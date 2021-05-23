@@ -60,6 +60,11 @@ const routes: Routes = [
     .then(m => m.AfterTestModule)
   },
   {
+    path: 'rulit',
+    loadChildren: () => import('./rulit/rulit.module')
+    .then(m => m.RulitModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./page-not-found/page-not-found.module')
       .then(m => m.PageNotFoundModule)
@@ -69,9 +74,10 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    // estrategia de precarga, ayuda al navegador con la carga de archivos js
-    preloadingStrategy: PreloadAllModules
-  }
+    // estrategia de precarga, ayuda al navegador con la carga de archivos js 
+    preloadingStrategy: PreloadAllModules,
+    relativeLinkResolution: 'legacy'
+}
   )],
   exports: [RouterModule]
 })

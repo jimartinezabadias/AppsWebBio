@@ -16,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorIntlES } from './custom/mat-paginator-intl_ES';
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MatPaginatorIntlES } from './custom/mat-paginator-intl_ES';
     MatSortModule,
     LayoutModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   exports: [
     MatButtonModule,
@@ -53,7 +55,8 @@ import { MatPaginatorIntlES } from './custom/mat-paginator-intl_ES';
     MatSortModule,
     LayoutModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlES}]
 })

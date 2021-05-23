@@ -1,0 +1,17 @@
+
+<section class="container">
+    
+    <app-header-rulit *ngIf="testStarted"></app-header-rulit>
+
+    <div class="container__component">
+
+        <!-- COUNTDOWN -->
+        <section #countdown *ngIf="! testStarted">
+            <h1 class="countdown">{{ countDown }}</h1> 
+        </section>
+
+        <canvas #canvas></canvas>
+
+    </div>    
+
+</section>

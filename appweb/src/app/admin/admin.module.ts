@@ -16,6 +16,8 @@ import { DataDbService } from '../core/services/db/data-db.service';
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { AdminCreativityComponent } from './components/admin-creativity/admin-creativity.component';
+import { AdminRulitComponent } from './components/admin-rulit/admin-rulit.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     DataDbService
   ],
   declarations: [
-    AdminComponent
+    AdminComponent,
+    AdminCreativityComponent,
+    AdminRulitComponent
   ],
   imports: [
     CommonModule,
