@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HeaderDarkComponent } from './header-dark.component';
 
@@ -6,7 +6,7 @@ describe('HeaderDarkComponent', () => {
   let component: HeaderDarkComponent;
   let fixture: ComponentFixture<HeaderDarkComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ HeaderDarkComponent ]
     })

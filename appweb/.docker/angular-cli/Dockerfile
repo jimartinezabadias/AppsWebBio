@@ -1,4 +1,4 @@
-FROM node:15.4.0-alpine3.12
+FROM node:lts-buster
 
 RUN npm install -g @angular/cli
 

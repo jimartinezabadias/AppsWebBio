@@ -1,0 +1,163 @@
+// DESKTOP
+// 1600 x 900
+// 1440 x 900
+// 1366 x 768
+// 1024 x 600
+
+.swiper-container {
+    width: 450px;
+    height: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: left;
+}
+.container-instructions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #4a4067;
+}
+.button-go {
+    font-size: larger;
+    padding: 10px 80px;
+    font-weight: 500;   
+    background-color: #4a4067;
+    color: white;
+    margin-top: 75px;
+}
+.button-go:hover {
+    background-color: #4a4067cc;
+}
+
+div.swiper-button-prev, div.swiper-button-next {
+    color:  #ffffff !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 18px;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #ffcf02;
+    font-size: small;
+    margin: 7px 18px 18px 18px;
+}
+
+div.swiper-button-next:hover, div.swiper-button-prev:hover {
+    -webkit-box-shadow: inset 0 0 0 2px #ffcf02;
+    -moz-box-shadow: inset 0 0 0 2px #ffcf02;
+    box-shadow: inset 0px 0px 0px 2px #ffcf02; 
+    background-color: rgba($color: #ffcf02, $alpha: 0.3); 
+    color: #ffcf02 !important;
+}
+
+.container-items {
+    width: 346px;
+    height: 145px;
+    background-color: #4a4067; 
+    padding: 10px 40px 10px 40px;
+    text-align: center;
+    border-radius: 0px 0px 10px 10px;
+}
+
+li {
+    margin: 10px 0px 5px 0px;
+    list-style: none;
+    font-size: 20px;
+    width: 350px;
+    color: #ffffff;
+}
+
+li.example {
+    font-style: oblique;
+}
+
+.intruction {
+    color: #e33b88;
+}
+
+span.instructions-text {
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.container-title-intruction {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+li>h3 {
+    margin-top: 8px;
+}
+
+@media screen and (max-width: 1366px) {
+
+   img {
+        width: 290px;     
+    }
+
+    .swiper-container {
+        width: 290px;
+        height: 360px;
+    }
+
+    div.swiper-button-next,  div.swiper-button-prev {
+        width: 18px;
+        height: 18px;
+        padding: 10px;
+        margin-bottom: 20px;
+        margin-top: 16px;
+        font-size: 10px;
+        position: absolute;
+        top: 170px;
+    }
+
+    div.swiper-button-next::after,
+    div.swiper-button-prev::after {
+        font-size: 26px;
+    }
+
+    .intruction {
+        font-size: 16px;
+        margin-top: 14px;
+    }
+
+    span.instructions-text {        
+        font-size: 13px;
+    }
+
+    .container-items {
+        width: 260px;
+        height: 90px;
+        padding: 12px 10px 0px 10px;
+        font-size: 16px;
+        margin-top: 3px;
+        margin-bottom: 0px;
+        line-height: 20px;
+    }
+
+    li {
+        font-size: 13px;
+        width: 260px;
+        margin: 0px;
+    }
+    li>h3 {
+        margin-top: 2px;
+    }
+    .button-go {
+        margin-top: 27px;
+    }
+}
+@media screen and (max-width: 1024px){
+ 
+    div.swiper-button-next,  div.swiper-button-prev {
+        margin-top: 18px;
+       
+    }
+
+}
+
+

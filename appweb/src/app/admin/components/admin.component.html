@@ -1,120 +1,19 @@
 
-<div class="container-all">
+<div class="containerAll">
     <app-header-admin></app-header-admin>
-    <div class="contains-body">
-        <div class="titleAndButton">
-            <h1 class="title">Datos de Test de creatividad</h1>
-            <h2  id="usersCount" class="subtitle">Total de usuarios testeados {{ totalTestsCounter.count }}</h2>
-            <button mat-raised-button class="button-getData" (click)="getData()">
-               DESCARGAR
-            </button>
-            <!-- <button mat-raised-button class="button-getData">
-                CANTIDAD DE USUARIOS TESTEADOS
-            </button> -->
+    <figure class="testSelect">
+        <h1>Resultados de los tests</h1>
+        <div class="testSelect__options">
+            <div class="testSelect__testLink" routerLink="/admin/creativity" routerLinkActive="active">
+                <img src="./assets/images/testCreatividad.png" alt="mano sosteniendo un foco, test de creatividad">
+                <h3>CREATIVIDAD</h3>
+            </div>
+            <div class="testSelect__testLink" routerLink="/admin/rulit" routerLinkActive="active">
+                <img src="assets/images/testMemoria.png" alt="rostro de perfil con un engranaje en la cabeza, test de memoria">
+                <h3>MEMORIA</h3>
+            </div>
         </div>
-
-        <div class="spinner-container" *ngIf="testsDataSource.loading$ | async">
-          <mat-spinner></mat-spinner>
-        </div>
-           
-        <div class="contains-tables mat-elevation-z8">
-            <mat-table [dataSource]="testsDataSource">      
-
-                <!-- NameLastName Column -->
-                <ng-container matColumnDef="nameLastName">
-                  <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.nameLastName }} </mat-cell>
-                </ng-container>
-
-                <!-- Age Column -->
-                <ng-container matColumnDef="age">
-                  <mat-header-cell *matHeaderCellDef> Edad </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.age }} </mat-cell>
-                </ng-container>
-
-                <!-- City Column -->
-                <ng-container matColumnDef="city">
-                  <mat-header-cell *matHeaderCellDef> Ciudad </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.city }} </mat-cell>
-                </ng-container>
-
-                <!-- EducationLevel Column -->
-                <ng-container matColumnDef="educationLevel">
-                  <mat-header-cell *matHeaderCellDef> Educación </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.educationLevel }} </mat-cell>
-                </ng-container>
-
-                <!-- EducationStatus Column -->
-                <ng-container matColumnDef="educationStatus">
-                  <mat-header-cell *matHeaderCellDef> Estado de Formación </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.educationStatus | replaceNullWithText }} </mat-cell>
-                </ng-container>
-
-                <!-- School Column -->
-                <ng-container matColumnDef="school">
-                  <mat-header-cell *matHeaderCellDef> Escuela / Institución </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.school | replaceNullWithText }} </mat-cell>
-                </ng-container>
-
-                <!-- Degree Column -->
-                <ng-container matColumnDef="degree">
-                  <mat-header-cell *matHeaderCellDef> Grado </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.degree | replaceNullWithText }} </mat-cell>
-                </ng-container>
-
-                <!-- Year Column -->
-                <ng-container matColumnDef="year">
-                  <mat-header-cell *matHeaderCellDef> Año </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.year | replaceNullWithText }} </mat-cell>
-                </ng-container>
-
-                <!-- Grade Column -->
-                <ng-container matColumnDef="grade">
-                  <mat-header-cell *matHeaderCellDef> Grade </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.grade | replaceNullWithText }} </mat-cell>
-                </ng-container>
-
-                <!-- Course Column -->
-                <ng-container matColumnDef="course">
-                  <mat-header-cell *matHeaderCellDef> Curso </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.course | replaceNullWithText }} </mat-cell>
-                </ng-container>
-
-                <!-- Object Column -->
-                <ng-container matColumnDef="object">
-                  <mat-header-cell *matHeaderCellDef> Objeto </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.object | replaceNullWithText }} </mat-cell>
-                </ng-container>
-
-                <!-- Proposal Column -->
-                <ng-container matColumnDef="proposal">
-                  <mat-header-cell *matHeaderCellDef class="table__item-proposal"> Propuestas </mat-header-cell>
-                  <mat-cell *matCellDef="let user" class="table__item-proposal"> {{ user.proposal | replaceNullWithText }} </mat-cell>
-                </ng-container>
-
-                <!-- DateStart Column -->
-                <ng-container matColumnDef="dateStart">
-                  <mat-header-cell *matHeaderCellDef> Tiempo Inicio </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.dateStart.toDate() | date:'long' }} </mat-cell>
-                </ng-container>
-
-                <!-- DateEnd Column -->
-                <ng-container matColumnDef="dateEnd">
-                  <mat-header-cell *matHeaderCellDef> Tiempo Fin </mat-header-cell>
-                  <mat-cell *matCellDef="let user"> {{ user.dateEnd.toMillis() | date:'mediumTime' }} </mat-cell>
-                </ng-container>
-
-
-                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
-            </mat-table>
-            
-            <mat-paginator [length]="totalTestsCounter.count" [pageSize]="pageSize"></mat-paginator>
-
-        </div>
-     
-    </div>
+    </figure>
 </div> 
 
 

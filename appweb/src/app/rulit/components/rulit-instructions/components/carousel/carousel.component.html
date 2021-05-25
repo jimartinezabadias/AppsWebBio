@@ -1,0 +1,58 @@
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide" *ngFor="let img of images">
+      <img [src]="img" alt="imagen del carousel">
+      <div class="image" *ngIf="img == './assets/videos/instructionRulit_1.gif'">
+        <div class="container-instructions">
+          <div class="container-title-intruction">
+            <h3 class="intruction">Instrucción 1 de 3</h3>
+          </div>
+          <ul class="container-items">
+            <li>Tu objetivo es
+              <span class="instructions-text">
+                encontrar un camino oculto tocando los circulos
+              </span> para descubrirlo              
+              <br> hasta llegar al final.
+              <br> Con cada  
+              <span class="instructions-text">
+                error volvés
+              </span> al punto anterior. 
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="image" *ngIf="img == './assets/images/instructionRulit_2.png'">
+        <div class="container-instructions">
+          <div class="container-number">
+            <h3 class="intruction">Instrucción 2 de 3</h3>
+          </div>
+          <ul class="container-items">
+            <li>Una vez que 
+              <span class="instructions-text">
+                encuentres la salida,
+                <br>memoriza tu ruta.
+              </span>
+              <br>Deberás esforzarte por recordarla 
+              <br>en los siguientes intentos.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="image" *ngIf="img == './assets/images/instruction_4.png'">
+        <div class="container-instructions">
+          <div class="container-number">
+            <h3 class="intruction">Instrucción 3 de 3</h3>
+          </div>
+          <button routerLink="/rulit/user-form" routerLinkActive="active"
+            class="button-go" mat-raised-button>
+            COMENZAR
+          </button>
+        </div>       
+      </div>
+      <div class="swiper-button-prev">
+      </div>    
+      <div class="swiper-button-next">
+      </div>
+    </div>
+  </div>
+</div>
