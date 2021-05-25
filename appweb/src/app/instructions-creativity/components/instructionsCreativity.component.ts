@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Element } from './../../core/models/element.module';
 import { ActivatedRoute, Params  } from '@angular/router';
 
-import Swiper from 'swiper';
+import Swiper, { Navigation } from 'swiper';
 
 @Component({
   selector: 'app-instructions-creativity',
@@ -67,6 +67,8 @@ export class InstructionsCreativityComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    Swiper.use([Navigation]);
+
     this.mySwiper = new Swiper('.swiper-container', {
       // If we need pagination
       pagination: {
