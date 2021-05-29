@@ -65,6 +65,11 @@ const routes: Routes = [
     .then(m => m.RulitModule)
   },
   {
+    path: 'encode',
+    loadChildren: () => import('./encode/encode.module')
+    .then(m => m.EncodeModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./page-not-found/page-not-found.module')
       .then(m => m.PageNotFoundModule)
