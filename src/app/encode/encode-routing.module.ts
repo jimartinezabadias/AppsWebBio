@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EncodeAboutComponent } from './encode-about/encode-about.component';
+import { AboutEncodeComponent } from './about-component/about-encode.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: EncodeAboutComponent,
+        component: AboutEncodeComponent,
         pathMatch: 'full'
     }
 ];

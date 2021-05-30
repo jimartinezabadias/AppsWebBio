@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IRulitConfig, IRulitUser } from 'src/app/rulit/bits/RulitUserService';
 import { AdminCreativityComponent } from 'src/app/admin/components/admin-creativity/admin-creativity.component';
+import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 
 
 @Injectable({
@@ -20,11 +21,13 @@ export class DataDbService {
   private rulitUserCollectionRef: AngularFirestoreCollection;
   private rulitConfigRef: AngularFirestoreCollection;
   public creativesUsers = [];
+  private encodeUserCollectionRef: AngularFirestoreCollection;
 
   constructor(private afs: AngularFirestore, private http: HttpClient) { 
     this.creativesCollectionRef = afs.collection<CreativeUser>('creatives-users', ref => ref.orderBy('dateStart', 'desc'));
     this.creativesMetadataRef = afs.collection('creatives-meta');
     this.rulitUserCollectionRef = afs.collection<IRulitUser>('rulit-users');
+    this.encodeUserCollectionRef = afs.collection<IEncodeUser>('encode-users');
     this.rulitConfigRef = afs.collection("rulit-config");
   } 
 
@@ -86,8 +89,12 @@ export class DataDbService {
     return this.creativesMetadataRef.doc('tests-counter');
   }
 
-  getNewRulitDocumentRef(): DocumentReference {
+  public getNewRulitDocumentRef(): DocumentReference {
     return this.rulitUserCollectionRef.ref.doc();
+  }
+
+  public getNewEncodeDocumentRef(): DocumentReference {
+    return this.encodeUserCollectionRef.ref.doc();
   }
 
   async getRulitUserData(userId: string): Promise<IRulitUser> {
@@ -105,6 +112,11 @@ export class DataDbService {
       testUser.testDate = firestore.FieldValue.serverTimestamp();
 
     await this.rulitUserCollectionRef.doc(testUser.userId).set(testUser);
+  }
+
+  public async saveEncodeUser(testUser: IEncodeUser): Promise<void> {
+    const userData = Object.assign(testUser,{});
+    await this.encodeUserCollectionRef.doc(testUser.userId).set(userData);
   }
 
   async getRulitConfig(): Promise<IRulitConfig> {
