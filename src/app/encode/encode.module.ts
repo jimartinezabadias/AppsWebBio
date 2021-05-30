@@ -7,11 +7,11 @@ import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 
 import { EncodeRoutingModule } from './encode-routing.module';
-import { EncodeAboutComponent } from './encode-about/encode-about.component';
+import { AboutEncodeComponent } from './about-component/about-encode.component';
 
 @NgModule({
     declarations: [
-        EncodeAboutComponent
+        AboutEncodeComponent
     ],
     imports: [
         SharedModule,

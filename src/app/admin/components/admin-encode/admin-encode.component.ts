@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 
 @Component({
   selector: 'app-admin-encode',
@@ -7,6 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AdminEncodeComponent{
 
-  constructor() {}
+  constructor(private _encodeUserService: EncodeUserService) {}
   
+  public async generateUserId(){
+    const id: string = (await this._encodeUserService.createUser()).userId;
+    // armar el link...
+  }
+
 }
