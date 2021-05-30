@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-encode-about',
-    templateUrl: './encode-about.component.html',
+    selector: 'app-about-encode',
+    templateUrl: './about-encode.component.html',
     styleUrls: ['../encode.component.scss']
 })
 
-export class EncodeAboutComponent {
+export class AboutEncodeComponent {
 
   constructor() {}
 
