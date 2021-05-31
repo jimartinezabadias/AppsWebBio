@@ -13,12 +13,18 @@ export class EncodeUserService {
 
     }    
     
-    // returns id of the created user
+    // creates and stores a new user
+    // returns the created user
     public async createUser(): Promise<IEncodeUser>
     {
         const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
         const newUser: IEncodeUser = new EncodeUser(newUserId);
         await this._dbService.saveEncodeUser(newUser);
         return newUser;
+    }
+
+    //
+    public async getUser(userid: string): Promise<IEncodeUser> {
+        return await this._dbService.getEncodeUser(userid);
     }
 }
