@@ -1,12 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AboutEncodeComponent } from './about-component/about-encode.component';
+import { EncodeAboutComponent } from './about-component/encode-about.component';
+import { EncodeWellcomeComponent } from './wellcome-component/encode-wellcome.component';
+import { AuthGuard } from "./auth.guard";
 
 const routes: Routes = [
     {
         path: '',
-        component: AboutEncodeComponent,
-        pathMatch: 'full'
+        component: EncodeAboutComponent
+    },
+    {
+        path: ':userId',
+        canActivate: [ AuthGuard ],
+        children: [
+            {
+                path: 'bienvenido',
+                component: EncodeWellcomeComponent
+            }
+        ]
     }
 ];
 

@@ -114,14 +114,21 @@ export class DataDbService {
     await this.rulitUserCollectionRef.doc(testUser.userId).set(testUser);
   }
 
+  
+  async getRulitConfig(): Promise<IRulitConfig> {
+    let cfg = await this.rulitConfigRef.doc<IRulitConfig>("config").get().toPromise();
+    return cfg.data();
+  }
+  
   public async saveEncodeUser(testUser: IEncodeUser): Promise<void> {
     const userData = Object.assign(testUser,{});
     await this.encodeUserCollectionRef.doc(testUser.userId).set(userData);
   }
 
-  async getRulitConfig(): Promise<IRulitConfig> {
-    let cfg = await this.rulitConfigRef.doc<IRulitConfig>("config").get().toPromise();
-    return cfg.data();
+  public async getEncodeUser(userId: string): Promise<IEncodeUser> {
+    let userData = await this.encodeUserCollectionRef.doc<IEncodeUser>(userId).get().toPromise();
+    // userData.data().userId = userId;
+    return userData.data();
   }
 
 }
