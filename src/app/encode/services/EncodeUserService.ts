@@ -8,6 +8,8 @@ import { EncodeUser } from "../models/EncodeUser";
 })
 export class EncodeUserService {
     
+    private _user: IEncodeUser = null;
+    
     constructor(private _dbService: DataDbService)
     {
 
@@ -23,8 +25,23 @@ export class EncodeUserService {
         return newUser;
     }
 
+    // searchs in db for user with given id and stores it if found. 
+    public async loadUser(userId: string): Promise<boolean> {
+        let user: IEncodeUser = await this.getUserData(userId);
+        if (user)
+        {
+            this._user = user;
+            return true;
+        }
+        return false;
+    }
+
+    public user(): IEncodeUser {
+        return this._user;
+    }
+    
     //
-    public async getUser(userid: string): Promise<IEncodeUser> {
-        return await this._dbService.getEncodeUser(userid);
+    private getUserData(userid: string): Promise<IEncodeUser> {
+        return this._dbService.getEncodeUser(userid);
     }
 }
