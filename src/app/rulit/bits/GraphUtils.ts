@@ -1,7 +1,8 @@
 import { ElementRef } from "@angular/core";
 import { CanvasGraph } from "./CanvasGraph";
 import { GraphNode } from "./GraphNode";
-import { INodeData, GRAPH_1, SOLUTION_1 } from "./graphs_available/Graph1_data_testing";
+import { INodeData, GRAPH_1, SOLUTION_1 } from "./graphs_available/Graph1_data";
+import { GRAPH_2, SOLUTION_2 } from "./graphs_available/Graph2_data";
 
 const NODE_REGULAR_IMAGE_URL = "./assets/images/rulit-node-regular.svg"
 const NODE_HOVER_IMAGE_URL = "./assets/images/rulit-node-hover.svg"
@@ -9,14 +10,29 @@ const NODE_START_IMAGE_URL = "./assets/images/rulit-node-start.svg"
 const NODE_END_IMAGE_URL = "./assets/images/rulit-node-end.svg"
 
 export const DEFAULT_GRAPH_SOLUTION = "19db35dd";
+export const SECOND_GRAPH_SOLUTION = "6a5ba4ef";
 
-export function getGraphAndSolutionData(theId: string): {graphData: Array<INodeData>, solutionData:Array<number>} {
-    // console.log(theId);
-    if (theId === DEFAULT_GRAPH_SOLUTION) {
-        // use a copy in each exercise
-        let solution = Object.assign([],SOLUTION_1);
-        return {graphData: GRAPH_1, solutionData: solution};
+export function getGraphAndSolutionData(graphAndSolutionId: string): {graphData: Array<INodeData>, solutionData:Array<number>} {
+    let graph: Array<INodeData>;
+    let solution: Array<number>;
+
+    switch (graphAndSolutionId) {
+        case DEFAULT_GRAPH_SOLUTION:
+            // use a copy in each exercise
+            console.log("usando grafo y solucion 1");
+            solution = Object.assign([],SOLUTION_1);
+            graph = GRAPH_1;
+            break;
+        case SECOND_GRAPH_SOLUTION:
+            // use a copy in each exercise
+            console.log("usando grafo y solucion 2");
+            solution = Object.assign([],SOLUTION_2);
+            graph = GRAPH_2;
+            break;
     }
+
+    return {graphData: graph, solutionData: solution};
+    
 }
 
 // Creates a new graph and adds nodes, edges and canvas.
