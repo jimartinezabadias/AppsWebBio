@@ -104,6 +104,9 @@ export class CanvasGraph extends Graph implements ICanvasGraph {
         
         let frame = 0;
         this.activeNode.circle.fill = COLOR_WHITE;
+        if (this.activeNode.isFirstNode){
+            this.activeNode.circle.fill = COLOR_TRANSPARENT_GREEN;
+        }
         
         const i = setInterval( () => {
             (Math.abs(frame % 2) == 1) ? newNode.circle.fill = COLOR_RED : newNode.resetColor();
