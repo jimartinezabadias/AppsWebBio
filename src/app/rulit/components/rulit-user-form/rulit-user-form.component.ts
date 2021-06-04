@@ -50,7 +50,7 @@ export class RulitUserFormComponent implements OnInit {
 
     onSaveForm($event: any){
         if ( this.userFormData.valid ) {
-            this.userService.setNewUser(this.userFormData.getRawValue());
+            this.userService.createNewUser(this.userFormData.getRawValue());
             this.router.navigate(['rulit/test', this.userService.user.userId]);
         } else {
             console.log("error in form");

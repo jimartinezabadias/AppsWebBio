@@ -13,8 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyDialogComponent } from './my-dialog/my-dialog.component';
-
-
+import { NavigationService } from './NavigationService/NavigationService';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,7 @@ import { MyDialogComponent } from './my-dialog/my-dialog.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule
   ],
-  providers: [],
+  providers: [ NavigationService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
