@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// import { UsersService } from './services/users/users.service';
 import { DataDbService } from './services/db/data-db.service';
 
 @NgModule({
@@ -9,9 +8,6 @@ import { DataDbService } from './services/db/data-db.service';
   imports: [
     CommonModule
   ],
-  providers: [
-    // UsersService,
-    DataDbService
-  ]
+  providers: [ DataDbService ]
 })
 export class CoreModule { }

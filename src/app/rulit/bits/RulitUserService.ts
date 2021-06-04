@@ -1,16 +1,9 @@
 import { Injectable } from "@angular/core";
 import { DocumentReference } from "@angular/fire/firestore";
 import { DataDbService } from "src/app/core/services/db/data-db.service";
+import { NavigationService } from "src/app/NavigationService/NavigationService";
 import { DEFAULT_GRAPH_SOLUTION } from "./GraphUtils";
 import { TestName } from "./RulitTestService";
-
-export interface IRulitConfig {
-    IS_TEST_OPEN: boolean,
-    SHORT_MEMORY_MAX_EXERCISES: number,
-    SHORT_MEMORY_MAX_CORRECT_EXERCISES: number,
-    LONG_MEMORY_MAX_EXERCISES: number,
-    LONG_MEMORY_MAX_CORRECT_EXERCISES: number
-}
 
 // Step stored in DB
 export interface IRulitStep {
@@ -46,15 +39,16 @@ export interface IRulitUser {
 export class RulitUserService {
 
     private _graphAndSolutionCode: string = DEFAULT_GRAPH_SOLUTION;
-    private _rulitConfig: IRulitConfig;
     private _user: IRulitUser;
     private _userDbRef: DocumentReference;
 
-    constructor(private _dbService: DataDbService){
-        this.loadRulitConfig();
+    constructor(private _dbService: DataDbService,
+                private _navigationService: NavigationService)
+    {
     }
 
-    get user(){
+    get user()
+    {
         return this._user;
     }
 
@@ -66,7 +60,7 @@ export class RulitUserService {
         return this._graphAndSolutionCode;
     }
     
-    setNewUser(newUserData: {name: string, email: string}): void{
+    createNewUser(newUserData: {name: string, email: string}): void{
         this._user = {
             userId: "",
             email: newUserData.email,
@@ -90,12 +84,6 @@ export class RulitUserService {
     // Load user from db
     async loadUserFromDB(userId: string): Promise<boolean> {
         this._user = await this._dbService.getRulitUserData(userId);
-        return true;
-    }
-
-    // Load config from db
-    async loadRulitConfig(): Promise<boolean> {
-        this._rulitConfig = await this._dbService.getRulitConfig();
         return true;
     }
 
@@ -132,16 +120,16 @@ export class RulitUserService {
 
     getMaxExercices(testName: TestName): number {
         if ( testName === "short_memory_test" )
-            return this._rulitConfig.SHORT_MEMORY_MAX_EXERCISES;
+            return this._navigationService.rulitConfig.SHORT_MEMORY_MAX_EXERCISES;
         if ( testName === "long_memory_test" )
-            return this._rulitConfig.LONG_MEMORY_MAX_EXERCISES;
+            return this._navigationService.rulitConfig.LONG_MEMORY_MAX_EXERCISES;
     }
 
     getMaxCorrectExercices(testName: TestName): number {
         if ( testName === "short_memory_test" )
-            return this._rulitConfig.SHORT_MEMORY_MAX_CORRECT_EXERCISES;
+            return this._navigationService.rulitConfig.SHORT_MEMORY_MAX_CORRECT_EXERCISES;
         if ( testName === "long_memory_test" )
-            return this._rulitConfig.LONG_MEMORY_MAX_CORRECT_EXERCISES;
+            return this._navigationService.rulitConfig.LONG_MEMORY_MAX_CORRECT_EXERCISES;
     }
 
 }
