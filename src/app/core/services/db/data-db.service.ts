@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { IRulitUser } from 'src/app/rulit/bits/RulitUserService';
 import { AdminCreativityComponent } from 'src/app/admin/components/admin-creativity/admin-creativity.component';
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
-import { IRulitConfig } from 'src/app/rulit/bits/IRulitConfig';
+import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';
 
 
 @Injectable({
@@ -21,6 +21,7 @@ export class DataDbService {
   private creativesMetadataRef: AngularFirestoreCollection;
   private rulitUserCollectionRef: AngularFirestoreCollection;
   private rulitConfigRef: AngularFirestoreCollection;
+  private rulitSolutionsRef: AngularFirestoreCollection;
   public creativesUsers = [];
   private encodeUserCollectionRef: AngularFirestoreCollection;
 
@@ -30,6 +31,7 @@ export class DataDbService {
     this.rulitUserCollectionRef = afs.collection<IRulitUser>('rulit-users');
     this.encodeUserCollectionRef = afs.collection<IEncodeUser>('encode-users');
     this.rulitConfigRef = afs.collection("rulit-config");
+    this.rulitSolutionsRef = afs.collection("rulit-solutions");
   } 
 
   // TODO: Theres no need for async
@@ -115,9 +117,13 @@ export class DataDbService {
     await this.rulitUserCollectionRef.doc(testUser.userId).set(testUser);
   }
 
+  async getRulitSettings(): Promise<IRulitSettings> {
+    let cfg = await this.rulitConfigRef.doc<IRulitSettings>("config").get().toPromise();
+    return cfg.data();
+  }
   
-  async getRulitConfig(): Promise<IRulitConfig> {
-    let cfg = await this.rulitConfigRef.doc<IRulitConfig>("config").get().toPromise();
+  async getRulitSolutionSettings(solutionCode: string): Promise<IRulitSolutionSettings> {
+    let cfg = await this.rulitSolutionsRef.doc<IRulitSolutionSettings>(solutionCode).get().toPromise();
     return cfg.data();
   }
   

@@ -1,10 +1,13 @@
 import { ElementRef, Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { filter, map, tap } from "rxjs/operators";
+import { DataDbService } from "src/app/core/services/db/data-db.service";
+import { NavigationService } from "src/app/NavigationService/NavigationService";
 import { CanvasGraph } from "./CanvasGraph";
 import { ExerciseService } from "./ExerciseService";
 import { GraphNode } from "./GraphNode";
 import { buildGraph, getGraphAndSolutionData } from "./GraphUtils";
+import { IRulitSolutionSettings } from "./IRulitSettings";
 import { IRulitExercise, IRulitUser, RulitUserService } from "./RulitUserService";
 
 export type TestName = "learning" | "short_memory_test" | "long_memory_test" | "no_next_test";
@@ -36,11 +39,23 @@ export class RulitTestService implements IRulitTestService {
     private _activeNodeChange$: Observable<GraphNode>;
     private _isExerciseOver$: Subject<boolean>;
     private _isTestOver$: Subject<string | null>;
+    private _solutionSettings: IRulitSolutionSettings = null;
 
-    constructor() {
+    constructor(private _navigationService: NavigationService,
+                private _dbService: DataDbService,
+                private _userService: RulitUserService) 
+    {
         this.isTesting = false;
         this._isExerciseOver$ = new Subject<boolean>();
         this._isTestOver$ = new Subject<string | null>();
+    }
+
+    async loadSolutionSettings(): Promise<void> 
+    {
+        if (this._userService.user)
+        {
+            this._solutionSettings = await this._dbService.getRulitSolutionSettings(this._userService.user.graphAndSolutionCode);
+        }
     }
 
     get isExerciseOver$(): Observable<boolean>{
@@ -61,6 +76,10 @@ export class RulitTestService implements IRulitTestService {
         
         this.testName = userService.user.nextTest;
         this._currentExercise = new ExerciseService();
+        if (!this._solutionSettings)
+        {
+            this.loadSolutionSettings();
+        }
 
         // 
         this._activeNodeChange$ = this.graph.activeNode$;
@@ -108,8 +127,10 @@ export class RulitTestService implements IRulitTestService {
 
     private isTestOver(userService: RulitUserService, currentTestExercisesArray: Array<IRulitExercise>): string | null {
         
-        const MAX_EXERCISES: number = userService.getMaxExercices(this.testName);
-        const MAX_CORRECT_EXERCISES: number = userService.getMaxCorrectExercices(this.testName);
+        // const MAX_EXERCISES: number = userService.getMaxExercices(this.testName);
+        // const MAX_CORRECT_EXERCISES: number = userService.getMaxCorrectExercices(this.testName);
+        const MAX_EXERCISES: number = this.getMaxExercises();
+        const MAX_CORRECT_EXERCISES: number = this.getMaxCorrectExercises();
         
         const correctExercisesInTest = userService.getConsecutiveCorrectExercises(this.testName);
         
@@ -121,6 +142,26 @@ export class RulitTestService implements IRulitTestService {
 
         return null;
 
+    }
+
+    private getMaxExercises(): number
+    {
+        switch (this.testName) {
+            case "short_memory_test":
+                return this._solutionSettings.shortMem_MaxExercises;
+            case "long_memory_test":
+                return this._solutionSettings.longMem_MaxExercises;
+        }
+    }
+
+    private getMaxCorrectExercises(): number
+    {
+        switch (this.testName) {
+            case "short_memory_test":
+                return this._solutionSettings.shortMem_MaxCorrectExercises;
+            case "long_memory_test":
+                return this._solutionSettings.longMem_MaxCorrectExercises;
+        }
     }
 
     isNodeNextInSolution(theNode: GraphNode): boolean {

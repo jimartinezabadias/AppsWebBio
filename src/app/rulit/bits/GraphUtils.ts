@@ -19,13 +19,11 @@ export function getGraphAndSolutionData(graphAndSolutionId: string): {graphData:
     switch (graphAndSolutionId) {
         case DEFAULT_GRAPH_SOLUTION:
             // use a copy in each exercise
-            console.log("usando grafo y solucion 1");
             solution = Object.assign([],SOLUTION_1);
             graph = GRAPH_1;
             break;
         case SECOND_GRAPH_SOLUTION:
             // use a copy in each exercise
-            console.log("usando grafo y solucion 2");
             solution = Object.assign([],SOLUTION_2);
             graph = GRAPH_2;
             break;
