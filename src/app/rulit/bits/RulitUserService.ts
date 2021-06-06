@@ -38,7 +38,6 @@ export interface IRulitUser {
 })
 export class RulitUserService {
 
-    private _graphAndSolutionCode: string = DEFAULT_GRAPH_SOLUTION;
     private _user: IRulitUser;
     private _userDbRef: DocumentReference;
 
@@ -51,21 +50,13 @@ export class RulitUserService {
     {
         return this._user;
     }
-
-    set graphAndSolutionCode(code: string) {
-        this._graphAndSolutionCode = code;
-    }
-    
-    get graphAndSolutionCode(): string {
-        return this._graphAndSolutionCode;
-    }
     
     createNewUser(newUserData: {name: string, email: string}): void{
         this._user = {
             userId: "",
             email: newUserData.email,
             name: newUserData.name,
-            graphAndSolutionCode: this._graphAndSolutionCode,
+            graphAndSolutionCode: "",
             shortMemoryTest: new Array<IRulitExercise>(),
             longMemoryTest: new Array<IRulitExercise>(),
             stepErrors: new Array<number>(),
@@ -78,7 +69,14 @@ export class RulitUserService {
 
         this._userDbRef = this._dbService.getNewRulitDocumentRef();
         this._user.userId = this._userDbRef.id;
-
+        
+        if (this._navigationService.rulitSolutionCodeUrl !== null )
+        {
+            this._user.graphAndSolutionCode = this._navigationService.rulitSolutionCodeUrl;
+        } else 
+        {
+            this._user.graphAndSolutionCode = DEFAULT_GRAPH_SOLUTION;
+        }
     }
 
     // Load user from db
@@ -116,20 +114,6 @@ export class RulitUserService {
 
     saveTestData() {
         this._dbService.saveRulitUserData(this._user);
-    }
-
-    getMaxExercices(testName: TestName): number {
-        if ( testName === "short_memory_test" )
-            return this._navigationService.rulitConfig.SHORT_MEMORY_MAX_EXERCISES;
-        if ( testName === "long_memory_test" )
-            return this._navigationService.rulitConfig.LONG_MEMORY_MAX_EXERCISES;
-    }
-
-    getMaxCorrectExercices(testName: TestName): number {
-        if ( testName === "short_memory_test" )
-            return this._navigationService.rulitConfig.SHORT_MEMORY_MAX_CORRECT_EXERCISES;
-        if ( testName === "long_memory_test" )
-            return this._navigationService.rulitConfig.LONG_MEMORY_MAX_CORRECT_EXERCISES;
     }
 
 }
