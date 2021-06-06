@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NavigationService } from 'src/app/NavigationService/NavigationService';
 
 import Swiper, { Navigation } from 'swiper';
-import { RulitUserService } from '../../bits/RulitUserService';
 
 @Component({
     selector: 'app-rulit-instructions',
@@ -14,12 +14,12 @@ export class RulitInstructionsComponent implements OnInit {
 
     mySwiper: Swiper;
 
-    constructor(private _route: ActivatedRoute, private _userService: RulitUserService) {}
+    constructor(private _route: ActivatedRoute, private _navigationService: NavigationService) {}
 
     ngOnInit(): void {
       // Allow user to access with a given graph and solution id in the URL
       const graphAndSolutionParam = this._route.snapshot.paramMap.get('graphAndSolutionId');
-      if (graphAndSolutionParam) this._userService.graphAndSolutionCode = graphAndSolutionParam;
+      if (graphAndSolutionParam) this._navigationService.rulitSolutionCodeUrl = graphAndSolutionParam;
     }
 
     ngAfterViewInit() {
