@@ -1,17 +1,12 @@
 import { INodeData } from "./Graph1_data";
 
-// This file exports two objects:
-//      - Graph: represented by an array of nodes.
-//      - Solution: represented by (TBC)
-//          - TODO: accept multiple solutions
-
 export const GRAPH_2: Array<INodeData> = [
     {
         id: 1,
         isFirstNode: false,
         isLastNode: false,
         edges: [2,9],
-        row: 1,
+        row: 2,
         column: 1
     },
     {
@@ -163,7 +158,7 @@ export const GRAPH_2: Array<INodeData> = [
         isFirstNode: false,
         isLastNode: false,
         edges: [13,18,23,27],
-        row: 8,
+        row: 10,
         column: 18
     },
     {
@@ -223,6 +218,3 @@ export const GRAPH_2: Array<INodeData> = [
         column: 16
     }
 ];
-
-export const SOLUTION_2: Array<number> = [15,21,19,10,14,6,9,2,3,7,17,22,23,20,18,12];
-
