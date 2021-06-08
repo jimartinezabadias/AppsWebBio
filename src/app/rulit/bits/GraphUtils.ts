@@ -1,8 +1,9 @@
 import { ElementRef } from "@angular/core";
 import { CanvasGraph } from "./CanvasGraph";
 import { GraphNode } from "./GraphNode";
-import { INodeData, GRAPH_1, SOLUTION_1 } from "./graphs_available/Graph1_data";
-import { GRAPH_2, SOLUTION_2 } from "./graphs_available/Graph2_data";
+import { INodeData, GRAPH_1 } from "./graphs_available/Graph1_data";
+import { GRAPH_2 } from "./graphs_available/Graph2_data";
+import { SOLUTION_1, SOLUTION_2 } from "./graphs_available/Solutions_data";
 
 const NODE_REGULAR_IMAGE_URL = "./assets/images/rulit-node-regular.svg"
 const NODE_HOVER_IMAGE_URL = "./assets/images/rulit-node-hover.svg"
