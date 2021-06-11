@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { EncodeUserService } from '../services/EncodeUserService';
 
 @Component({
     selector: 'app-encode-wellcome',
@@ -6,8 +7,17 @@ import { Component } from '@angular/core';
     styleUrls: ['../encode.component.scss']
 })
 
-export class EncodeWellcomeComponent {
+export class EncodeWellcomeComponent implements OnInit {
 
-  constructor() {}
+  public userName: string;
+
+  constructor(private _userService: EncodeUserService) 
+  {
+  }
+
+  ngOnInit(): void 
+  {
+    this.userName = this._userService.user().name;
+  }
 
 }

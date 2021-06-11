@@ -134,7 +134,6 @@ export class DataDbService {
 
   public async getEncodeUser(userId: string): Promise<IEncodeUser> {
     let userData = await this.encodeUserCollectionRef.doc<IEncodeUser>(userId).get().toPromise();
-    // userData.data().userId = userId;
     return userData.data();
   }
 
