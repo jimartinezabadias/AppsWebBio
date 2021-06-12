@@ -10,7 +10,7 @@ services:
       - "4200:4200"
     volumes:
       - .:/home/node/app
-    command: ng serve --host 0.0.0.0 --disable-host-check
+    command: ng serve --host 0.0.0.0 --disable-host-check --ssl --ssl-cert "ssl/desa.local.crt" --ssl-key "ssl/desa-local.key"
   web:
     build: .docker/nginx
     image: nginx-investigar
