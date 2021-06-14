@@ -31,7 +31,6 @@ export class AuthGuard implements CanActivate {
 
     if (await this._userService.loadUser(userId))
     {
-      console.log("Se encontro el usuario");
       // Redirect to the home page
       return this._router.parseUrl(url + '/bienvenido');
     }

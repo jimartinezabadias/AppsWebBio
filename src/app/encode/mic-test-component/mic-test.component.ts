@@ -9,17 +9,12 @@ import { EncodeUserService } from '../services/EncodeUserService';
 
 export class EncodeMicTestComponent implements OnInit {
 
-  private _browser: Navigator;
-
   constructor(private _userService: EncodeUserService) 
   {
   }
 
   ngOnInit(): void 
   {
-    // navigator.mediaDevices.getUserMedia({audio: true, video: false})
-    //   .then(() => console.log("grabando"));
-    console.log(navigator);
   }
 
 }
