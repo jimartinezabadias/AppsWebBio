@@ -9,7 +9,7 @@ import { AudioRecorderService } from '../services/AudioRecorderService';
 
 export class AudioRecorderComponent implements OnInit {
 
-  // private _navigator: Navigator = navigator;
+  private _navigator: Navigator = navigator;
 
   constructor(private _recorderService: AudioRecorderService) 
   {
@@ -19,14 +19,13 @@ export class AudioRecorderComponent implements OnInit {
   {
   }
 
-  public onRec(): void
+  public async onRec(): Promise<void>
   {
     if (!this._recorderService.isRecording)
     {
-      this._recorderService.record();
+      const stream = await this._navigator.mediaDevices.getUserMedia({audio: true, video: false});
+      this._recorderService.record(stream);
     }
-    // this._navigator.mediaDevices.getUserMedia({audio: true, video: false})
-    //   .then(() => console.log("grabando"));
   }
   
   public onStop(): void
@@ -36,29 +35,5 @@ export class AudioRecorderComponent implements OnInit {
       this._recorderService.stopRecording();
     }
   }
-
-  // const handleSuccess = function(stream) {
-  //   const options = {mimeType: 'audio/webm'};
-  //   const recordedChunks = [];
-  //   const mediaRecorder = new MediaRecorder(stream, options);
-
-  //   mediaRecorder.addEventListener('dataavailable', function(e) {
-  //     if (e.data.size > 0) {
-  //       recordedChunks.push(e.data);
-  //     }
-
-  //     if(shouldStop === true && stopped === false) {
-  //       mediaRecorder.stop();
-  //       stopped = true;
-  //     }
-  //   });
-
-  //   mediaRecorder.addEventListener('stop', function() {
-  //     downloadLink.href = URL.createObjectURL(new Blob(recordedChunks));
-  //     downloadLink.download = 'acetest.wav';
-  //   });
-
-  //   mediaRecorder.start();
-  // };
 
 }
