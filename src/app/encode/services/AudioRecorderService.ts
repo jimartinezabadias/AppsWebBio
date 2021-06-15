@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { fromEvent } from "rxjs";
 import { IAudioRecorder } from "./IAudioRecorderService";
 
 @Injectable({
@@ -7,42 +8,45 @@ import { IAudioRecorder } from "./IAudioRecorderService";
 export class AudioRecorderService implements IAudioRecorder {
     
     isRecording: boolean = false;
-    audioList: any[];
+    audioList = [];
 
     private _options = {mimeType: 'audio/webm'};
+    private _mediaRecorder: MediaRecorder;
+    private _recordedChunks = [];
 
     constructor()
     {
     }    
     
     record(stream: MediaStream): void {
+        this._mediaRecorder = new MediaRecorder(stream, this._options);
         this.isRecording = true;
         console.log("recording...");
 
-        const recordedChunks = [];
-        const mediaRecorder = new MediaRecorder(stream, this._options);
+        const dataAvailable$ = fromEvent(this._mediaRecorder,"dataavailable");
+        const dataAvailableChange$ = dataAvailable$.subscribe((e: BlobEvent) => {
+            console.log("data available");
+            console.log(e.data);
+            if (e.data.size > 0)
+            {
+                this._recordedChunks.push(e.data);
+            }
+        });
 
-        // mediaRecorder.addEventListener('dataavailable', function(e) {
-        // if (e.data.size > 0) {
-        //     recordedChunks.push(e.data);
-        // }
+        const stop$ = fromEvent(this._mediaRecorder,"stop");
+        const stopChange$ = stop$.subscribe((e: Event) => {
+            this.audioList.push(new Blob(this._recordedChunks));
+            console.log("onstop");
+            console.log(this.audioList);
+        });
 
-        // if(shouldStop === true && stopped === false) {
-        //     mediaRecorder.stop();
-        //     stopped = true;
-        // }
-        // });
-
-        // mediaRecorder.addEventListener('stop', function() {
-        // downloadLink.href = URL.createObjectURL(new Blob(recordedChunks));
-        // downloadLink.download = 'acetest.wav';
-        // });
-
-        // mediaRecorder.start();
+        this._mediaRecorder.start();
     }
     
     stopRecording(): void {
         this.isRecording = false;
+        this._mediaRecorder.stop();
+        
         console.log("recording has stoped");
     }
 
