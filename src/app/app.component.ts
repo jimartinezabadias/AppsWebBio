@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log("version 14062012");
+    console.log("version 16062021");
   }
 
 }
