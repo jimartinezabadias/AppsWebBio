@@ -6,7 +6,6 @@ import { AudioRecorderService } from '../services/AudioRecorderService';
     templateUrl: './audio-recorder.component.html',
     styleUrls: ['../encode.component.scss']
 })
-
 export class AudioRecorderComponent implements OnInit {
 
   private _navigator: Navigator = navigator;
