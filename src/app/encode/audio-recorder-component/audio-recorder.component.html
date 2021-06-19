@@ -1,6 +1,15 @@
 <section class="container">
     <div>
-        <button (click)="onRec()">Grabar</button>
-        <button (click)="onStop()">Detener</button>
+        <div>
+            <button (click)="onRec()">Grabar</button>
+            <button (click)="onStop()">Detener</button>
+        </div>
+        <div>
+            <div *ngFor="let audio of audios" >
+                <audio controls>
+                    <source [src]="audio" type="audio/webm"/>
+                </audio>
+            </div>
+        </div>
     </div>
 </section>

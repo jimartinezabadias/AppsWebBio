@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { fromEvent } from "rxjs";
+import { fromEvent, Subject } from "rxjs";
 import { IAudioRecorder } from "./IAudioRecorderService";
 
 @Injectable({
@@ -7,18 +7,21 @@ import { IAudioRecorder } from "./IAudioRecorderService";
 })
 export class AudioRecorderService implements IAudioRecorder {
     
-    private _audioList = [];
+    private _audioList: Array<any>;
     private _options = {mimeType: 'audio/webm'};
     private _mediaRecorder: MediaRecorder;
     private _recordedChunks = [];
     
     isRecording: boolean;
     audioCount: number;
+    audioListChanged$: Subject<boolean>;
     
     constructor()
     {
+        this._audioList = new Array();
         this.isRecording = false;
         this.audioCount = 0;
+        this.audioListChanged$ = new Subject<boolean>();
     }    
     
     record(stream: MediaStream): void 
@@ -28,7 +31,7 @@ export class AudioRecorderService implements IAudioRecorder {
         console.log("recording...");
 
         const dataAvailable$ = fromEvent(this._mediaRecorder,"dataavailable");
-        const dataAvailableChange$ = dataAvailable$.subscribe((e: BlobEvent) => {
+        dataAvailable$.subscribe((e: BlobEvent) => {
             console.log("data available");
             console.log(e.data);
             if (e.data.size > 0)
@@ -38,10 +41,9 @@ export class AudioRecorderService implements IAudioRecorder {
         });
 
         const stop$ = fromEvent(this._mediaRecorder,"stop");
-        const stopChange$ = stop$.subscribe((e: Event) => {
-            this._audioList.push(new Blob(this._recordedChunks));
-            console.log("onstop");
-            console.log(this._audioList);
+        stop$.subscribe((e: Event) => {
+            this._audioList.push(new Blob(this._recordedChunks, {type: "audio/webm"}));
+            this.audioListChanged$.next(true);
         });
 
         this._mediaRecorder.start();
