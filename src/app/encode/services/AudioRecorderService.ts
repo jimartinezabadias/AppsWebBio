@@ -7,7 +7,7 @@ import { IAudioRecorder } from "./IAudioRecorderService";
 })
 export class AudioRecorderService implements IAudioRecorder {
     
-    private _audioList: Array<any>;
+    private _audioList: Array<Blob>;
     private _options = {mimeType: 'audio/webm'};
     private _mediaRecorder: MediaRecorder;
     private _recordedChunks = [];
@@ -43,6 +43,7 @@ export class AudioRecorderService implements IAudioRecorder {
         const stop$ = fromEvent(this._mediaRecorder,"stop");
         stop$.subscribe((e: Event) => {
             this._audioList.push(new Blob(this._recordedChunks, {type: "audio/webm"}));
+            this.audioCount++;
             this.audioListChanged$.next(true);
         });
 
@@ -57,16 +58,16 @@ export class AudioRecorderService implements IAudioRecorder {
         console.log("recording has stoped");
     }
 
-    getAudio(index: number): any | null
+    getAudioAt(index: number): Blob | null
     {
-        if (index > this._audioList.length)
+        if (this._audioList.length > index)
         {
             return this._audioList[index];
         }
         return null;
     }
 
-    getAudios(): Array<any>
+    getAudios(): Array<Blob>
     {
         return this._audioList;
     }

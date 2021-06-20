@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { AudioRecorderService } from '../services/AudioRecorderService';
 
 @Component({
@@ -11,10 +10,7 @@ export class AudioRecorderComponent implements OnInit {
 
   private _navigator: Navigator = navigator;
 
-  audios: Array<SafeResourceUrl>;
-
-  constructor(private _recorderService: AudioRecorderService,
-              private _sanitizer: DomSanitizer) 
+  constructor(private _recorderService: AudioRecorderService) 
   {
   }
 
@@ -23,10 +19,9 @@ export class AudioRecorderComponent implements OnInit {
     this._recorderService.audioListChanged$.subscribe(
       { 
         next: () => {
-          this._updateAudioList();
+          this._updateRecorderState();
         } 
       });
-    
   }
 
   public async onRec(): Promise<void>
@@ -51,13 +46,9 @@ export class AudioRecorderComponent implements OnInit {
     }
   }
 
-  private _updateAudioList()
+  private _updateRecorderState(): void
   {
-    console.log("updating audio list in recorder");
-    this.audios = this._recorderService.getAudios().map((audioData) => {
-      return this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(audioData));
-    });
-    console.log(this.audios);
+    console.log("updating recorder state");
   }
 
 }

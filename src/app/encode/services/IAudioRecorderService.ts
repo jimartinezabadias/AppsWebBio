@@ -6,6 +6,6 @@ export interface IAudioRecorder {
     audioListChanged$: Subject<boolean>;
     record(stream: MediaStream): void;
     stopRecording(): void;
-    getAudio(index: number): any | null;
-    getAudios(): Array<any>;
+    getAudioAt(index: number): Blob | null;
+    getAudios(): Array<Blob>;
 }

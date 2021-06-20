@@ -11,13 +11,15 @@ import { EncodeAboutComponent } from './about-component/encode-about.component';
 import { EncodeWellcomeComponent } from './wellcome-component/encode-wellcome.component';
 import { AudioRecorderComponent } from './audio-recorder-component/audio-recorder.component';
 import { EncodeMicTestComponent } from './mic-test-component/mic-test.component';
+import { AudioConfirmComponent } from './mic-test-component/audio-confirm-component/audio-confirm.component';
 
 @NgModule({
     declarations: [
         EncodeAboutComponent,
         EncodeWellcomeComponent,
         EncodeMicTestComponent,
-        AudioRecorderComponent
+        AudioRecorderComponent,
+        AudioConfirmComponent
     ],
     imports: [
         SharedModule,

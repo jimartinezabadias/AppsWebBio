@@ -1,0 +1,8 @@
+<section class="container" *ngIf="audio">
+    <h1>Escuchá tu grabación y confimá que el audio se escuche bien.</h1>
+     <div>
+        <audio controls>
+            <source [src]="audio" type="audio/webm"/>
+        </audio>
+    </div>
+</section>
