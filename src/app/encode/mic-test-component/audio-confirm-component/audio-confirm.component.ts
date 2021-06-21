@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -6,16 +7,15 @@ import { SafeResourceUrl } from '@angular/platform-browser';
     templateUrl: './audio-confirm.component.html',
     styleUrls: ['../../encode.component.scss']
 })
-export class AudioConfirmComponent implements OnInit {
+export class AudioConfirmComponent {
 
-  @Input() audio?: SafeResourceUrl;
-
-  constructor() 
+  constructor(public dialogRef: MatDialogRef<AudioConfirmComponent>,
+              @Inject(MAT_DIALOG_DATA) public audio: SafeResourceUrl) 
   {
   }
 
-  ngOnInit(): void 
-  {
+  onClose(result: boolean): void {
+    this.dialogRef.close(result);
   }
 
 }
