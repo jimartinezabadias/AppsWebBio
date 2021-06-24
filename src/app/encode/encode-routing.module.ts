@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { EncodeAboutComponent } from './about-component/encode-about.component';
 import { EncodeWellcomeComponent } from './wellcome-component/encode-wellcome.component';
 import { AuthGuard } from "./auth.guard";
+import { EncodeMicTestComponent } from './mic-test-component/mic-test.component';
 
 const routes: Routes = [
     {
@@ -16,6 +17,10 @@ const routes: Routes = [
             {
                 path: 'bienvenido',
                 component: EncodeWellcomeComponent
+            },
+            {
+                path: 'mic-test',
+                component: EncodeMicTestComponent
             }
         ]
     }

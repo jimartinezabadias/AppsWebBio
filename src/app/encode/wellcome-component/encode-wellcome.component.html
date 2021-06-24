@@ -1,3 +1,27 @@
 <section class="container">
-    <h1>Wellcome Encode</h1>
+    <h1>Bienvenido {{ userName }}</h1>
+    <h4>
+        Muchas gracias por participar en esta investigación.
+        Tu participación es sumamente valiosa para nosotros.
+    </h4>
+
+    <div>
+        <img src="" alt=""/>
+        <div>
+            <ul>
+                <li>
+                    Ésta práctica requiere tener micrófono y buena conexión.
+                </li>
+                <li>
+                    Necesitamos que compruebes su buen funcionamiento.
+                </li>
+                <li>
+                    Es necesario que estés en un ambiente con poco ruido.
+                </li>
+            </ul>
+            <a  routerLink="../mic-test"
+                routerLinkActive="active">Comprobar</a>
+        </div>
+    </div>
+
 </section>
