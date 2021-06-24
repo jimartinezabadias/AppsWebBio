@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RecorderStatus } from '../constants';
 import { AudioRecorderService } from '../services/AudioRecorderService';
 
 @Component({
@@ -8,20 +9,18 @@ import { AudioRecorderService } from '../services/AudioRecorderService';
 })
 export class AudioRecorderComponent implements OnInit {
 
-  private _navigator: Navigator = navigator;
+  private _navigator: Navigator;
+
+  status: RecorderStatus;
 
   constructor(private _recorderService: AudioRecorderService) 
   {
+    this._navigator = navigator;
+    this.status = RecorderStatus.Ready;
   }
 
   ngOnInit(): void 
   {
-    this._recorderService.audioListChanged$.subscribe(
-      { 
-        next: () => {
-          this._updateRecorderState();
-        } 
-      });
   }
 
   public async onRec(): Promise<void>
@@ -31,6 +30,7 @@ export class AudioRecorderComponent implements OnInit {
       try {
         const stream = await this._navigator.mediaDevices.getUserMedia({audio: true, video: false});
         this._recorderService.record(stream);
+        this.status = RecorderStatus.Recording;
       } catch (error) {
         console.log("error al acceder al microfono");
         console.log(error);
@@ -43,12 +43,8 @@ export class AudioRecorderComponent implements OnInit {
     if (this._recorderService.isRecording)
     {
       this._recorderService.stopRecording();
+      this.status = RecorderStatus.Ready;
     }
-  }
-
-  private _updateRecorderState(): void
-  {
-    console.log("updating recorder state");
   }
 
 }
