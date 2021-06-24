@@ -16,6 +16,7 @@ export class AudioConfirmComponent {
 
   onClose(result: boolean): void {
     this.dialogRef.close(result);
+    this.audio = null;
   }
 
 }

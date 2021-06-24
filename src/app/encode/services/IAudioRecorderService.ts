@@ -8,4 +8,5 @@ export interface IAudioRecorder {
     stopRecording(): void;
     getAudioAt(index: number): Blob | null;
     getAudios(): Array<Blob>;
+    deleteAudioAt(index: number): void
 }

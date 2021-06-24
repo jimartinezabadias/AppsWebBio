@@ -27,20 +27,20 @@ export class EncodeMicTestComponent implements OnInit {
     this._recorderService.audioListChanged$.subscribe(
       { 
         next: () => {
-          this._audioUrl = this._createAudioUrl();
-          this._openDialog();
-        } 
+          if (this._recorderService.audioCount === 1)
+          {
+            const audioData = this._recorderService.getAudioAt(0);
+            this._audioUrl = this._createAudioUrl(audioData);
+            this._openDialog();
+          }
+        }
       });
   }
 
-  private _createAudioUrl(): SafeResourceUrl
+  private _createAudioUrl(audioData: Blob): SafeResourceUrl
   {
-    if (this._recorderService.audioCount === 1)
-    {
-      const audioData = this._recorderService.getAudioAt(0);
-      const audioUrl = URL.createObjectURL(audioData);
-      return this._sanitizer.bypassSecurityTrustUrl(audioUrl);
-    }
+    const audioUrl = URL.createObjectURL(audioData);
+    return this._sanitizer.bypassSecurityTrustUrl(audioUrl);
   }
 
   private _openDialog(): void {
@@ -55,7 +55,7 @@ export class EncodeMicTestComponent implements OnInit {
       }
       else
       {
-        console.log("se escuchaba mal");
+        this._recorderService.deleteAudioAt(0);
       }
     });
   }
