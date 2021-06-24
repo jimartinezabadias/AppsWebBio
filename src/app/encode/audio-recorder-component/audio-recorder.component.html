@@ -2,8 +2,10 @@
     <div>
         <span>{{status}}</span>
         <div>
-            <button (click)="onRec()">Grabar</button>
-            <button (click)="onStop()">Detener</button>
+            <button (click)="onRec()"
+                [disabled]="recorderService.isRecording">Grabar</button>
+            <button (click)="onStop()"
+                [disabled]="!recorderService.isRecording">Detener</button>
         </div>
     </div>
 </section>

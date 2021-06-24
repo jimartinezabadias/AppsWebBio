@@ -12,10 +12,12 @@ export class AudioRecorderComponent implements OnInit {
   private _navigator: Navigator;
 
   status: RecorderStatus;
+  recorderService: AudioRecorderService;
 
-  constructor(private _recorderService: AudioRecorderService) 
+  constructor(recorder: AudioRecorderService) 
   {
     this._navigator = navigator;
+    this.recorderService = recorder;
     this.status = RecorderStatus.Ready;
   }
 
@@ -25,11 +27,11 @@ export class AudioRecorderComponent implements OnInit {
 
   public async onRec(): Promise<void>
   {
-    if (!this._recorderService.isRecording)
+    if (!this.recorderService.isRecording)
     {
       try {
         const stream = await this._navigator.mediaDevices.getUserMedia({audio: true, video: false});
-        this._recorderService.record(stream);
+        this.recorderService.record(stream);
         this.status = RecorderStatus.Recording;
       } catch (error) {
         console.log("error al acceder al microfono");
@@ -40,9 +42,9 @@ export class AudioRecorderComponent implements OnInit {
   
   public onStop(): void
   {
-    if (this._recorderService.isRecording)
+    if (this.recorderService.isRecording)
     {
-      this._recorderService.stopRecording();
+      this.recorderService.stopRecording();
       this.status = RecorderStatus.Ready;
     }
   }
