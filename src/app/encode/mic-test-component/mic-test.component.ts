@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AudioRecorderService } from '../services/AudioRecorderService';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { AudioConfirmComponent } from './audio-confirm-component/audio-confirm.component';
@@ -15,7 +16,8 @@ export class EncodeMicTestComponent implements OnInit {
 
   private _audioUrl: SafeResourceUrl;
 
-  constructor(private _userService: EncodeUserService,
+  constructor(private _router: Router,
+              private _route: ActivatedRoute,
               private _recorderService: AudioRecorderService,
               private _sanitizer: DomSanitizer,
               public dialog: MatDialog) 
@@ -51,7 +53,7 @@ export class EncodeMicTestComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result)
       {
-        console.log("se escuchaba bien!!");
+        this._router.navigate(["../video-test"], { relativeTo: this._route });
       }
       else
       {

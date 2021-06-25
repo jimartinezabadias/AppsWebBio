@@ -12,6 +12,7 @@ import { EncodeWellcomeComponent } from './wellcome-component/encode-wellcome.co
 import { AudioRecorderComponent } from './audio-recorder-component/audio-recorder.component';
 import { EncodeMicTestComponent } from './mic-test-component/mic-test.component';
 import { AudioConfirmComponent } from './mic-test-component/audio-confirm-component/audio-confirm.component';
+import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { AudioConfirmComponent } from './mic-test-component/audio-confirm-compon
         EncodeWellcomeComponent,
         EncodeMicTestComponent,
         AudioRecorderComponent,
-        AudioConfirmComponent
+        AudioConfirmComponent,
+        EncodeVideoTestComponent
     ],
     imports: [
         SharedModule,

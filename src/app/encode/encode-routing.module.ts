@@ -4,6 +4,7 @@ import { EncodeAboutComponent } from './about-component/encode-about.component';
 import { EncodeWellcomeComponent } from './wellcome-component/encode-wellcome.component';
 import { AuthGuard } from "./auth.guard";
 import { EncodeMicTestComponent } from './mic-test-component/mic-test.component';
+import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,10 @@ const routes: Routes = [
             {
                 path: 'mic-test',
                 component: EncodeMicTestComponent
+            },
+            {
+                path: 'video-test',
+                component: EncodeVideoTestComponent
             }
         ]
     }
