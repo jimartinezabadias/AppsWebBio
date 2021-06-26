@@ -2,9 +2,11 @@
     <div>
         <span>{{status}}</span>
         <div>
-            <button (click)="onRec()"
-                [disabled]="recorderService.isRecording">Grabar</button>
-            <button (click)="onStop()"
+            <button mat-fab (click)="onRec()"
+                [disabled]="recorderService.isRecording">
+                <mat-icon>microphone</mat-icon>
+            </button>
+            <button mat-fab (click)="onStop()"
                 [disabled]="!recorderService.isRecording">Detener</button>
         </div>
     </div>

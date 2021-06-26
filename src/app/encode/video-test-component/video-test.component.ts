@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EncodeVideoTestComponent implements OnInit {
 
+  isVideoGood: boolean;
+  
   constructor() 
   {
   }
