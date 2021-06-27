@@ -50,16 +50,18 @@ export class EncodeMicTestComponent implements OnInit {
       data: this._audioUrl
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result)
-      {
-        this._router.navigate(["../video-test"], { relativeTo: this._route });
-      }
-      else
-      {
-        this._recorderService.deleteAudioAt(0);
-      }
-    });
+    dialogRef.afterClosed().subscribe(this._dialogClosedObserver);
+  }
+
+  private _dialogClosedObserver = (result) => {
+    if (result)
+    {
+      this._router.navigate(["../video-test"], { relativeTo: this._route });
+    }
+    else
+    {
+      this._recorderService.deleteAudioAt(0);
+    }
   }
 
 }
