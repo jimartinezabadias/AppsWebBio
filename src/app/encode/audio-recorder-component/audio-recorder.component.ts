@@ -10,6 +10,7 @@ import { AudioRecorderService } from '../services/AudioRecorderService';
 export class AudioRecorderComponent implements OnInit {
 
   private _navigator: Navigator;
+  private _stream: MediaStream;
 
   status: RecorderStatus;
   recorderService: AudioRecorderService;
@@ -30,8 +31,8 @@ export class AudioRecorderComponent implements OnInit {
     if (!this.recorderService.isRecording)
     {
       try {
-        const stream = await this._navigator.mediaDevices.getUserMedia({audio: true, video: false});
-        this.recorderService.record(stream);
+        this._stream = await this._navigator.mediaDevices.getUserMedia({audio: true, video: false});
+        this.recorderService.record(this._stream);
         this.status = RecorderStatus.Recording;
       } catch (error) {
         console.log("error al acceder al microfono");
@@ -45,6 +46,7 @@ export class AudioRecorderComponent implements OnInit {
     if (this.recorderService.isRecording)
     {
       this.recorderService.stopRecording();
+      this._stream.getTracks().forEach( track => track.stop() );
       this.status = RecorderStatus.Ready;
     }
   }

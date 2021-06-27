@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '../shared/shared.module';
@@ -26,7 +26,7 @@ import { EncodeVideoTestComponent } from './video-test-component/video-test.comp
     imports: [
         SharedModule,
         EncodeRoutingModule,
-        ReactiveFormsModule,
+        FormsModule,
         MaterialModule,
         CommonModule
     ],

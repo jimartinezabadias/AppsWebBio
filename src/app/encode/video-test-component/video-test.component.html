@@ -11,24 +11,25 @@
     <div>
         <label id="video-question-label">¿La imagen se ve bien y de manera fluída?</label>
         <mat-radio-group 
-            aria-labelledby="video-question-label">
-            <mat-radio-button [value]="isVideoGood">Si</mat-radio-button>
-            <mat-radio-button>No</mat-radio-button>
+            aria-labelledby="video-question-label"
+            [(ngModel)]="isVideoGood">
+            <mat-radio-button [value]="true">Si</mat-radio-button>
+            <mat-radio-button [value]="false">No</mat-radio-button>
         </mat-radio-group>
     </div>
 
     <div>
         <label id="audio-question-label">¿El audio se escucha claro y fuerte?</label>
         <mat-radio-group 
-            aria-labelledby="audio-question-label">
-            <mat-radio-button [value]="isVideoGood">Si</mat-radio-button>
-            <mat-radio-button>No</mat-radio-button>
+            aria-labelledby="audio-question-label"
+            [(ngModel)]="isAudioGood">
+            <mat-radio-button [value]="true">Si</mat-radio-button>
+            <mat-radio-button [value]="false">No</mat-radio-button>
         </mat-radio-group>
     </div>
 
     <a mat-raised-button
-        routerLink="#"
-        routerLinkActive="active">Confirmar respuesta</a>
+        (click)="onConfirm()">Confirmar respuesta</a>
 
 
 </section>

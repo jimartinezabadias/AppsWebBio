@@ -1,20 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-encode-video-test',
     templateUrl: './video-test.component.html',
     styleUrls: ['../encode.component.scss']
 })
-export class EncodeVideoTestComponent implements OnInit {
+export class EncodeVideoTestComponent {
 
-  isVideoGood: boolean;
-  
+    isVideoGood: boolean = true;
+    isAudioGood: boolean = true;
+
   constructor() 
   {
   }
 
-  ngOnInit(): void 
+  onConfirm(): any 
   {
+    console.log("video:");
+    console.log(this.isVideoGood);
+    console.log("audio:");
+    console.log(this.isAudioGood);
   }
 
 }
