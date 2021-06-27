@@ -5,6 +5,7 @@ import { EncodeWellcomeComponent } from './wellcome-component/encode-wellcome.co
 import { AuthGuard } from "./auth.guard";
 import { EncodeMicTestComponent } from './mic-test-component/mic-test.component';
 import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
+import { EncodeConsentComponent } from './consent-component/encode-consent.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,10 @@ const routes: Routes = [
             {
                 path: 'video-test',
                 component: EncodeVideoTestComponent
+            },
+            {
+                path: 'consent',
+                component: EncodeConsentComponent
             }
         ]
     }

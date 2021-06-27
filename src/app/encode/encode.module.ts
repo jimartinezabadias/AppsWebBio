@@ -13,6 +13,7 @@ import { AudioRecorderComponent } from './audio-recorder-component/audio-recorde
 import { EncodeMicTestComponent } from './mic-test-component/mic-test.component';
 import { AudioConfirmComponent } from './mic-test-component/audio-confirm-component/audio-confirm.component';
 import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
+import { EncodeConsentComponent } from './consent-component/encode-consent.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { EncodeVideoTestComponent } from './video-test-component/video-test.comp
         EncodeMicTestComponent,
         AudioRecorderComponent,
         AudioConfirmComponent,
-        EncodeVideoTestComponent
+        EncodeVideoTestComponent,
+        EncodeConsentComponent
     ],
     imports: [
         SharedModule,

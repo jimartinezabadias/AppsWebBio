@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-encode-video-test',
@@ -10,16 +11,14 @@ export class EncodeVideoTestComponent {
     isVideoGood: boolean = true;
     isAudioGood: boolean = true;
 
-  constructor() 
+  constructor(private _router: Router,
+              private _route: ActivatedRoute,) 
   {
   }
 
   onConfirm(): any 
   {
-    console.log("video:");
-    console.log(this.isVideoGood);
-    console.log("audio:");
-    console.log(this.isAudioGood);
+    this._router.navigate(["../consent"], { relativeTo: this._route });
   }
 
 }
