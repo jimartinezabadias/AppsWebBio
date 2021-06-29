@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSelectionList } from '@angular/material/list';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-encode-consent',
@@ -11,7 +12,8 @@ export class EncodeConsentComponent {
 
   @ViewChild('list_of_agreement') private _agreements: MatSelectionList;
   
-  constructor() 
+  constructor(private _router: Router,
+              private _route: ActivatedRoute) 
   {
   }
 
@@ -24,6 +26,7 @@ export class EncodeConsentComponent {
     else
     {
       console.log("guardar el consentimiento y navegar al primer googleform");
+      this._router.navigate(["../google-form"], { relativeTo: this._route });
     }
   }
 }

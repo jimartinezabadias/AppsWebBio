@@ -6,6 +6,7 @@ import { AuthGuard } from "./auth.guard";
 import { EncodeMicTestComponent } from './mic-test-component/mic-test.component';
 import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
 import { EncodeConsentComponent } from './consent-component/encode-consent.component';
+import { GoogleFormComponent } from './google-form-component/google-form.component';
 
 const routes: Routes = [
     {
@@ -31,6 +32,10 @@ const routes: Routes = [
             {
                 path: 'consent',
                 component: EncodeConsentComponent
+            },
+            {
+                path: 'google-form',
+                component: GoogleFormComponent
             }
         ]
     }

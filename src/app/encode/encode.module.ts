@@ -14,6 +14,7 @@ import { EncodeMicTestComponent } from './mic-test-component/mic-test.component'
 import { AudioConfirmComponent } from './mic-test-component/audio-confirm-component/audio-confirm.component';
 import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
 import { EncodeConsentComponent } from './consent-component/encode-consent.component';
+import { GoogleFormComponent } from './google-form-component/google-form.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { EncodeConsentComponent } from './consent-component/encode-consent.compo
         AudioRecorderComponent,
         AudioConfirmComponent,
         EncodeVideoTestComponent,
-        EncodeConsentComponent
+        EncodeConsentComponent,
+        GoogleFormComponent
     ],
     imports: [
         SharedModule,

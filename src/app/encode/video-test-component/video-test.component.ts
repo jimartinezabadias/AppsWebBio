@@ -12,7 +12,7 @@ export class EncodeVideoTestComponent {
     isAudioGood: boolean = true;
 
   constructor(private _router: Router,
-              private _route: ActivatedRoute,) 
+              private _route: ActivatedRoute) 
   {
   }
 
