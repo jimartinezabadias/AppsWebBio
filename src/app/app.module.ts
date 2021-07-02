@@ -13,7 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyDialogComponent } from './my-dialog/my-dialog.component';
-import { NavigationService } from './NavigationService/NavigationService';
+import { NavigationService } from './navigation-service/navigation.service';
 
 @NgModule({
   declarations: [
@@ -36,5 +36,3 @@ import { NavigationService } from './NavigationService/NavigationService';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-

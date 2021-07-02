@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavigationService } from 'src/app/NavigationService/NavigationService';
+import { NavigationService } from 'src/app/navigation-service/navigation.service';
 
 import Swiper, { Navigation } from 'swiper';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationService } from 'src/app/NavigationService/NavigationService';
+import { NavigationService } from 'src/app/navigation-service/navigation.service';
 
 // Allows use of ngif in template
 import { CommonModule } from '@angular/common'; 

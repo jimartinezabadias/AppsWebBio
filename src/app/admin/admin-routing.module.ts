@@ -5,6 +5,7 @@ import { AdminEncodeComponent } from './components/admin-encode/admin-encode.com
 import { AdminRulitComponent } from './components/admin-rulit/admin-rulit.component';
 
 import { AdminComponent } from './components/admin.component';
+import { SigninComponent } from './components/signin/signin.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,12 @@ const routes: Routes = [
   {
     path: 'encode',
     component: AdminEncodeComponent
+  },
+  {
+    path: 'signin',
+    component: SigninComponent
   }
+
 ];
 
 @NgModule({

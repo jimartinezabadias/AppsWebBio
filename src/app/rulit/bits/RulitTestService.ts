@@ -2,7 +2,7 @@ import { ElementRef, Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { filter, map, tap } from "rxjs/operators";
 import { DataDbService } from "src/app/core/services/db/data-db.service";
-import { NavigationService } from "src/app/NavigationService/NavigationService";
+import { NavigationService } from "src/app/navigation-service/navigation.service"
 import { CanvasGraph } from "./CanvasGraph";
 import { ExerciseService } from "./ExerciseService";
 import { GraphNode } from "./GraphNode";
