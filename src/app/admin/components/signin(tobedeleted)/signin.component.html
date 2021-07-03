@@ -8,11 +8,10 @@
 
         <!-- User NOT logged in -->
         <ng-template #guest>
-            <h3>Howdy, GUEST</h3>
-            <p>Login to get started...</p>
+            <h3>Activá tu cuenta</h3>
             
-            <button (click)="auth.googleSignin()">
-                <i class="fa fa-google"></i> Connect Google
+            <button mat-button (click)="auth.googleSignin()">
+                <i class="fa fa-google"></i>Ingresar con Google
             </button>
 
         </ng-template>
@@ -21,8 +20,6 @@
         <!-- User logged in -->
         <ng-template #authenticated>
             <div *ngIf="auth.user$ | async as user">
-                <h3>Howdy</h3>
-                <pre>{{ user }}</pre>
                 <button (click)="auth.signOut()">Logout</button>
             </div>
         </ng-template>

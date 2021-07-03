@@ -19,7 +19,6 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { AdminCreativityComponent } from './components/admin-creativity/admin-creativity.component';
 import { AdminRulitComponent } from './components/admin-rulit/admin-rulit.component';
 import { AdminEncodeComponent } from './components/admin-encode/admin-encode.component';
-import { SigninComponent } from './components/signin/signin.component';
 
 
 @NgModule({
@@ -30,8 +29,7 @@ import { SigninComponent } from './components/signin/signin.component';
     AdminComponent,
     AdminCreativityComponent,
     AdminRulitComponent,
-    AdminEncodeComponent,
-    SigninComponent
+    AdminEncodeComponent
   ],
   imports: [
     CommonModule,

@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
-import firebase from "firebase/app";
+import firebase, { firestore } from "firebase/app";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/firestore";
+import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 
-import { IAdminUser } from "../admin/adminUser.model";
+import { IAdminUser } from "../admin/IAdminUser.model";
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +15,7 @@ import { IAdminUser } from "../admin/adminUser.model";
 export class AuthService {
 
     user$: Observable<IAdminUser>;
+    private _adminUserCollectionRef: AngularFirestoreCollection;
     
     constructor(
         private _afAuth: AngularFireAuth,
@@ -23,12 +24,14 @@ export class AuthService {
     )
     {
         this.user$ = this._afAuth.authState;
+        this._adminUserCollectionRef = this._afs.collection<IAdminUser>("admin-users");
     }
 
-    async googleSignin()
+    async googleLogin()
     {
         const provider = new firebase.auth.GoogleAuthProvider();
-        const credentials = await this._afAuth.signInWithPopup(provider);
+        const credential = await this._afAuth.signInWithPopup(provider);
+        return this._verifyUserIsAdmin(credential.user);
     }
 
     async signOut()
@@ -37,4 +40,13 @@ export class AuthService {
         this._router.navigate(["/"]);
     }
 
+    private async _verifyUserIsAdmin(user: firebase.User)
+    {
+        const userRef: firestore.DocumentSnapshot<IAdminUser> = await this._adminUserCollectionRef.doc<IAdminUser>(user.uid).get().toPromise();
+        if (userRef.exists)
+        {
+            return;
+        }
+        this.signOut();
+    }
 }
