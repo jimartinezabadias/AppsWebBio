@@ -5,7 +5,7 @@ import { EncodeUserService } from './services/EncodeUserService';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class EncodeAuthGuard implements CanActivate {
   
   constructor(private _userService: EncodeUserService, private _router: Router) {}
 

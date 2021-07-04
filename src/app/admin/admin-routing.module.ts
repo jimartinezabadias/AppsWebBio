@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdminAuthGuard } from './admin-auth.guard';
 import { AdminCreativityComponent } from './components/admin-creativity/admin-creativity.component';
 import { AdminEncodeComponent } from './components/admin-encode/admin-encode.component';
 import { AdminRulitComponent } from './components/admin-rulit/admin-rulit.component';
@@ -13,15 +14,18 @@ const routes: Routes = [
   },
   {
     path: 'creativity',
-    component: AdminCreativityComponent
+    component: AdminCreativityComponent,
+    canActivate: [ AdminAuthGuard ]
   },
   {
     path: 'rulit',
-    component: AdminRulitComponent
+    component: AdminRulitComponent,
+    canActivate: [ AdminAuthGuard ]
   },
   {
     path: 'encode',
-    component: AdminEncodeComponent
+    component: AdminEncodeComponent,
+    canActivate: [ AdminAuthGuard ]
   }
 ];
 

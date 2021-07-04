@@ -7,7 +7,7 @@ import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/fire
 
 import { Observable } from "rxjs";
 
-import { IAdminUser } from "../admin/IAdminUser.model";
+import { IAdminUser } from "./IAdminUser.model";
 
 @Injectable({
     providedIn: 'root'
@@ -47,6 +47,7 @@ export class AuthService {
         {
             return;
         }
+        (await this._afAuth.currentUser).delete();
         this.signOut();
     }
 }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EncodeAboutComponent } from './about-component/encode-about.component';
 import { EncodeWellcomeComponent } from './wellcome-component/encode-wellcome.component';
-import { AuthGuard } from "./auth.guard";
+import { EncodeAuthGuard } from "./encode-auth.guard";
 import { EncodeMicTestComponent } from './mic-test-component/mic-test.component';
 import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
 import { EncodeConsentComponent } from './consent-component/encode-consent.component';
@@ -15,7 +15,7 @@ const routes: Routes = [
     },
     {
         path: ':userId',
-        canActivate: [ AuthGuard ],
+        canActivate: [ EncodeAuthGuard ],
         children: [
             {
                 path: 'bienvenido',
