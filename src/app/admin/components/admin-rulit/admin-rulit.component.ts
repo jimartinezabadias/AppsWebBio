@@ -16,7 +16,6 @@ export class AdminRulitComponent{
   
   async getData() {
     let rulitUsers = await this.dbData.getAllRulitUsersData();
-    console.log(rulitUsers.length);
     rulitUsers.map( (user) => { 
       if ( user.trainingDate )
         user.trainingDate = (user.trainingDate as firebase.firestore.Timestamp).toDate().toLocaleString("es-AR")
