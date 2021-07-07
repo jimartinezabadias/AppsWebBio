@@ -12,7 +12,6 @@ export class EncodeUserService {
     
     constructor(private _dbService: DataDbService)
     {
-
     }    
     
     // creates and stores a new user

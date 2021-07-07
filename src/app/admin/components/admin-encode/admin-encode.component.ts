@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 
 @Component({
@@ -8,10 +9,12 @@ import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 })
 export class AdminEncodeComponent{
 
+  public users: Array<IEncodeUser>;
+
   constructor(private _encodeUserService: EncodeUserService) {}
   
   public async generateUserId(){
-    const id: string = (await this._encodeUserService.createUser()).userId;
+    const id: string = (await this._encodeUserService.createUser()).uid;
     // armar el link...
   }
 

@@ -127,14 +127,23 @@ export class DataDbService {
     return cfg.data();
   }
   
-  public async saveEncodeUser(testUser: IEncodeUser): Promise<void> {
-    const userData = Object.assign(testUser,{});
-    await this.encodeUserCollectionRef.doc(testUser.userId).set(userData);
+  public async saveEncodeUser(user: IEncodeUser): Promise<void> {
+    const userObj = Object.assign({},user);
+    await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).set(userObj);
   }
 
   public async getEncodeUser(userId: string): Promise<IEncodeUser> {
     let userData = await this.encodeUserCollectionRef.doc<IEncodeUser>(userId).get().toPromise();
     return userData.data();
+  }
+
+  async getAllEncodeUsersData(): Promise<Array<IEncodeUser>> {
+    const snapshot = await this.encodeUserCollectionRef.ref.get();
+    let users = new Array<IEncodeUser>();
+    snapshot.docs.forEach( (doc: DocumentData) => {
+      users.push(doc.data());
+    });
+    return users;
   }
 
 }

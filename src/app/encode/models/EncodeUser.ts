@@ -2,12 +2,13 @@ import { IEncodeUser } from "./IEncodeUser";
 
 export class EncodeUser implements IEncodeUser {
     
-    public userId: string;
-    public name: string;
+    public uid: string;
+    public name: string | null;
+    public email: string | null;
 
     constructor(id: string)
     {
-        this.userId = id;
+        this.uid = id;
     }
 
 }

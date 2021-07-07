@@ -1,17 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient, HttpClientModule, HttpResponse } from '@angular/common/http';
-
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  AngularFirestoreModule,
-  DocumentData,
-  QuerySnapshot,
-} from '@angular/fire/firestore';
-
-import { FileSaverService } from 'ngx-filesaver';
-
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
 
 import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -47,13 +34,7 @@ export class AdminCreativityComponent implements AfterViewInit, OnInit {
   @ViewChild(MatTable) table: MatTable<CreativeUser>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private dbData: DataDbService,
-    private FileSaverService: FileSaverService,
-    private afStorage: AngularFirestore
-  ) { }
+  constructor( private dbData: DataDbService ) { }
 
 
   //al iniciar esta sección, se obtienen todos los datos de la colección 'creativesUsers'

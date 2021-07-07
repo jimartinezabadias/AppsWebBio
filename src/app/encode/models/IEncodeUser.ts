@@ -1,5 +1,6 @@
 // EncodeUser stored in DB
 export interface IEncodeUser {
-    userId: string;
+    uid: string;
     name: string;
+    email: string;
 }
