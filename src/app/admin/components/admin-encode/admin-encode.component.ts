@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
+import { InviteFormComponent } from './invite-form-component/invite-form.component';
 
 @Component({
   selector: 'app-admin-encode',
@@ -9,13 +12,25 @@ import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 })
 export class AdminEncodeComponent{
 
-  public users: Array<IEncodeUser>;
+  public users$: Observable<IEncodeUser[]>;
 
-  constructor(private _encodeUserService: EncodeUserService) {}
+  constructor(
+    private _encodeUserService: EncodeUserService,
+    private _dialog: MatDialog) {}
   
-  public async generateUserId(){
+  private async _generateUserId(){
     const id: string = (await this._encodeUserService.createUser()).uid;
-    // armar el link...
+  }
+
+  public openInviteDialog(): void {
+    const dialogRef = this._dialog.open(InviteFormComponent);
+
+    dialogRef.afterClosed().subscribe(this._dialogClosedObserver);
+  }
+
+  private _dialogClosedObserver = (result) => {
+    console.log("se cerro el dialog");
+    console.log(result);
   }
 
 }
