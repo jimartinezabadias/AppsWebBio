@@ -19,6 +19,8 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { AdminCreativityComponent } from './components/admin-creativity/admin-creativity.component';
 import { AdminRulitComponent } from './components/admin-rulit/admin-rulit.component';
 import { AdminEncodeComponent } from './components/admin-encode/admin-encode.component';
+import { InviteFormComponent } from './components/admin-encode/invite-form-component/invite-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { AdminEncodeComponent } from './components/admin-encode/admin-encode.com
     AdminComponent,
     AdminCreativityComponent,
     AdminRulitComponent,
-    AdminEncodeComponent
+    AdminEncodeComponent,
+    InviteFormComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +43,8 @@ import { AdminEncodeComponent } from './components/admin-encode/admin-encode.com
     FileSaverModule,
     MatTableModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ReactiveFormsModule
   ]
 })
 

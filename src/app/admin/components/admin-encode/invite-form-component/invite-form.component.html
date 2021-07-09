@@ -1,7 +1,31 @@
 <h1 mat-dialog-title>Nueva invitacion</h1>
-<div mat-dialog-content>
-    
-</div>
+<form mat-dialog-content class="form">
+    <!-- Nombre -->
+    <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" required
+            [formControl]="nameFormControl"
+            placeholder="Ej. Laura Torres">
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+            Nombre es un dato <strong>requerido</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field appearance="fill">
+        <mat-label>E-mail</mat-label>
+        <input matInput type="email" required
+            [formControl]="emailFormControl"
+            placeholder="Ej. lauratorres@ejemplo.com">
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Por favor ingresar un email valido
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email es un dato <strong>requerido</strong>
+        </mat-error>
+    </mat-form-field>
+
+</form>
 <div mat-dialog-actions>
     <button mat-button
         (click)="onClose(false)">
