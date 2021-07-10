@@ -21,6 +21,7 @@ import { AdminRulitComponent } from './components/admin-rulit/admin-rulit.compon
 import { AdminEncodeComponent } from './components/admin-encode/admin-encode.component';
 import { InviteFormComponent } from './components/admin-encode/invite-form-component/invite-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTableModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule
   ]
 })
 

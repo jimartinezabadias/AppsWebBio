@@ -8,20 +8,28 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['invite.scss','../../admin.component.scss'],
 })
 export class InviteFormComponent {
-
-  emailFormControl = new FormControl('', [
+  
+  public emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
   ]);
   
-  nameFormControl = new FormControl('', [
+  public nameFormControl = new FormControl('', [
     Validators.required
   ]);
 
   constructor(public dialogRef: MatDialogRef<InviteFormComponent>) {}
 
-  onClose(result: boolean): void {
-    this.dialogRef.close(result);
+  public onClose(): void 
+  {
+    this.dialogRef.close(null);
+  }
+
+  public onSave()
+  {
+    let name = this.nameFormControl.value;
+    let email = this.emailFormControl.value;
+    this.dialogRef.close({ name, email });
   }
 
 }

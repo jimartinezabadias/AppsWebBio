@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Nueva invitacion</h1>
-<form mat-dialog-content class="form">
+<mat-dialog-content class="form">
     <!-- Nombre -->
     <mat-form-field appearance="fill">
         <mat-label>Nombre</mat-label>
@@ -25,15 +25,14 @@
         </mat-error>
     </mat-form-field>
 
-</form>
-<div mat-dialog-actions>
-    <button mat-button
-        (click)="onClose(false)">
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onClose()">
         Cancelar
     </button>
-    <button mat-button
-        (click)="onClose(true)"
-        cdkFocusInitial>
+    <button mat-button (click)="onSave()"
+        [disabled]="!this.emailFormControl.valid || this.emailFormControl.value === '' || 
+                    !this.nameFormControl.valid || this.nameFormControl.value === ''">
         Guardar
     </button>
-</div>
+</mat-dialog-actions>

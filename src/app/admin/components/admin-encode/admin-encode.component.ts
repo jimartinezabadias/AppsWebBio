@@ -30,7 +30,11 @@ export class AdminEncodeComponent{
 
   private _dialogClosedObserver = (result) => {
     console.log("se cerro el dialog");
-    console.log(result);
+    if (result)
+    {
+      console.log("saving user to db");
+      console.log(result);
+    }
   }
 
 }
