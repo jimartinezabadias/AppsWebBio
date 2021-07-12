@@ -92,6 +92,10 @@ export class DataDbService {
     return this.creativesMetadataRef.doc('tests-counter');
   }
 
+  public getEncodeMetadataCounter(){
+    return this.creativesMetadataRef.doc('encode-counter');
+  }
+
   public getNewRulitDocumentRef(): DocumentReference {
     return this.rulitUserCollectionRef.ref.doc();
   }
@@ -128,7 +132,10 @@ export class DataDbService {
   }
   
   public async saveEncodeUser(user: IEncodeUser): Promise<void> {
+    user.creationDate = firestore.FieldValue.serverTimestamp();
     const userObj = Object.assign({},user);
+    // TODO: change CreativesMetadataCounter to TestsMetadata
+    this.getEncodeMetadataCounter().update( {"count": firestore.FieldValue.increment(1)} );
     await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).set(userObj);
   }
 

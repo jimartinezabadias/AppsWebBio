@@ -16,16 +16,17 @@ export class EncodeUserService {
     
     // creates and stores a new user
     // returns the created user
-    public async createUser(): Promise<IEncodeUser>
+    public async createUser(userData: {name: string, email: string}): Promise<IEncodeUser>
     {
         const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
-        const newUser: IEncodeUser = new EncodeUser(newUserId);
+        const newUser: IEncodeUser = new EncodeUser(newUserId, userData.name, userData.email);
         await this._dbService.saveEncodeUser(newUser);
         return newUser;
     }
 
     // searchs in db for user with given id and stores it if found. 
-    public async loadUser(userId: string): Promise<boolean> {
+    public async loadUser(userId: string): Promise<boolean> 
+    {
         let user: IEncodeUser = await this.getUserData(userId);
         if (user)
         {
@@ -35,12 +36,14 @@ export class EncodeUserService {
         return false;
     }
 
-    public user(): IEncodeUser {
+    public user(): IEncodeUser 
+    {
         return this._user;
     }
     
     //
-    private getUserData(userid: string): Promise<IEncodeUser> {
+    private getUserData(userid: string): Promise<IEncodeUser> 
+    {
         return this._dbService.getEncodeUser(userid);
     }
 }
