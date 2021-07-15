@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { EncodeUser } from 'src/app/encode/models/EncodeUser';
-import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
+import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
+import { EncodeUsersDataSource } from './encodeUsersDataSource';
 import { InviteFormComponent } from './invite-form-component/invite-form.component';
 
 @Component({
@@ -11,18 +10,31 @@ import { InviteFormComponent } from './invite-form-component/invite-form.compone
   templateUrl: './admin-encode.component.html',
   styleUrls: ['../admin.component.scss'],
 })
-export class AdminEncodeComponent{
+export class AdminEncodeComponent implements OnInit{
 
-  public users$: Observable<IEncodeUser[]>;
+  public usersDataSource: EncodeUsersDataSource;
+  public totalTestsCounter: any = { count: -1 };
+  public pageSize: number = 10;
+
+  // Columnas de la tabla que se van a mostrar
+  displayedColumns: string[] = ["name", "email", "creationDate" ];
 
   constructor(
     private _encodeUserService: EncodeUserService,
-    private _dialog: MatDialog) {}
+    private _dialog: MatDialog,
+    private _dbService: DataDbService) {}
   
-  // private async _generateUserId(){
-  //   const id: string = (await this._encodeUserService.createUser()).uid;
-  // }
+  ngOnInit(): void 
+  {
+    this.usersDataSource = new EncodeUsersDataSource(this._dbService);
+    // this.usersDataSource.loadTests(this.pageSize);
 
+    // Get total number of users
+    this._dbService.getCreativesMetadataCounter().snapshotChanges().subscribe( counterData => {
+      this.totalTestsCounter = counterData.payload.data();
+    });
+  }
+  
   public openInviteDialog(): void {
     const dialogRef = this._dialog.open(InviteFormComponent);
 
@@ -32,7 +44,7 @@ export class AdminEncodeComponent{
   private _dialogClosedObserver = async (userData: { name: string, email: string }) => {
     if (userData)
     {
-      await this._encodeUserService.createUser(userData);
+      await this._encodeUserService.createNewUser(userData);
     }
   }
 

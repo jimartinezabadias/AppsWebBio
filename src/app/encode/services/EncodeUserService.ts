@@ -16,7 +16,7 @@ export class EncodeUserService {
     
     // creates and stores a new user
     // returns the created user
-    public async createUser(userData: {name: string, email: string}): Promise<IEncodeUser>
+    public async createNewUser(userData: {name: string, email: string}): Promise<IEncodeUser>
     {
         const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
         const newUser: IEncodeUser = new EncodeUser(newUserId, userData.name, userData.email);

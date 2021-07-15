@@ -7,7 +7,6 @@ import { tap } from 'rxjs/operators';
 import { CreativeUser } from 'src/app/core/models/creative-user.interface';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 
-
 @Component({
   selector: 'app-admin-creativity',
   templateUrl: './admin-creativity.component.html',
@@ -15,7 +14,7 @@ import { DataDbService } from 'src/app/core/services/db/data-db.service';
 })
 export class AdminCreativityComponent implements AfterViewInit, OnInit {
 
-  testsDataSource: CreativityTestsDataSource;
+  public testsDataSource: CreativityTestsDataSource;
 
   public creativesUsers: CreativeUser[] = [];
   public count = 1;
