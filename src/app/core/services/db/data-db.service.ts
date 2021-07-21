@@ -130,6 +130,8 @@ export class DataDbService {
     let cfg = await this.rulitSolutionsRef.doc<IRulitSolutionSettings>(solutionCode).get().toPromise();
     return cfg.data();
   }
+
+  // Encode
   
   public async saveEncodeUser(user: IEncodeUser): Promise<void> {
     user.creationDate = firestore.FieldValue.serverTimestamp();
@@ -151,6 +153,27 @@ export class DataDbService {
       users.push(doc.data());
     });
     return users;
+  }
+
+  public getEncodeFirstPage(pageSize: number = 3):  Observable<QuerySnapshot<IEncodeUser>> {
+    const ref = this.afs.collection<IEncodeUser>('encode-users', 
+      ref => ref.orderBy('creationDate', 'desc').limit(pageSize));
+    
+    return ref.get();
+  }
+
+  public getEncodesNextPage(actualLast, pageSize: number = 3):  Observable<QuerySnapshot<IEncodeUser>> {
+    const ref = this.afs.collection<IEncodeUser>('encode-users', 
+      ref => ref.orderBy('creationDate', 'desc').startAfter(actualLast).limit(pageSize));
+    
+    return ref.get();
+  }
+
+  public getEncodePrevPage(prevFirst,actualFirst, pageSize: number = 3):  Observable<QuerySnapshot<IEncodeUser>> {
+    const ref = this.afs.collection<IEncodeUser>('encode-users', 
+      ref => ref.orderBy('creationDate', 'desc').startAt(prevFirst).endBefore(actualFirst).limit(pageSize));
+    
+    return ref.get();
   }
 
 }
