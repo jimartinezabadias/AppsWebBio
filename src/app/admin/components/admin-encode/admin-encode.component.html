@@ -33,7 +33,7 @@
                 <!-- Creation Date -->
                 <ng-container matColumnDef="creationDate">
                     <mat-header-cell *matHeaderCellDef> Fecha de creacion </mat-header-cell>
-                    <mat-cell *matCellDef="let user"> {{ user.creationDate }} </mat-cell>
+                    <mat-cell *matCellDef="let user"> {{ user.creationDate.toMillis() | date:'d/M/yyyy, h:mm a' }} </mat-cell>
                 </ng-container>
         
                 <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
