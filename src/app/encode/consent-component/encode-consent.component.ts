@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
     selector: 'app-encode-consent',
     templateUrl: './encode-consent.component.html',
-    styleUrls: ['../encode.component.scss']
+    styleUrls: ['encode-consent.component.scss','../encode.component.scss']
 })
 
 export class EncodeConsentComponent {

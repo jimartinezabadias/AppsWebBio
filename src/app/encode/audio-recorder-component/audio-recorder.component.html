@@ -1,13 +1,17 @@
-<section class="container">
-    <div>
+<div class="recorder">
+    <div class="recorder-display">
         <span>{{status}}</span>
-        <div>
-            <button mat-fab (click)="onRec()"
-                [disabled]="recorderService.isRecording">
-                <mat-icon>microphone</mat-icon>
-            </button>
-            <button mat-fab (click)="onStop()"
-                [disabled]="!recorderService.isRecording">Detener</button>
-        </div>
     </div>
-</section>
+    <div class="recorder-controls">
+        <button mat-fab 
+            class="rec-button"
+            (click)="onRec()"
+            [disabled]="recorderService.isRecording">
+            <mat-icon>microphone</mat-icon>
+        </button>
+        <button mat-fab (click)="onStop()"
+            [disabled]="!recorderService.isRecording">
+            <mat-icon>stop</mat-icon>
+        </button>
+    </div>
+</div>

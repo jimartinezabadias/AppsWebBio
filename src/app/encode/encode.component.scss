@@ -1,0 +1,22 @@
+.container {
+    background-color: #eeeeee;
+    width: 100%;
+    min-height: 100%;
+}
+
+.container>section.main-app-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 4em;
+}
+
+.btn {
+    color: #e33b88;
+    padding: 5px 15px;
+    border: 0.5px solid #e33b88;
+}
+
+.btn {
+    background-color: #e33b881b;
+}

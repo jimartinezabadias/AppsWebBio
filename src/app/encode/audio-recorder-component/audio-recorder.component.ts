@@ -5,7 +5,7 @@ import { AudioRecorderService } from '../services/AudioRecorderService';
 @Component({
     selector: 'app-audio-recorder',
     templateUrl: './audio-recorder.component.html',
-    styleUrls: ['../encode.component.scss']
+    styleUrls: ['../encode.component.scss','audio-recorder.component.scss']
 })
 export class AudioRecorderComponent implements OnInit {
 

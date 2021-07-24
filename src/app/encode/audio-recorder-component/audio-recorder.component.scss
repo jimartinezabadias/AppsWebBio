@@ -1,0 +1,25 @@
+.recorder
+{
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    row-gap: 8px;
+}
+
+.recorder-display
+{
+    padding: 16px;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.recorder-controls
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.rec-button
+{
+    margin-right: 8px;
+}

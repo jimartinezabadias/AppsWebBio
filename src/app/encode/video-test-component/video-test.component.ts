@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
     selector: 'app-encode-video-test',
     templateUrl: './video-test.component.html',
-    styleUrls: ['../encode.component.scss']
+    styleUrls: ['video-test.component.scss','../encode.component.scss']
 })
 export class EncodeVideoTestComponent {
 

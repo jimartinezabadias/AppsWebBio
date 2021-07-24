@@ -3,13 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AudioRecorderService } from '../services/AudioRecorderService';
-import { EncodeUserService } from '../services/EncodeUserService';
 import { AudioConfirmComponent } from './audio-confirm-component/audio-confirm.component';
 
 @Component({
     selector: 'app-encode-mic-test',
     templateUrl: './mic-test.component.html',
-    styleUrls: ['../encode.component.scss']
+    styleUrls: ['mic-test.component.scss','../encode.component.scss']
 })
 
 export class EncodeMicTestComponent implements OnInit {
