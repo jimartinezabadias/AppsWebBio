@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '../shared/shared.module';
@@ -14,6 +14,7 @@ import { EncodeMicTestComponent } from './mic-test-component/mic-test.component'
 import { AudioConfirmComponent } from './mic-test-component/audio-confirm-component/audio-confirm.component';
 import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
 import { EncodeConsentComponent } from './consent-component/encode-consent.component';
+import { EncodePersonalInfoComponent } from './personal-info-component/encode-personal-info.component';
 
 @NgModule({
     declarations: [
@@ -23,12 +24,14 @@ import { EncodeConsentComponent } from './consent-component/encode-consent.compo
         AudioRecorderComponent,
         AudioConfirmComponent,
         EncodeVideoTestComponent,
-        EncodeConsentComponent
+        EncodeConsentComponent,
+        EncodePersonalInfoComponent
     ],
     imports: [
         SharedModule,
         EncodeRoutingModule,
         FormsModule,
+        ReactiveFormsModule,
         MaterialModule,
         CommonModule
     ],

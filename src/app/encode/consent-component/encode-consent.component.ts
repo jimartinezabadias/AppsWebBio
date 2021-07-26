@@ -26,7 +26,7 @@ export class EncodeConsentComponent {
     else
     {
       console.log("guardar el consentimiento y navegar al primer googleform");
-      this._router.navigate(["../google-form"], { relativeTo: this._route });
+      this._router.navigate(["../personal-info"], { relativeTo: this._route });
     }
   }
 }

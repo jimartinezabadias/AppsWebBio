@@ -1,0 +1,54 @@
+<section class="container">
+    <app-header-encode></app-header-encode>
+    <section class="main-app-section">
+        <div class="personal-info">
+           
+            <form [formGroup]="personalInfoFormGroup" (ngSubmit)="onSaveForm($event)">
+            
+                <mat-card>
+                    
+                    <mat-card-header>
+                        <mat-card-title>Información personal</mat-card-title>
+                        <mat-card-subtitle>
+                            La información que brindes es totalmente confidencial y solo se utilizará con fines académicos.
+                            Las siguientes preguntas buscan recopilar información socio-demográfica:
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    
+                    <mat-card-content>
+
+                        <!-- Edad -->
+                        <mat-form-field class="full-width" appearance="fill">
+                            
+                            <mat-label>Edad</mat-label>
+                            
+                            <input type="number" 
+                                matInput  
+                                formControlName="age" 
+                                placeholder="18"
+                                min="18" max="100">
+
+                            <mat-error *ngIf="age.invalid && !age.hasError('required')">
+                                La edad debe estar entre 18 y 100
+                            </mat-error>
+                            <mat-error *ngIf="age.hasError('required')">
+                                Edad es un dato <strong>requerido</strong>.
+                            </mat-error>
+
+                        </mat-form-field>
+
+                        <mat-card-actions>
+                            <button mat-raised-button type="submit" class="save-form-btn">
+                                GUARDAR DATOS
+                            </button>   
+                        </mat-card-actions>
+
+                    </mat-card-content>
+
+                </mat-card>
+
+            </form>
+
+        </div>
+    </section>
+</section>
