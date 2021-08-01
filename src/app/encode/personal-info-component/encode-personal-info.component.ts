@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EncodeUserService } from '../services/EncodeUserService';
+import { Genders } from '../constants';
 
 @Component({
     selector: 'app-encode-personal-info',
@@ -10,7 +11,8 @@ import { EncodeUserService } from '../services/EncodeUserService';
 
 export class EncodePersonalInfoComponent implements OnInit {
 
-  personalInfoFormGroup: FormGroup;
+  public personalInfoFormGroup: FormGroup;
+  public genders = Genders;
 
   constructor(private _userService: EncodeUserService) 
   {
@@ -19,11 +21,14 @@ export class EncodePersonalInfoComponent implements OnInit {
   
   ngOnInit(): void 
   {
-    
   }
 
   get age(){
     return this.personalInfoFormGroup.get('age');
+  }
+  
+  get gender(){
+    return this.personalInfoFormGroup.get('gender');
   }
 
   onSaveForm($event: any)
@@ -47,6 +52,9 @@ export class EncodePersonalInfoComponent implements OnInit {
           Validators.required,
           Validators.min(18),
           Validators.max(100)
+        ]),
+        gender: new FormControl('', [
+          Validators.required
         ]),
     });
     return userFormFields;

@@ -5,3 +5,10 @@ export enum RecorderStatus
 };
 
 export const REC_OPTIONS = {mimeType: 'audio/webm'};
+
+export enum Genders
+{
+    Male = "Masculino",
+    Female = "Femenino",
+    NonBinary = "No Binario"
+}

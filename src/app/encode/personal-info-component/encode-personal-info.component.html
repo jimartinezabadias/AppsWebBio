@@ -15,7 +15,7 @@
                         </mat-card-subtitle>
                     </mat-card-header>
                     
-                    <mat-card-content>
+                    <mat-card-content class="form-fields">
 
                         <!-- Edad -->
                         <mat-form-field class="full-width" appearance="fill">
@@ -36,6 +36,29 @@
                             </mat-error>
 
                         </mat-form-field>
+
+                        <!-- Genero -->
+                        <mat-form-field appearance="fill">
+
+                            <mat-label>Género</mat-label>
+                            
+                            <mat-select formControlName="gender" name="gender">
+                              <mat-option value="genders.Male">
+                                {{genders.Male}}
+                              </mat-option>
+                              <mat-option value="genders.Female">
+                                {{genders.Female}}
+                              </mat-option>
+                              <mat-option value="genders.NonBinary">
+                                {{genders.NonBinary}}
+                              </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="gender.hasError('required')">
+                                Género es un dato <strong>requerido</strong>.
+                            </mat-error>
+
+                          </mat-form-field>
 
                         <mat-card-actions>
                             <button mat-raised-button type="submit" class="save-form-btn">
