@@ -35,6 +35,7 @@ export class EncodePersonalInfoComponent implements OnInit {
   onSaveForm($event: any)
   {
       console.log("saving form");
+      console.log(this.personalInfoFormGroup);
   }
 
   private _buildPersonalInfoFormGroup(): FormGroup
