@@ -60,6 +60,8 @@ export class EncodePersonalInfoComponent implements OnInit {
         educationLevel: new FormControl('', [
           Validators.required
         ]),
+        ongoingCareer: new FormControl(''),
+        occupation: new FormControl('')
     });
     return userFormFields;
   }

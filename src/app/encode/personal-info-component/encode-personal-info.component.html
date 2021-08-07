@@ -95,9 +95,31 @@
 
                         </mat-form-field>
 
+                        <!-- Carrera en curso -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>Carrera en curso</mat-label>
+                            <input type="text"
+                                matInput
+                                formControlName="ongoingCareer" 
+                                placeholder="Ej. Medicina">
+                          </mat-form-field>
+                        
+                        <!-- Ocupación -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>Ocupación</mat-label>
+                            <input type="text"
+                                matInput
+                                formControlName="occupation" 
+                                placeholder="Ej. Doctor">
+
+                            <mat-error *ngIf="gender.hasError('required')">
+                                Ocupación es un dato <strong>requerido</strong>.
+                            </mat-error>
+                        </mat-form-field>
+
                         <mat-card-actions>
                             <button mat-raised-button type="submit" class="save-form-btn">
-                                GUARDAR DATOS
+                                Siguiente
                             </button>   
                         </mat-card-actions>
 
