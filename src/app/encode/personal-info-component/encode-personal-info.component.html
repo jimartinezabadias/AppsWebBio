@@ -58,7 +58,42 @@
                                 Género es un dato <strong>requerido</strong>.
                             </mat-error>
 
-                          </mat-form-field>
+                        </mat-form-field>
+
+                        <!-- Max Educacion -->
+                        <mat-form-field appearance="fill">
+
+                            <mat-label>Nivel educativo alcanzado</mat-label>
+                            
+                            <mat-select formControlName="educationLevel" name="educationLevel">
+                                <mat-option value="educationLevels.incompleteSecondary">
+                                    {{educationLevels.incompleteSecondary}}
+                                </mat-option>
+                                <mat-option value="educationLevels.completeSecondary">
+                                    {{educationLevels.completeSecondary}}
+                                </mat-option>
+                                <mat-option value="educationLevels.incompleteTertiary">
+                                    {{educationLevels.incompleteTertiary}}
+                                </mat-option>
+                                <mat-option value="educationLevels.completeTertiary">
+                                    {{educationLevels.completeTertiary}}
+                                </mat-option>
+                                <mat-option value="educationLevels.completeTertiary">
+                                    {{educationLevels.completeTertiary}}
+                                </mat-option>
+                                <mat-option value="educationLevels.incompleteBachelors">
+                                    {{educationLevels.incompleteBachelors}}
+                                </mat-option>
+                                <mat-option value="educationLevels.completeBachelors">
+                                    {{educationLevels.completeBachelors}}
+                                </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="gender.hasError('required')">
+                                Nivel educativo es un dato <strong>requerido</strong>.
+                            </mat-error>
+
+                        </mat-form-field>
 
                         <mat-card-actions>
                             <button mat-raised-button type="submit" class="save-form-btn">

@@ -12,3 +12,13 @@ export enum Genders
     Female = "Femenino",
     NonBinary = "No Binario"
 }
+
+export enum EducationLevels
+{
+    incompleteSecondary = "Secundario incompleto",
+    completeSecondary = "Secundario completo",
+    incompleteTertiary = "Terciario incompleto",
+    completeTertiary = "Terciario completo",
+    incompleteBachelors = "Universitario incompleto",
+    completeBachelors = "Universitario completo"
+}

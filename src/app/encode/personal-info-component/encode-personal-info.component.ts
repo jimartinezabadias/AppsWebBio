@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { Genders } from '../constants';
+import { Genders, EducationLevels } from '../constants';
 
 @Component({
     selector: 'app-encode-personal-info',
@@ -13,6 +13,7 @@ export class EncodePersonalInfoComponent implements OnInit {
 
   public personalInfoFormGroup: FormGroup;
   public genders = Genders;
+  public educationLevels = EducationLevels;
 
   constructor(private _userService: EncodeUserService) 
   {
@@ -54,6 +55,9 @@ export class EncodePersonalInfoComponent implements OnInit {
           Validators.max(100)
         ]),
         gender: new FormControl('', [
+          Validators.required
+        ]),
+        educationLevel: new FormControl('', [
           Validators.required
         ]),
     });
