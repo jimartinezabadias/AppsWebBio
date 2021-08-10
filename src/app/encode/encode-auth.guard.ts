@@ -14,12 +14,12 @@ export class EncodeAuthGuard implements CanActivate {
     state: RouterStateSnapshot): Promise<boolean | UrlTree> 
   {
     const url: string = state.url;
-    const userId: string = route.paramMap.get('userId');
-    
-    return this.checkLogin(url, userId);
+    return this.checkLogin(url, route);
   }
   
-  private async checkLogin(url: string, userId: string): Promise<boolean | UrlTree> {
+  private async checkLogin(url: string, route: ActivatedRouteSnapshot): Promise<boolean | UrlTree> {
+    const userId: string = route.paramMap.get('userId');
+    
     // check if user is already loged-in
     if (this._userService.user()) 
     { 
@@ -28,11 +28,13 @@ export class EncodeAuthGuard implements CanActivate {
         return true;
       } 
     }
-
-    if (await this._userService.loadUser(userId))
+    else if (route.children.length == 0)
     {
-      // Redirect to the home page
-      return this._router.parseUrl(url + '/bienvenido');
+      if (await this._userService.loadUser(userId))
+      {
+        // Redirect to the home page
+        return this._router.parseUrl(url + '/bienvenido');
+      }
     }
 
     // Redirect to the home page
