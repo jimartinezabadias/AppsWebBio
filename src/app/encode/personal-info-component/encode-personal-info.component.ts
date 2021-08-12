@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { Genders, EducationLevels } from '../constants';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-encode-personal-info',
@@ -15,7 +16,9 @@ export class EncodePersonalInfoComponent implements OnInit {
   public genders = Genders;
   public educationLevels = EducationLevels;
 
-  constructor(private _userService: EncodeUserService) 
+  constructor(private _router: Router,
+    private _route: ActivatedRoute,
+    private _userService: EncodeUserService) 
   {
     this.personalInfoFormGroup = this._buildPersonalInfoFormGroup();
   }
@@ -34,22 +37,16 @@ export class EncodePersonalInfoComponent implements OnInit {
 
   onSaveForm($event: any)
   {
-      console.log("saving form");
-      console.log(this.personalInfoFormGroup);
+    if (this.personalInfoFormGroup.valid)
+    {
+        console.log("saving form and navigating");
+        this._router.navigate(["../health-info"], { relativeTo: this._route });
+      }
   }
 
   private _buildPersonalInfoFormGroup(): FormGroup
   {
     const userFormFields = new FormGroup({
-        name: new FormControl('', [
-            Validators.required,
-            Validators.minLength(4),
-            Validators.maxLength(30)
-        ]),
-        email: new FormControl('',[
-            Validators.required,
-            Validators.email
-        ]),
         age: new FormControl('', [
           Validators.required,
           Validators.min(18),
