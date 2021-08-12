@@ -15,6 +15,7 @@ import { AudioConfirmComponent } from './mic-test-component/audio-confirm-compon
 import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
 import { EncodeConsentComponent } from './consent-component/encode-consent.component';
 import { EncodePersonalInfoComponent } from './personal-info-component/encode-personal-info.component';
+import { EncodeHealthInfoComponent } from './health-info-component/health-info.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { EncodePersonalInfoComponent } from './personal-info-component/encode-pe
         AudioConfirmComponent,
         EncodeVideoTestComponent,
         EncodeConsentComponent,
-        EncodePersonalInfoComponent
+        EncodePersonalInfoComponent,
+        EncodeHealthInfoComponent
     ],
     imports: [
         SharedModule,

@@ -1,0 +1,30 @@
+.health-info
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 42rem;
+}
+
+.health-info>form
+{
+    margin: 2rem 0;
+}
+
+.mat-card-header
+{
+    margin: 16px 0 !important;
+}
+
+.form-fields
+{
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    margin: 0px 64px;
+}
+
+.mat-card-actions
+{
+    align-self: center;
+}

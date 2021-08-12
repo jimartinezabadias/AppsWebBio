@@ -7,6 +7,7 @@ import { EncodeMicTestComponent } from './mic-test-component/mic-test.component'
 import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
 import { EncodeConsentComponent } from './consent-component/encode-consent.component';
 import { EncodePersonalInfoComponent } from './personal-info-component/encode-personal-info.component';
+import { EncodeHealthInfoComponent } from './health-info-component/health-info.component';
 
 const routes: Routes = [
     {
@@ -36,6 +37,10 @@ const routes: Routes = [
             {
                 path: 'personal-info',
                 component: EncodePersonalInfoComponent
+            },
+            {
+                path: 'health-info',
+                component: EncodeHealthInfoComponent
             }
         ]
     }
