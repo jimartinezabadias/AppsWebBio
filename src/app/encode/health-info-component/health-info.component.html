@@ -3,7 +3,35 @@
     <section class="main-app-section">
         <div class="health-info">
            
-            <p>health-info</p>
+            <form [formGroup]="healthInfoFormGroup" (ngSubmit)="onSaveForm($event)">
+            
+                <mat-card>
+                    
+                    <mat-card-header>
+                        <mat-card-title>Datos sobre tu salud</mat-card-title>
+                        <mat-card-subtitle>
+                            La información que brindes es totalmente confidencial y solo se utilizará con fines académicos.
+                            Las siguientes preguntas buscan recopilar información socio-demográfica:
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    
+                    <mat-card-content class="form-fields">
+                    
+                        <div>
+                            <label id="cronic-medicine-label">¿Consume medicación de forma crónica?</label>
+                            <mat-radio-group 
+                                aria-labelledby="cronic-medicine-label"
+                                formControlName="takesCronicMedicine">
+                                <mat-radio-button [value]="true">Si</mat-radio-button>
+                                <mat-radio-button [value]="false">No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        
+                    </mat-card-content>
+                
+                </mat-card>
+
+            </form>
 
         </div>
     </section>
