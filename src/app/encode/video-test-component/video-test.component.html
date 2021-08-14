@@ -2,7 +2,7 @@
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
 
-        <div class="video-test">
+        <div class="videoTest">
 
             <h1>Mirá el video y decinos si podés verlo y escucharlo correctamente</h1>
         
@@ -14,29 +14,35 @@
                 Sorry, your browser doesn't support embedded videos.
             </video>
 
-            <div>
-                <label id="video-question-label">¿La imagen se ve bien y de manera fluída?</label>
-                <mat-radio-group 
-                    aria-labelledby="video-question-label"
-                    [(ngModel)]="isVideoGood">
-                    <mat-radio-button [value]="true">Si</mat-radio-button>
-                    <mat-radio-button [value]="false">No</mat-radio-button>
-                </mat-radio-group>
+            <div class="videoQuestions">
+
+                <div class="labelAndRadioContainer">
+                    <label id="video-question-label">¿La imagen se ve bien y de manera fluída?</label>
+                    <mat-radio-group 
+                        aria-labelledby="video-question-label"
+                        [(ngModel)]="isVideoGood"
+                        class="radioButtonsGroup">
+                        <mat-radio-button [value]="true">Si</mat-radio-button>
+                        <mat-radio-button [value]="false">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+    
+                <div>
+                    <label id="audio-question-label">¿El audio se escucha claro y fuerte?</label>
+                    <mat-radio-group 
+                        aria-labelledby="audio-question-label"
+                        [(ngModel)]="isAudioGood"
+                        class="radioButtonsGroup">
+                        <mat-radio-button [value]="true">Si</mat-radio-button>
+                        <mat-radio-button [value]="false">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+    
+                <a mat-raised-button
+                    (click)="onConfirm()">Confirmar respuesta</a>
+
             </div>
-
-            <div>
-                <label id="audio-question-label">¿El audio se escucha claro y fuerte?</label>
-                <mat-radio-group 
-                    aria-labelledby="audio-question-label"
-                    [(ngModel)]="isAudioGood">
-                    <mat-radio-button [value]="true">Si</mat-radio-button>
-                    <mat-radio-button [value]="false">No</mat-radio-button>
-                </mat-radio-group>
-            </div>
-
-            <a mat-raised-button
-                (click)="onConfirm()">Confirmar respuesta</a>
-
+            
         </div>
                 
     </section>
