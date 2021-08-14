@@ -16,6 +16,16 @@ export class EncodePersonalInfoComponent implements OnInit {
   public genders = Genders;
   public educationLevels = EducationLevels;
 
+  get age()
+  {
+    return this.personalInfoFormGroup.get('age');
+  }
+  
+  get gender()
+  {
+    return this.personalInfoFormGroup.get('gender');
+  }
+
   constructor(private _router: Router,
     private _route: ActivatedRoute,
     private _userService: EncodeUserService) 
@@ -25,14 +35,6 @@ export class EncodePersonalInfoComponent implements OnInit {
   
   ngOnInit(): void 
   {
-  }
-
-  get age(){
-    return this.personalInfoFormGroup.get('age');
-  }
-  
-  get gender(){
-    return this.personalInfoFormGroup.get('gender');
   }
 
   onSaveForm($event: any)

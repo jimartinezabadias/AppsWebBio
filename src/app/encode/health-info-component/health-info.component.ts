@@ -10,10 +10,18 @@ import { EncodeUserService } from '../services/EncodeUserService';
 
 export class EncodeHealthInfoComponent implements OnInit {
 
-  private _cronicMedicinesValidator = [ ];
-
   public healthInfoFormGroup: FormGroup;
 
+  get takesCronicMedicine()
+  {
+    return this.healthInfoFormGroup.get('takesCronicMedicine');
+  }
+
+  get cronicMedicines()
+  {
+    return this.healthInfoFormGroup.get('cronicMedicines');
+  }
+  
   constructor(private _userService: EncodeUserService) 
   {
     this.healthInfoFormGroup = this._buildhealthInfoFormGroup();
@@ -21,39 +29,42 @@ export class EncodeHealthInfoComponent implements OnInit {
   
   ngOnInit(): void 
   {
-    this.healthInfoFormGroup.get('takesCronicMedicine').valueChanges
-      .subscribe(value => {
-        if(value) {
-          this.healthInfoFormGroup.get('cronicMedicines').setValidators(this._cronicMedicinesValidator.concat(Validators.required))
-        } else {
-          this.healthInfoFormGroup.get('cronicMedicines').setValidators(this._cronicMedicinesValidator);
-        }
-      });
+    this.takesCronicMedicine.valueChanges.subscribe(this._takesMedicineObserver);
   }
 
-  get takesCronicMedicine(){
-    return this.healthInfoFormGroup.get('takesCronicMedicine');
-  }
-
-  get cronicMedicines(){
-    return this.healthInfoFormGroup.get('cronicMedicines');
-  }
   
   onSaveForm($event: any)
   {
     if (this.healthInfoFormGroup.valid)
     {
       console.log("saving form and navigating");
+    } 
+    else
+    {
+      console.log("form has errors");
+      console.log(this.healthInfoFormGroup);
     }
   }
   
-  private _buildhealthInfoFormGroup(): FormGroup {
+  private _buildhealthInfoFormGroup(): FormGroup 
+  {
     const healthFormFields = new FormGroup({
       takesCronicMedicine: new FormControl(false, [ Validators.required ]),
-      cronicMedicines: new FormControl('', this._cronicMedicinesValidator)
+      cronicMedicines: new FormControl('')
     });
    
     return healthFormFields;
+  }
+
+  private _takesMedicineObserver = (isTakingMedicines: boolean) => 
+  {
+    if(isTakingMedicines) {
+      this.cronicMedicines.setValidators(Validators.required);
+    } else {
+      this.cronicMedicines.setValidators(Validators.nullValidator);
+    }
+
+    this.cronicMedicines.updateValueAndValidity({onlySelf:  true});
   }
 
 }
