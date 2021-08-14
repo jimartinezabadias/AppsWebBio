@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { EncodeUserService } from '../services/EncodeUserService';
 
 @Component({
@@ -12,16 +12,26 @@ export class EncodeHealthInfoComponent implements OnInit {
 
   public healthInfoFormGroup: FormGroup;
 
-  get takesCronicMedicine()
+  get takesCronicMedicine(): AbstractControl
   {
     return this.healthInfoFormGroup.get('takesCronicMedicine');
   }
 
-  get cronicMedicines()
+  get cronicMedicines(): AbstractControl
   {
     return this.healthInfoFormGroup.get('cronicMedicines');
   }
   
+  get hasSleepDisorder(): AbstractControl
+  {
+    return this.healthInfoFormGroup.get('hasSleepDisorder');
+  }
+
+  get sleepDisorders(): AbstractControl
+  {
+    return this.healthInfoFormGroup.get('sleepDisorders');
+  }
+
   constructor(private _userService: EncodeUserService) 
   {
     this.healthInfoFormGroup = this._buildhealthInfoFormGroup();
@@ -30,6 +40,7 @@ export class EncodeHealthInfoComponent implements OnInit {
   ngOnInit(): void 
   {
     this.takesCronicMedicine.valueChanges.subscribe(this._takesMedicineObserver);
+    this.hasSleepDisorder.valueChanges.subscribe(this._hasSleepDisorderObserver);
   }
 
   
@@ -50,7 +61,9 @@ export class EncodeHealthInfoComponent implements OnInit {
   {
     const healthFormFields = new FormGroup({
       takesCronicMedicine: new FormControl(false, [ Validators.required ]),
-      cronicMedicines: new FormControl('')
+      cronicMedicines: new FormControl(''),
+      hasSleepDisorder: new FormControl(false, [ Validators.required ]),
+      sleepDisorders: new FormControl('')
     });
    
     return healthFormFields;
@@ -65,6 +78,17 @@ export class EncodeHealthInfoComponent implements OnInit {
     }
 
     this.cronicMedicines.updateValueAndValidity({onlySelf:  true});
+  }
+  
+  private _hasSleepDisorderObserver = (hasSleepDisorder: boolean) => 
+  {
+    if(hasSleepDisorder) {
+      this.sleepDisorders.setValidators(Validators.required);
+    } else {
+      this.sleepDisorders.setValidators(Validators.nullValidator);
+    }
+
+    this.sleepDisorders.updateValueAndValidity({onlySelf:  true});
   }
 
 }

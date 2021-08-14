@@ -42,6 +42,32 @@
                             </mat-error>
                         </mat-form-field>
 
+                        <!-- Tiene transtorno de sueño -->
+                        <div>
+                            <label id="sleep-disorder-label">¿Sufre algún transtorno o desroden de sueño?</label>
+                            <mat-radio-group
+                                aria-labelledby="sleep-disorder-label"
+                                formControlName="hasSleepDisorder">
+                                <mat-radio-button [value]="true">Si</mat-radio-button>
+                                <mat-radio-button [value]="false">No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <!-- Transtorno de sueño -->
+                        <mat-form-field  *ngIf="hasSleepDisorder.value == true" 
+                            appearance="fill">
+                            <mat-label>Especifique cuales</mat-label>
+                            <input type="text"
+                                matInput
+                                formControlName="sleepDisorders" 
+                                placeholder="Ej. JetLag">
+
+                            <mat-error *ngIf="sleepDisorders.hasError('required')">
+                                Transtorno de sueño es un dato <strong>requerido</strong>.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <!-- Boton siguiente -->
                         <mat-card-actions>
                             <button mat-raised-button type="submit" class="save-form-btn">
                                 Siguiente
