@@ -61,7 +61,7 @@ export class EncodePersonalInfoComponent implements OnInit {
         ongoingCareer: new FormControl(''),
         occupation: new FormControl('')
     });
-    
+
     return userFormFields;
   }
 

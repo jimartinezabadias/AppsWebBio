@@ -17,6 +17,7 @@
                     
                     <mat-card-content class="form-fields">
                     
+                        <!-- Toma medicina cronica -->
                         <div>
                             <label id="cronic-medicine-label">¿Consume medicación de forma crónica?</label>
                             <mat-radio-group 
@@ -26,6 +27,26 @@
                                 <mat-radio-button [value]="false">No</mat-radio-button>
                             </mat-radio-group>
                         </div>
+
+                        <!-- Medicina que toma -->
+                        <mat-form-field  *ngIf="takesCronicMedicine.value == true" 
+                            appearance="fill">
+                            <mat-label>Especifique cuales</mat-label>
+                            <input type="text"
+                                matInput
+                                formControlName="cronicMedicines" 
+                                placeholder="Ej. medicina">
+
+                            <mat-error *ngIf="cronicMedicines.hasError('required')">
+                                Medicina cronica es un dato <strong>requerido</strong>.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-card-actions>
+                            <button mat-raised-button type="submit" class="save-form-btn">
+                                Siguiente
+                            </button>   
+                        </mat-card-actions>
                         
                     </mat-card-content>
                 
