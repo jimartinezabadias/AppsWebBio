@@ -13,21 +13,40 @@
                     
                     <mat-card-content class="form-fields">
                     
-                        <div class="radioAndTextGroup">
+                        <!-- Grado de somnolencia -->
+                        <div class="labelAndRadioContainer">
+                            <label id="somnolence-degree-label">Este test es una forma rápida de detectar cuán alerta te sentís, selecioná ell estado con el que te identifiques mejor en este momento</label>
+                            <mat-radio-group 
+                                aria-labelledby="somnolence-degree-label"
+                                formControlName="somnolenceDegree"
+                                class="radioButtonsGroup">
+                                <mat-radio-button [value]="somnolenceDegrees.totallyAwake">
+                                    {{somnolenceDegrees.totallyAwake}}
+                                </mat-radio-button>
+                                <mat-radio-button [value]="somnolenceDegrees.veryHigh">
+                                    {{somnolenceDegrees.veryHigh}}
+                                </mat-radio-button>
+                                <mat-radio-button [value]="somnolenceDegrees.relaxed">
+                                    {{somnolenceDegrees.relaxed}}
+                                </mat-radio-button>
+                                <mat-radio-button [value]="somnolenceDegrees.littleConfused">
+                                    {{somnolenceDegrees.littleConfused}}
+                                </mat-radio-button>
+                                <mat-radio-button [value]="somnolenceDegrees.confused">
+                                    {{somnolenceDegrees.confused}}
+                                </mat-radio-button>
+                                <mat-radio-button [value]="somnolenceDegrees.tired">
+                                    {{somnolenceDegrees.tired}}
+                                </mat-radio-button>
+                                <mat-radio-button [value]="somnolenceDegrees.almostSlept">
+                                    {{somnolenceDegrees.almostSlept}}
+                                </mat-radio-button>
+                                <mat-radio-button [value]="somnolenceDegrees.slept">
+                                    {{somnolenceDegrees.slept}}
+                                </mat-radio-button>
+                            </mat-radio-group>
 
-                            <!-- Toma medicina cronica -->
-                            <div class="labelAndRadioContainer">
-                                <label id="somnolence-degree-label">Este test es una forma rápida de detectar cuán alerta te sentís, selecioná ell estado con el que te identifiques mejor en este momento</label>
-                                <mat-radio-group 
-                                    aria-labelledby="somnolence-degree-label"
-                                    formControlName="somnolenceDegree"
-                                    class="radioButtonsGroup">
-                                    <mat-radio-button [value]="true">Si</mat-radio-button>
-                                    <mat-radio-button [value]="false">No</mat-radio-button>
-                                </mat-radio-group>
-                            </div>
-
-                        </div>
+                        </div>    
                         
                         <!-- Boton siguiente -->
                         <mat-card-actions>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
+import { SomnolenceDegrees } from "../constants";
 
 @Component({
     selector: 'app-encode-somnolence-degree',
@@ -12,6 +13,11 @@ import { EncodeUserService } from '../services/EncodeUserService';
 export class EncodeSomnolenceDegreeComponent implements OnInit {
 
   public somnolenceDegreeFormGroup: FormGroup;
+  
+  get somnolenceDegrees() 
+  {
+    return SomnolenceDegrees;
+  }
 
   constructor(private _router: Router,
     private _route: ActivatedRoute,
@@ -31,7 +37,7 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
 
   private _buildSomnolenceDegreeFormGroup(): FormGroup {
     const somnolenceFormFields = new FormGroup({
-      somnolenceDegree: new FormControl(false, [ Validators.required ]),
+      somnolenceDegree: new FormControl(this.somnolenceDegrees.totallyAwake, [ Validators.required ]),
     });
    
     return somnolenceFormFields;
