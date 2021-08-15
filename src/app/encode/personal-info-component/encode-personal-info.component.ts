@@ -41,7 +41,7 @@ export class EncodePersonalInfoComponent implements OnInit {
   {
     if (this.personalInfoFormGroup.valid)
     {
-        console.log("saving form and navigating");
+        console.log("TODO: save personal info form");
         this._router.navigate(["../health-info"], { relativeTo: this._route });
       }
   }

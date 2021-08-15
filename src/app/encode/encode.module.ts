@@ -16,6 +16,7 @@ import { EncodeVideoTestComponent } from './video-test-component/video-test.comp
 import { EncodeConsentComponent } from './consent-component/encode-consent.component';
 import { EncodePersonalInfoComponent } from './personal-info-component/encode-personal-info.component';
 import { EncodeHealthInfoComponent } from './health-info-component/health-info.component';
+import { EncodeSomnolenceDegreeComponent } from './somnolence-degree-component/somnolence-degree.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { EncodeHealthInfoComponent } from './health-info-component/health-info.c
         EncodeVideoTestComponent,
         EncodeConsentComponent,
         EncodePersonalInfoComponent,
-        EncodeHealthInfoComponent
+        EncodeHealthInfoComponent,
+        EncodeSomnolenceDegreeComponent
     ],
     imports: [
         SharedModule,

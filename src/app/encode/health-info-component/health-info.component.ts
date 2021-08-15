@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
 
 @Component({
@@ -32,9 +33,11 @@ export class EncodeHealthInfoComponent implements OnInit {
     return this.healthInfoFormGroup.get('sleepDisorders');
   }
 
-  constructor(private _userService: EncodeUserService) 
+  constructor(private _router: Router,
+    private _route: ActivatedRoute,
+    private _userService: EncodeUserService) 
   {
-    this.healthInfoFormGroup = this._buildhealthInfoFormGroup();
+    this.healthInfoFormGroup = this._buildHealthInfoFormGroup();
   }
   
   ngOnInit(): void 
@@ -48,7 +51,8 @@ export class EncodeHealthInfoComponent implements OnInit {
   {
     if (this.healthInfoFormGroup.valid)
     {
-      console.log("saving form and navigating");
+      console.log("TODO: save health info form");
+      this._router.navigate(["../somnolence-degree"], { relativeTo: this._route });
     } 
     else
     {
@@ -57,7 +61,7 @@ export class EncodeHealthInfoComponent implements OnInit {
     }
   }
   
-  private _buildhealthInfoFormGroup(): FormGroup 
+  private _buildHealthInfoFormGroup(): FormGroup 
   {
     const healthFormFields = new FormGroup({
       takesCronicMedicine: new FormControl(false, [ Validators.required ]),
