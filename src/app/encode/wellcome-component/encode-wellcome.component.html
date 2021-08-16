@@ -2,34 +2,54 @@
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
         <div class="wellcome-message">
-            <h1>Bienvenido {{ userName }}</h1>
+            <h1 class="mat-display-1">¡Bienvenido {{ userName }}!</h1>
             <h4>
                 Muchas gracias por participar en esta investigación.
                 Tu participación es sumamente valiosa para nosotros.
             </h4>
 
-            <div>
-                <img src="" alt=""/>
-                <div>
-                    <ul>
-                        <li>
-                            Ésta práctica requiere tener micrófono y buena conexión.
-                        </li>
-                        <li>
-                            Necesitamos que compruebes su buen funcionamiento.
-                        </li>
-                        <li>
-                            Es necesario que estés en un ambiente con poco ruido.
-                        </li>
-                    </ul>
-                    <a mat-raised-button
-                        class="btn"
-                        routerLink="../mic-test"
-                        routerLinkActive="active">
-                        Comprobar
-                    </a>
-                </div>
-            </div>
+            <mat-card class="wellcome-card">
+
+                <mat-card-content class="wellcome-card-content">
+
+                    <img src="assets/images/encode_wellcome_image.jpeg" alt=""/>
+                    <div class="list-and-button">
+
+                        <h3>Antes de empezar</h3>
+                        <mat-list>
+                            <mat-list-item>
+                                <mat-icon mat-list-icon
+                                    color="accent">done</mat-icon>
+                                <div class="mat-list-text">
+                                    Es necesario que estés en un ambiente con poco ruido.
+                                </div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <mat-icon mat-list-icon
+                                    color="accent">done</mat-icon>
+                                <div class="mat-list-text">
+                                    Ésta práctica requiere tener micrófono y buena conexión. <br/>
+                                </div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <mat-icon mat-list-icon
+                                color="accent">done</mat-icon>
+                                <div class="mat-list-text">
+                                    Necesitamos que compruebes su buen funcionamiento.
+                                </div>
+                            </mat-list-item>
+                            
+                        </mat-list>
+                        <a mat-raised-button
+                            class="btn"
+                            routerLink="../mic-test"
+                            routerLinkActive="active">
+                            Comprobar
+                        </a>
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
         </div>
     </section>
 </section>
