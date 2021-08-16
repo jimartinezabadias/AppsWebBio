@@ -17,6 +17,7 @@ import { EncodeConsentComponent } from './consent-component/encode-consent.compo
 import { EncodePersonalInfoComponent } from './personal-info-component/encode-personal-info.component';
 import { EncodeHealthInfoComponent } from './health-info-component/health-info.component';
 import { EncodeSomnolenceDegreeComponent } from './somnolence-degree-component/somnolence-degree.component';
+import { EncodeVideoComponent } from './video-component/video.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { EncodeSomnolenceDegreeComponent } from './somnolence-degree-component/s
         EncodeConsentComponent,
         EncodePersonalInfoComponent,
         EncodeHealthInfoComponent,
-        EncodeSomnolenceDegreeComponent
+        EncodeSomnolenceDegreeComponent,
+        EncodeVideoComponent
     ],
     imports: [
         SharedModule,

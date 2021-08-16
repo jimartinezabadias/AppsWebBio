@@ -33,6 +33,8 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
   
   onSaveForm($event: any)
   {
+    console.log("todo: - save in DB. -navigate to next step in phase ");
+    this._router.navigate(["../video"], { relativeTo: this._route });
   }
 
   private _buildSomnolenceDegreeFormGroup(): FormGroup {
