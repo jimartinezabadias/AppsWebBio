@@ -17,106 +17,118 @@
                     
                     <mat-card-content class="form-fields">
 
-                        <!-- Edad -->
-                        <mat-form-field class="full-width" appearance="fill">
-                            
-                            <mat-label>Edad</mat-label>
-                            
-                            <input type="number" 
-                                matInput  
-                                formControlName="age" 
-                                placeholder="18"
-                                min="18" max="100">
+                        <div class="row">
 
-                            <mat-error *ngIf="age.invalid && !age.hasError('required')">
-                                La edad debe estar entre 18 y 100
-                            </mat-error>
-                            <mat-error *ngIf="age.hasError('required')">
-                                Edad es un dato <strong>requerido</strong>.
-                            </mat-error>
+                            <!-- Edad -->
+                            <mat-form-field class="full-width" appearance="fill">
+                                
+                                <mat-label>Edad</mat-label>
+                                
+                                <input type="number" 
+                                    matInput  
+                                    formControlName="age" 
+                                    placeholder="18"
+                                    min="18" max="100">
 
-                        </mat-form-field>
+                                <mat-error *ngIf="age.invalid && !age.hasError('required')">
+                                    La edad debe estar entre 18 y 100
+                                </mat-error>
+                                <mat-error *ngIf="age.hasError('required')">
+                                    Edad es un dato <strong>requerido</strong>.
+                                </mat-error>
 
-                        <!-- Genero -->
-                        <mat-form-field appearance="fill">
+                            </mat-form-field>
 
-                            <mat-label>Género</mat-label>
-                            
-                            <mat-select formControlName="gender" name="gender">
-                              <mat-option value="genders.Male">
-                                {{genders.Male}}
-                              </mat-option>
-                              <mat-option value="genders.Female">
-                                {{genders.Female}}
-                              </mat-option>
-                              <mat-option value="genders.NonBinary">
-                                {{genders.NonBinary}}
-                              </mat-option>
-                            </mat-select>
+                            <!-- Genero -->
+                            <mat-form-field appearance="fill">
 
-                            <mat-error *ngIf="gender.hasError('required')">
-                                Género es un dato <strong>requerido</strong>.
-                            </mat-error>
-
-                        </mat-form-field>
-
-                        <!-- Max Educacion -->
-                        <mat-form-field appearance="fill">
-
-                            <mat-label>Nivel educativo alcanzado</mat-label>
-                            
-                            <mat-select formControlName="educationLevel" name="educationLevel">
-                                <mat-option value="educationLevels.incompleteSecondary">
-                                    {{educationLevels.incompleteSecondary}}
+                                <mat-label>Género</mat-label>
+                                
+                                <mat-select formControlName="gender" name="gender">
+                                <mat-option value="genders.Male">
+                                    {{genders.Male}}
                                 </mat-option>
-                                <mat-option value="educationLevels.completeSecondary">
-                                    {{educationLevels.completeSecondary}}
+                                <mat-option value="genders.Female">
+                                    {{genders.Female}}
                                 </mat-option>
-                                <mat-option value="educationLevels.incompleteTertiary">
-                                    {{educationLevels.incompleteTertiary}}
+                                <mat-option value="genders.NonBinary">
+                                    {{genders.NonBinary}}
                                 </mat-option>
-                                <mat-option value="educationLevels.completeTertiary">
-                                    {{educationLevels.completeTertiary}}
-                                </mat-option>
-                                <mat-option value="educationLevels.completeTertiary">
-                                    {{educationLevels.completeTertiary}}
-                                </mat-option>
-                                <mat-option value="educationLevels.incompleteBachelors">
-                                    {{educationLevels.incompleteBachelors}}
-                                </mat-option>
-                                <mat-option value="educationLevels.completeBachelors">
-                                    {{educationLevels.completeBachelors}}
-                                </mat-option>
-                            </mat-select>
+                                </mat-select>
 
-                            <mat-error *ngIf="gender.hasError('required')">
-                                Nivel educativo es un dato <strong>requerido</strong>.
-                            </mat-error>
+                                <mat-error *ngIf="gender.hasError('required')">
+                                    Género es un dato <strong>requerido</strong>.
+                                </mat-error>
 
-                        </mat-form-field>
+                            </mat-form-field>
 
-                        <!-- Carrera en curso -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Carrera en curso</mat-label>
-                            <input type="text"
-                                matInput
-                                formControlName="ongoingCareer" 
-                                placeholder="Ej. Medicina">
-                          </mat-form-field>
+                        </div>
+
+                        <div class="row">
+
+                            <!-- Max Educacion -->
+                            <mat-form-field appearance="fill">
+
+                                <mat-label>Nivel educativo alcanzado</mat-label>
+                                
+                                <mat-select formControlName="educationLevel" name="educationLevel">
+                                    <mat-option value="educationLevels.incompleteSecondary">
+                                        {{educationLevels.incompleteSecondary}}
+                                    </mat-option>
+                                    <mat-option value="educationLevels.completeSecondary">
+                                        {{educationLevels.completeSecondary}}
+                                    </mat-option>
+                                    <mat-option value="educationLevels.incompleteTertiary">
+                                        {{educationLevels.incompleteTertiary}}
+                                    </mat-option>
+                                    <mat-option value="educationLevels.completeTertiary">
+                                        {{educationLevels.completeTertiary}}
+                                    </mat-option>
+                                    <mat-option value="educationLevels.completeTertiary">
+                                        {{educationLevels.completeTertiary}}
+                                    </mat-option>
+                                    <mat-option value="educationLevels.incompleteBachelors">
+                                        {{educationLevels.incompleteBachelors}}
+                                    </mat-option>
+                                    <mat-option value="educationLevels.completeBachelors">
+                                        {{educationLevels.completeBachelors}}
+                                    </mat-option>
+                                </mat-select>
+
+                                <mat-error *ngIf="gender.hasError('required')">
+                                    Nivel educativo es un dato <strong>requerido</strong>.
+                                </mat-error>
+
+                            </mat-form-field>
+
+                            <!-- Carrera en curso -->
+                            <mat-form-field appearance="fill">
+                                <mat-label>Carrera en curso</mat-label>
+                                <input type="text"
+                                    matInput
+                                    formControlName="ongoingCareer" 
+                                    placeholder="Ej. Medicina">
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="row">
+
+                            <!-- Ocupación -->
+                            <mat-form-field appearance="fill">
+                                <mat-label>Ocupación</mat-label>
+                                <input type="text"
+                                    matInput
+                                    formControlName="occupation" 
+                                    placeholder="Ej. Doctor">
+
+                                <mat-error *ngIf="gender.hasError('required')">
+                                    Ocupación es un dato <strong>requerido</strong>.
+                                </mat-error>
+                            </mat-form-field>
+
+                        </div>
                         
-                        <!-- Ocupación -->
-                        <mat-form-field appearance="fill">
-                            <mat-label>Ocupación</mat-label>
-                            <input type="text"
-                                matInput
-                                formControlName="occupation" 
-                                placeholder="Ej. Doctor">
-
-                            <mat-error *ngIf="gender.hasError('required')">
-                                Ocupación es un dato <strong>requerido</strong>.
-                            </mat-error>
-                        </mat-form-field>
-
                         <mat-card-actions>
                             <button mat-raised-button type="submit" class="save-form-btn">
                                 Siguiente
