@@ -18,6 +18,7 @@ import { EncodePersonalInfoComponent } from './personal-info-component/encode-pe
 import { EncodeHealthInfoComponent } from './health-info-component/health-info.component';
 import { EncodeSomnolenceDegreeComponent } from './somnolence-degree-component/somnolence-degree.component';
 import { EncodeVideoComponent } from './video-component/video.component';
+import { EncodeFormListComponent } from './form-list-component/form-list.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { EncodeVideoComponent } from './video-component/video.component';
         EncodePersonalInfoComponent,
         EncodeHealthInfoComponent,
         EncodeSomnolenceDegreeComponent,
-        EncodeVideoComponent
+        EncodeVideoComponent,
+        EncodeFormListComponent
     ],
     imports: [
         SharedModule,

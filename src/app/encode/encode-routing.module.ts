@@ -10,6 +10,7 @@ import { EncodePersonalInfoComponent } from './personal-info-component/encode-pe
 import { EncodeHealthInfoComponent } from './health-info-component/health-info.component';
 import { EncodeSomnolenceDegreeComponent } from './somnolence-degree-component/somnolence-degree.component';
 import { EncodeVideoComponent } from './video-component/video.component';
+import { EncodeFormListComponent } from './form-list-component/form-list.component';
 
 const routes: Routes = [
     {
@@ -47,6 +48,10 @@ const routes: Routes = [
             {
                 path: 'somnolence-degree',
                 component: EncodeSomnolenceDegreeComponent
+            },
+            {
+                path: 'form-list',
+                component: EncodeFormListComponent
             },
             {
                 path: 'video',

@@ -1,0 +1,39 @@
+<section class="container">
+    <app-header-encode></app-header-encode>
+    <section class="main-app-section">
+        <div class="form-list">
+
+            <mat-card>
+                    
+                <mat-card-header>
+                    <mat-card-title>Formularios</mat-card-title>
+                    <mat-card-subtitle>
+                        (Formularios google forms)
+                    </mat-card-subtitle>
+                </mat-card-header>
+                
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item>
+                            <button mat-flat-button
+                                (click)="openForm('test')">
+                                <mat-icon mat-list-icon
+                                color="primary">assignment</mat-icon>
+                                Formulario prueba
+                            </button>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+
+                <mat-card-actions>
+                    <a mat-raised-button
+                        routerLink="../video"
+                        routerLinkActive="active">
+                        Continuar
+                    </a>
+                </mat-card-actions>
+
+            </mat-card>
+
+        </div>
+</section>
