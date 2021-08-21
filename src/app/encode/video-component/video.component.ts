@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SomnolenceDegrees } from "../constants";
 
 @Component({
     selector: 'app-encode-video',
@@ -8,16 +7,12 @@ import { SomnolenceDegrees } from "../constants";
 })
 
 export class EncodeVideoComponent implements OnInit {
-  
-  get somnolenceDegrees() 
-  {
-    return SomnolenceDegrees;
-  }
 
+  public videoSource = "assets/videos/videoEncode.mp4";
+  
   constructor() 
   {
   }
-  
 
   ngOnInit(): void 
   {
