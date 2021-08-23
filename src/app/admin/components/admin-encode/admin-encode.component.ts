@@ -10,7 +10,7 @@ import { InviteFormComponent } from './invite-form-component/invite-form.compone
 @Component({
   selector: 'app-admin-encode',
   templateUrl: './admin-encode.component.html',
-  styleUrls: ['../admin.component.scss'],
+  styleUrls: ['admin-encode.component.scss','../admin.component.scss'],
 })
 export class AdminEncodeComponent implements OnInit{
 

@@ -24,10 +24,9 @@
                 </ng-container>
         
                 <!-- Link -->
-                <!-- Hacer un pipe para el link -->
                 <ng-container matColumnDef="link">
                     <mat-header-cell *matHeaderCellDef> Link </mat-header-cell>
-                    <mat-cell *matCellDef="let user"> {{ user.uid }} </mat-cell>
+                    <mat-cell *matCellDef="let user"> {{ user.uid | encodeLink }} </mat-cell>
                 </ng-container>
 
                 <!-- Creation Date -->
@@ -36,7 +35,7 @@
                     <mat-cell *matCellDef="let user"> {{ user.creationDate.toMillis() | date:'d/M/yyyy, h:mm a' }} </mat-cell>
                 </ng-container>
         
-                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         
             </mat-table>

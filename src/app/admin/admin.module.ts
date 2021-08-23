@@ -7,7 +7,7 @@ import { AdminComponent } from './components/admin.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FileSaverModule } from 'ngx-filesaver';
 
 import { DataDbService } from '../core/services/db/data-db.service';
@@ -20,8 +20,9 @@ import { AdminCreativityComponent } from './components/admin-creativity/admin-cr
 import { AdminRulitComponent } from './components/admin-rulit/admin-rulit.component';
 import { AdminEncodeComponent } from './components/admin-encode/admin-encode.component';
 import { InviteFormComponent } from './components/admin-encode/invite-form-component/invite-form.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { EncodeLinkPipe } from './components/admin-encode/encode-link.pipe';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { MatButtonModule } from '@angular/material/button';
     AdminCreativityComponent,
     AdminRulitComponent,
     AdminEncodeComponent,
-    InviteFormComponent
+    InviteFormComponent,
+    EncodeLinkPipe
   ],
   imports: [
     CommonModule,

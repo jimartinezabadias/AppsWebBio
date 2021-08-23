@@ -1,3 +1,5 @@
+export const ENCODE_TEST_URL: string = "/encode"; 
+
 export enum RecorderStatus 
 {
     Ready = "Listo para grabar",
