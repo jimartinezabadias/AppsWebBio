@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, Observable } from 'rxjs';
 
 @Component({
@@ -13,7 +14,7 @@ export class EncodeVideoComponent implements OnInit {
   private _videoEnded$: Observable<Event>;
   public videoSource = "assets/videos/videoEncode.mp4";
     
-  constructor() 
+  constructor(private _router: Router, private _route: ActivatedRoute) 
   {
   }
 
@@ -23,6 +24,8 @@ export class EncodeVideoComponent implements OnInit {
     this._videoEnded$.subscribe(this._videoEndedObserver);
   }
 
-  private _videoEndedObserver = () => { console.log('video ended')};
+  private _videoEndedObserver = () => { 
+    this._router.navigate(["../audios"], { relativeTo: this._route });
+  };
   
 }
