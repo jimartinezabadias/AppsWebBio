@@ -7,19 +7,32 @@
                     
                 <mat-card-header>
                     <mat-card-title>Formularios</mat-card-title>
-                    <mat-card-subtitle>
-                        (Formularios google forms)
-                    </mat-card-subtitle>
                 </mat-card-header>
                 
                 <mat-card-content>
                     <mat-list>
                         <mat-list-item>
                             <button mat-flat-button
-                                (click)="openForm('test')">
+                                (click)="openForm('stai')">
                                 <mat-icon mat-list-icon
-                                color="primary">assignment</mat-icon>
-                                Formulario prueba
+                                    color="primary">assignment</mat-icon>
+                                    CUESTIONARIO STAI (estado)
+                            </button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <button mat-flat-button
+                                (click)="openForm('panas')">
+                                <mat-icon mat-list-icon
+                                    color="primary">assignment</mat-icon>
+                                    PANAS
+                            </button>
+                        </mat-list-item>
+                        <mat-list-item>                  
+                            <button mat-flat-button
+                                (click)="openForm('ipip')">
+                                <mat-icon mat-list-icon
+                                    color="primary">assignment</mat-icon>
+                                    IPIP-Revisado
                             </button>
                         </mat-list-item>
                     </mat-list>
