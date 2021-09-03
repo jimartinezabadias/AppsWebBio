@@ -7,9 +7,10 @@
             class="rec-button"
             (click)="onRec()"
             [disabled]="recorderService.isRecording">
-            <mat-icon>microphone</mat-icon>
+            <mat-icon>mic</mat-icon>
         </button>
-        <button mat-fab (click)="onStop()"
+        <button mat-fab 
+            (click)="onStop()"
             [disabled]="!recorderService.isRecording">
             <mat-icon>stop</mat-icon>
         </button>
