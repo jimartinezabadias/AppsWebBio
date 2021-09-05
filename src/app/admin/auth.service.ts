@@ -47,7 +47,7 @@ export class AuthService {
         {
             return;
         }
-        (await this._afAuth.currentUser).delete();
+        
         this.signOut();
     }
 }
