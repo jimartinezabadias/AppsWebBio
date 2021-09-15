@@ -12,6 +12,8 @@ import { EncodeSomnolenceDegreeComponent } from './somnolence-degree-component/s
 import { EncodeVideoComponent } from './video-component/video.component';
 import { EncodeFormListComponent } from './form-list-component/form-list.component';
 import { EncodeAudiosComponent } from './audios-component/audios.component';
+import { EncodeEndComponent } from './end-component/encode-end.component';
+
 
 const routes: Routes = [
     {
@@ -61,6 +63,10 @@ const routes: Routes = [
             {
                 path: 'audios',
                 component: EncodeAudiosComponent
+            },
+            {
+                path: 'end',
+                component: EncodeEndComponent
             }
         ]
     }

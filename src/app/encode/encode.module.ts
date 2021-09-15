@@ -20,6 +20,7 @@ import { EncodeSomnolenceDegreeComponent } from './somnolence-degree-component/s
 import { EncodeVideoComponent } from './video-component/video.component';
 import { EncodeFormListComponent } from './form-list-component/form-list.component';
 import { EncodeAudiosComponent } from './audios-component/audios.component';
+import { EncodeEndComponent } from './end-component/encode-end.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { EncodeAudiosComponent } from './audios-component/audios.component';
         EncodeSomnolenceDegreeComponent,
         EncodeVideoComponent,
         EncodeFormListComponent,
-        EncodeAudiosComponent
+        EncodeAudiosComponent,
+        EncodeEndComponent
     ],
     imports: [
         SharedModule,
