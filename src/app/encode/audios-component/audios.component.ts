@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-encode-audios',
@@ -8,8 +9,16 @@ import { Component } from '@angular/core';
 
 export class EncodeAudiosComponent {
     
-  constructor() 
+  constructor(private _router: Router,
+    private _route: ActivatedRoute) 
   {
+  }
+
+  onAudiosReady()
+  {
+    //falta chequear por audios
+    this._router.navigate(["../end"], { relativeTo: this._route });
+    
   }
   
 }
