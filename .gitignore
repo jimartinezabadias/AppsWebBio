@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# priv key file
+ssl/dev-investigar.key
+
 # large files
 src/assets/videos/videoEncode.mp4
 
