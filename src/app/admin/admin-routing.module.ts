@@ -4,6 +4,8 @@ import { AdminAuthGuard } from './admin-auth.guard';
 import { AdminCreativityComponent } from './components/admin-creativity/admin-creativity.component';
 import { AdminEncodeComponent } from './components/admin-encode/admin-encode.component';
 import { AdminRulitComponent } from './components/admin-rulit/admin-rulit.component';
+import { AdminEncodeUserComponent } from './components/admin-encode-user/admin-encode-user.component';
+
 
 import { AdminComponent } from './components/admin.component';
 
@@ -25,6 +27,11 @@ const routes: Routes = [
   {
     path: 'encode',
     component: AdminEncodeComponent,
+    canActivate: [ AdminAuthGuard ]
+  },
+  {
+    path: 'encode/:userId',
+    component: AdminEncodeUserComponent,
     canActivate: [ AdminAuthGuard ]
   }
 ];
