@@ -1,15 +1,19 @@
 <section class="container">
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
-        <div class="video">
+        <mat-card class="card-content">
 
-            <video controls width="720" #video>
+            <h1 class="mat-display-1">Mirá el video con atención. Una vez que empiece no podrás detenerlo.</h1>         
 
-                <source [src]="videoSource"
-                    type="video/mp4">
-                    Sorry, your browser doesn't support embedded videos.
-            </video>
-           
-        </div>
+            <div class="video">
+                <video width="720" #video>
+                    <source [src]="videoSource"
+                        type="video/mp4">
+                        Sorry, your browser doesn't support embedded videos.
+                </video>
+            </div>
+
+        </mat-card>
     </section>
+
 </section>

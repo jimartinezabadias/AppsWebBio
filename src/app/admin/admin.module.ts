@@ -14,6 +14,9 @@ import { DataDbService } from '../core/services/db/data-db.service';
 
 
 import { MatTableModule } from "@angular/material/table";
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { AdminCreativityComponent } from './components/admin-creativity/admin-creativity.component';
@@ -49,6 +52,9 @@ import { EncodeLinkPipe } from './components/admin-encode/encode-link.pipe';
     MatTableModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatToolbarModule,
     ReactiveFormsModule,
     MatButtonModule
   ]
