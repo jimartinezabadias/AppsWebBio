@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, Observable } from 'rxjs';
+import { LazyDialogService } from '../services/lazy-dialog.service';
 
 @Component({
     selector: 'app-encode-video',
@@ -14,7 +15,7 @@ export class EncodeVideoComponent implements OnInit {
   private _videoEnded$: Observable<Event>;
   public videoSource = "assets/videos/videoEncode.mp4";
     
-  constructor(private _router: Router, private _route: ActivatedRoute) 
+  constructor(private _router: Router, private _route: ActivatedRoute, public lazyDialog: LazyDialogService) 
   {
   }
 
