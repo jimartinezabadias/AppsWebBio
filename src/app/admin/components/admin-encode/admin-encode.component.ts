@@ -6,6 +6,7 @@ import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 import { EncodeUsersDataSource } from './encodeUsersDataSource';
 import { InviteFormComponent } from './invite-form-component/invite-form.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-encode',
@@ -27,7 +28,9 @@ export class AdminEncodeComponent implements OnInit{
   constructor(
     private _encodeUserService: EncodeUserService,
     private _dialog: MatDialog,
-    private _dbService: DataDbService) {}
+    private _dbService: DataDbService,
+    private _router: Router,
+    private _route: ActivatedRoute) {}
   
   ngOnInit(): void 
   {
@@ -64,6 +67,10 @@ export class AdminEncodeComponent implements OnInit{
     const dialogRef = this._dialog.open(InviteFormComponent);
 
     dialogRef.afterClosed().subscribe(this._dialogClosedObserver);
+  }
+
+  public getUserResults(uid) {
+    this._router.navigate(['/admin/encode/', uid]);
   }
 
   private _dialogClosedObserver = async (userData: { name: string, email: string }) => {
