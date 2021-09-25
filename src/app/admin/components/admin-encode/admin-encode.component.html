@@ -37,7 +37,7 @@
         
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;"
-                [routerLink]="['/admin/encode/', row.uid]"></mat-row>
+                (click)="getUserResults(row.uid)"></mat-row>
         
             </mat-table>
             
