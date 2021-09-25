@@ -36,8 +36,8 @@
                 </ng-container>
         
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"
-                (click)="getUserResults(row.uid)"></mat-row>
+                <mat-row *matRowDef="let user; columns: displayedColumns;"
+                  (click)="getUserResults(user.uid)"></mat-row>
         
             </mat-table>
             
