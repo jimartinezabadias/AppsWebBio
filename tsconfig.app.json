@@ -8,8 +8,5 @@
     "src/main.ts",
     "src/polyfills.ts"
   ],
-  "include": [
-    "src/**/*.d.ts", 
-    "src/app/dialogs/*/*.component.ts"
-  ]
+  "include": ["src/**/*.d.ts", "src/app/encode/video-component/dialogs/*/*.component.ts"]
 }

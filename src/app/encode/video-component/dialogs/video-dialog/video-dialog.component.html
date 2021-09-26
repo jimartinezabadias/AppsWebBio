@@ -1,2 +1,5 @@
-<h1 mat-dialog-title>My Video</h1>
-<youtube-player videoId="kRRspDN4Xwo"></youtube-player>
+    <video controls width="720" #video>
+        <source [src]="videoSource"
+            type="video/mp4">
+            Sorry, your browser doesn't support embedded videos.
+    </video>
