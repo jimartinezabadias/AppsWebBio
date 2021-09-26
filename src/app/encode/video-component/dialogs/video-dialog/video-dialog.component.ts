@@ -1,28 +1,37 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { NgModule, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
-
-let apiLoaded = false;
+import { ActivatedRoute, Router } from '@angular/router';
+import { fromEvent, Observable } from 'rxjs';
+import { LazyDialogService } from 'src/app/encode/services/lazy-dialog.service';
 
 @Component({
   selector: 'app-my-video',
-  templateUrl: './my-video.component.html',
-  styleUrls: ['./my-video.component.css'],
+  templateUrl: './video-dialog.component.html',
+  styleUrls: ['./video-dialog.component.scss'],
 })
 export class MyVideoComponent implements OnInit {
-  constructor() {}
 
-  ngOnInit(): void {
-    if (!apiLoaded) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      document.body.appendChild(tag);
-      apiLoaded = true;
-    }
+  @ViewChild('video', { static: true }) private _video: ElementRef<HTMLVideoElement>;
+  private _videoEnded$: Observable<Event>;
+  public videoSource = "assets/videos/videoEncode.mp4";
+
+  constructor(private _router: Router, private _route: ActivatedRoute, public lazyDialog: LazyDialogService) 
+  {
   }
+
+  ngOnInit(): void 
+  {
+    this._video.nativeElement.play();
+    this._videoEnded$ = fromEvent(this._video.nativeElement,'ended');
+    this._videoEnded$.subscribe(this._videoEndedObserver);
+  }
+
+  private _videoEndedObserver = () => {
+    this._router.navigate(["/encode/"+location.pathname.split('/').slice()[2]+"/audios"]);
+  };
 }
 
 @NgModule({
-  declarations: [MyVideoComponent],
   imports: [MatDialogModule],
 })
 export class MyVideoModule {}
