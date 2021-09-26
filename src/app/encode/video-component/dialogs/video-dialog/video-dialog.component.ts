@@ -28,6 +28,7 @@ export class MyVideoComponent implements OnInit {
 
   private _videoEndedObserver = () => {
     this._router.navigate(["/encode/"+location.pathname.split('/').slice()[2]+"/audios"]);
+    this.lazyDialog.closeDialog();
   };
 }
 

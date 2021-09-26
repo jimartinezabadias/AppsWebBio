@@ -5,14 +5,14 @@
 
             <h1 class="mat-display-1">Mirá el video con atención. Una vez que empiece no podrás detenerlo.</h1>         
 
-            <div class="video">
+            <div class="button-overlay">
                 <video width="720" #video>
                     <source [src]="videoSource"
                         type="video/mp4">
                         Sorry, your browser doesn't support embedded videos.
                 </video>
-                <button mat-raised-button (click)="lazyDialog.openDialog('video-dialog')">
-                    Open Dialog
+                <button mat-fab (click)="lazyDialog.openDialog('video-dialog')" color="primary" id="play-button" aria-label="Reproducir">
+                    <mat-icon>play_arrow</mat-icon>
                 </button>
             </div>
 

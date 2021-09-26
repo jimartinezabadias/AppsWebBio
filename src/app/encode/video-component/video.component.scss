@@ -11,7 +11,6 @@
 {
     display: flex;
     flex-flow: column;
-    row-gap: 2rem;
     align-items: flex-start;
     margin-top: 1rem;
     margin-left: 16px;
@@ -25,8 +24,50 @@
     row-gap: 2rem;
 }
 
-h1, h2 {
+h1[_ngcontent-ljn-c186] {
     text-align: center;
     color: rgba(0,0,0,.87);
+}
+
+.mat-display-1, .mat-typography .mat-display-1 {
+    font: 400 26px/40px Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    margin: 0 0 30px;
+}
+
+.button-overlay {
+    position: relative;
+    width: 750px;
+    margin: 0 auto;
+}
+
+.button-overlay video {
+    width: 100%;
+    display: block;
+}
+
+.button-overlay:before {
+    content: '';
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#play-button {
+    position: absolute;
+    top: 44%;
+    left: 45%;
+    width: 90px;
+    height: 90px;
+}
+
+#play-button mat-icon {
+    font-size: 60px;
+    height: auto;
+    width: auto;
 }
 
