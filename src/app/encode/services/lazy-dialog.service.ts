@@ -14,7 +14,9 @@ export class LazyDialogService {
     );
 
     const dialogComponent = Object.values(chunk)[0] as ComponentType<unknown>;
-    return this.dialog.open(dialogComponent, { disableClose: true, backdropClass: 'backdropBackground' });
+    return this.dialog.open(dialogComponent, { disableClose: true, 
+                                               backdropClass: 'backdropBackground',
+                                               panelClass: 'custom-background' });
   }
 
   async closeDialog() {
