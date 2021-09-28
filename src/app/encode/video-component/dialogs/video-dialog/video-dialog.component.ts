@@ -1,4 +1,4 @@
-import { NgModule, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgModule, Component, ElementRef, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, Observable } from 'rxjs';
@@ -22,6 +22,7 @@ export class MyVideoComponent implements OnInit {
   ngOnInit(): void 
   {
     this._video.nativeElement.play();
+    this._video.nativeElement.volume= 0.8;
     this._videoEnded$ = fromEvent(this._video.nativeElement,'ended');
     this._videoEnded$.subscribe(this._videoEndedObserver);
   }
@@ -33,6 +34,6 @@ export class MyVideoComponent implements OnInit {
 }
 
 @NgModule({
-  imports: [MatDialogModule],
+  imports: [MatDialogModule]
 })
 export class MyVideoModule {}

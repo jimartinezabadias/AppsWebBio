@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -11,9 +11,17 @@ export class EncodeVideoTestComponent {
     isVideoGood: boolean = true;
     isAudioGood: boolean = true;
 
+  @ViewChild('video', { static: true }) private _video: ElementRef<HTMLVideoElement>;
+
   constructor(private _router: Router,
               private _route: ActivatedRoute) 
   {
+  }
+
+  ngOnInit(): void 
+  {
+    this._video.nativeElement.play();
+    this._video.nativeElement.volume= 0.8;
   }
 
   onConfirm(): any 

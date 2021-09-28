@@ -72,3 +72,8 @@ snack-bar-container.custom-rulit-snack-bar {
 .backdropBackground {
     background: rgb(0 0 0 / 89%);
 }
+
+.custom-background mat-dialog-container {
+    background-color: #4e3a3a00;
+    box-shadow: none;
+}
