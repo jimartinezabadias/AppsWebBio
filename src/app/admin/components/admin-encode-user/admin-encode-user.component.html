@@ -8,28 +8,45 @@
         <mat-card class="results-card">
             <mat-card-content>
 
-                <h1 class="mat-display-1">Resultados de: {{ userData.name }}</h1>
+                <h1 class="mat-display-1">{{ userData.name }}</h1>
 
-                <table>
-                    <tr>
-                        <td>Email</td>
-                        <td>{{ userData.email }}</td>
-                    </tr>
-                    <tr>
-                        <td>Link</td>
-                        <td>{{ userData.uid | encodeLink }}</td>
-                    </tr>
-                    <tr>
-                        <td>Fecha de creacion</td>
-                        <td>{{ userData.creationDate.toMillis() | date:'d/M/yyyy, h:mm a' }}</td>
-                    </tr>
-                </table>
+                <div class="user-info">
+                    <p>Email: {{ userData.email }}</p>
+                    <p>Link: {{ userData.uid | encodeLink }}</p>
+                    <p>Fecha de creación: {{ userData.creationDate.toMillis() | date:'d/M/yyyy, h:mm a' }}</p>
+                </div>
 
                 <mat-tab-group>
-                    <mat-tab label="Información Personal"> Información Personal </mat-tab>
-                    <mat-tab label="Respuestas"> Respuestas </mat-tab>
-                    <mat-tab label="Formularios"> Formularios </mat-tab>
-                    <mat-tab label="Audios"> Audios </mat-tab>
+                    <mat-tab label="Información Personal">
+                        <h3>Datos Sociodemográficos</h3>
+                        <br>
+                        <br>
+                        <h3>Datos Salud</h3>
+                        <br>
+                        <br>
+                        <h3>Consentimiento</h3>
+                        <br>
+                        <br>
+                    </mat-tab>
+                    <mat-tab label="Dia 1">
+                        <h3>Escala de grado de somnolencia</h3>
+                        <br>
+                        <br>
+                        <h3>Audios</h3>
+                        <br>
+                        <br>
+                    </mat-tab>
+                    <mat-tab label="Dia 2">
+                        <h3>Escala de grado de somnolencia</h3>
+                        <br>
+                        <br>
+                        <h3>Ronda de reconocimiento</h3>
+                        <br>
+                        <br>
+                        <h3>Audios</h3>
+                        <br>
+                        <br>
+                    </mat-tab>
                 </mat-tab-group>
 
             </mat-card-content>
