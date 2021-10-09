@@ -1,5 +1,8 @@
 export const ENCODE_TEST_URL: string = "/encode"; 
-export const GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQrJfwCyw8JzOswhnhHXLVEowppMMhHHj_HFPFa8wqcJnt1mF0lkkNL86hf0tatZls/exec";
+export const GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbrSYXn2ZbsWzLyGcf9hgO78MoKRcBhKodQozW7-N5a9eBRAiHz77uKYT88g7EwPJM/exec";
+
+// Test params
+// export const GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynZj-Kd0rHt6g1aA44M0GmdHe2HwiAARq1z1SyahOnQOuNnL6DJyMXFolPpMEu7bxj/exec";
 
 export enum RecorderStatus 
 {
@@ -40,5 +43,6 @@ export enum SomnolenceDegrees
 
 export enum googleFormsURLs
 {
-    testFormURL = "https://docs.google.com/forms/d/1wutu-cgKSt9cfcq5OjPl7xp1EoafgtWbitAPSSmNJIY"
+    testFormURL = "https://docs.google.com/forms/d/1wutu-cgKSt9cfcq5OjPl7xp1EoafgtWbitAPSSmNJIY/edit",
+    testStaiURL = "https://docs.google.com/forms/d/1Wf8b6VcORHDubmI569wVylsPFCd8DIaiaOCEwAnBSV8/edit"
 }
