@@ -2,7 +2,7 @@
 
 function doGet(e){
   const email = e.parameter.email;
-  const formsURLs = e.parameter.formsURLs.split(",");
+  const formsURLs = e.parameters.formsURLs;
   
   let preFilledResponses = [];
 

@@ -22,7 +22,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { AdminCreativityComponent } from './components/admin-creativity/admin-creativity.component';
 import { AdminRulitComponent } from './components/admin-rulit/admin-rulit.component';
 import { AdminEncodeComponent } from './components/admin-encode/admin-encode.component';
-import { AdminEncodeUserComponent } from './components/admin-encode-user/admin-encode-user.component';
+import { AdminEncodeUserComponent } from './components/admin-encode/encode-user/admin-encode-user.component';
 import { InviteFormComponent } from './components/admin-encode/invite-form-component/invite-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';

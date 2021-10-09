@@ -59,9 +59,5 @@ export class EncodeUserService {
             }
         }
         return this._http.get<string[]>(GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL, options).toPromise();
-        
-        // request.subscribe(response => {
-        //     return response;
-        // });
     }
 }

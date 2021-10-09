@@ -1,8 +1,5 @@
 export const ENCODE_TEST_URL: string = "/encode"; 
-export const GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbrSYXn2ZbsWzLyGcf9hgO78MoKRcBhKodQozW7-N5a9eBRAiHz77uKYT88g7EwPJM/exec";
-
-// Test params
-// export const GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynZj-Kd0rHt6g1aA44M0GmdHe2HwiAARq1z1SyahOnQOuNnL6DJyMXFolPpMEu7bxj/exec";
+export const GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwepY9MB3D89YYkiQ3SZlN6ha6YXopuioMZDZgJRpVJbXzpU07IAgiWgUCLjJKpZhQ/exec";
 
 export enum RecorderStatus 
 {
