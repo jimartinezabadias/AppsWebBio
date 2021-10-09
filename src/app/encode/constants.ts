@@ -1,4 +1,5 @@
 export const ENCODE_TEST_URL: string = "/encode"; 
+export const GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQrJfwCyw8JzOswhnhHXLVEowppMMhHHj_HFPFa8wqcJnt1mF0lkkNL86hf0tatZls/exec";
 
 export enum RecorderStatus 
 {
@@ -35,4 +36,9 @@ export enum SomnolenceDegrees
     tired= "Somnoliento, mareado, luchado contra el sueño; prefiero recostarme.",
     almostSlept= "Ya no lucho contra el sueño, comenzaré a dormirme pronto; tengo pensamientos como sueños.",
     slept= "Dormido."
+}
+
+export enum googleFormsURLs
+{
+    testFormURL = "https://docs.google.com/forms/d/1wutu-cgKSt9cfcq5OjPl7xp1EoafgtWbitAPSSmNJIY"
 }

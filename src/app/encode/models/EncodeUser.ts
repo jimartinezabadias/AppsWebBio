@@ -1,4 +1,3 @@
-import { firestore } from "firebase";
 import { IEncodeUser } from "./IEncodeUser";
 
 export class EncodeUser implements IEncodeUser {
@@ -7,7 +6,7 @@ export class EncodeUser implements IEncodeUser {
     public name: string;
     public email: string;
     public creationDate: Date | null;
-    
+    public googleFormsPreFilledURLs: string[] | null;    
 
     constructor(id: string, name: string, email: string)
     {

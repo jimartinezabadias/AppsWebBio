@@ -5,5 +5,6 @@ export interface IEncodeUser {
     uid: string | null;
     name: string;
     email: string;
-    creationDate: Date | firestore.FieldValue | null
+    creationDate: Date | firestore.FieldValue | null;
+    googleFormsPreFilledURLs: string[] | null;
 }
