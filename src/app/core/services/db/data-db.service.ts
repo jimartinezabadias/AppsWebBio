@@ -9,6 +9,7 @@ import { IRulitUser } from 'src/app/rulit/bits/RulitUserService';
 import { AdminCreativityComponent } from 'src/app/admin/components/admin-creativity/admin-creativity.component';
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';
+import { IEncodeSettings } from 'src/app/encode/models/IEncodeSettings';
 
 
 @Injectable({
@@ -24,6 +25,7 @@ export class DataDbService {
   private rulitSolutionsRef: AngularFirestoreCollection;
   public creativesUsers = [];
   private encodeUserCollectionRef: AngularFirestoreCollection;
+  private encodeConfigRef: AngularFirestoreCollection;
 
   constructor(private afs: AngularFirestore, private http: HttpClient) { 
     this.creativesCollectionRef = afs.collection<CreativeUser>('creatives-users', ref => ref.orderBy('dateStart', 'desc'));
@@ -32,6 +34,7 @@ export class DataDbService {
     this.encodeUserCollectionRef = afs.collection<IEncodeUser>('encode-users');
     this.rulitConfigRef = afs.collection("rulit-config");
     this.rulitSolutionsRef = afs.collection("rulit-solutions");
+    this.encodeConfigRef = afs.collection("encode-config");
   } 
 
   // TODO: Theres no need for async
@@ -174,6 +177,11 @@ export class DataDbService {
       ref => ref.orderBy('creationDate', 'desc').startAt(prevFirst).endBefore(actualFirst).limit(pageSize));
     
     return ref.get();
+  }
+
+  async getEncodeSettings(): Promise<IEncodeSettings> {
+    let cfg = await this.encodeConfigRef.doc<IEncodeSettings>("config").get().toPromise();
+    return cfg.data();
   }
 
 }

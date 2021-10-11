@@ -2,8 +2,9 @@ import { Injectable } from "@angular/core";
 import { DataDbService } from "src/app/core/services/db/data-db.service";
 import { IEncodeUser } from "../models/IEncodeUser";
 import { EncodeUser } from "../models/EncodeUser";
-import { GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL, googleFormsURLs } from "../constants";
+// import { GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL, googleFormsURLs } from "../constants";
 import { HttpClient } from "@angular/common/http";
+import { IEncodeSettings } from "../models/IEncodeSettings";
 
 @Injectable({
     providedIn: 'root'
@@ -51,13 +52,14 @@ export class EncodeUserService {
         return this._dbService.getEncodeUser(userid);
     }
 
-    private _getGoogleFormsPreFilledURLs(user: IEncodeUser): Promise<string[]> {
+    private async _getGoogleFormsPreFilledURLs(user: IEncodeUser): Promise<string[]> {
+        const encodeConfig: IEncodeSettings = await this._dbService.getEncodeSettings();
         const options = {
             params: {
                 email: user.email,
-                formsURLs: [googleFormsURLs.testFormURL, googleFormsURLs.testStaiURL]
+                formsURLs: encodeConfig.googleFormsURLs
             }
         }
-        return this._http.get<string[]>(GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL, options).toPromise();
+        return this._http.get<string[]>(encodeConfig.generateFormResponsesScriptURL, options).toPromise();
     }
 }
