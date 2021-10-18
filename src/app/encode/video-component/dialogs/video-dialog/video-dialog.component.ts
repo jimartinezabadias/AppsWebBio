@@ -14,7 +14,6 @@ export class MyVideoComponent implements OnInit {
   @ViewChild('video', { static: true }) private _video: ElementRef<HTMLVideoElement>;
   private _videoEnded$: Observable<Event>;
   public videoSource = "assets/videos/videoEncode.mp4";
-  public videoEnded = false;
 
   constructor(private _router: Router, private _route: ActivatedRoute, public lazyDialog: LazyDialogService) 
   {
@@ -22,7 +21,6 @@ export class MyVideoComponent implements OnInit {
 
   ngOnInit(): void 
   {
-    this.videoEnded = false;
     this._video.nativeElement.play();
     this._video.nativeElement.volume= 0.8;
     this._videoEnded$ = fromEvent(this._video.nativeElement,'ended');
@@ -30,8 +28,6 @@ export class MyVideoComponent implements OnInit {
   }
 
   private _videoEndedObserver = () => {
-    this.videoEnded = true;
-    this._router.navigate(["/encode/"+location.pathname.split('/').slice()[2]+"/audios"]);
     this.lazyDialog.closeDialog();
   };
 }

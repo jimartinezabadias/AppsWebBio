@@ -10,7 +10,6 @@ import { EncodePersonalInfoComponent } from './personal-info-component/encode-pe
 import { EncodeHealthInfoComponent } from './health-info-component/health-info.component';
 import { EncodeSomnolenceDegreeComponent } from './somnolence-degree-component/somnolence-degree.component';
 import { EncodeVideoComponent } from './video-component/video.component';
-import { EncodeVideoDialogComponent } from './video-dialog-component/video-dialog.component';
 import { EncodeFormListComponent } from './form-list-component/form-list.component';
 import { EncodeAudiosComponent } from './audios-component/audios.component';
 import { EncodeEndComponent } from './end-component/encode-end.component';
@@ -64,12 +63,8 @@ const routes: Routes = [
                 component: EncodeVideoComponent
             },
             {
-                path: 'video-dialog',
-                canDeactivate: [ExitGuard],
-                component: EncodeVideoDialogComponent
-            },
-            {
                 path: 'audios',
+                canDeactivate: [ExitGuard],
                 component: EncodeAudiosComponent
             },
             {

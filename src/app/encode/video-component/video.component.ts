@@ -12,7 +12,7 @@ import { OnExit } from '../exit.guard';
 export class EncodeVideoComponent implements OnInit, OnExit {
 
   public videoSource = "assets/videos/videoEncode.mp4";
-  public videoLaunched = false;
+  private dialogClosed = false;
     
   constructor(private _router: Router, private _route: ActivatedRoute, public lazyDialog: LazyDialogService) 
   {
@@ -20,24 +20,31 @@ export class EncodeVideoComponent implements OnInit, OnExit {
 
   ngOnInit(): void 
   {
-    this.videoLaunched = false;
   }
 
   onExit() {
     //si confirma, envia al componente anterior
-    if(this.videoLaunched == false) {
-      const rta = confirm('¿Quieres salir del test?');
-      return rta; 
-    } else {
+    if(this.dialogClosed == false) {
+      if(confirm('¿Quieres salir del test?')) {
+        window.location.href = '';
+        return true;
+      } else {
+        return false;
+      } 
+    }else {
       return true;
     }
-
   }
 
-  onVideoLaunched()
+  async onVideoLaunched()
   {
-    this.videoLaunched = true;
-    this._router.navigate(["../video-dialog"], { relativeTo: this._route });
+    const dialogRef = await this.lazyDialog.openDialog('video-dialog');
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("cerró");
+      this.dialogClosed = true;
+      this._router.navigate(["/encode/"+location.pathname.split('/').slice()[2]+"/audios"]);
+    });
   }
   
 }
