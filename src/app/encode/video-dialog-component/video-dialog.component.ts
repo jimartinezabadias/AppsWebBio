@@ -1,18 +1,19 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LazyDialogService } from '../services/lazy-dialog.service';
-import { OnExit } from '../exit.guard';
+import { OnExit } from 'src/app/encode/exit.guard';
 
 @Component({
-    selector: 'app-encode-video',
-    templateUrl: './video.component.html',
-    styleUrls: ['video.component.scss','../encode.component.scss']
+    selector: 'app-encode-video-dialog',
+    templateUrl: './video-dialog.component.html',
+    styleUrls: ['video-dialog.component.scss','../encode.component.scss']
 })
 
-export class EncodeVideoComponent implements OnInit, OnExit {
+export class EncodeVideoDialogComponent implements OnInit, OnExit {
 
   public videoSource = "assets/videos/videoEncode.mp4";
-  public videoLaunched = false;
+
+  public videoLaunched;
     
   constructor(private _router: Router, private _route: ActivatedRoute, public lazyDialog: LazyDialogService) 
   {
@@ -20,6 +21,7 @@ export class EncodeVideoComponent implements OnInit, OnExit {
 
   ngOnInit(): void 
   {
+    this.lazyDialog.openDialog('video-dialog')
     this.videoLaunched = false;
   }
 
@@ -34,10 +36,9 @@ export class EncodeVideoComponent implements OnInit, OnExit {
 
   }
 
-  onVideoLaunched()
-  {
+  launchVideo() {
     this.videoLaunched = true;
-    this._router.navigate(["../video-dialog"], { relativeTo: this._route });
+    console.log("video running");
   }
   
 }
