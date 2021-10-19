@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnExit } from '../exit.guard';
+import { MatDialog } from '@angular/material/dialog';
+import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 
 @Component({
     selector: 'app-encode-audios',
@@ -11,24 +13,38 @@ import { OnExit } from '../exit.guard';
 export class EncodeAudiosComponent implements OnExit {
 
   private audiosReady = false;
+  private exitValue = false;
 
   constructor(private _router: Router,
-    private _route: ActivatedRoute) 
+    private _route: ActivatedRoute,
+    private dialog: MatDialog) 
   {
   }
 
   onExit() {
     if(this.audiosReady == false) {
-      if(confirm('¿Quieres salir del test?')) {
-        window.location.href = '';
-        return true;
+      if(this.exitValue == false) {
+        this._openDialog();
       } else {
-        return false;
-      } 
+        return true;
+      }
     } else {
       return true;
     }
+  }
 
+  private async _openDialog() {
+    const dialogRef = this.dialog.open(ExitConfirmComponent, {});
+    dialogRef.afterClosed().subscribe(this._dialogClosedObserver);
+  }
+
+  private _dialogClosedObserver = (result) => {
+    if(result) {
+      this.exitValue = true;
+      window.location.href = '';
+    } else {
+      this.exitValue = false;
+    }
   }
 
   onAudiosReady()

@@ -22,6 +22,7 @@ import { MyVideoComponent } from './video-component/dialogs/video-dialog/video-d
 import { EncodeFormListComponent } from './form-list-component/form-list.component';
 import { EncodeAudiosComponent } from './audios-component/audios.component';
 import { EncodeEndComponent } from './end-component/encode-end.component';
+import { ExitConfirmComponent } from './exit-confirm-component/exit-confirm.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { EncodeEndComponent } from './end-component/encode-end.component';
         MyVideoComponent,
         EncodeFormListComponent,
         EncodeAudiosComponent,
-        EncodeEndComponent
+        EncodeEndComponent,
+        ExitConfirmComponent
     ],
     imports: [
         SharedModule,

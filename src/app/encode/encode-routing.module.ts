@@ -69,6 +69,7 @@ const routes: Routes = [
             },
             {
                 path: 'end',
+                canDeactivate: [ExitGuard],
                 component: EncodeEndComponent
             }
         ]
