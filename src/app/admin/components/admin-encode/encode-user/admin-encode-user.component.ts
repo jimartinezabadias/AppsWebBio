@@ -11,7 +11,7 @@ export class AdminEncodeUserComponent implements OnInit {
 
   // Columnas de la tabla que se van a mostrar
   public displayedColumns: string[] = ["email", "link", "creationDate" ];
-  public userData: any;
+  public userData;
 
   constructor(
     private _dbService: DataDbService,
@@ -20,8 +20,7 @@ export class AdminEncodeUserComponent implements OnInit {
   async ngOnInit(): Promise<void> 
   {
     let userIdParam = this.route.snapshot.paramMap.get('userId');
-    const userData = await this._dbService.getEncodeUser(userIdParam);
-    this.userData = userData;
+    this._dbService.getEncodeUser(userIdParam).then(data => this.userData = data);
   }
 
 }

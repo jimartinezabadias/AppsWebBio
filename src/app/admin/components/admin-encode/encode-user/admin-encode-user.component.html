@@ -6,14 +6,14 @@
         </div>
 
         <mat-card class="results-card">
-            <mat-card-content>
+            <mat-card-content *ngIf="userData">
 
-                <h1 class="mat-display-1">{{ userData.name }}</h1>
+                <h1 class="mat-display-1" h1Def="let userData">{{ userData.name }}</h1>
 
                 <div class="user-info">
-                    <p>Email: {{ userData.email }}</p>
-                    <p>Link: {{ userData.uid | encodeLink }}</p>
-                    <p>Fecha de creación: {{ userData.creationDate.toMillis() | date:'d/M/yyyy, h:mm a' }}</p>
+                    <p pDef="let userData">Email: {{ userData.email }}</p>
+                    <p pDef="let userData">Link: {{ userData.uid | encodeLink }}</p>
+                    <p pDef="let userData">Fecha de creación: {{ userData.creationDate.toMillis() | date:'d/M/yyyy, h:mm a' }}</p>
                 </div>
 
                 <mat-tab-group>
