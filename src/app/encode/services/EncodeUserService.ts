@@ -24,7 +24,7 @@ export class EncodeUserService {
         const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
         const newUser: IEncodeUser = new EncodeUser(newUserId, userData.name, userData.email);
         const googleFormsPreFilledURLs: string[] = await this._getGoogleFormsPreFilledURLs(newUser);
-        newUser.googleFormsPreFilledURLs = googleFormsPreFilledURLs;
+        // TODO: armar array con google forms
         await this._dbService.saveEncodeUser(newUser);
         return newUser;
     }
@@ -60,6 +60,6 @@ export class EncodeUserService {
                 formsURLs: encodeConfig.googleFormsURLs
             }
         }
-        return this._http.get<string[]>(encodeConfig.generateFormResponsesScriptURL, options).toPromise();
+        return this._http.get<string[]>(encodeConfig.generatePreFilledResponsesScriptURL, options).toPromise();
     }
 }

@@ -1,4 +1,5 @@
 import { firestore } from "firebase";
+import { IEncodeGoogleFormResponse } from "./IEncodeGoogleFormResponse";
 
 // EncodeUser stored in DB
 export interface IEncodeUser {
@@ -6,5 +7,5 @@ export interface IEncodeUser {
     name: string;
     email: string;
     creationDate: Date | firestore.FieldValue | null;
-    googleFormsPreFilledURLs: string[] | null;
+    googleFormsResponses: IEncodeGoogleFormResponse[] | null;
 }

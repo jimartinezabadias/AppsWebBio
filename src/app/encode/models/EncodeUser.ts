@@ -1,3 +1,4 @@
+import { IEncodeGoogleFormResponse } from "./IEncodeGoogleFormResponse";
 import { IEncodeUser } from "./IEncodeUser";
 
 export class EncodeUser implements IEncodeUser {
@@ -6,7 +7,7 @@ export class EncodeUser implements IEncodeUser {
     public name: string;
     public email: string;
     public creationDate: Date | null;
-    public googleFormsPreFilledURLs: string[] | null;    
+    public googleFormsResponses: IEncodeGoogleFormResponse[] | null;
 
     constructor(id: string, name: string, email: string)
     {
