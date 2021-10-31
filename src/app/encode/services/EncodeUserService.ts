@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { DataDbService } from "src/app/core/services/db/data-db.service";
 import { IEncodeUser } from "../models/IEncodeUser";
 import { EncodeUser } from "../models/EncodeUser";
-// import { GENERATE_GOOGLE_FORMS_LINKS_SCRIPT_URL, googleFormsURLs } from "../constants";
 import { HttpClient } from "@angular/common/http";
 import { IEncodeSettings } from "../models/IEncodeSettings";
+import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
 
 @Injectable({
     providedIn: 'root'
@@ -22,9 +22,10 @@ export class EncodeUserService {
     public async createNewUser(userData: {name: string, email: string}): Promise<IEncodeUser>
     {
         const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
-        const newUser: IEncodeUser = new EncodeUser(newUserId, userData.name, userData.email);
-        const googleFormsPreFilledURLs: string[] = await this._getGoogleFormsPreFilledURLs(newUser);
+        const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(userData.email);
+        const newUser: IEncodeUser = new EncodeUser(newUserId, userData.name, userData.email,googleFormsResponses);
         // TODO: armar array con google forms
+        
         await this._dbService.saveEncodeUser(newUser);
         return newUser;
     }
@@ -52,14 +53,14 @@ export class EncodeUserService {
         return this._dbService.getEncodeUser(userid);
     }
 
-    private async _getGoogleFormsPreFilledURLs(user: IEncodeUser): Promise<string[]> {
+    private async _getGoogleFormsPreFilledURLs(userEmail: string): Promise<IEncodeGoogleFormResponse[]> {
         const encodeConfig: IEncodeSettings = await this._dbService.getEncodeSettings();
         const options = {
             params: {
-                email: user.email,
+                email: userEmail,
                 formsURLs: encodeConfig.googleFormsURLs
             }
         }
-        return this._http.get<string[]>(encodeConfig.generatePreFilledResponsesScriptURL, options).toPromise();
+        return this._http.get<IEncodeGoogleFormResponse[]>(encodeConfig.generatePreFilledResponsesScriptURL, options).toPromise();
     }
 }

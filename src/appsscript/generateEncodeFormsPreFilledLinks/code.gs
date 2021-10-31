@@ -1,3 +1,8 @@
+// 
+// implementacion
+// descripcion: v0.0.1
+// url: https://script.google.com/macros/s/AKfycbzOsyPiQLvrlr8MOE_YHSkbvJ-N2keuASO_LCYldJm5d5UaEuVUyyzHRnPWg8iEAo46/exec
+// 
 "use strict";
 
 function doGet(e){
@@ -7,14 +12,16 @@ function doGet(e){
   let preFilledResponses = [];
 
   for (let formURL of formsURLs){
-    preFilledResponses.push(generateResponseURL(email, formURL));
+    preFilledResponses.push(generateNewResponse(email, formURL));
   }
 
   return ContentService.createTextOutput(JSON.stringify(preFilledResponses)).setMimeType(ContentService.MimeType.JSON); 
 }
 
-function generateResponseURL(email, formURL){
-  let form = FormApp.openByUrl(formURL);
+function generateNewResponse(email, formURL){
+  const form = FormApp.openByUrl(formURL);
+  const formId = form.getId();
+  const isResponded = false;
   let formItems = form.getItems();
   let newFormResponse = form.createResponse();
   
@@ -22,6 +29,12 @@ function generateResponseURL(email, formURL){
   let itemResponse = emailItem.createResponse(email);
   newFormResponse.withItemResponse(itemResponse);
 
-  let preFilledURL = newFormResponse.toPrefilledUrl();
-  return preFilledURL;
+  const preFilledURL = newFormResponse.toPrefilledUrl();
+
+  const newResponse = {
+    formID: formId,
+    preFilledURL: preFilledURL,
+    isResponded: isResponded
+  };
+  return newResponse;
 }

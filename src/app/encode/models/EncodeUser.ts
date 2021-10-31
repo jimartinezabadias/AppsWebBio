@@ -9,11 +9,12 @@ export class EncodeUser implements IEncodeUser {
     public creationDate: Date | null;
     public googleFormsResponses: IEncodeGoogleFormResponse[] | null;
 
-    constructor(id: string, name: string, email: string)
+    constructor(id: string, name: string, email: string, googleFormsResponses: IEncodeGoogleFormResponse[])
     {
         this.uid = id;
         this.name = name;
         this.email = email;
+        this.googleFormsResponses = googleFormsResponses;
     }
 
 }
