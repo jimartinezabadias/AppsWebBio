@@ -19,8 +19,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatPaginatorIntlES } from './custom/mat-paginator-intl_ES';
-import {MatTabsModule} from '@angular/material/tabs';
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [],
@@ -43,7 +43,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatDialogModule,
     MatSnackBarModule,
     MatRadioModule,
-    MatTabsModule
+    MatTabsModule,
+    MatStepperModule,
   ],
   exports: [
     MatButtonModule,
@@ -63,7 +64,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatDialogModule,
     MatSnackBarModule,
     MatRadioModule,
-    MatTabsModule
+    MatTabsModule,
+    MatStepperModule,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlES}]
 })

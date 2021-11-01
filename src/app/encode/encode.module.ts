@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '../shared/shared.module';
 
-import { MaterialModule } from '../material/material.module';
-
 import { EncodeRoutingModule } from './encode-routing.module';
 import { EncodeAboutComponent } from './about-component/encode-about.component';
 import { EncodeWellcomeComponent } from './wellcome-component/encode-wellcome.component';
@@ -20,10 +18,10 @@ import { EncodeHealthInfoComponent } from './health-info-component/health-info.c
 import { EncodeSomnolenceDegreeComponent } from './somnolence-degree-component/somnolence-degree.component';
 import { EncodeVideoComponent } from './video-component/video.component';
 import { MyVideoComponent } from './video-component/dialogs/video-dialog/video-dialog.component';
-import { EncodeFormListComponent } from './form-list-component/form-list.component';
 import { EncodeAudiosComponent } from './audios-component/audios.component';
 import { EncodeEndComponent } from './end-component/encode-end.component';
 import { ExitConfirmComponent } from './exit-confirm-component/exit-confirm.component';
+import { EncodeGoogleFormsComponent } from './google-forms-component/encode-google-forms.component';
 
 @NgModule({
     declarations: [
@@ -40,18 +38,17 @@ import { ExitConfirmComponent } from './exit-confirm-component/exit-confirm.comp
         EncodeSomnolenceDegreeComponent,
         EncodeVideoComponent,
         MyVideoComponent,
-        EncodeFormListComponent,
         EncodeAudiosComponent,
         EncodeEndComponent,
-        ExitConfirmComponent
+        ExitConfirmComponent,
+        EncodeGoogleFormsComponent
     ],
     imports: [
+        CommonModule,
         SharedModule,
         EncodeRoutingModule,
         FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        CommonModule
+        ReactiveFormsModule
     ],
     exports: [],
     providers: []

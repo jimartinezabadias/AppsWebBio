@@ -43,7 +43,8 @@ import { HeaderEncodeComponent } from './components/header-encode/header-encode.
     ReplaceNullWithTextPipe,
     HeaderRulitComponent,
     HeaderQuestionRulitComponent,
-    HeaderEncodeComponent
+    HeaderEncodeComponent,
+    MaterialModule
   ],
   imports: [
     CommonModule,

@@ -5,7 +5,6 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './components/admin.component';
 
 import { SharedModule } from '../shared/shared.module';
-import { MaterialModule } from '../material/material.module';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FileSaverModule } from 'ngx-filesaver';
@@ -46,7 +45,6 @@ import { EncodeLinkPipe } from './components/admin-encode/encode-link.pipe';
     CommonModule,
     AdminRoutingModule,
     SharedModule,
-    MaterialModule,
     HttpClientModule,
     FileSaverModule,
     MatTableModule,
