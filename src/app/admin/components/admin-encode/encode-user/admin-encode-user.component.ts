@@ -1,6 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
+import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
+import { from, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin-encode-user',
@@ -11,7 +13,7 @@ export class AdminEncodeUserComponent implements OnInit {
 
   // Columnas de la tabla que se van a mostrar
   public displayedColumns: string[] = ["email", "link", "creationDate" ];
-  public userData;
+  public user$ : Observable<IEncodeUser>;
 
   constructor(
     private _dbService: DataDbService,
@@ -20,7 +22,7 @@ export class AdminEncodeUserComponent implements OnInit {
   async ngOnInit(): Promise<void> 
   {
     let userIdParam = this.route.snapshot.paramMap.get('userId');
-    this._dbService.getEncodeUser(userIdParam).then(data => this.userData = data);
+    this.user$ = from(this._dbService.getEncodeUser(userIdParam));
   }
 
 }
