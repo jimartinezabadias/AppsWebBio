@@ -41,7 +41,7 @@ export class EncodeAudiosComponent implements OnExit {
   private _dialogClosedObserver = (result) => {
     if(result) {
       this.exitValue = true;
-      window.location.href = '';
+      this._router.navigate(["/"]);
     } else {
       this.exitValue = false;
     }

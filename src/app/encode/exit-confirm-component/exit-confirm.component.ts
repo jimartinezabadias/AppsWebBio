@@ -9,8 +9,7 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 })
 export class ExitConfirmComponent {
 
-  constructor(public dialogRef: MatDialogRef<ExitConfirmComponent>,
-              @Inject(MAT_DIALOG_DATA) public audio: SafeResourceUrl) 
+  constructor(public dialogRef: MatDialogRef<ExitConfirmComponent>) 
   {
   }
 
