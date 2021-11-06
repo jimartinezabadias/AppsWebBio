@@ -1,5 +1,7 @@
 import { firestore } from "firebase";
 import { IEncodeGoogleFormResponse } from "./IEncodeGoogleFormResponse";
+import { IEncodeDayOne } from "./IEncodeDayOne";
+import { IEncodeUserPersonalInfo } from "./IEncodeUserPersonalInfo";
 
 // EncodeUser stored in DB
 export interface IEncodeUser {
@@ -8,4 +10,7 @@ export interface IEncodeUser {
     email: string;
     creationDate: Date | firestore.FieldValue | null;
     googleFormsResponses: IEncodeGoogleFormResponse[] | null;
+    googleFormsPreFilledURLs: string[] | null;
+    personalInfo: IEncodeUserPersonalInfo | null;
+    dayOne: IEncodeDayOne | null;
 }
