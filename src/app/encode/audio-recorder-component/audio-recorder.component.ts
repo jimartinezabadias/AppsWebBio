@@ -38,12 +38,12 @@ export class AudioRecorderComponent implements OnInit {
   {
     if (!this.recorderService.isRecording)
     {
+      this._openDialog();
       try {
         this._stream = await this._navigator.mediaDevices.getUserMedia({audio: true, video: false});
         this.recorderService.record(this._stream);
         this.status = RecorderStatus.Recording;
       } catch (error) {
-        this._openDialog();
         console.log("error al acceder al microfono");
         console.log(error);
       }
