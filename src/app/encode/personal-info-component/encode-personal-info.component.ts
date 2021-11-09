@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { Genders, EducationLevels } from '../constants';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IEncodeUserPersonalInfo } from '../models/IEncodeUserPersonalInfo';
 
 @Component({
     selector: 'app-encode-personal-info',
@@ -41,7 +42,8 @@ export class EncodePersonalInfoComponent implements OnInit {
   {
     if (this.personalInfoFormGroup.valid)
     {
-        console.log("TODO: save personal info form");
+        const formData: IEncodeUserPersonalInfo = this.personalInfoFormGroup.value;
+        this._userService.storePersonalInfo(formData);
         this._router.navigate(["../health-info"], { relativeTo: this._route });
       }
   }

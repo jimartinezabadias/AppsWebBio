@@ -5,6 +5,8 @@ import { EncodeUser } from "../models/EncodeUser";
 import { HttpClient } from "@angular/common/http";
 import { IEncodeSettings } from "../models/IEncodeSettings";
 import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
+import { FormGroup } from "@angular/forms";
+import { IEncodeUserPersonalInfo } from "../models/IEncodeUserPersonalInfo";
 
 @Injectable({
     providedIn: 'root'
@@ -45,6 +47,10 @@ export class EncodeUserService {
     public user(): IEncodeUser 
     {
         return this._user;
+    }
+
+    public storePersonalInfo(personalInfo: IEncodeUserPersonalInfo): void {
+        this._user.personalInfo = personalInfo;
     }
     
     //
