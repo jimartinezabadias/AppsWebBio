@@ -2,8 +2,9 @@
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
         <div class="consent">
-            <h1>Estudio sobre la formación de memorias episódicas y su relación con estados de ánimo y personalidad.</h1>
-            <h3>-Investigadora responsable: Dra. Forcato Cecilia (Conicet-ITBA)</h3>
+            <h1 class="title">Estudio sobre la formación de memorias episódicas y su relación con estados de ánimo y personalidad.</h1>
+            
+            <h3><span>-Investigadora responsable: Dra. Forcato Cecilia (Conicet-ITBA)</span></h3>
 
             <h4>Objetivo de la investigación</h4>
             <p>
@@ -94,9 +95,9 @@
                 </mat-list-option>
             </mat-selection-list>
 
-            <a mat-raised-button
+            <button mat-raised-button class="save-form-btn"
                 disabled="{{list_of_agreement.selectedOptions.selected.length < 4}}"
-                (click)="onConsent()">Doy mi consentimiento para participar</a>
+                (click)="onConsent()">Doy mi consentimiento para participar</button>
 
             <p>
                 Cualquier duda que tengas sobre el consentimiento informado podes corroborarlo comunicandote con el
