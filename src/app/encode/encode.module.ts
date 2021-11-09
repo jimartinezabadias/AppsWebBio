@@ -12,6 +12,7 @@ import { EncodeWellcomeComponent } from './wellcome-component/encode-wellcome.co
 import { AudioRecorderComponent } from './audio-recorder-component/audio-recorder.component';
 import { EncodeMicTestComponent } from './mic-test-component/mic-test.component';
 import { AudioConfirmComponent } from './mic-test-component/audio-confirm-component/audio-confirm.component';
+import { AudioDisclaimerComponent } from './audio-recorder-component/audio-disclaimer-component/audio-disclaimer.component';
 import { EncodeVideoTestComponent } from './video-test-component/video-test.component';
 import { EncodeConsentComponent } from './consent-component/encode-consent.component';
 import { EncodePersonalInfoComponent } from './personal-info-component/encode-personal-info.component';
@@ -31,6 +32,7 @@ import { ExitConfirmComponent } from './exit-confirm-component/exit-confirm.comp
         EncodeMicTestComponent,
         AudioRecorderComponent,
         AudioConfirmComponent,
+        AudioDisclaimerComponent,
         EncodeVideoTestComponent,
         EncodeConsentComponent,
         EncodePersonalInfoComponent,

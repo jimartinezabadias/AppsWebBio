@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RecorderStatus } from '../constants';
 import { AudioRecorderService } from '../services/AudioRecorderService';
+import { AudioDisclaimerComponent } from './audio-disclaimer-component/audio-disclaimer.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-audio-recorder',
     templateUrl: './audio-recorder.component.html',
-    styleUrls: ['../encode.component.scss','audio-recorder.component.scss']
+    styleUrls: ['audio-recorder.component.scss','../encode.component.scss']
 })
 export class AudioRecorderComponent implements OnInit {
 
@@ -15,7 +17,7 @@ export class AudioRecorderComponent implements OnInit {
   status: RecorderStatus;
   recorderService: AudioRecorderService;
 
-  constructor(recorder: AudioRecorderService) 
+  constructor(recorder: AudioRecorderService, public dialog: MatDialog) 
   {
     this._navigator = navigator;
     this.recorderService = recorder;
@@ -24,6 +26,12 @@ export class AudioRecorderComponent implements OnInit {
 
   ngOnInit(): void 
   {
+  }
+
+  private _openDialog(): void {
+    const dialogRef = this.dialog.open(AudioDisclaimerComponent, {
+      width: '580px'
+    });
   }
 
   public async onRec(): Promise<void>
@@ -35,6 +43,7 @@ export class AudioRecorderComponent implements OnInit {
         this.recorderService.record(this._stream);
         this.status = RecorderStatus.Recording;
       } catch (error) {
+        this._openDialog();
         console.log("error al acceder al microfono");
         console.log(error);
       }

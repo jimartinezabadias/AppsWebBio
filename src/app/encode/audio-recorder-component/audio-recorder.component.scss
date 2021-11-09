@@ -38,3 +38,19 @@
 .mat-icon {
     transform: scale(1.32);
 }
+
+.cdk-overlay-pane {
+    max-width: 580px;
+}
+
+.mat-dialog-content > p
+{
+    font-size: 17px;
+    line-height: 24px;
+}
+
+.mat-dialog-title > h1
+{
+    margin-bottom: 5px;
+    text-align: left;
+}
