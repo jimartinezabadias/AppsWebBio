@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IEncodeUserHealthInfo } from '../models/IEncodeUserHealthInfo';
 import { EncodeUserService } from '../services/EncodeUserService';
 
 @Component({
@@ -51,7 +52,8 @@ export class EncodeHealthInfoComponent implements OnInit {
   {
     if (this.healthInfoFormGroup.valid)
     {
-      console.log("TODO: save health info form");
+      const formData: IEncodeUserHealthInfo = this.healthInfoFormGroup.value;
+      this._userService.storeHealthInfo(formData);
       this._router.navigate(["../somnolence-degree"], { relativeTo: this._route });
     } 
     else
