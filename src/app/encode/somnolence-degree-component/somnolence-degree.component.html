@@ -5,7 +5,7 @@
            
             <form [formGroup]="somnolenceDegreeFormGroup" (ngSubmit)="onSaveForm($event)">
             
-                <mat-card>
+                <mat-card class="shipping-card">
                     
                     <mat-card-header>
                         <mat-card-title>Grado de somnolencia</mat-card-title>
@@ -15,7 +15,10 @@
                     
                         <!-- Grado de somnolencia -->
                         <div class="labelAndRadioContainer">
-                            <label id="somnolence-degree-label">Este test es una forma rápida de detectar cuán alerta te sentís, selecioná ell estado con el que te identifiques mejor en este momento:</label>
+                            <mat-card-subtitle>
+                                <label id="somnolence-degree-label">Este test es una forma rápida de detectar cuán alerta te sentís, selecioná ell estado con el que te identifiques mejor en este momento:</label>
+                            </mat-card-subtitle>
+                            
                             <mat-radio-group 
                                 aria-labelledby="somnolence-degree-label"
                                 formControlName="somnolenceDegree"
@@ -51,7 +54,7 @@
                         <!-- Boton siguiente -->
                         <mat-card-actions>
                             <button mat-raised-button type="submit" class="save-form-btn">
-                                Siguiente
+                                SIGUIENTE
                             </button>   
                         </mat-card-actions>
                         
