@@ -3,14 +3,27 @@
     <section class="main-app-section">
         <div class="google-forms">
 
-            <mat-horizontal-stepper linear #stepper>
-                <mat-step *ngFor="let form of googleForms">
+            <!-- <mat-horizontal-stepper linear #stepper>
+                <mat-step *ngFor="let form of userForms">
                     <ng-template matStepLabel>Step 1</ng-template>
                     <ng-template matStepContent>
-                        <iframe [src]="form.url" frameborder="0"></iframe>
+                        <p>lalalala</p>
+                        <iframe [src]="form.preFilledURL | byPassSecurity" width="640" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
                     </ng-template>
                 </mat-step>
-            </mat-horizontal-stepper>
-            
+            </mat-horizontal-stepper> -->
+
+            <!-- <mat-horizontal-stepper linear #stepper> -->
+                <!-- <div *ngFor="let form of userForms"> -->
+                    <!-- <ng-template matStepLabel>Step 1</ng-template> -->
+                    <!-- <div matStepContent>
+                        <p>llalal</p>
+                        <iframe src="{{ form.preFilledURL + '&' + embeddedParameter}}" width="640" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+                    </div>
+                </div> -->
+            <!-- </mat-horizontal-stepper> -->
+            <div *ngFor="let url of userForms">
+                <iframe [src]="url.preFilledURL | byPassSecurity" width="640" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+            </div>
         </div>
 </section>

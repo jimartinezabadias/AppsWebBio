@@ -22,6 +22,7 @@ import { EncodeAudiosComponent } from './audios-component/audios.component';
 import { EncodeEndComponent } from './end-component/encode-end.component';
 import { ExitConfirmComponent } from './exit-confirm-component/exit-confirm.component';
 import { EncodeGoogleFormsComponent } from './google-forms-component/encode-google-forms.component';
+import { ByPassSecurityPipe } from './google-forms-component/by-pass-security.pipe';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { EncodeGoogleFormsComponent } from './google-forms-component/encode-goog
         EncodeAudiosComponent,
         EncodeEndComponent,
         ExitConfirmComponent,
-        EncodeGoogleFormsComponent
+        EncodeGoogleFormsComponent,
+        ByPassSecurityPipe
     ],
     imports: [
         CommonModule,
