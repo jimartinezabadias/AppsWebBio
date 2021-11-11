@@ -2,6 +2,7 @@ import { firestore } from "firebase";
 import { IEncodeGoogleFormResponse } from "./IEncodeGoogleFormResponse";
 import { IEncodeDayOne } from "./IEncodeDayOne";
 import { IEncodeUserPersonalInfo } from "./IEncodeUserPersonalInfo";
+import { IEncodeUserHealthInfo } from "./IEncodeUserHealthInfo";
 
 // EncodeUser stored in DB
 export interface IEncodeUser {
@@ -13,4 +14,5 @@ export interface IEncodeUser {
     googleFormsPreFilledURLs: string[] | null;
     personalInfo: IEncodeUserPersonalInfo | null;
     dayOne: IEncodeDayOne | null;
+    healthInfo: IEncodeUserHealthInfo | null;
 }

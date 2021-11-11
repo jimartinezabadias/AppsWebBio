@@ -2,6 +2,7 @@ import { IEncodeGoogleFormResponse } from "./IEncodeGoogleFormResponse";
 import { IEncodeDayOne } from "./IEncodeDayOne";
 import { IEncodeUser } from "./IEncodeUser";
 import { IEncodeUserPersonalInfo } from "./IEncodeUserPersonalInfo";
+import { IEncodeUserHealthInfo } from "./IEncodeUserHealthInfo";
 
 export class EncodeUser implements IEncodeUser {
     
@@ -13,6 +14,7 @@ export class EncodeUser implements IEncodeUser {
     public googleFormsPreFilledURLs: string[] | null;    
     public personalInfo: IEncodeUserPersonalInfo | null;
     public dayOne: IEncodeDayOne | null;
+    public healthInfo: IEncodeUserHealthInfo | null;
 
     constructor(id: string, name: string, email: string, googleFormsResponses: IEncodeGoogleFormResponse[])
     {
@@ -22,6 +24,7 @@ export class EncodeUser implements IEncodeUser {
         this.googleFormsResponses = googleFormsResponses;
         this.personalInfo = null;
         this.dayOne = null;
+        this.healthInfo = null;
     }
     
 
