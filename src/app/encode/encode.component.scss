@@ -38,22 +38,41 @@ h3>span {
     background-color: #e33b881b;
 }
 
-.mat-card-header
-{
-    margin: 16px 0 !important;
+.mat-card {
+    max-width: 33em;
 }
 
-.save-form-btn{
+.mat-card-header
+{
+    margin: 0px 0 !important;
+}
+
+.mat-card-subtitle
+{
+    padding-top: 8px;
+    text-align: center;
+    line-height: 19px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.save-form-btn
+{
     width: 100%;
     background-color: #76ad2e;
     color: #eeeeee;
     font-size: large;
     font-weight: 500;
     padding: 0.5rem 0;
-    max-width: 350px;
 }
 
-.save-form-btn:hover:enabled{
+.save-form-btn:hover:enabled
+{
     color: white;
     background-color: #76ad2ecc;
+}
+
+.mat-card-actions 
+{
+    width: 100%;
 }

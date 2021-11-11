@@ -8,7 +8,7 @@ import { IEncodeUserPersonalInfo } from '../models/IEncodeUserPersonalInfo';
 @Component({
     selector: 'app-encode-personal-info',
     templateUrl: './encode-personal-info.component.html',
-    styleUrls: ['encode-personal-info.component.scss','../encode.component.scss']
+    styleUrls: ['../encode.component.scss','encode-personal-info.component.scss']
 })
 
 export class EncodePersonalInfoComponent implements OnInit {
