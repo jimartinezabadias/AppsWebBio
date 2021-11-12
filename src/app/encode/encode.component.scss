@@ -76,3 +76,16 @@ h3>span {
 {
     width: 100%;
 }
+
+mat-card-header {
+    justify-content: center;
+    background-color: #4a4067;
+    color: white;
+    padding: 1em;
+    margin: 0px 0 !important;
+}
+
+.mat-card-title 
+{
+    margin: 0 !important;
+}
