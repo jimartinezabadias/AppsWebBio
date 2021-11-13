@@ -1,6 +1,6 @@
 export interface IEncodeUserHealthInfo {
     takesCronicMedicine: boolean;
-    cronicMedicines: string;
+    cronicMedicines: string | null;
     hasSleepDisorder: boolean;
-    sleepDisorders: string;
+    sleepDisorders: string | null;
 }
