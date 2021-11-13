@@ -59,8 +59,8 @@ export class EncodeUserService {
         this._user.healthInfo= healthInfo;
     }
     
-    public storeDayOne(dayOne: IEncodeDayOne): void {
-        this._user.dayOne = dayOne;
+    public storeSomnolenceDayOne(dayOne: string): void {
+        this._user.dayOne.somnolenceDegree = dayOne;
     }
     
     //
