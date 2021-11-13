@@ -8,6 +8,7 @@ import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
 import { FormGroup } from "@angular/forms";
 import { IEncodeUserPersonalInfo } from "../models/IEncodeUserPersonalInfo";
 import { IEncodeUserHealthInfo } from "../models/IEncodeUserHealthInfo";
+import { IEncodeDayOne } from "../models/IEncodeDayOne";
 
 @Injectable({
     providedIn: 'root'
@@ -56,6 +57,10 @@ export class EncodeUserService {
 
     public storeHealthInfo(healthInfo: IEncodeUserHealthInfo): void {
         this._user.healthInfo= healthInfo;
+    }
+    
+    public storeDayOne(dayOne: IEncodeDayOne): void {
+        this._user.dayOne = dayOne;
     }
     
     //

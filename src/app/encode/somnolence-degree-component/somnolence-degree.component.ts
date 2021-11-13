@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { SomnolenceDegrees } from "../constants";
+import { IEncodeDayOne } from '../models/IEncodeDayOne';
 
 @Component({
     selector: 'app-encode-somnolence-degree',
@@ -33,7 +34,9 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
   
   onSaveForm($event: any)
   {
-    console.log("todo: - save in DB. -navigate to next step in phase ");
+    const formData: IEncodeDayOne = this.somnolenceDegreeFormGroup.value;
+    this._userService.storeDayOne(formData);
+    console.log("todo: - save in DB.");
     this._router.navigate(["../google-forms"], { relativeTo: this._route });
   }
 
