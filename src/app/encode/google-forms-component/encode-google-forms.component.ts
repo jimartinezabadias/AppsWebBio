@@ -2,11 +2,18 @@ import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IEncodeGoogleFormResponse } from '../models/IEncodeGoogleFormResponse';
 import { EncodeUserService } from '../services/EncodeUserService';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 @Component({
     selector: 'app-encode-google-forms',
     templateUrl: './encode-google-forms.component.html',
-    styleUrls: ['encode-google-forms.component.scss','../encode.component.scss']
+    styleUrls: ['encode-google-forms.component.scss','../encode.component.scss'],
+    providers: [
+      {
+        provide: STEPPER_GLOBAL_OPTIONS,
+        useValue: {showError: true},
+      },
+    ]
 })
 
 export class EncodeGoogleFormsComponent{
