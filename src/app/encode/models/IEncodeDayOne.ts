@@ -1,3 +1,5 @@
+import { SomnolenceDegrees } from "../constants";
+
 export interface IEncodeDayOne {
-    somnolenceDegree: string;
+    somnolenceDegree: SomnolenceDegrees;
 }

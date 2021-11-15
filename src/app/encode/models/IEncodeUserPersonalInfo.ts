@@ -1,7 +1,9 @@
+import { EducationLevels, Genders } from "../constants";
+
 export interface IEncodeUserPersonalInfo {
-    age: string;
-    gender: string;
-    educationLevel: string;
+    age: number;
+    gender: Genders;
+    educationLevel: EducationLevels;
     ongoingCareer: string | null;
     occupation: string | null
 }

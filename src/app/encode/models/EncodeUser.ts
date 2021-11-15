@@ -3,6 +3,7 @@ import { IEncodeDayOne } from "./IEncodeDayOne";
 import { IEncodeUser } from "./IEncodeUser";
 import { IEncodeUserPersonalInfo } from "./IEncodeUserPersonalInfo";
 import { IEncodeUserHealthInfo } from "./IEncodeUserHealthInfo";
+import { EncodeDayOne } from "./EncodeDayOne";
 
 export class EncodeUser implements IEncodeUser {
     
@@ -23,7 +24,7 @@ export class EncodeUser implements IEncodeUser {
         this.email = email;
         this.googleFormsResponses = googleFormsResponses;
         this.personalInfo = null;
-        this.dayOne = null;
+        this.dayOne = new EncodeDayOne();
         this.healthInfo = null;
     }
     

@@ -5,10 +5,9 @@ import { EncodeUser } from "../models/EncodeUser";
 import { HttpClient } from "@angular/common/http";
 import { IEncodeSettings } from "../models/IEncodeSettings";
 import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
-import { FormGroup } from "@angular/forms";
 import { IEncodeUserPersonalInfo } from "../models/IEncodeUserPersonalInfo";
 import { IEncodeUserHealthInfo } from "../models/IEncodeUserHealthInfo";
-import { IEncodeDayOne } from "../models/IEncodeDayOne";
+import { SomnolenceDegrees } from "../constants";
 
 @Injectable({
     providedIn: 'root'
@@ -56,11 +55,12 @@ export class EncodeUserService {
     }
 
     public storeHealthInfo(healthInfo: IEncodeUserHealthInfo): void {
-        this._user.healthInfo= healthInfo;
+        this._user.healthInfo = healthInfo;
     }
     
-    public storeSomnolenceDayOne(dayOne: string): void {
-        this._user.dayOne.somnolenceDegree = dayOne;
+    public storeSomnolenceDayOne(somnolenceDegreeResponse: SomnolenceDegrees): void {
+        console.log(this._user);
+        this._user.dayOne.somnolenceDegree = somnolenceDegreeResponse;
     }
     
     //
