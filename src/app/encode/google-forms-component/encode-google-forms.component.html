@@ -3,14 +3,51 @@
     <section class="main-app-section">
         <div class="google-forms">
 
-            <mat-horizontal-stepper linear>
+            <mat-card>
+                    
+                <mat-card-header>
+                    <mat-card-title>Formularios</mat-card-title>
+                </mat-card-header>
+                
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item *ngFor="let form of userForms; let indexOfelement=index;">
+                            <button mat-flat-button (click)="openForm(form.preFilledURL)" [disabled]="isFormDisabled(indexOfelement)">
+                                <mat-icon *ngIf="form.isResponded" mat-list-icon color="green">assignment_turned_in</mat-icon>
+                                <mat-icon *ngIf="!form.isResponded" mat-list-icon color="primary">assignment</mat-icon>
+                                Formulario {{ indexOfelement + 1 }}
+                            </button>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
 
-                <mat-step *ngFor="let url of userForms">
-                    <ng-template matStepLabel>Step 1</ng-template>
-                    <iframe [src]="url.preFilledURL | byPassSecurity" width="640" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
-                </mat-step>
-              
-            </mat-horizontal-stepper>
+                <mat-card-actions>
+                    <a mat-raised-button
+                        routerLink="../video"
+                        routerLinkActive="active">
+                        Continuar
+                    </a>
+                </mat-card-actions>
+
+            </mat-card>
+            
+            
+            <!-- <form [formGroup]="formGroup">
+
+                <mat-horizontal-stepper linear formArrayName="formArray">
+    
+                    <mat-step [stepControl]="formArray.get([0])">
+                        <ng-template matStepLabel>Fill out your name</ng-template>
+                    </mat-step> -->
+                    
+                    <!-- <mat-step >
+                        <ng-template matStepLabel>Step 1</ng-template>
+                        <iframe [src]="url.preFilledURL | byPassSecurity" width="640" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+                    </mat-step> -->
+<!--                   
+                </mat-horizontal-stepper>
+                
+            </form> -->
 
             <!-- <mat-horizontal-stepper linear #stepper>
                 <mat-step *ngFor="let form of userForms">

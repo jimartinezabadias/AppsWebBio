@@ -10,6 +10,7 @@ import { AdminCreativityComponent } from 'src/app/admin/components/admin-creativ
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';
 import { IEncodeSettings } from 'src/app/encode/models/IEncodeSettings';
+import { IEncodeGoogleFormResponse } from 'src/app/encode/models/IEncodeGoogleFormResponse';
 
 
 @Injectable({
@@ -149,6 +150,10 @@ export class DataDbService {
   public async getEncodeUser(userId: string): Promise<IEncodeUser> {
     let userData = await this.encodeUserCollectionRef.doc<IEncodeUser>(userId).get().toPromise();
     return userData.data();
+  }
+
+  public getEncodeUser$(userId: string): Observable<IEncodeUser> {
+    return this.encodeUserCollectionRef.doc<IEncodeUser>(userId).valueChanges();
   }
 
   async getAllEncodeUsersData(): Promise<Array<IEncodeUser>> {

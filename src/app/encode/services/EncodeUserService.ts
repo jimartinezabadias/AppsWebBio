@@ -8,6 +8,7 @@ import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
 import { IEncodeUserPersonalInfo } from "../models/IEncodeUserPersonalInfo";
 import { IEncodeUserHealthInfo } from "../models/IEncodeUserHealthInfo";
 import { SomnolenceDegrees } from "../constants";
+import { Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,7 @@ import { SomnolenceDegrees } from "../constants";
 export class EncodeUserService {
     
     private _user: IEncodeUser = null;
+    private _user$: Observable<IEncodeUser> = null;
     
     constructor(private _dbService: DataDbService, private _http: HttpClient)
     {
@@ -45,9 +47,25 @@ export class EncodeUserService {
         return false;
     }
 
+    public loadUser$(userId: string): boolean 
+    {
+        let user$: Observable<IEncodeUser> = this._dbService.getEncodeUser$(userId);
+        if (user$)
+        {
+            this._user$ = user$;
+            return true;
+        }
+        return false;
+    }
+
     public user(): IEncodeUser 
     {
         return this._user;
+    }
+
+    public user$(): Observable<IEncodeUser> 
+    {
+        return this._user$;
     }
 
     public storePersonalInfo(personalInfo: IEncodeUserPersonalInfo): void {
