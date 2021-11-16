@@ -64,5 +64,11 @@ export class EncodeVideoComponent implements OnInit, OnExit {
       this._router.navigate(["/encode/"+location.pathname.split('/').slice()[2]+"/audios"]);
     });
   }
+
+  skipVideo()
+  {
+    this.dialogClosed = true;
+    this._router.navigate(["../audios"], { relativeTo: this._route });
+  }
   
 }
