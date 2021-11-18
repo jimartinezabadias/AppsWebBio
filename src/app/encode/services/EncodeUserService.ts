@@ -80,6 +80,11 @@ export class EncodeUserService {
         console.log(this._user);
         this._user.dayOne.somnolenceDegree = somnolenceDegreeResponse;
     }
+
+    public async saveDayOneResults() 
+    {
+        await this._dbService.saveEncodeDayOneResults(this._user);
+    }
     
     //
     private getUserData(userid: string): Promise<IEncodeUser> 

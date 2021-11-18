@@ -24,6 +24,11 @@ export class EncodeEndComponent implements OnInit, OnExit {
   {
     this.userName = this._userService.user().name;
     this.exitValue = false;
+    this.saveResults();
+  }
+
+  private async saveResults() {
+    await this._userService.saveDayOneResults();
   }
 
   onExit() {

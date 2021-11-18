@@ -137,6 +137,12 @@ export class DataDbService {
 
   // Encode
   
+  public async saveEncodeDayOneResults(user: IEncodeUser): Promise<void> {
+    const userObj = Object.assign({},user);
+    
+    await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).set(userObj);
+  }
+
   public async saveEncodeUser(user: IEncodeUser): Promise<void> {
     user.creationDate = firestore.FieldValue.serverTimestamp();
     const dayOneObj = Object.assign({},user.dayOne);
