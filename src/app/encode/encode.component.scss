@@ -38,24 +38,6 @@ h3>span {
     background-color: #e33b881b;
 }
 
-.mat-card {
-    max-width: 33em;
-}
-
-.mat-card-header
-{
-    margin: 0px 0 !important;
-}
-
-.mat-card-subtitle
-{
-    padding-top: 8px;
-    text-align: center;
-    line-height: 19px;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
 .save-form-btn
 {
     width: 100%;
@@ -77,15 +59,11 @@ h3>span {
     width: 100%;
 }
 
-mat-card-header {
-    justify-content: center;
-    background-color: #4a4067;
-    color: white;
-    padding: 1em;
-    margin: 0px 0 !important;
-}
-
-.mat-card-title 
+.mat-card-subtitle
 {
-    margin: 0 !important;
+    padding-top: 8px;
+    text-align: center;
+    line-height: 19px;
+    font-size: 16px;
+    margin-bottom: 10px;
 }

@@ -11,7 +11,7 @@
 {
     display: flex;
     flex-flow: column;
-    row-gap: 1rem;
+    row-gap: 2rem;
     align-items: flex-start;
     margin-top: 1rem;
     margin-left: 16px;
@@ -40,3 +40,14 @@
     margin-top: 1rem;
 }
 
+.save-form-btn 
+{
+    max-width: 200px;
+}
+
+.mat-card-title 
+{
+    color: #4a4067;
+    font-weight: 400;
+    font-size: 1.8em;
+}
