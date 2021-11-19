@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,28 +11,13 @@ import { AudioRecorderService } from '../services/AudioRecorderService';
     styleUrls: ['audios.component.scss','../encode.component.scss']
 })
 
-export class EncodeAudiosComponent implements OnInit, OnExit {
+export class EncodeAudiosComponent implements OnExit {
 
   private audiosReady = false;
   private exitValue = false;
 
   constructor(private _router: Router, private _route: ActivatedRoute, private dialog: MatDialog, private _recorderService: AudioRecorderService) 
   {
-  }
-
-  ngOnInit(): void {
-    this._recorderService.audioListChanged$.subscribe(
-      { 
-        next: () => {
-          // TODO ir agregando a la lista de audios
-          // if (this._recorderService.audioCount === 1)
-          // {
-          //   const audioData = this._recorderService.getAudioAt(0);
-          //   this._audioUrl = this._createAudioUrl(audioData);
-          //   this._openDialog();
-          // }
-        }
-      });
   }
 
   onExit() {

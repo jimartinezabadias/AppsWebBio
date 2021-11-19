@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { fromEvent, Subject } from "rxjs";
 import { REC_OPTIONS } from "../constants";
+import { IEncodeAudio } from "../models/IEncodeAudio";
 import { IAudioRecorder } from "./IAudioRecorderService";
 
 @Injectable({
@@ -8,18 +9,18 @@ import { IAudioRecorder } from "./IAudioRecorderService";
 })
 export class AudioRecorderService implements IAudioRecorder {
     
-    private _audioList: Array<Blob>;
+    private _audioList: Array<IEncodeAudio>;
     private _mediaRecorder: MediaRecorder;
     private _recordedChunks;
     
-    isRecording: boolean;
-    audioListChanged$: Subject<boolean>;
+    public isRecording: boolean;
+    public audioListChanged$: Subject<IEncodeAudio>;
     
     constructor()
     {
-        this._audioList = new Array();
+        this._audioList = new Array<IEncodeAudio>();
         this.isRecording = false;
-        this.audioListChanged$ = new Subject<boolean>();
+        this.audioListChanged$ = new Subject<IEncodeAudio>();
         this._recordedChunks = new Array();
     }
 
@@ -43,8 +44,10 @@ export class AudioRecorderService implements IAudioRecorder {
 
         const stop$ = fromEvent(this._mediaRecorder,"stop");
         stop$.subscribe((e: Event) => {
-            this._audioList.push(new Blob(this._recordedChunks, {type: "audio/webm"}));
-            this.audioListChanged$.next(true);
+            const audioData: Blob = new Blob(this._recordedChunks, {type: "audio/webm"});
+            const newAudio: IEncodeAudio = { id: null, rawData: audioData};
+            this._audioList.push(newAudio);
+            this.audioListChanged$.next(newAudio);
             this._recordedChunks = new Array();
         });
 
@@ -57,7 +60,7 @@ export class AudioRecorderService implements IAudioRecorder {
         this._mediaRecorder.stop();
     }
 
-    getAudioAt(index: number): Blob | null
+    getAudioAt(index: number): IEncodeAudio | null
     {
         if (this._audioList.length > index)
         {
@@ -67,7 +70,7 @@ export class AudioRecorderService implements IAudioRecorder {
         return null;
     }
 
-    getAudios(): Array<Blob>
+    getAudios(): Array<IEncodeAudio>
     {
         return this._audioList;
     }

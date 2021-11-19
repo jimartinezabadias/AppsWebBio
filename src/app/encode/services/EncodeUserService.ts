@@ -77,7 +77,6 @@ export class EncodeUserService {
     }
     
     public storeSomnolenceDayOne(somnolenceDegreeResponse: SomnolenceDegrees): void {
-        console.log(this._user);
         this._user.dayOne.somnolenceDegree = somnolenceDegreeResponse;
     }
 

@@ -1,12 +1,13 @@
 import { Subject } from "rxjs";
+import { IEncodeAudio } from "../models/IEncodeAudio";
 
 export interface IAudioRecorder {
     isRecording: boolean;
     audioCount: number;
-    audioListChanged$: Subject<boolean>;
+    audioListChanged$: Subject<IEncodeAudio>;
     record(stream: MediaStream): void;
     stopRecording(): void;
-    getAudioAt(index: number): Blob | null;
-    getAudios(): Array<Blob>;
+    getAudioAt(index: number): IEncodeAudio | null;
+    getAudios(): Array<IEncodeAudio>;
     deleteAudioAt(index: number): void
 }

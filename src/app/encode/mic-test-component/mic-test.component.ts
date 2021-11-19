@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IEncodeAudio } from '../models/IEncodeAudio';
 import { AudioRecorderService } from '../services/AudioRecorderService';
 import { AudioConfirmComponent } from './audio-confirm-component/audio-confirm.component';
 
@@ -27,7 +28,7 @@ export class EncodeMicTestComponent implements OnInit {
   {
     this._recorderService.audioListChanged$.subscribe(
       { 
-        next: () => {
+        next: (newAudio: IEncodeAudio) => {
           if (this._recorderService.audioCount === 1)
           {
             const audioData = this._recorderService.getAudioAt(0);
@@ -38,9 +39,9 @@ export class EncodeMicTestComponent implements OnInit {
       });
   }
 
-  private _createAudioUrl(audioData: Blob): SafeResourceUrl
+  private _createAudioUrl(audioData: IEncodeAudio): SafeResourceUrl
   {
-    const audioUrl = URL.createObjectURL(audioData);
+    const audioUrl = URL.createObjectURL(audioData.rawData);
     return this._sanitizer.bypassSecurityTrustUrl(audioUrl);
   }
 
