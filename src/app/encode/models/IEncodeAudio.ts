@@ -1,4 +1,4 @@
 export interface IEncodeAudio {
-    id: number | null,
+    id: string | null,
     rawData: Blob
 }

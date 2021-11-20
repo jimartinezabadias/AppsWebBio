@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { IEncodeAudio } from '../../models/IEncodeAudio';
 import { AudioRecorderService } from '../../services/AudioRecorderService';
+import { EncodeUserService } from '../../services/EncodeUserService';
 
 @Component({
     selector: 'app-encode-audio-list',
@@ -11,7 +13,7 @@ export class EncodeAudioListComponent {
 
   public audios: Array<IEncodeAudio>;
 
-  constructor(private _recorderService: AudioRecorderService) 
+  constructor(private _recorderService: AudioRecorderService, private _bdService: DataDbService, private _userService: EncodeUserService) 
   {
     this.audios = new Array<IEncodeAudio>();
     this._recorderService.audioListChanged$.subscribe(
@@ -28,7 +30,8 @@ export class EncodeAudioListComponent {
 
   private _storeAudioInFirebase(newAudio: IEncodeAudio): void 
   {
-    console.log("saving audio in db");
+    const filePath = `encode-audios/${this._userService.user().uid}/${newAudio.id}`;
+    this._bdService.uploadFileToFirestore(filePath, newAudio.rawData);
   }
   
 }

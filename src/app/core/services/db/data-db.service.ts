@@ -10,7 +10,8 @@ import { AdminCreativityComponent } from 'src/app/admin/components/admin-creativ
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';
 import { IEncodeSettings } from 'src/app/encode/models/IEncodeSettings';
-import { IEncodeGoogleFormResponse } from 'src/app/encode/models/IEncodeGoogleFormResponse';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { IEncodeAudio } from 'src/app/encode/models/IEncodeAudio';
 
 
 @Injectable({
@@ -28,14 +29,14 @@ export class DataDbService {
   private encodeUserCollectionRef: AngularFirestoreCollection;
   private encodeConfigRef: AngularFirestoreCollection;
 
-  constructor(private afs: AngularFirestore, private http: HttpClient) { 
-    this.creativesCollectionRef = afs.collection<CreativeUser>('creatives-users', ref => ref.orderBy('dateStart', 'desc'));
-    this.creativesMetadataRef = afs.collection('creatives-meta');
-    this.rulitUserCollectionRef = afs.collection<IRulitUser>('rulit-users');
-    this.encodeUserCollectionRef = afs.collection<IEncodeUser>('encode-users');
-    this.rulitConfigRef = afs.collection("rulit-config");
-    this.rulitSolutionsRef = afs.collection("rulit-solutions");
-    this.encodeConfigRef = afs.collection("encode-config");
+  constructor(private _afs: AngularFirestore, private _storage: AngularFireStorage, private http: HttpClient) { 
+    this.creativesCollectionRef = _afs.collection<CreativeUser>('creatives-users', ref => ref.orderBy('dateStart', 'desc'));
+    this.creativesMetadataRef = _afs.collection('creatives-meta');
+    this.rulitUserCollectionRef = _afs.collection<IRulitUser>('rulit-users');
+    this.encodeUserCollectionRef = _afs.collection<IEncodeUser>('encode-users');
+    this.rulitConfigRef = _afs.collection("rulit-config");
+    this.rulitSolutionsRef = _afs.collection("rulit-solutions");
+    this.encodeConfigRef = _afs.collection("encode-config");
   } 
 
   // TODO: Theres no need for async
@@ -51,21 +52,21 @@ export class DataDbService {
   }
 
   public getTestsFirstPage(pageSize: number = 3):  Observable<QuerySnapshot<CreativeUser>> {
-    const testsRef = this.afs.collection<CreativeUser>('creatives-users', 
+    const testsRef = this._afs.collection<CreativeUser>('creatives-users', 
       ref => ref.orderBy('dateStart', 'desc').limit(pageSize));
     
     return testsRef.get();
   }
 
   public getTestsNextPage(actualLast, pageSize: number = 3):  Observable<QuerySnapshot<CreativeUser>> {
-    const testsRef = this.afs.collection<CreativeUser>('creatives-users', 
+    const testsRef = this._afs.collection<CreativeUser>('creatives-users', 
       ref => ref.orderBy('dateStart', 'desc').startAfter(actualLast).limit(pageSize));
     
     return testsRef.get();
   }
   
   public getTestsPrevPage(prevFirst,actualFirst, pageSize: number = 3):  Observable<QuerySnapshot<CreativeUser>> {
-    const testsRef = this.afs.collection<CreativeUser>('creatives-users', 
+    const testsRef = this._afs.collection<CreativeUser>('creatives-users', 
       ref => ref.orderBy('dateStart', 'desc').startAt(prevFirst).endBefore(actualFirst).limit(pageSize));
     
     return testsRef.get();
@@ -172,21 +173,21 @@ export class DataDbService {
   }
 
   public getEncodeFirstPage(pageSize: number = 3):  Observable<QuerySnapshot<IEncodeUser>> {
-    const ref = this.afs.collection<IEncodeUser>('encode-users', 
+    const ref = this._afs.collection<IEncodeUser>('encode-users', 
       ref => ref.orderBy('creationDate', 'desc').limit(pageSize));
     
     return ref.get();
   }
 
   public getEncodesNextPage(actualLast, pageSize: number = 3):  Observable<QuerySnapshot<IEncodeUser>> {
-    const ref = this.afs.collection<IEncodeUser>('encode-users', 
+    const ref = this._afs.collection<IEncodeUser>('encode-users', 
       ref => ref.orderBy('creationDate', 'desc').startAfter(actualLast).limit(pageSize));
     
     return ref.get();
   }
 
   public getEncodePrevPage(prevFirst,actualFirst, pageSize: number = 3):  Observable<QuerySnapshot<IEncodeUser>> {
-    const ref = this.afs.collection<IEncodeUser>('encode-users', 
+    const ref = this._afs.collection<IEncodeUser>('encode-users', 
       ref => ref.orderBy('creationDate', 'desc').startAt(prevFirst).endBefore(actualFirst).limit(pageSize));
     
     return ref.get();
@@ -195,6 +196,11 @@ export class DataDbService {
   async getEncodeSettings(): Promise<IEncodeSettings> {
     let cfg = await this.encodeConfigRef.doc<IEncodeSettings>("config").get().toPromise();
     return cfg.data();
+  }
+
+  public uploadFileToFirestore(filePath: string, rawData: Blob): void {
+    const ref = this._storage.ref(filePath);
+    const task = ref.put(rawData);
   }
 
 }

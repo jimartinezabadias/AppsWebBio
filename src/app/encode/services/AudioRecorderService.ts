@@ -3,6 +3,7 @@ import { fromEvent, Subject } from "rxjs";
 import { REC_OPTIONS } from "../constants";
 import { IEncodeAudio } from "../models/IEncodeAudio";
 import { IAudioRecorder } from "./IAudioRecorderService";
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
     providedIn: 'root'
@@ -45,7 +46,8 @@ export class AudioRecorderService implements IAudioRecorder {
         const stop$ = fromEvent(this._mediaRecorder,"stop");
         stop$.subscribe((e: Event) => {
             const audioData: Blob = new Blob(this._recordedChunks, {type: "audio/webm"});
-            const newAudio: IEncodeAudio = { id: null, rawData: audioData};
+            const randomId = uuidv4();
+            const newAudio: IEncodeAudio = { id: randomId , rawData: audioData};
             this._audioList.push(newAudio);
             this.audioListChanged$.next(newAudio);
             this._recordedChunks = new Array();

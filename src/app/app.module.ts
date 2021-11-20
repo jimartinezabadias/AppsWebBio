@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from "@angular/fire/storage";
 import { environment } from './../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -30,7 +31,8 @@ import { NavigationService } from './navigation-service/navigation.service';
     ReactiveFormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireStorageModule
   ],
   providers: [ NavigationService ],
   bootstrap: [AppComponent]
