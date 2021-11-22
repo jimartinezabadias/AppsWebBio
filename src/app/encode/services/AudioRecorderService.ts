@@ -4,13 +4,14 @@ import { REC_OPTIONS } from "../constants";
 import { IEncodeAudio } from "../models/IEncodeAudio";
 import { IAudioRecorder } from "./IAudioRecorderService";
 import { v4 as uuidv4 } from 'uuid';
+import { IEncodeInMemoryAudio } from "../models/IEncodeInMemoryAudio";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AudioRecorderService implements IAudioRecorder {
     
-    private _audioList: Array<IEncodeAudio>;
+    private _audioList: Array<IEncodeInMemoryAudio>;
     private _mediaRecorder: MediaRecorder;
     private _recordedChunks;
     
@@ -19,7 +20,7 @@ export class AudioRecorderService implements IAudioRecorder {
     
     constructor()
     {
-        this._audioList = new Array<IEncodeAudio>();
+        this._audioList = new Array<IEncodeInMemoryAudio>();
         this.isRecording = false;
         this.audioListChanged$ = new Subject<IEncodeAudio>();
         this._recordedChunks = new Array();
@@ -47,7 +48,7 @@ export class AudioRecorderService implements IAudioRecorder {
         stop$.subscribe((e: Event) => {
             const audioData: Blob = new Blob(this._recordedChunks, {type: "audio/webm"});
             const randomId = uuidv4();
-            const newAudio: IEncodeAudio = { id: randomId , rawData: audioData};
+            const newAudio: IEncodeInMemoryAudio = { id: randomId , rawData: audioData, downloadURL: null};
             this._audioList.push(newAudio);
             this.audioListChanged$.next(newAudio);
             this._recordedChunks = new Array();
@@ -62,7 +63,7 @@ export class AudioRecorderService implements IAudioRecorder {
         this._mediaRecorder.stop();
     }
 
-    getAudioAt(index: number): IEncodeAudio | null
+    getAudioAt(index: number): IEncodeInMemoryAudio | null
     {
         if (this._audioList.length > index)
         {

@@ -17,7 +17,7 @@ export class EncodeWellcomeComponent implements OnInit {
 
   ngOnInit(): void 
   {
-    this.userName = this._userService.user().name;
+    this.userName = this._userService.user.name;
   }
 
 }

@@ -18,7 +18,7 @@ export class EncodeGoogleFormsComponent {
   constructor(private _userService: EncodeUserService) 
   {
     // this.userForms = this._userService.user().googleFormsResponses;
-    this._userService.loadUser$(this._userService.user().uid);
+    this._userService.loadUser$(this._userService.user.uid);
     this._userService.user$().subscribe(this._userObserver);
   }
 
@@ -35,8 +35,6 @@ export class EncodeGoogleFormsComponent {
   }
 
   private _userObserver = (user: IEncodeUser) => {
-    console.log("user updated");
-    console.log(user);
     this.userForms = user.googleFormsResponses;
   }
   

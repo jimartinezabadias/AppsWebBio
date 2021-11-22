@@ -10,7 +10,7 @@ import { AdminCreativityComponent } from 'src/app/admin/components/admin-creativ
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';
 import { IEncodeSettings } from 'src/app/encode/models/IEncodeSettings';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 import { IEncodeAudio } from 'src/app/encode/models/IEncodeAudio';
 
 
@@ -139,6 +139,9 @@ export class DataDbService {
   // Encode
   
   public async saveEncodeDayOneResults(user: IEncodeUser): Promise<void> {
+    console.log("saving user data...");
+    console.log(user);
+
     const userObj = Object.assign({},user);
     
     await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).set(userObj);
@@ -198,9 +201,12 @@ export class DataDbService {
     return cfg.data();
   }
 
-  public uploadFileToFirestore(filePath: string, rawData: Blob): void {
-    const ref = this._storage.ref(filePath);
-    const task = ref.put(rawData);
+  public setCloudStorageFileRef(filePath: string): AngularFireStorageReference{
+    return this._storage.ref(filePath);
+  }
+  
+  public uploadFileToCloudStorage(filePath: string, rawData: Blob): AngularFireUploadTask {
+    return this._storage.upload(filePath,rawData);
   }
 
 }

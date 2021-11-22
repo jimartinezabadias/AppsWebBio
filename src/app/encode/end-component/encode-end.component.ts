@@ -22,7 +22,7 @@ export class EncodeEndComponent implements OnInit, OnExit {
 
   ngOnInit(): void 
   {
-    this.userName = this._userService.user().name;
+    this.userName = this._userService.user.name;
     this.exitValue = false;
     this.saveResults();
   }

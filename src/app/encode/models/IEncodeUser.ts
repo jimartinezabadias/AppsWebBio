@@ -11,7 +11,6 @@ export interface IEncodeUser {
     email: string;
     creationDate: Date | firestore.FieldValue | null;
     googleFormsResponses: IEncodeGoogleFormResponse[] | null;
-    googleFormsPreFilledURLs: string[] | null;
     personalInfo: IEncodeUserPersonalInfo | null;
     dayOne: IEncodeDayOne | null;
     healthInfo: IEncodeUserHealthInfo | null;

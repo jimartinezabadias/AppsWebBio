@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { DataDbService } from "src/app/core/services/db/data-db.service";
 import { IEncodeUser } from "../models/IEncodeUser";
-import { EncodeUser } from "../models/EncodeUser";
 import { HttpClient } from "@angular/common/http";
 import { IEncodeSettings } from "../models/IEncodeSettings";
 import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
@@ -9,6 +8,7 @@ import { IEncodeUserPersonalInfo } from "../models/IEncodeUserPersonalInfo";
 import { IEncodeUserHealthInfo } from "../models/IEncodeUserHealthInfo";
 import { SomnolenceDegrees } from "../constants";
 import { Observable } from "rxjs";
+import { IEncodeAudio } from "../models/IEncodeAudio";
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +28,16 @@ export class EncodeUserService {
     {
         const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
         const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(userData.email);
-        const newUser: IEncodeUser = new EncodeUser(newUserId, userData.name, userData.email,googleFormsResponses);
+        const newUser: IEncodeUser = {
+            uid: newUserId, 
+            name: userData.name, 
+            email: userData.email, 
+            googleFormsResponses: googleFormsResponses,
+            creationDate: null,
+            personalInfo: null,
+            dayOne: null,
+            healthInfo: null
+        };
         // TODO: armar array con google forms
         
         await this._dbService.saveEncodeUser(newUser);
@@ -58,9 +67,13 @@ export class EncodeUserService {
         return false;
     }
 
-    public user(): IEncodeUser 
+    get user(): IEncodeUser 
     {
         return this._user;
+    }
+
+    set user(value: IEncodeUser) {
+        this._user = value;
     }
 
     public user$(): Observable<IEncodeUser> 

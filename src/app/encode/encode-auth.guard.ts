@@ -21,9 +21,9 @@ export class EncodeAuthGuard implements CanActivate {
     const userId: string = route.paramMap.get('userId');
     
     // check if user is already loged-in
-    if (this._userService.user()) 
+    if (this._userService.user) 
     { 
-      if (this._userService.user().uid == userId)
+      if (this._userService.user.uid == userId)
       {
         return true;
       } 
