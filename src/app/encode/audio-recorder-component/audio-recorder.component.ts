@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RecorderStatus } from '../constants';
 import { AudioRecorderService } from '../services/AudioRecorderService';
 import { AudioDisclaimerComponent } from './audio-disclaimer-component/audio-disclaimer.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogState } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-audio-recorder',
@@ -13,6 +13,7 @@ export class AudioRecorderComponent implements OnInit {
 
   private _navigator: Navigator;
   private _stream: MediaStream;
+  private _disclaimerDialog: MatDialogRef<AudioDisclaimerComponent>;
 
   status: RecorderStatus;
   recorderService: AudioRecorderService;
@@ -29,7 +30,7 @@ export class AudioRecorderComponent implements OnInit {
   }
 
   private _openDialog(): void {
-    const dialogRef = this.dialog.open(AudioDisclaimerComponent, {
+    this._disclaimerDialog = this.dialog.open(AudioDisclaimerComponent, {
       width: '580px'
     });
   }
@@ -39,11 +40,17 @@ export class AudioRecorderComponent implements OnInit {
     if (!this.recorderService.isRecording)
     {
       try {
+        this._openDialog();
         this._stream = await this._navigator.mediaDevices.getUserMedia({audio: true, video: false});
+        if (this._disclaimerDialog.getState() === MatDialogState.OPEN){
+          this._disclaimerDialog.close();
+        }
         this.recorderService.record(this._stream);
         this.status = RecorderStatus.Recording;
       } catch (error) {
-        this._openDialog();
+        if (this._disclaimerDialog.getState() === MatDialogState.CLOSED){
+          this._openDialog();
+        }
         console.log("error al acceder al microfono");
         console.log(error);
       }
