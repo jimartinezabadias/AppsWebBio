@@ -14,4 +14,5 @@ export interface IEncodeUser {
     personalInfo: IEncodeUserPersonalInfo | null;
     dayOne: IEncodeDayOne | null;
     healthInfo: IEncodeUserHealthInfo | null;
+    abandonedByUser: boolean | null;
 }

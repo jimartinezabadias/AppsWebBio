@@ -36,7 +36,8 @@ export class EncodeUserService {
             creationDate: null,
             personalInfo: null,
             dayOne: null,
-            healthInfo: null
+            healthInfo: null,
+            abandonedByUser: false
         };
         // TODO: armar array con google forms
         
@@ -91,6 +92,10 @@ export class EncodeUserService {
     
     public storeSomnolenceDayOne(somnolenceDegreeResponse: SomnolenceDegrees): void {
         this._user.dayOne.somnolenceDegree = somnolenceDegreeResponse;
+    }
+
+    public storeAbandonedByUser(abandono: boolean): void {
+        this._user.abandonedByUser = abandono;
     }
 
     public async saveDayOneResults() 
