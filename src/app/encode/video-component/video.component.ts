@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { EncodeUserService } from '../services/EncodeUserService';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LazyDialogService } from '../services/lazy-dialog.service';
@@ -17,7 +18,12 @@ export class EncodeVideoComponent implements OnInit, OnExit {
   private dialogClosed;
   private exitValue;
     
-  constructor(private _router: Router, private _route: ActivatedRoute, private lazyDialog: LazyDialogService, private dialog: MatDialog)
+  constructor(
+    private _userService: EncodeUserService, 
+    private _router: Router, 
+    private _route: ActivatedRoute, 
+    private lazyDialog: LazyDialogService, 
+    private dialog: MatDialog)
   {
   }
 
@@ -32,11 +38,17 @@ export class EncodeVideoComponent implements OnInit, OnExit {
       if(this.exitValue == false) {
         this._openDialog();
       } else {
+        this.saveAbandonedUser();
         return true;
       }
     } else {
       return true;
     }
+  }
+
+  private async saveAbandonedUser() {
+    await this._userService.storeAbandonedByUser(true);
+    await this._userService.saveDayOneResults();
   }
 
   private async _openDialog() {

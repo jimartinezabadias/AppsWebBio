@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EncodeUserService } from '../services/EncodeUserService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,7 +17,12 @@ export class EncodeAudiosComponent implements OnExit {
   private audiosReady = false;
   private exitValue = false;
 
-  constructor(private _router: Router, private _route: ActivatedRoute, private dialog: MatDialog, private _recorderService: AudioRecorderService) 
+  constructor(
+    private _userService: EncodeUserService,
+    private _router: Router, 
+    private _route: ActivatedRoute, 
+    private dialog: MatDialog, 
+    private _recorderService: AudioRecorderService) 
   {
   }
 
@@ -25,11 +31,17 @@ export class EncodeAudiosComponent implements OnExit {
       if(this.exitValue == false) {
         this._openDialog();
       } else {
+        this.saveAbandonedUser();
         return true;
       }
     } else {
       return true;
     }
+  }
+
+  private async saveAbandonedUser() {
+    await this._userService.storeAbandonedByUser(true);
+    await this._userService.saveDayOneResults();
   }
 
   private async _openDialog() {

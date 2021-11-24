@@ -35,8 +35,14 @@ export class EncodeEndComponent implements OnInit, OnExit {
     if(this.exitValue == false) {
       this._openDialog();
     } else {
+      this.saveAbandonedUser();
       return true;
     }
+  }
+
+  private async saveAbandonedUser() {
+    await this._userService.storeAbandonedByUser(true);
+    await this._userService.saveDayOneResults();
   }
 
   private async _openDialog() {
