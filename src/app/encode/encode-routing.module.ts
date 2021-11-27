@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EncodeAboutComponent } from './about-component/encode-about.component';
+import { EncodeAbandonedComponent } from './abandoned-component/encode-abandoned.component';
 import { EncodeWellcomeComponent } from './wellcome-component/encode-wellcome.component';
 import { EncodeAuthGuard } from "./encode-auth.guard";
 import { EncodeMicTestComponent } from './mic-test-component/mic-test.component';
@@ -14,6 +15,7 @@ import { EncodeAudiosComponent } from './audios-component/audios.component';
 import { EncodeEndComponent } from './end-component/encode-end.component';
 import { ExitGuard } from './exit.guard';
 import { EncodeGoogleFormsComponent } from './google-forms-component/encode-google-forms.component';
+import { EncodeAbandonedGuard } from './encode-abandoned.guard';
 
 
 const routes: Routes = [
@@ -22,8 +24,12 @@ const routes: Routes = [
         component: EncodeAboutComponent
     },
     {
+        path: 'abandono',
+        component: EncodeAbandonedComponent
+    },
+    {
         path: ':userId',
-        canActivate: [ EncodeAuthGuard ],
+        canActivate: [ EncodeAuthGuard, EncodeAbandonedGuard ], 
         children: [
             {
                 path: 'bienvenido',
