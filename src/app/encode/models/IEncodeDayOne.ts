@@ -4,4 +4,5 @@ import { IEncodeAudio } from "./IEncodeAudio";
 export interface IEncodeDayOne {
     somnolenceDegree: SomnolenceDegrees;
     audios: Array<IEncodeAudio> | null;
+    completed: boolean | null;
 }

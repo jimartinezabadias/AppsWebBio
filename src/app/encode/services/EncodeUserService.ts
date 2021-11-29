@@ -38,6 +38,7 @@ export class EncodeUserService {
             dayOne: null,
             healthInfo: null,
             abandonedByUser: false
+            completed: false
         };
         // TODO: armar array con google forms
         
@@ -96,6 +97,10 @@ export class EncodeUserService {
     public async saveDayOneResults() 
     {
         await this._dbService.saveEncodeDayOneResults(this._user);
+    }
+
+    public storeAbandonedByUser(completo: boolean): void {
+        this._user.completed = completo;
     }
     
     //

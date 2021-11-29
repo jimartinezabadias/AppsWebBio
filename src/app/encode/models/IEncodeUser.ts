@@ -15,4 +15,5 @@ export interface IEncodeUser {
     dayOne: IEncodeDayOne | null;
     healthInfo: IEncodeUserHealthInfo | null;
     abandonedByUser: boolean | null;
+    completed: boolean | null;
 }
