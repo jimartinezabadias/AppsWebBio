@@ -123,12 +123,17 @@ export class EncodeUserService {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public storeCompletedByUser(completo: boolean): void {
         this._user.dayOne.completed = completo;
 =======
     public storeAbandonedByUser(completo: boolean): void {
         this._user.completed = completo;
 >>>>>>> e472580... completed added in IEncodeUser
+=======
+    public storeCompletedByUser(completo: boolean): void {
+        this._user.dayOne.completed = completo;
+>>>>>>> 82add24... fix dayOne
     }
     
     //
