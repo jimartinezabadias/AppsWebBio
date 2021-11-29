@@ -122,8 +122,13 @@ export class EncodeUserService {
         await this._dbService.saveEncodeDayOneResults(this._user);
     }
 
+<<<<<<< HEAD
     public storeCompletedByUser(completo: boolean): void {
         this._user.dayOne.completed = completo;
+=======
+    public storeAbandonedByUser(completo: boolean): void {
+        this._user.completed = completo;
+>>>>>>> e472580... completed added in IEncodeUser
     }
     
     //
