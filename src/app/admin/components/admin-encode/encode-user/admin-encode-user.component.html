@@ -23,8 +23,13 @@
     
                     <div class="user-info">
                         <p>Email: {{ user.email }}</p>
-                        <p>Link: {{ user.uid | encodeLink }}</p>
+                        <p>Link: <a target="_blank" href="{{ user.uid | encodeLink }}">{{ user.uid | encodeLink }}</a>
+                            <button ngxClipboard [cbContent]="user.uid | encodeLink">
+                                <mat-icon aria-hidden="false" aria-label="copiar link">content_copy</mat-icon>
+                            </button>
+                        </p>
                         <p>Fecha de creación: {{ user.creationDate.toMillis() | date:'d/M/yyyy, h:mm a' }}</p>
+
                     </div>
     
                     <mat-tab-group>

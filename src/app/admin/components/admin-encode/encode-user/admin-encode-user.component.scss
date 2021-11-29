@@ -16,3 +16,13 @@
 .mat-display-1, .mat-typography .mat-display-1 {
     margin: 0 0 25px;
 }
+
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
