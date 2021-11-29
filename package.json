@@ -28,6 +28,7 @@
     "firebase": "^7.24.0",
     "flexboxgrid": "^6.3.1",
     "json2csv": "^5.0.6",
+    "ngx-clipboard": "^14.0.2",
     "ngx-filesaver": "^11.0.0",
     "rxjs": "~6.6.7",
     "safe-buffer": "^5.2.1",
