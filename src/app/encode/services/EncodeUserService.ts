@@ -99,8 +99,8 @@ export class EncodeUserService {
         await this._dbService.saveEncodeDayOneResults(this._user);
     }
 
-    public storeAbandonedByUser(completo: boolean): void {
-        this._user.completed = completo;
+    public storeCompletedByUser(completo: boolean): void {
+        this._user.dayOne.completed = completo;
     }
     
     //
