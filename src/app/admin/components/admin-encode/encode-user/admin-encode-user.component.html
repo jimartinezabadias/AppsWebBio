@@ -35,11 +35,52 @@
                     <mat-tab-group>
                         <mat-tab label="Información Personal">
                             <h3>Datos Sociodemográficos</h3>
-                            <br>
-                            <br>
+                            <div *ngIf="user.personalInfo.age > 0; then personal">
+                                <!-- template will replace this div -->
+                            </div>
+                            <ng-template #personal>
+                                <p>Edad: {{ user.personalInfo.age }}</p>
+                                <p>Género: {{ user.personalInfo.gender }}</p>
+                                <p>Nivel educativo: {{ user.personalInfo.educationLevel }}</p>
+
+                                <div *ngIf="user.personalInfo.occupation.length > 0; then occupation">
+                                    <!-- template will replace this div -->
+                                </div>
+                                <ng-template #occupation>
+                                    <p>Ocupación: {{ user.personalInfo.occupation }}</p>
+                                </ng-template>
+
+                                <div *ngIf="user.personalInfo.ongoingCareer.length > 0; then career">
+                                    <!-- template will replace this div -->
+                                </div>
+                                <ng-template #career>
+                                    <p>Carrera en curso: {{ user.personalInfo.ongoingCareer }}</p>
+                                </ng-template>
+                            </ng-template>
+
                             <h3>Datos Salud</h3>
-                            <br>
-                            <br>
+                            <div *ngIf="user.healthInfo.hasSleepDisorder; then sleepDisorder else noSleepDisorder">
+                                <!-- template will replace this div -->
+                            </div>
+                            <ng-template #sleepDisorder>
+                                <p>Tiene un desorden del sueño.</p>
+                                <p>El cual es: {{ user.healthInfo.sleepDisorders }}</p>
+                            </ng-template>
+                            <ng-template #noSleepDisorder>
+                                <p>No tiene un desorden del sueño.</p>
+                            </ng-template>
+                            
+                            <div *ngIf="user.healthInfo.takesCronicMedicine; then cronicMedicine else noCronicMedicine">
+                                <!-- template will replace this div -->
+                            </div>
+                            <ng-template #cronicMedicine>
+                                <p>Consume medicación de forma crónica.</p>
+                                <p>Las cuales son: {{ user.healthInfo.cronicMedicines }}</p>
+                            </ng-template>
+                            <ng-template #noCronicMedicine>
+                                <p>No consume medicación de forma crónica.</p>
+                            </ng-template>
+
                             <h3>Consentimiento</h3>
                             <br>
                             <br>
