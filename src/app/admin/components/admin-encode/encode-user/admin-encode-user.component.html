@@ -49,7 +49,11 @@
                     <mat-tab-group>
                         <mat-tab label="Información Personal">
                             <h3>Datos Sociodemográficos</h3>
+<<<<<<< HEAD
                             <div *ngIf="user.personalInfo">
+=======
+                            <div *ngIf="user.personalInfo.age > 0">
+>>>>>>> 8232c89... all info showing in encode-admin
                                 <p>Edad: {{ user.personalInfo.age }}</p>
 
                                 <div *ngIf="user.personalInfo.gender === 'genders.Male'">
@@ -148,7 +152,11 @@
                             </div>
 
                             <h3>Audios</h3>
+<<<<<<< HEAD
                             <div class="audios-container" *ngIf="user.dayOne.audios">
+=======
+                            <div class="audios-container" *ngIf="user.dayOne.audios.length > 0">
+>>>>>>> 8232c89... all info showing in encode-admin
                                 <audio *ngFor="let audio of user.dayOne.audios" controls>
                                     <source [src]="audio.downloadURL" type="audio/webm"/>
                                 </audio>
