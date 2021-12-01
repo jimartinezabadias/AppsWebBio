@@ -31,7 +31,8 @@
                         </ng-template>
                         <ng-template #progress>
                             <div *ngIf="user.dayOne.completed">
-                                <p>Estado: Dia 1 Completado</p> 
+                                <p>Estado: Dia 1 Completado</p>
+                                <!-- boton habilitar dia 2 -->
                             </div>
                             <div *ngIf="!user.dayOne.completed">
                                 <p>Estado: Dia 1 En progreso</p>
@@ -49,11 +50,9 @@
                     <mat-tab-group>
                         <mat-tab label="Información Personal">
                             <h3>Datos Sociodemográficos</h3>
-<<<<<<< HEAD
                             <div *ngIf="user.personalInfo">
-=======
                             <div *ngIf="user.personalInfo.age > 0">
->>>>>>> 8232c89... all info showing in encode-admin
+                            <div *ngIf="user.personalInfo">
                                 <p>Edad: {{ user.personalInfo.age }}</p>
 
                                 <div *ngIf="user.personalInfo.gender === 'genders.Male'">
@@ -152,11 +151,10 @@
                             </div>
 
                             <h3>Audios</h3>
-<<<<<<< HEAD
                             <div class="audios-container" *ngIf="user.dayOne.audios">
-=======
                             <div class="audios-container" *ngIf="user.dayOne.audios.length > 0">
->>>>>>> 8232c89... all info showing in encode-admin
+
+                            <div class="audios-container" *ngIf="user.dayOne.audios">
                                 <audio *ngFor="let audio of user.dayOne.audios" controls>
                                     <source [src]="audio.downloadURL" type="audio/webm"/>
                                 </audio>

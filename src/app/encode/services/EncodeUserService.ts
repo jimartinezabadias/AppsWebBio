@@ -95,48 +95,11 @@ export class EncodeUserService {
         return this._user$;
     }
 
-<<<<<<< HEAD
-=======
-    public storePersonalInfo(personalInfo: IEncodeUserPersonalInfo): void {
-        this._user.personalInfo = personalInfo;
-    }
-
-    public storeHealthInfo(healthInfo: IEncodeUserHealthInfo): void {
-        this._user.healthInfo = healthInfo;
-    }
-    
-    public storeSomnolenceDayOne(somnolenceDegreeResponse: SomnolenceDegrees): void {
-        this._user.dayOne.somnolenceDegree = somnolenceDegreeResponse;
-    }
-
-    public startDayTwo(perpetrator: boolean): void {
-        this._user.dayTwo.hasPerpetrator = perpetrator;
-        this._user.dayTwo.completed = false;
-        this.saveDayOneResults();
-    }
-
-
->>>>>>> 8d0b2c6... starDayTwo buttons
     public async saveDayOneResults() 
     {
         await this._dbService.saveEncodeDayOneResults(this._user);
     }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public storeCompletedByUser(completo: boolean): void {
-        this._user.dayOne.completed = completo;
-=======
-    public storeAbandonedByUser(completo: boolean): void {
-        this._user.completed = completo;
->>>>>>> e472580... completed added in IEncodeUser
-=======
-    public storeCompletedByUser(completo: boolean): void {
-        this._user.dayOne.completed = completo;
->>>>>>> 82add24... fix dayOne
-    }
     
-    //
     private getUserData(userid: string): Promise<IEncodeUser> 
     {
         return this._dbService.getEncodeUser(userid);
