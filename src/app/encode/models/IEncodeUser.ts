@@ -1,6 +1,7 @@
 import { firestore } from "firebase";
 import { IEncodeGoogleFormResponse } from "./IEncodeGoogleFormResponse";
 import { IEncodeDayOne } from "./IEncodeDayOne";
+import { IEncodeDayTwo } from "./IEncodeDayTwo";
 import { IEncodeUserPersonalInfo } from "./IEncodeUserPersonalInfo";
 import { IEncodeUserHealthInfo } from "./IEncodeUserHealthInfo";
 
@@ -13,6 +14,7 @@ export interface IEncodeUser {
     googleFormsResponses: IEncodeGoogleFormResponse[] | null;
     personalInfo: IEncodeUserPersonalInfo | null;
     dayOne: IEncodeDayOne | null;
+    dayTwo: IEncodeDayTwo | null;
     healthInfo: IEncodeUserHealthInfo | null;
     abandonedByUser: boolean | null;
     completed: boolean | null;

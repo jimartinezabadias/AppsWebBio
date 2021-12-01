@@ -23,6 +23,21 @@
     
                     <div class="user-info">
                         <p>Email: {{ user.email }}</p>
+                        <div *ngIf="user.abandonedByUser; then abandoned else progress">
+                            <!-- template will replace this div -->
+                        </div>
+                        <ng-template #abandoned>
+                            <p>Estado: Abandono</p>
+                        </ng-template>
+                        <ng-template #progress>
+                            <div *ngIf="user.dayOne.completed">
+                                <p>Estado: Dia 1 Completado</p>
+                                <!-- boton habilitar dia 2 -->
+                            </div>
+                            <div *ngIf="!user.dayOne.completed">
+                                <p>Estado: Dia 1 En progreso</p>
+                            </div>
+                        </ng-template>
                         <p>Link: <a target="_blank" href="{{ user.uid | encodeLink }}">{{ user.uid | encodeLink }}</a>
                             <button ngxClipboard [cbContent]="user.uid | encodeLink">
                                 <mat-icon aria-hidden="false" aria-label="copiar link">content_copy</mat-icon>
@@ -35,7 +50,7 @@
                     <mat-tab-group>
                         <mat-tab label="Información Personal">
                             <h3>Datos Sociodemográficos</h3>
-                            <div *ngIf="user.personalInfo.age > 0">
+                            <div *ngIf="user.personalInfo">
                                 <p>Edad: {{ user.personalInfo.age }}</p>
 
                                 <div *ngIf="user.personalInfo.gender === 'genders.Male'">
@@ -78,27 +93,30 @@
                             </div>
 
                             <h3>Datos Salud</h3>
-                            <div *ngIf="user.healthInfo.hasSleepDisorder; then sleepDisorder else noSleepDisorder">
-                                <!-- template will replace this div -->
+                            <div *ngIf="user.healthInfo">
+                                <div *ngIf="user.healthInfo.hasSleepDisorder; then sleepDisorder else noSleepDisorder">
+                                    <!-- template will replace this div -->
+                                </div>
+                                <ng-template #sleepDisorder>
+                                    <p>Tiene un desorden del sueño.</p>
+                                    <p>El cual es: {{ user.healthInfo.sleepDisorders }}</p>
+                                </ng-template>
+                                <ng-template #noSleepDisorder>
+                                    <p>No tiene un desorden del sueño.</p>
+                                </ng-template>
+                                
+                                <div *ngIf="user.healthInfo.takesCronicMedicine; then cronicMedicine else noCronicMedicine">
+                                    <!-- template will replace this div -->
+                                </div>
+                                <ng-template #cronicMedicine>
+                                    <p>Consume medicación de forma crónica.</p>
+                                    <p>Las cuales son: {{ user.healthInfo.cronicMedicines }}</p>
+                                </ng-template>
+                                <ng-template #noCronicMedicine>
+                                    <p>No consume medicación de forma crónica.</p>
+                                </ng-template>
                             </div>
-                            <ng-template #sleepDisorder>
-                                <p>Tiene un desorden del sueño.</p>
-                                <p>El cual es: {{ user.healthInfo.sleepDisorders }}</p>
-                            </ng-template>
-                            <ng-template #noSleepDisorder>
-                                <p>No tiene un desorden del sueño.</p>
-                            </ng-template>
-                            
-                            <div *ngIf="user.healthInfo.takesCronicMedicine; then cronicMedicine else noCronicMedicine">
-                                <!-- template will replace this div -->
-                            </div>
-                            <ng-template #cronicMedicine>
-                                <p>Consume medicación de forma crónica.</p>
-                                <p>Las cuales son: {{ user.healthInfo.cronicMedicines }}</p>
-                            </ng-template>
-                            <ng-template #noCronicMedicine>
-                                <p>No consume medicación de forma crónica.</p>
-                            </ng-template>
+
 
                             <h3>Consentimiento</h3>
                             <p>Consentimiento otorgado.</p>
@@ -131,7 +149,7 @@
                             </div>
 
                             <h3>Audios</h3>
-                            <div class="audios-container" *ngIf="user.dayOne.audios.length > 0">
+                            <div class="audios-container" *ngIf="user.dayOne.audios">
                                 <audio *ngFor="let audio of user.dayOne.audios" controls>
                                     <source [src]="audio.downloadURL" type="audio/webm"/>
                                 </audio>
