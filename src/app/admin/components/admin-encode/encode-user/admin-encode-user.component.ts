@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { from, Observable } from 'rxjs';
-import { EducationLevels } from 'src/app/encode/constants';
+import { Genders, EducationLevels, SomnolenceDegrees } from 'src/app/encode/constants';
 
 @Component({
   selector: 'app-admin-encode-user',
@@ -15,7 +15,9 @@ export class AdminEncodeUserComponent implements OnInit {
   // Columnas de la tabla que se van a mostrar
   public displayedColumns: string[] = ["email", "link", "creationDate" ];
   public user$ : Observable<IEncodeUser>;
+  public genders = Genders;
   public educationLevels = EducationLevels;
+  public somnolenceDegrees = SomnolenceDegrees;
 
   constructor(
     private _dbService: DataDbService,

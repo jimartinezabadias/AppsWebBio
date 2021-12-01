@@ -35,28 +35,47 @@
                     <mat-tab-group>
                         <mat-tab label="Información Personal">
                             <h3>Datos Sociodemográficos</h3>
-                            <div *ngIf="user.personalInfo.age > 0; then personal">
-                                <!-- template will replace this div -->
-                            </div>
-                            <ng-template #personal>
+                            <div *ngIf="user.personalInfo.age > 0">
                                 <p>Edad: {{ user.personalInfo.age }}</p>
-                                <p>Género: {{ user.personalInfo.gender }}</p>
-                                <p>Nivel educativo: {{ user.personalInfo.educationLevel }}</p>
 
-                                <div *ngIf="user.personalInfo.occupation.length > 0; then occupation">
-                                    <!-- template will replace this div -->
+                                <div *ngIf="user.personalInfo.gender === 'genders.Male'">
+                                    <p>Género: {{genders.Male}}</p>
                                 </div>
-                                <ng-template #occupation>
+                                <div *ngIf="user.personalInfo.gender === 'genders.Female'">
+                                    <p>Género: {{genders.Female}}</p>
+                                </div>
+                                <div *ngIf="user.personalInfo.gender === 'genders.NonBinary'">
+                                    <p>Género: {{genders.NonBinary}}</p>
+                                </div>
+
+                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.incompleteSecondary'">
+                                    <p>Nivel educativo: {{educationLevels.incompleteSecondary}}</p>
+                                </div>
+                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.completeSecondary'">
+                                    <p>Nivel educativo: {{educationLevels.completeSecondary}}</p>
+                                </div>
+                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.incompleteTertiary'">
+                                    <p>Nivel educativo: {{educationLevels.incompleteTertiary}}</p>
+                                </div>
+                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.completeTertiary'">
+                                    <p>Nivel educativo: {{educationLevels.completeTertiary}}</p>
+                                </div>
+                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.incompleteBachelors'">
+                                    <p>Nivel educativo: {{educationLevels.incompleteBachelors}}</p>
+                                </div>
+                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.completeBachelors'">
+                                    <p>Nivel educativo: {{educationLevels.completeBachelors}}</p>
+                                </div>
+                                
+
+                                <div *ngIf="user.personalInfo.occupation.length > 0">
                                     <p>Ocupación: {{ user.personalInfo.occupation }}</p>
-                                </ng-template>
-
-                                <div *ngIf="user.personalInfo.ongoingCareer.length > 0; then career">
-                                    <!-- template will replace this div -->
                                 </div>
-                                <ng-template #career>
+
+                                <div *ngIf="user.personalInfo.ongoingCareer.length > 0">
                                     <p>Carrera en curso: {{ user.personalInfo.ongoingCareer }}</p>
-                                </ng-template>
-                            </ng-template>
+                                </div>
+                            </div>
 
                             <h3>Datos Salud</h3>
                             <div *ngIf="user.healthInfo.hasSleepDisorder; then sleepDisorder else noSleepDisorder">
@@ -82,16 +101,41 @@
                             </ng-template>
 
                             <h3>Consentimiento</h3>
-                            <br>
-                            <br>
+                            <p>Consentimiento otorgado.</p>
                         </mat-tab>
                         <mat-tab label="Dia 1">
                             <h3>Escala de grado de somnolencia</h3>
-                            <br>
-                            <br>
+                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.totallyAwake">
+                                <p>{{somnolenceDegrees.totallyAwake}}</p>
+                            </div>
+                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.veryHigh">
+                                <p>{{somnolenceDegrees.veryHigh}}</p>
+                            </div>
+                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.relaxed">
+                                <p>{{somnolenceDegrees.relaxed}}</p>
+                            </div>
+                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.littleConfused">
+                                <p>{{somnolenceDegrees.littleConfused}}</p>
+                            </div>
+                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.confused">
+                                <p>{{somnolenceDegrees.confused}}</p>
+                            </div>
+                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.tired">
+                                <p>{{somnolenceDegrees.tired}}</p>
+                            </div>
+                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.almostSlept">
+                                <p>{{somnolenceDegrees.almostSlept}}</p>
+                            </div>
+                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.slept">
+                                <p>{{somnolenceDegrees.slept}}</p>
+                            </div>
+
                             <h3>Audios</h3>
-                            <br>
-                            <br>
+                            <div class="audios-container" *ngIf="user.dayOne.audios.length > 0">
+                                <audio *ngFor="let audio of user.dayOne.audios" controls>
+                                    <source [src]="audio.downloadURL" type="audio/webm"/>
+                                </audio>
+                            </div>
                         </mat-tab>
                         <mat-tab label="Dia 2">
                             <h3>Escala de grado de somnolencia</h3>
