@@ -38,7 +38,7 @@
                             </div>
                         </ng-template>
                         <p>Link: <a target="_blank" href="{{ user.uid | encodeLink }}">{{ user.uid | encodeLink }}</a>
-                            <button ngxClipboard [cbContent]="user.uid | encodeLink">
+                            <button [cdkCopyToClipboard]="user.uid | encodeLink">
                                 <mat-icon aria-hidden="false" aria-label="copiar link">content_copy</mat-icon>
                             </button>
                         </p>
@@ -167,17 +167,20 @@
                                 </button>  
                             </div>
 
-                            <div *ngIf="user.dayTwo.completed == true || user.dayTwo.completed == false">
-                                <h3>Escala de grado de somnolencia</h3>
-                                <br>
-                                <br>
-                                <h3>Ronda de reconocimiento</h3>
-                                <br>
-                                <br>
-                                <h3>Audios</h3>
-                                <br>
-                                <br>
+                            <div *ngIf="user.dayTwo">
+                                <div *ngIf="user.dayTwo.completed == true || user.dayTwo.completed == false">
+                                    <h3>Escala de grado de somnolencia</h3>
+                                    <br>
+                                    <br>
+                                    <h3>Ronda de reconocimiento</h3>
+                                    <br>
+                                    <br>
+                                    <h3>Audios</h3>
+                                    <br>
+                                    <br>
+                                </div>
                             </div>
+
 
                         </mat-tab>
                     </mat-tab-group>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LayoutModule } from '@angular/cdk/layout';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,6 +40,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatMenuModule,
     MatSortModule,
     LayoutModule,
+    ClipboardModule,
     MatPaginatorModule,
     MatDialogModule,
     MatSnackBarModule,
@@ -60,6 +62,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatMenuModule,
     MatSortModule,
     LayoutModule,
+    ClipboardModule,
     MatPaginatorModule,
     MatDialogModule,
     MatSnackBarModule,

@@ -26,8 +26,6 @@ import { InviteFormComponent } from './components/admin-encode/invite-form-compo
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { EncodeLinkPipe } from './components/admin-encode/encode-link.pipe';
-import { ClipboardModule } from 'ngx-clipboard';
-
 @NgModule({
   providers: [
     DataDbService
@@ -54,8 +52,7 @@ import { ClipboardModule } from 'ngx-clipboard';
     MatButtonModule,
     MatToolbarModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    ClipboardModule
+    MatButtonModule
   ]
 })
 
