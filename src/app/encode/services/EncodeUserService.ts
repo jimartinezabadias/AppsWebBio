@@ -36,6 +36,7 @@ export class EncodeUserService {
             creationDate: null,
             personalInfo: null,
             dayOne: null,
+            dayTwo: null,
             healthInfo: null,
             abandonedByUser: false
             completed: false
@@ -94,6 +95,28 @@ export class EncodeUserService {
         return this._user$;
     }
 
+<<<<<<< HEAD
+=======
+    public storePersonalInfo(personalInfo: IEncodeUserPersonalInfo): void {
+        this._user.personalInfo = personalInfo;
+    }
+
+    public storeHealthInfo(healthInfo: IEncodeUserHealthInfo): void {
+        this._user.healthInfo = healthInfo;
+    }
+    
+    public storeSomnolenceDayOne(somnolenceDegreeResponse: SomnolenceDegrees): void {
+        this._user.dayOne.somnolenceDegree = somnolenceDegreeResponse;
+    }
+
+    public startDayTwo(perpetrator: boolean): void {
+        this._user.dayTwo.hasPerpetrator = perpetrator;
+        this._user.dayTwo.completed = false;
+        this.saveDayOneResults();
+    }
+
+
+>>>>>>> 8d0b2c6... starDayTwo buttons
     public async saveDayOneResults() 
     {
         await this._dbService.saveEncodeDayOneResults(this._user);

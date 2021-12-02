@@ -31,8 +31,7 @@
                         </ng-template>
                         <ng-template #progress>
                             <div *ngIf="user.dayOne.completed">
-                                <p>Estado: Dia 1 Completado</p>
-                                <!-- boton habilitar dia 2 -->
+                                <p>Estado: Dia 1 Completado</p> 
                             </div>
                             <div *ngIf="!user.dayOne.completed">
                                 <p>Estado: Dia 1 En progreso</p>
@@ -156,15 +155,30 @@
                             </div>
                         </mat-tab>
                         <mat-tab label="Dia 2">
-                            <h3>Escala de grado de somnolencia</h3>
-                            <br>
-                            <br>
-                            <h3>Ronda de reconocimiento</h3>
-                            <br>
-                            <br>
-                            <h3>Audios</h3>
-                            <br>
-                            <br>
+                            <div *ngIf="user.dayOne.completed && !user.dayTwo.completed">
+                                <h3>Habilitar Dia 2</h3>
+                                <button mat-raised-button type="submit" class="start-daytwo-btn" (click)="startDayTwo(true)">
+                                    Con Perpetrador
+                                </button>
+                                <br>
+                                <br> 
+                                <button mat-raised-button type="submit" class="start-daytwo-btn" (click)="startDayTwo(false)">
+                                    Sin Perpetrador
+                                </button>  
+                            </div>
+
+                            <div *ngIf="user.dayTwo.completed == true || user.dayTwo.completed == false">
+                                <h3>Escala de grado de somnolencia</h3>
+                                <br>
+                                <br>
+                                <h3>Ronda de reconocimiento</h3>
+                                <br>
+                                <br>
+                                <h3>Audios</h3>
+                                <br>
+                                <br>
+                            </div>
+
                         </mat-tab>
                     </mat-tab-group>
     

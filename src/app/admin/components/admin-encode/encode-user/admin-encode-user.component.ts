@@ -29,4 +29,9 @@ export class AdminEncodeUserComponent implements OnInit {
     this.user$ = from(this._dbService.getEncodeUser(userIdParam));
   }
 
+  public async startDayTwo(perpetrator: boolean) 
+  {
+    //
+  }
+
 }
