@@ -53,7 +53,7 @@ export class EncodeHealthInfoComponent implements OnInit {
     if (this.healthInfoFormGroup.valid)
     {
       const formData: IEncodeUserHealthInfo = this.healthInfoFormGroup.value;
-      this._userService.storeHealthInfo(formData);
+      this._userService.user.healthInfo = formData;
       this._router.navigate(["../somnolence-degree"], { relativeTo: this._route });
     } 
     else

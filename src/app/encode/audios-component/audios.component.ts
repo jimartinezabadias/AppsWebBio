@@ -31,17 +31,13 @@ export class EncodeAudiosComponent implements OnExit {
       if(this.exitValue == false) {
         this._openDialog();
       } else {
-        this.saveAbandonedUser();
+        this._userService.user.abandonedByUser = true;
+        this._userService.saveDayOneResults();
         return true;
       }
     } else {
       return true;
     }
-  }
-
-  private async saveAbandonedUser() {
-    await this._userService.storeAbandonedByUser(true);
-    await this._userService.saveDayOneResults();
   }
 
   private async _openDialog() {

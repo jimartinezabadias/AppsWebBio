@@ -93,22 +93,6 @@ export class EncodeUserService {
         return this._user$;
     }
 
-    public storePersonalInfo(personalInfo: IEncodeUserPersonalInfo): void {
-        this._user.personalInfo = personalInfo;
-    }
-
-    public storeHealthInfo(healthInfo: IEncodeUserHealthInfo): void {
-        this._user.healthInfo = healthInfo;
-    }
-    
-    public storeSomnolenceDayOne(somnolenceDegreeResponse: SomnolenceDegrees): void {
-        this._user.dayOne.somnolenceDegree = somnolenceDegreeResponse;
-    }
-
-    public storeAbandonedByUser(abandono: boolean): void {
-        this._user.abandonedByUser = abandono;
-    }
-
     public async saveDayOneResults() 
     {
         await this._dbService.saveEncodeDayOneResults(this._user);

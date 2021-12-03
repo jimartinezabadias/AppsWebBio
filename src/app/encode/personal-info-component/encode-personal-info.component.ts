@@ -43,7 +43,7 @@ export class EncodePersonalInfoComponent implements OnInit {
     if (this.personalInfoFormGroup.valid)
     {
         const formData: IEncodeUserPersonalInfo = this.personalInfoFormGroup.value;
-        this._userService.storePersonalInfo(formData);
+        this._userService.user.personalInfo = formData;
         this._router.navigate(["../health-info"], { relativeTo: this._route });
       }
   }
