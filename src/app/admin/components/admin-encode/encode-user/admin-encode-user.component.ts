@@ -2,6 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
+import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 import { from, Observable } from 'rxjs';
 import { Genders, EducationLevels, SomnolenceDegrees } from 'src/app/encode/constants';
 
@@ -21,7 +22,8 @@ export class AdminEncodeUserComponent implements OnInit {
 
   constructor(
     private _dbService: DataDbService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private _userService: EncodeUserService) {}
 
   async ngOnInit(): Promise<void> 
   {
@@ -31,7 +33,8 @@ export class AdminEncodeUserComponent implements OnInit {
 
   public async startDayTwo(perpetrator: boolean) 
   {
-    //
+    this._userService.user.dayTwo.hasPerpetrator = perpetrator;
+    this._userService.user.dayTwo.completed = false;
   }
 
 }
