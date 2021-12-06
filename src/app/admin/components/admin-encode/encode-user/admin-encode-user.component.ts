@@ -2,6 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
+import { IEncodeDayTwo } from 'src/app/encode/models/IEncodeDayTwo';
 import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 import { from, Observable } from 'rxjs';
 import { Genders, EducationLevels, SomnolenceDegrees } from 'src/app/encode/constants';
@@ -29,12 +30,15 @@ export class AdminEncodeUserComponent implements OnInit {
   {
     let userIdParam = this.route.snapshot.paramMap.get('userId');
     this.user$ = from(this._dbService.getEncodeUser(userIdParam));
+    this._userService.loadUser(userIdParam);
   }
 
   public async startDayTwo(perpetrator: boolean) 
   {
-    this._userService.user.dayTwo.hasPerpetrator = perpetrator;
-    this._userService.user.dayTwo.completed = false;
+    const dayTwoData: IEncodeDayTwo = { completed: false, hasPerpetrator: perpetrator, somnolenceDegree: null };
+    this._userService.user.dayTwo = dayTwoData;
+    this._userService.saveDayOneResults();
+    this.ngOnInit();
   }
 
 }

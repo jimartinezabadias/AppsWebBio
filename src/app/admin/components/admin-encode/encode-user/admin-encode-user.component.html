@@ -160,7 +160,10 @@
                             </div>
                         </mat-tab>
                         <mat-tab label="Dia 2">
-                            <div *ngIf="user.dayOne.completed && !user.dayTwo.completed">
+                            <div *ngIf="user.dayOne.completed && !(user.dayTwo.hasPerpetrator == false || user.dayTwo.hasPerpetrator == true); then buttonsStart else infoDayTwo">
+                                <!-- template will replace this div -->
+                            </div>
+                            <ng-template #buttonsStart>
                                 <h3>Habilitar Dia 2</h3>
                                 <button mat-raised-button type="submit" class="start-daytwo-btn" (click)="startDayTwo(true)">
                                     Con Perpetrador
@@ -170,9 +173,9 @@
                                 <button mat-raised-button type="submit" class="start-daytwo-btn" (click)="startDayTwo(false)">
                                     Sin Perpetrador
                                 </button>  
-                            </div>
+                            </ng-template>
 
-                            <div *ngIf="user.dayTwo">
+                            <ng-template #infoDayTwo>
                                 <div *ngIf="user.dayTwo.completed == true || user.dayTwo.completed == false">
                                     <h3>Escala de grado de somnolencia</h3>
                                     <br>
@@ -184,8 +187,7 @@
                                     <br>
                                     <br>
                                 </div>
-                            </div>
-
+                            </ng-template>
 
                         </mat-tab>
                     </mat-tab-group>
