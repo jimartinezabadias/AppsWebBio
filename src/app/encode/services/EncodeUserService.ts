@@ -37,13 +37,8 @@ export class EncodeUserService {
             personalInfo: null,
             dayOne: null,
             dayTwo: null,
-<<<<<<< HEAD
             healthInfo: null,
             abandonedByUser: false
-            completed: false
-=======
-            healthInfo: null
->>>>>>> 6dcd433... starDayTwo buttons
         };
         // TODO: armar array con google forms
         
