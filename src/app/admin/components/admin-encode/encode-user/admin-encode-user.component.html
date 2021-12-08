@@ -50,8 +50,6 @@
                         <mat-tab label="Información Personal">
                             <h3>Datos Sociodemográficos</h3>
                             <div *ngIf="user.personalInfo">
-                            <div *ngIf="user.personalInfo.age > 0">
-                            <div *ngIf="user.personalInfo">
                                 <p>Edad: {{ user.personalInfo.age }}</p>
 
                                 <div *ngIf="user.personalInfo.gender === 'genders.Male'">
@@ -150,9 +148,6 @@
                             </div>
 
                             <h3>Audios</h3>
-                            <div class="audios-container" *ngIf="user.dayOne.audios">
-                            <div class="audios-container" *ngIf="user.dayOne.audios.length > 0">
-
                             <div class="audios-container" *ngIf="user.dayOne.audios">
                                 <audio *ngFor="let audio of user.dayOne.audios" controls>
                                     <source [src]="audio.downloadURL" type="audio/webm"/>
