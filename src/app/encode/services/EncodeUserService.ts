@@ -27,7 +27,7 @@ export class EncodeUserService {
     public async createNewUser(userData: {name: string, email: string}): Promise<IEncodeUser>
     {
         const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
-        const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(userData.email);
+        const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserId);
         const newUser: IEncodeUser = {
             uid: newUserId, 
             name: userData.name, 
@@ -104,14 +104,15 @@ export class EncodeUserService {
         return this._dbService.getEncodeUser(userid);
     }
 
-    private async _getGoogleFormsPreFilledURLs(userEmail: string): Promise<IEncodeGoogleFormResponse[]> {
+    private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
         const encodeConfig: IEncodeSettings = await this._dbService.getEncodeSettings();
         const options = {
             params: {
-                email: userEmail,
+                userId: newUserId,
                 formsURLs: encodeConfig.googleFormsURLs
             }
         }
+
         return this._http.get<IEncodeGoogleFormResponse[]>(encodeConfig.generatePreFilledResponsesScriptURL, options).toPromise();
     }
 }
