@@ -1,32 +1,32 @@
 // 
 // implementacion
-// descripcion: v0.0.1
-// url: https://script.google.com/macros/s/AKfycbzOsyPiQLvrlr8MOE_YHSkbvJ-N2keuASO_LCYldJm5d5UaEuVUyyzHRnPWg8iEAo46/exec
+// descripcion: v2.01
+// url: https://script.google.com/macros/s/AKfycbyMMbupBPwdCvZ5Oh90DeAGwNmTsbwqT5V2p6JzGR0iP3KdX1D4FI8hSHBvz15dH7pg/exec
 // 
 "use strict";
 
 function doGet(e){
-  const email = e.parameter.email;
+  const userId = e.parameter.userId;
   const formsURLs = e.parameters.formsURLs;
   
   let preFilledResponses = [];
 
   for (let formURL of formsURLs){
-    preFilledResponses.push(generateNewResponse(email, formURL));
+    preFilledResponses.push(generateNewResponse(userId, formURL));
   }
 
   return ContentService.createTextOutput(JSON.stringify(preFilledResponses)).setMimeType(ContentService.MimeType.JSON); 
 }
 
-function generateNewResponse(email, formURL){
+function generateNewResponse(userId, formURL){
   const form = FormApp.openByUrl(formURL);
   const formId = form.getId();
   const isResponded = false;
   let formItems = form.getItems();
   let newFormResponse = form.createResponse();
   
-  let emailItem = formItems[0].asMultipleChoiceItem().setChoiceValues([email]);
-  let itemResponse = emailItem.createResponse(email);
+  let userIdItem = formItems[0].asMultipleChoiceItem().setChoiceValues([userId]);
+  let itemResponse = userIdItem.createResponse(userId);
   newFormResponse.withItemResponse(itemResponse);
 
   const preFilledURL = newFormResponse.toPrefilledUrl();
@@ -36,5 +36,6 @@ function generateNewResponse(email, formURL){
     preFilledURL: preFilledURL,
     isResponded: isResponded
   };
+
   return newResponse;
 }
