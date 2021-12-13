@@ -5,7 +5,29 @@
 
             <mat-card>
                     
-                <mat-card-header>
+                <form [formGroup]="userForms" (ngOnSubmit)="submitForms()">
+
+                    <mat-horizontal-stepper formArrayName="googleForms" linear>
+
+                        <mat-step *ngFor="let form of googleForms.controls; let i = index" [formGroupName]="i">
+                            <ng-template matStepLabel>Formulario {{i + 1}}</ng-template>
+                            <!-- <ng-template matStepContent> -->
+                                <!-- <p>sadfasdf</p>
+                                <p>{{ form.value.preFilledURL }}</p> -->
+                                <!-- <iframe src="{{ form.value.preFilledURL + '&' + embeddedParameter}}" width="640" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe> -->
+                                <iframe [src]="form.value.preFilledURL | byPassSecurity" width="640" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+                            <!-- </ng-template> -->
+                        </mat-step>
+
+                    </mat-horizontal-stepper>
+
+                </form>
+                
+                
+                
+                <!-- Lista que habre cada form en una ventana emergente -->
+
+                <!-- <mat-card-header>
                     <mat-card-title>Formularios</mat-card-title>
                 </mat-card-header>
                 
@@ -27,7 +49,7 @@
                         routerLinkActive="active">
                         Continuar
                     </a>
-                </mat-card-actions>
+                </mat-card-actions> -->
 
             </mat-card>
             
