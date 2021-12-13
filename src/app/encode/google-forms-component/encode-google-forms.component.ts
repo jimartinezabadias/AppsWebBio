@@ -43,6 +43,7 @@ export class EncodeGoogleFormsComponent implements OnInit {
         preFilledURL: preFilledResp.preFilledURL
       }));
     });
+
   }
 
   submitForms(): void {

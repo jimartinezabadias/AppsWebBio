@@ -9,13 +9,17 @@
 
                     <mat-horizontal-stepper formArrayName="googleForms" linear>
 
-                        <mat-step *ngFor="let form of googleForms.controls; let i = index" [formGroupName]="i">
+                        <mat-step *ngFor="let form of googleForms.controls; let i = index"
+                            [stepControl]="googleForms.get([i])">
+                            <!-- ver si se requiera para que ande la validacion
+                            [stepControl]="googleForms.get([i])" -->
+
                             <ng-template matStepLabel>Formulario {{i + 1}}</ng-template>
                             <!-- <ng-template matStepContent> -->
                                 <!-- <p>sadfasdf</p>
                                 <p>{{ form.value.preFilledURL }}</p> -->
                                 <!-- <iframe src="{{ form.value.preFilledURL + '&' + embeddedParameter}}" width="640" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe> -->
-                                <iframe [src]="form.value.preFilledURL | byPassSecurity" width="640" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+                                <iframe [src]="form.value.preFilledURL | byPassSecurity" width="960" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
                             <!-- </ng-template> -->
                         </mat-step>
 
