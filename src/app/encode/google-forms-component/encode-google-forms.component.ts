@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IEncodeGoogleFormResponse } from '../models/IEncodeGoogleFormResponse';
-import { IEncodeUser } from '../models/IEncodeUser';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from "@angular/forms";
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 
 export class EncodeGoogleFormsComponent implements OnInit {
-  
+
   private _userResponses: Array<IEncodeGoogleFormResponse> = null;
   
   public userForms: FormGroup;
@@ -22,9 +23,6 @@ export class EncodeGoogleFormsComponent implements OnInit {
   constructor(private _userService: EncodeUserService, private _formBuilder: FormBuilder) 
   {
     this._userResponses = this._userService.user.googleFormsResponses;
-    
-    // this._userService.loadUser$(this._userService.user.uid);
-    // this._userService.user$().subscribe(this._userObserver);
   }
   
   get googleForms(): FormArray {
@@ -39,9 +37,7 @@ export class EncodeGoogleFormsComponent implements OnInit {
     console.log(this.googleForms);
 
     this._userResponses.forEach(preFilledResp => {
-      this.googleForms.push(this._formBuilder.control({
-        preFilledURL: preFilledResp.preFilledURL
-      }));
+      this.googleForms.push(this._formBuilder.control({ preFilledURL: preFilledResp.preFilledURL }, null, CustomValidator.googleFormResponse(this._userService)));
     });
 
   }
@@ -66,4 +62,30 @@ export class EncodeGoogleFormsComponent implements OnInit {
   //   this.userForms = user.googleFormsResponses;
   // }
   
+}
+
+export class CustomValidator {
+  static googleFormResponse(userService: EncodeUserService){
+    return (control: FormControl): Observable<ValidationErrors | null>  => {
+
+      const responseURL: string = control.value.preFilledURL;
+
+      return userService.googleForms$.pipe(
+        map(arr => arr.filter(resp => {
+          // console.log('actual form url: ');
+          // console.log(responseURL);
+          // console.log('actual resp to compare: ');
+          // console.log(resp.preFilledURL);
+          // console.log('is responded: ');
+          // console.log(resp.isResponded);
+          if ((resp.preFilledURL == responseURL) && resp.isResponded) {
+            console.log('form has been responded');
+            return of(null);
+          } 
+         
+          return of({ 'error': 'bla'});
+        }))
+      );
+    }
+  }
 }

@@ -69,16 +69,16 @@ export class EncodeUserService {
         return false;
     }
 
-    public loadUser$(userId: string): boolean 
-    {
-        let user$: Observable<IEncodeUser> = this._dbService.getEncodeUser$(userId);
-        if (user$)
-        {
-            this._user$ = user$;
-            return true;
-        }
-        return false;
-    }
+    // public loadUser$(userId: string): boolean 
+    // {
+    //     let user$: Observable<IEncodeUser> = this._dbService.getEncodeUser$(userId);
+    //     if (user$)
+    //     {
+    //         this._user$ = user$;
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     get user(): IEncodeUser 
     {
@@ -87,6 +87,10 @@ export class EncodeUserService {
 
     set user(value: IEncodeUser) {
         this._user = value;
+    }
+
+    get googleForms$(): Observable<IEncodeGoogleFormResponse[]>{
+        return this._dbService.getEncodeUserForms$(this._user.uid);
     }
 
     public user$(): Observable<IEncodeUser> 

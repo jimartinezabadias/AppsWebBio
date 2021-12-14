@@ -7,7 +7,7 @@
                     
                 <form [formGroup]="userForms" (ngOnSubmit)="submitForms()">
 
-                    <mat-horizontal-stepper formArrayName="googleForms" linear>
+                    <mat-horizontal-stepper formArrayName="googleForms" linear #stepper>
 
                         <mat-step *ngFor="let form of googleForms.controls; let i = index"
                             [stepControl]="googleForms.get([i])">
