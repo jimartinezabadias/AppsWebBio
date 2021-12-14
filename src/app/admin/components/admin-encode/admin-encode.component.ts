@@ -7,6 +7,9 @@ import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 import { EncodeUsersDataSource } from './encodeUsersDataSource';
 import { InviteFormComponent } from './invite-form-component/invite-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Parser, transforms } from 'json2csv';
+
+const SEPARATOR = "_";
 
 @Component({
   selector: 'app-admin-encode',
@@ -83,6 +86,53 @@ export class AdminEncodeComponent implements OnInit{
 
   private _userCounterObserver = (counterData) => {
     this.totalTestsCounter = counterData.payload.data();
+  }
+
+  async getData() {
+    let encodeUsers = await this._dbService.getAllEncodeUsersData();
+    
+    // CSV
+    const flatOptions = transforms.flatten({ objects: true, arrays: true, separator: SEPARATOR });
+    let fields = this._getFields();
+    const json2csvParser = new Parser({ fields: fields, transforms: [ flatOptions ] });
+    const csv = json2csvParser.parse(encodeUsers);
+    console.log(json2csvParser.parse(encodeUsers));
+    
+    // Download
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
+  }
+
+  // Returns the column names of the csv in the correct order
+  private _getFields(): Array<string> {
+
+    // Set static fields
+    let fields = [
+      "uid",
+      "name",
+      "email",
+      "creationDate",
+      "abandonedByUser",
+      "personalInfo_age",
+      "personalInfo_educationLevel",
+      "personalInfo_gender",
+      "personalInfo_occupation",
+      "personalInfo_ongoingCareer",
+      "healthInfo_cronicMedicines",
+      "healthInfo_hasSleepDisorder",
+      "healthInfo_sleepDisorders",
+      "healthInfo_takesCronicMedicine",
+      "dayOne_somnolenceDegree",
+      "dayOne_audios_0_downloadURL",
+      "googleFormsResponses_0_preFilledURL"
+    ];
+
+    // Set stepErrors 
+
+
+    return fields;
+
   }
 
 }
