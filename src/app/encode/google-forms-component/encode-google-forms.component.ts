@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { IEncodeGoogleFormResponse } from '../models/IEncodeGoogleFormResponse';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors } from "@angular/forms";
-import { Observable, of } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { MatStepper } from '@angular/material/stepper';
+import { GoogleFormValidator } from './google-form-validator';
 
 
 @Component({
@@ -12,7 +12,9 @@ import { catchError, switchMap, tap } from 'rxjs/operators';
     styleUrls: ['encode-google-forms.component.scss','../encode.component.scss']
 })
 
-export class EncodeGoogleFormsComponent implements OnInit {
+export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('stepper') stepper: MatStepper;
 
   private _userResponses: Array<IEncodeGoogleFormResponse> = null;
   
@@ -31,12 +33,19 @@ export class EncodeGoogleFormsComponent implements OnInit {
     this.userForms = this._formBuilder.group({
       googleForms: this._formBuilder.array([])
     });
+  }
 
+  ngAfterViewInit(): void {
     this._userResponses.forEach(preFilledResp => {
-      let newControl = this._formBuilder.control({ preFilledURL: preFilledResp.preFilledURL }, null, CustomValidator.googleFormResponse(this._userService));
+      let newControl = this._formBuilder.control({ preFilledURL: preFilledResp.preFilledURL }, null, GoogleFormValidator.googleFormResponse(this._userService));
+      newControl.statusChanges.subscribe(() => {
+        if (newControl.status == 'VALID'){
+          this.stepper.next();
+        }
+      })
+
       this.googleForms.push(newControl);
     });
-
   }
 
   submitForms(): void {
@@ -44,38 +53,3 @@ export class EncodeGoogleFormsComponent implements OnInit {
   }
 
 }
-
-export class CustomValidator {
-  
-  static googleFormResponse(userService: EncodeUserService){
-    
-    return (control: FormControl): Observable<ValidationErrors | null>  => {
-
-      const actualResponseURL: string = control.value.preFilledURL;
-
-      return userService.googleForms$.pipe(
-        switchMap(arr => { 
-          arr = arr.filter(resp => (resp.preFilledURL == actualResponseURL) && resp.isResponded );
-
-          if (arr.length > 0){
-            return of(null);
-          }
-
-          return of({'error': 'error'});
-        }), 
-        catchError(() => of({'error': 'error'}))
-        );
-      }
-    }    
-  }
-  
-
-function next(next: any, arg1: () => void): any {
-  throw new Error('Function not implemented.');
-}
-  // console.log('actual form url: ');
-  // console.log(responseURL);
-  // console.log('actual resp to compare: ');
-  // console.log(resp.preFilledURL);
-  // console.log('is responded: ');
-  // console.log(resp.isResponded);
