@@ -4,6 +4,7 @@ import { EncodeUserService } from '../services/EncodeUserService';
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { MatStepper } from '@angular/material/stepper';
 import { GoogleFormValidator } from './google-form-validator';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
   
   public userForms: FormGroup;
 
-  constructor(private _userService: EncodeUserService, private _formBuilder: FormBuilder) 
+  constructor(private _userService: EncodeUserService, private _formBuilder: FormBuilder, private _router: Router, private _route: ActivatedRoute) 
   {
     this._userResponses = this._userService.user.googleFormsResponses;
   }
@@ -48,8 +49,14 @@ export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  submitForms(): void {
-    console.log('bla');
-  }
+  // public submitForms(): void {
+  //   console.log('navigating to video component');
+    // if (this.userForms.valid)
+    // {
+      // this._router.navigate(["../video"], { relativeTo: this._route });
+    // }
+
+    // Error: Error: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value for 'ng-valid': 'true'. 
+  // }
 
 }

@@ -5,7 +5,7 @@
 
             <mat-card>
                     
-                <form [formGroup]="userForms" (ngOnSubmit)="submitForms()">
+                <form [formGroup]="userForms">
 
                     <mat-horizontal-stepper formArrayName="googleForms" linear #stepper>
 
@@ -16,6 +16,21 @@
                             <ng-template matStepLabel>Formulario {{i + 1}}</ng-template>
                             
                             <iframe [src]="form.value.preFilledURL | byPassSecurity" width="960" height="740" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+                        </mat-step>
+
+                        <mat-step editable="false">
+
+                            <ng-template matStepLabel>Hecho</ng-template>
+                            <p>Terminaste</p>
+                            <div>
+                                <a mat-raised-button
+                            class="btn"
+                            routerLink="../video"
+                            routerLinkActive="active">
+                            Comprobar
+                        </a>
+                            </div>
+                            
                         </mat-step>
 
                     </mat-horizontal-stepper>
