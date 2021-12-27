@@ -11,6 +11,21 @@
     align-items: center;
     row-gap: 2em;
     padding-bottom: 4em;
+    margin-top: 64px;
+}
+
+.login-btn
+{
+    background-color: #76ad2e;
+    color: #eeeeee;
+    font-size: medium;
+    padding: 8px 16px;
+}
+
+.logout-btn
+{
+    font-size: medium;
+    padding: 8px 16px;
 }
 
 .button-getData {
@@ -26,10 +41,6 @@
     -moz-box-shadow: inset 0 0 0 2px #ffcf02;
     box-shadow: inset 0px 0px 0px 2px #ffcf02;
 }
-
-// .title {
-//     margin-bottom: 50px;
-// }
 
 .contains-tables {
     max-width: 90%;
@@ -48,8 +59,6 @@ mat-header-cell {
 }  
 
 mat-cell {
-    // border: 1px solid #dddddd;
-    // text-align: left;
     padding: 1em !important;
 }
 
@@ -57,28 +66,6 @@ mat-paginator {
     background-color:  #E33B88;
     color: #eeeeee;
 }
-
-// mat-paginator>span.mat-button-wrapper{
-//     color: #ffcf02 !important;
-// }
-
-// .spinner-container {
-//     height: 360px;
-//     width: 390px;
-//     position: fixed;
-// }
-
-// .spinner-container mat-spinner {
-//     margin: 130px auto 0 auto;
-// }
-
-// .proposal {
-//     max-width: 400px;
-// }
-
-// .timeInit {
-//     max-width: 300px !important;
-// }
 
 h1, h2 {
     text-align: center;
@@ -92,43 +79,6 @@ h1, h2 {
     align-items: center;
 }
 
-// .contains-body, .contains-tables {
-//     display: block;
-//     justify-content: center;
-//     align-items: center;
-// }
-
-// .media {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-   
-// }
-
-// @media screen and (max-width: 1440px) {
-//    .contains-body {
-//        width: fit-content;
-//    }
-//    .media {
-//        width: 80%;
-//        display: block;
-//        justify-content: center;
-//        align-items: center;
-//    }
-
-
-  
-
-// }
-
-// @media screen and (max-width: 320px) {
-//     .container-all {
-//         min-height: 800px;
-//         padding-bottom: 0px;
-//     }
-   
-// }
-
 // test-select
 .testSelect {
     display: flex;
@@ -141,6 +91,7 @@ h1, h2 {
 .testSelect__options {
     display: flex;
     column-gap: 1em;
+    margin-bottom: 32px;
 }
 
 .testSelect__testLink {

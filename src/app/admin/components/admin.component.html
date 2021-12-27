@@ -8,7 +8,9 @@
 
         <!-- User NOT logged in -->
         <ng-template #guest>
-            <button mat-button (click)="auth.googleLogin()">
+            <button mat-raised-button 
+                (click)="auth.googleLogin()"
+                class="login-btn">
                 <mat-icon>login</mat-icon> Ingresar
             </button>
         </ng-template>
@@ -31,11 +33,16 @@
                         <h3>ENCODE</h3>
                     </div>
                 </div>
-                <button mat-button (click)="auth.signOut()">Logout</button>
+                
+                <!-- Boton Cerrar -->
+                <button mat-raised-button 
+                    (click)="auth.signOut()"
+                    class="logout-btn">
+                    <mat-icon>logout</mat-icon> Cerrar session</button>
             </div>
         </ng-template>
         
-        <p>Version 16062021</p>
+        <p>Version 12272021</p>
 
     </div>
 </div> 
