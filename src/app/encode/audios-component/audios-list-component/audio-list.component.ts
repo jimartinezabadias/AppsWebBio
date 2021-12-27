@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
+import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { IEncodeAudio } from '../../models/IEncodeAudio';
@@ -15,7 +15,7 @@ import { EncodeUserService } from '../../services/EncodeUserService';
 export class EncodeAudioListComponent {
 
   public audios: Array<IEncodeAudio>;
-  public isUploadingNewAudio: boolean = false;
+  public isUploadingNewAudio$: BehaviorSubject<boolean>;
 
   constructor(private _recorderService: AudioRecorderService, private _bdService: DataDbService, private _userService: EncodeUserService) 
   {
@@ -25,15 +25,16 @@ export class EncodeAudioListComponent {
         next: this._newAudioObserver
       }
     );
+    this.isUploadingNewAudio$ = new BehaviorSubject(false);
   }
 
   private _newAudioObserver = async (newAudio: IEncodeInMemoryAudio) => {
-    this.isUploadingNewAudio = true;
+    this.isUploadingNewAudio$.next(true);
     const downloadUrl = this._storeAudioInFirebase(newAudio);
     newAudio.downloadURL = await downloadUrl;
     this._storeAudioInUser(newAudio);
     this.audios.push(newAudio);
-    this.isUploadingNewAudio = false;
+    this.isUploadingNewAudio$.next(false);
   }
 
   private async _storeAudioInFirebase(newAudio: IEncodeInMemoryAudio): Promise<string> 
@@ -58,7 +59,6 @@ export class EncodeAudioListComponent {
     }
 
     this._userService.user.dayOne.audios.push(audioDbData);
-    console.log(this._userService.user);
   }
 
 }

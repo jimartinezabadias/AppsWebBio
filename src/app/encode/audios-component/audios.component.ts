@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { AudioRecorderService } from '../services/AudioRecorderService';
+import { EncodeAudioListComponent } from './audios-list-component/audio-list.component';
 
 @Component({
     selector: 'app-encode-audios',
@@ -14,21 +15,22 @@ import { AudioRecorderService } from '../services/AudioRecorderService';
 
 export class EncodeAudiosComponent implements OnExit {
 
-  private audiosReady = false;
-  private exitValue = false;
+  @ViewChild('audioList') public audioListComponent: EncodeAudioListComponent;
+
+  public audiosReady: boolean = false;
+  private _exitValue: boolean = false;
 
   constructor(
     private _userService: EncodeUserService,
     private _router: Router, 
     private _route: ActivatedRoute, 
-    private dialog: MatDialog, 
-    private _recorderService: AudioRecorderService) 
+    private dialog: MatDialog) 
   {
   }
-
+  
   onExit() {
     if(this.audiosReady == false) {
-      if(this.exitValue == false) {
+      if(this._exitValue == false) {
         this._openDialog();
       } else {
         this._userService.user.abandonedByUser = true;
@@ -47,17 +49,15 @@ export class EncodeAudiosComponent implements OnExit {
 
   private _dialogClosedObserver = (result) => {
     if(result) {
-      this.exitValue = true;
+      this._exitValue = true;
       this._router.navigate(["/"]);
     } else {
-      this.exitValue = false;
+      this._exitValue = false;
     }
   }
 
   onAudiosReady()
   {
-    //falta chequear por audios
-    this.audiosReady = true;
     this._router.navigate(["../end"], { relativeTo: this._route });
   }
   

@@ -4,7 +4,7 @@
         <div *ngFor="let audio of audios; let indexOfelement=index;">
             <p>Audio nro {{indexOfelement + 1}}</p>
         </div>
-        <div *ngIf="isUploadingNewAudio">
+        <div *ngIf="isUploadingNewAudio$ | async">
             <p>(Subiendo ...)</p>
         </div>
     </div>

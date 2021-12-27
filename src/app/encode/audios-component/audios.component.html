@@ -5,10 +5,12 @@
 
             <h1 class="mat-display-1">Audios</h1>
             <app-audio-recorder></app-audio-recorder>
-            <app-encode-audio-list></app-encode-audio-list>
+            <app-encode-audio-list #audioList></app-encode-audio-list>
 
             <mat-card-actions>
-                <a mat-raised-button (click)="onAudiosReady()">Finalizar</a>
+                <a mat-raised-button 
+                    (click)="onAudiosReady()"
+                    [disabled]="audioListComponent?.isUploadingNewAudio$ | async">Finalizar</a>
             </mat-card-actions>
         </div>
     </section>
