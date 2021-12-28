@@ -90,13 +90,17 @@ export class AdminEncodeComponent implements OnInit{
 
   async getData() {
     let encodeUsers = await this._dbService.getAllEncodeUsersData();
-    
+    let temp = JSON.parse(JSON.stringify(encodeUsers));
+    let prefix = window.location.href.replace("/encode", "") + "/audios/";
+    for (let i = 0; i < temp.length; i++) {
+      temp[i].link_audios = prefix + temp[i].uid;
+    }
     // CSV
     const flatOptions = transforms.flatten({ objects: true, arrays: true, separator: SEPARATOR });
     let fields = this._getFields();
     const json2csvParser = new Parser({ fields: fields, transforms: [ flatOptions ] });
-    const csv = json2csvParser.parse(encodeUsers);
-    console.log(json2csvParser.parse(encodeUsers));
+    const csv = json2csvParser.parse(temp);
+    console.log(json2csvParser.parse(temp));
     
     // Download
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -124,12 +128,8 @@ export class AdminEncodeComponent implements OnInit{
       "healthInfo_sleepDisorders",
       "healthInfo_takesCronicMedicine",
       "dayOne_somnolenceDegree",
-      "dayOne_audios_0_downloadURL",
-      "googleFormsResponses_0_preFilledURL"
+      "link_audios"
     ];
-
-    // Set stepErrors 
-
 
     return fields;
 
