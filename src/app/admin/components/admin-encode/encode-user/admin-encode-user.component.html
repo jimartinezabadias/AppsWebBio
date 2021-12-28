@@ -171,16 +171,18 @@
                             </ng-template>
 
                             <ng-template #infoDayTwo>
-                                <div *ngIf="user.dayTwo.completed == true || user.dayTwo.completed == false">
-                                    <h3>Escala de grado de somnolencia</h3>
-                                    <br>
-                                    <br>
-                                    <h3>Ronda de reconocimiento</h3>
-                                    <br>
-                                    <br>
-                                    <h3>Audios</h3>
-                                    <br>
-                                    <br>
+                                <div *ngIf="user.dayOne.completed == true">
+                                    <div *ngIf="user.dayTwo.completed == true || user.dayTwo.completed == false">
+                                        <h3>Escala de grado de somnolencia</h3>
+                                        <br>
+                                        <br>
+                                        <h3>Ronda de reconocimiento</h3>
+                                        <br>
+                                        <br>
+                                        <h3>Audios</h3>
+                                        <br>
+                                        <br>
+                                    </div>
                                 </div>
                             </ng-template>
 

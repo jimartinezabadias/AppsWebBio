@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DataDbService } from "src/app/core/services/db/data-db.service";
 import { IEncodeUser } from "../models/IEncodeUser";
+import { IEncodeDayOne } from "../models/IEncodeDayOne";
 import { HttpClient } from "@angular/common/http";
 import { IEncodeSettings } from "../models/IEncodeSettings";
 import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
