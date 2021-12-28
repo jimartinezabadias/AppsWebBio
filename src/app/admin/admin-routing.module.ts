@@ -5,7 +5,7 @@ import { AdminCreativityComponent } from './components/admin-creativity/admin-cr
 import { AdminEncodeComponent } from './components/admin-encode/admin-encode.component';
 import { AdminRulitComponent } from './components/admin-rulit/admin-rulit.component';
 import { AdminEncodeUserComponent } from './components/admin-encode/encode-user/admin-encode-user.component';
-
+import { AudiosDownload } from './components/admin-encode/audios-download/audios-download';
 
 import { AdminComponent } from './components/admin.component';
 
@@ -32,6 +32,11 @@ const routes: Routes = [
   {
     path: 'encode/:userId',
     component: AdminEncodeUserComponent,
+    canActivate: [ AdminAuthGuard ]
+  },
+  {
+    path: 'audios/:userId',
+    component: AudiosDownload,
     canActivate: [ AdminAuthGuard ]
   }
 ];
