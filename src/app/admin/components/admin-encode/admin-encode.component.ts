@@ -100,7 +100,6 @@ export class AdminEncodeComponent implements OnInit{
     let fields = this._getFields();
     const json2csvParser = new Parser({ fields: fields, transforms: [ flatOptions ] });
     const csv = json2csvParser.parse(temp);
-    console.log(json2csvParser.parse(temp));
     
     // Download
     const blob = new Blob([csv], { type: 'text/csv' });

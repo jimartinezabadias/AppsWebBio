@@ -6,11 +6,6 @@
             <button mat-raised-button class="button-getData" (click)="openInviteDialog()">
                 Crear Invitacion
             </button>
-
-            <h1 class="title">Datos de Test de ENCODE</h1>
-            <button mat-raised-button class="button-getData" (click)="getData()">
-               DESCARGAR
-            </button>
         </div>
 
         <div class="contains-tables mat-elevation-z8">
@@ -45,8 +40,15 @@
                   (click)="getUserResults(user.uid)"></mat-row>
         
             </mat-table>
-            
-            <mat-paginator [length]="totalTestsCounter.count" [pageSize]="pageSize"></mat-paginator>
+
+            <mat-toolbar>
+                <mat-toolbar-row>
+                    <button>
+                        <mat-icon (click)="getData()" title="Exportar Datos">save_alt</mat-icon>
+                    </button>
+                    <mat-paginator [length]="totalTestsCounter.count" [pageSize]="pageSize"></mat-paginator>
+                </mat-toolbar-row>
+            </mat-toolbar>
         
         </div>
 
