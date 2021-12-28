@@ -17,4 +17,5 @@ export interface IEncodeUser {
     dayTwo: IEncodeDayTwo | null;
     healthInfo: IEncodeUserHealthInfo | null;
     abandonedByUser: boolean | null;
+    consent: string | null;
 }

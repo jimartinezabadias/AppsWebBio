@@ -15,6 +15,7 @@ import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyDialogComponent } from './my-dialog/my-dialog.component';
 import { NavigationService } from './navigation-service/navigation.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { NavigationService } from './navigation-service/navigation.service';
     AngularFirestoreModule,
     AngularFireStorageModule
   ],
-  providers: [ NavigationService ],
+  providers: [ NavigationService, DatePipe ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

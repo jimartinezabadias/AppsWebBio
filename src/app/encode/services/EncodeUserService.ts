@@ -39,7 +39,8 @@ export class EncodeUserService {
             dayOne: null,
             dayTwo: null,
             healthInfo: null,
-            abandonedByUser: false
+            abandonedByUser: false,
+            consent: null
         };
         // TODO: armar array con google forms
         

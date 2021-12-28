@@ -18,6 +18,7 @@ import { HeaderRulitComponent } from './components/header-rulit/header-rulit.com
 import { HeaderQuestionRulitComponent } from './components/header-questionRulit/header-questionRulit.component';
 import { HeaderEncodeComponent } from './components/header-encode/header-encode.component';
 
+
 @NgModule({
   declarations: [
     HeaderComponent,
