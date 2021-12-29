@@ -88,10 +88,13 @@ export class AdminEncodeComponent implements OnInit{
     this.totalTestsCounter = counterData.payload.data();
   }
 
+  //meter lo de comentario CSV y DOWNLOAD en funciones propias
+  //parsear el creationDate
   async getData() {
     let encodeUsers = await this._dbService.getAllEncodeUsersData();
     let temp = JSON.parse(JSON.stringify(encodeUsers));
-    let prefix = window.location.href.replace("/encode", "") + "/audios/";
+    //hacerlo con activeroute
+    let prefix = window.location.href + "/audios/";
     for (let i = 0; i < temp.length; i++) {
       temp[i].link_audios = prefix + temp[i].uid;
     }

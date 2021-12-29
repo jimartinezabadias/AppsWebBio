@@ -5,6 +5,8 @@ import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import {HttpClient} from '@angular/common/http';
 import {saveAs} from 'file-saver/dist/FileSaver';
 import * as JSZip from 'jszip';
+import { ByPassSecurityPipe } from 'src/app/encode/google-forms-component/by-pass-security.pipe';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-admin-audios-download',
@@ -15,7 +17,8 @@ import * as JSZip from 'jszip';
 
     constructor(private httpClient: HttpClient,
                 private route: ActivatedRoute,
-                private _dbService: DataDbService) {
+                private _dbService: DataDbService,
+                private _sanitizer: DomSanitizer) {
     }
     
     async ngOnInit(): Promise<void> 
@@ -30,6 +33,8 @@ import * as JSZip from 'jszip';
         let count = 0;
     
         files.forEach(file => {
+            const bypass = new ByPassSecurityPipe(this._sanitizer);
+            const safeUrl = bypass.transform(file.downloadURL);
             this.httpClient.get(file.downloadURL, {responseType: 'blob'}).subscribe(response => {
             zipFile.file(file.id, response, {binary: true});
             count++;

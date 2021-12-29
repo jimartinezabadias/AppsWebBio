@@ -30,15 +30,22 @@ const routes: Routes = [
     canActivate: [ AdminAuthGuard ]
   },
   {
-    path: 'encode/:userId',
-    component: AdminEncodeUserComponent,
-    canActivate: [ AdminAuthGuard ]
-  },
-  {
-    path: 'audios/:userId',
-    component: AudiosDownload,
-    canActivate: [ AdminAuthGuard ]
+    path: 'encode',
+    canActivate: [ AdminAuthGuard ],
+    children: [
+      {
+        path: ':userId',
+        component: AdminEncodeUserComponent,
+        canActivate: [ AdminAuthGuard ]
+      },
+      {
+        path: 'audios/:userId',
+        component: AudiosDownload,
+        canActivate: [ AdminAuthGuard ]
+      }
+    ]
   }
+  
 ];
 
 @NgModule({
