@@ -88,7 +88,23 @@ export class AdminEncodeComponent implements OnInit{
     this.totalTestsCounter = counterData.payload.data();
   }
 
-  //meter lo de comentario CSV y DOWNLOAD en funciones propias
+  private downloadCSV(csv) {
+    // Download
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
+  }
+
+  private generateCSV(temp) {
+    // CSV
+    const flatOptions = transforms.flatten({ objects: true, arrays: true, separator: SEPARATOR });
+    let fields = this._getFields();
+    const json2csvParser = new Parser({ fields: fields, transforms: [ flatOptions ] });
+    const csv = json2csvParser.parse(temp);
+
+    this.downloadCSV(csv);
+  }
+
   //parsear el creationDate
   async getData() {
     let encodeUsers = await this._dbService.getAllEncodeUsersData();
@@ -98,16 +114,8 @@ export class AdminEncodeComponent implements OnInit{
     for (let i = 0; i < temp.length; i++) {
       temp[i].link_audios = prefix + temp[i].uid;
     }
-    // CSV
-    const flatOptions = transforms.flatten({ objects: true, arrays: true, separator: SEPARATOR });
-    let fields = this._getFields();
-    const json2csvParser = new Parser({ fields: fields, transforms: [ flatOptions ] });
-    const csv = json2csvParser.parse(temp);
-    
-    // Download
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url= window.URL.createObjectURL(blob);
-    window.open(url);
+
+    this.generateCSV(temp);
   }
 
   // Returns the column names of the csv in the correct order
