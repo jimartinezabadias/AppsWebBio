@@ -8,7 +8,7 @@ import { EncodeUsersDataSource } from './encodeUsersDataSource';
 import { InviteFormComponent } from './invite-form-component/invite-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Parser, transforms } from 'json2csv';
-import { DatePipe } from '@angular/common'
+import { PlatformLocation } from '@angular/common';
 
 
 const SEPARATOR = "_";
@@ -36,7 +36,7 @@ export class AdminEncodeComponent implements OnInit{
     private _dbService: DataDbService,
     private _router: Router,
     private _route: ActivatedRoute,
-    public datepipe: DatePipe) {}
+    private platformLocation: PlatformLocation) {}
   
   ngOnInit(): void 
   {
@@ -110,14 +110,12 @@ export class AdminEncodeComponent implements OnInit{
 
   async getData() {
     let encodeUsers = await this._dbService.getAllEncodeUsersData();
-    console.log(encodeUsers);
     let temp = JSON.parse(JSON.stringify(encodeUsers));
-    let prefix = this._router.url + "/audios/";
+    let prefix = (this.platformLocation as any).location.origin + "/audios/";
     for (let i = 0; i < temp.length; i++) {
       temp[i].link_audios = prefix + temp[i].uid;
       temp[i].creationDate = new Date(temp[i].creationDate.seconds*1000);
     }
-    console.log("temp", temp);
     this.generateCSV(temp);
   }
 
