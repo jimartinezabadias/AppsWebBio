@@ -1,15 +1,10 @@
 import { Injectable } from "@angular/core";
 import { DataDbService } from "src/app/core/services/db/data-db.service";
 import { IEncodeUser } from "../models/IEncodeUser";
-import { IEncodeDayOne } from "../models/IEncodeDayOne";
 import { HttpClient } from "@angular/common/http";
 import { IEncodeSettings } from "../models/IEncodeSettings";
 import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
-import { IEncodeUserPersonalInfo } from "../models/IEncodeUserPersonalInfo";
-import { IEncodeUserHealthInfo } from "../models/IEncodeUserHealthInfo";
-import { SomnolenceDegrees } from "../constants";
 import { Observable } from "rxjs";
-import { IEncodeAudio } from "../models/IEncodeAudio";
 
 @Injectable({
     providedIn: 'root'

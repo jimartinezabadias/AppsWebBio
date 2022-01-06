@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { SomnolenceDegrees } from "../constants";
+import { SomnolenceDegree } from "../constants";
 
 @Component({
     selector: 'app-encode-somnolence-degree',
@@ -16,7 +16,7 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
   
   get somnolenceDegrees() 
   {
-    return SomnolenceDegrees;
+    return SomnolenceDegree;
   }
 
   constructor(private _router: Router,
@@ -33,7 +33,7 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
   
   onSaveForm()
   {
-    const formData: SomnolenceDegrees = this.somnolenceDegreeFormGroup.get('somnolenceDegree').value;
+    const formData: SomnolenceDegree = this.somnolenceDegreeFormGroup.get('somnolenceDegree').value;
     this._userService.user.dayOne.somnolenceDegree = formData;
     this._router.navigate(["../google-forms"], { relativeTo: this._route });
   }

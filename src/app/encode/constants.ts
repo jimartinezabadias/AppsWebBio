@@ -1,6 +1,6 @@
 export const ENCODE_TEST_URL: string = "/encode"; 
 
-export enum RecorderStatus 
+export enum RecorderStatus
 {
     Ready = "Listo para grabar",
     Recording = "Grabando..."
@@ -8,14 +8,14 @@ export enum RecorderStatus
 
 export const REC_OPTIONS = {mimeType: 'audio/webm'};
 
-export enum Genders
+export enum Gender
 {
     Male = "Masculino",
     Female = "Femenino",
     NonBinary = "No Binario"
 }
 
-export enum EducationLevels
+export enum EducationLevel
 {
     incompleteSecondary = "Secundario incompleto",
     completeSecondary = "Secundario completo",
@@ -25,7 +25,7 @@ export enum EducationLevels
     completeBachelors = "Universitario completo"
 }
 
-export enum SomnolenceDegrees
+export enum SomnolenceDegree
 {
     totallyAwake = "Me siento activo, vital, alerta o bien despierto.",
     veryHigh = "Funcionando a niveles altos, pero no completamente alerta.",
@@ -35,4 +35,9 @@ export enum SomnolenceDegrees
     tired= "Somnoliento, mareado, luchado contra el sueño; prefiero recostarme.",
     almostSlept= "Ya no lucho contra el sueño, comenzaré a dormirme pronto; tengo pensamientos como sueños.",
     slept= "Dormido."
+}
+
+export enum PerpetratorCondition {
+    A = "Sospechoso 1 Presente, Sospechoso 2 Ausente",
+    B = "Sospechoso 2 Presente, Sospechoso 1 Ausente"
 }

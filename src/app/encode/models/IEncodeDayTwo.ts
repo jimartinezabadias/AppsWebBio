@@ -1,7 +1,7 @@
-import { SomnolenceDegrees } from "../constants";
+import { PerpetratorCondition, SomnolenceDegree } from "../constants";
 
 export interface IEncodeDayTwo {
-    somnolenceDegree: SomnolenceDegrees;
-    hasPerpetrator: boolean | null;
+    somnolenceDegree: SomnolenceDegree;
+    perpetratorCondition: PerpetratorCondition | null;
     completed: boolean | null;
 }

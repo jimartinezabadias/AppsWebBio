@@ -5,7 +5,7 @@ import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { IEncodeDayTwo } from 'src/app/encode/models/IEncodeDayTwo';
 import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 import { from, Observable } from 'rxjs';
-import { Genders, EducationLevels, SomnolenceDegrees } from 'src/app/encode/constants';
+import { Gender, EducationLevel, SomnolenceDegree, PerpetratorCondition } from 'src/app/encode/constants';
 
 @Component({
   selector: 'app-admin-encode-user',
@@ -17,9 +17,9 @@ export class AdminEncodeUserComponent implements OnInit {
   // Columnas de la tabla que se van a mostrar
   public displayedColumns: string[] = ["email", "link", "creationDate" ];
   public user$ : Observable<IEncodeUser>;
-  public genders = Genders;
-  public educationLevels = EducationLevels;
-  public somnolenceDegrees = SomnolenceDegrees;
+  public genders = Gender;
+  public educationLevels = EducationLevel;
+  public somnolenceDegrees = SomnolenceDegree;
 
   constructor(
     private _dbService: DataDbService,
@@ -33,9 +33,9 @@ export class AdminEncodeUserComponent implements OnInit {
     this._userService.loadUser(userIdParam);
   }
 
-  public async startDayTwo(perpetrator: boolean) 
+  public startDayTwo(perpetratorCondition: PerpetratorCondition) 
   {
-    const dayTwoData: IEncodeDayTwo = { completed: false, hasPerpetrator: perpetrator, somnolenceDegree: null };
+    const dayTwoData: IEncodeDayTwo = { completed: false, perpetratorCondition: perpetratorCondition, somnolenceDegree: null };
     this._userService.user.dayTwo = dayTwoData;
     this._userService.saveDayOneResults();
     this.ngOnInit();

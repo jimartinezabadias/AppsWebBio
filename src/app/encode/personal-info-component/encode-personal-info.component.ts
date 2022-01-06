@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { Genders, EducationLevels } from '../constants';
+import { Gender, EducationLevel } from '../constants';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IEncodeUserPersonalInfo } from '../models/IEncodeUserPersonalInfo';
 
@@ -14,8 +14,8 @@ import { IEncodeUserPersonalInfo } from '../models/IEncodeUserPersonalInfo';
 export class EncodePersonalInfoComponent implements OnInit {
 
   public personalInfoFormGroup: FormGroup;
-  public genders = Genders;
-  public educationLevels = EducationLevels;
+  public genders = Gender;
+  public educationLevels = EducationLevel;
 
   get age()
   {
