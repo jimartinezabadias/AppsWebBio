@@ -61,17 +61,6 @@ export class EncodeUserService {
         return false;
     }
 
-    // searchs in db for user with given id and returns abandoned state 
-    public async loadUserAbandonedState(userId: string): Promise<boolean> 
-    {
-        let user: IEncodeUser = await this.getUserData(userId);
-        if (user.abandonedByUser)
-        {
-            return true;
-        }
-        return false;
-    }
-
     // public loadUser$(userId: string): boolean 
     // {
     //     let user$: Observable<IEncodeUser> = this._dbService.getEncodeUser$(userId);
