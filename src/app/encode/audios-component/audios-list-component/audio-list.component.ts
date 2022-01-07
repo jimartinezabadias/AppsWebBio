@@ -53,12 +53,12 @@ export class EncodeAudioListComponent {
 
   private _storeAudioInUser(newAudio: IEncodeInMemoryAudio) {
     const audioDbData: IEncodeAudio = { id: newAudio.id, downloadURL: newAudio.downloadURL };
-    if (this._userService.user.dayOne.audios == null)
+    if (this._userService.user.sessionOne.audios == null)
     {
-      this._userService.user.dayOne.audios = new Array<IEncodeAudio>();
+      this._userService.user.sessionOne.audios = new Array<IEncodeAudio>();
     }
 
-    this._userService.user.dayOne.audios.push(audioDbData);
+    this._userService.user.sessionOne.audios.push(audioDbData);
   }
 
 }

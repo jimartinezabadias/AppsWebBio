@@ -31,8 +31,8 @@ export class EncodeUserService {
             googleFormsResponses: googleFormsResponses,
             creationDate: null,
             personalInfo: null,
-            dayOne: null,
-            dayTwo: null,
+            sessionOne: null,
+            sessionTwo: null,
             healthInfo: null,
             abandonedByUser: false,
             consent: null

@@ -1,7 +1,7 @@
 import { firestore } from "firebase";
 import { IEncodeGoogleFormResponse } from "./IEncodeGoogleFormResponse";
-import { IEncodeDayOne } from "./IEncodeDayOne";
-import { IEncodeDayTwo } from "./IEncodeDayTwo";
+import { IEncodeSessionOne } from "./IEncodeSessionOne";
+import { IEncodeSessionTwo } from "./IEncodeSessionTwo";
 import { IEncodeUserPersonalInfo } from "./IEncodeUserPersonalInfo";
 import { IEncodeUserHealthInfo } from "./IEncodeUserHealthInfo";
 
@@ -13,8 +13,8 @@ export interface IEncodeUser {
     creationDate: Date | firestore.FieldValue | null;
     googleFormsResponses: IEncodeGoogleFormResponse[] | null;
     personalInfo: IEncodeUserPersonalInfo | null;
-    dayOne: IEncodeDayOne | null;
-    dayTwo: IEncodeDayTwo | null;
+    sessionOne: IEncodeSessionOne | null;
+    sessionTwo: IEncodeSessionTwo | null;
     healthInfo: IEncodeUserHealthInfo | null;
     abandonedByUser: boolean | null;
     consent: string | null;

@@ -24,8 +24,8 @@ export class AudiosDownload implements OnInit{
         const userData = await this._dbService.getEncodeUser(userIdParam);
         let userAudios = new Array<IEncodeAudio>();
 
-        if (userData.dayOne != null) {
-            userData.dayOne.audios.map((audio: IEncodeAudio) => {
+        if (userData.sessionOne != null) {
+            userData.sessionOne.audios.map((audio: IEncodeAudio) => {
                 userAudios.push(audio);
             })
         }
