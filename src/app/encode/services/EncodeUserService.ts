@@ -37,7 +37,6 @@ export class EncodeUserService {
             abandonedByUser: false,
             consent: null
         };
-        // TODO: armar array con google forms
         
         await this._dbService.saveEncodeUser(newUser);
         return newUser;

@@ -89,7 +89,7 @@ export class AdminEncodeComponent implements OnInit {
   public openInviteDialog(): void {
     const dialogRef = this._dialog.open(InviteFormComponent);
 
-    dialogRef.afterClosed().subscribe(this._dialogClosedObserver);
+    dialogRef.afterClosed().subscribe(this._inviteDialogClosed$);
   }
 
   public getUserResults(uid) {
@@ -109,7 +109,7 @@ export class AdminEncodeComponent implements OnInit {
     this.openDownloadWindow(csvString);
   }
 
-  private _dialogClosedObserver = async (userData: { name: string, email: string }) => {
+  private _inviteDialogClosed$ = async (userData: { name: string, email: string }) => {
     if (userData)
     {
       await this._encodeUserService.createNewUser(userData);

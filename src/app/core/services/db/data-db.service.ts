@@ -151,9 +151,7 @@ export class DataDbService {
 
   public async saveEncodeUser(user: IEncodeUser): Promise<void> {
     user.creationDate = firestore.FieldValue.serverTimestamp();
-    const dayOneObj = Object.assign({},user.dayOne);
     const userObj = Object.assign({},user);
-    userObj.dayOne = dayOneObj;
     // TODO: change CreativesMetadataCounter to TestsMetadata
     this.getEncodeMetadataCounter().update( {"count": firestore.FieldValue.increment(1)} );
     await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).set(userObj);

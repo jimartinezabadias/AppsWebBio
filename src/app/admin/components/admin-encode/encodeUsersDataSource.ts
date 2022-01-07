@@ -62,17 +62,19 @@ export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
 
     private async _loadNewResults(results: QuerySnapshot<IEncodeUser>): Promise<void>
     {
-        let arrUsers: IEncodeUser[] = [];
-        this._usersSubject.next(arrUsers);
+        if (results.docs.length > 0){
+            let arrUsers: IEncodeUser[] = [];
+            this._usersSubject.next(arrUsers);
+                
+            results.docs.forEach( user => {
+                arrUsers.push(user.data());
+            });
+    
+            this._actualFirstInPage = await results.docs[0].ref.get();
+            this._actualLastInPage = await results.docs[results.size - 1].ref.get();
             
-        results.docs.forEach( user => {
-            arrUsers.push(user.data());
-        });
-
-        this._actualFirstInPage = await results.docs[0].ref.get();
-        this._actualLastInPage = await results.docs[results.size - 1].ref.get();
-        
-        this._usersSubject.next(arrUsers);
+            this._usersSubject.next(arrUsers);
+        }
     }
 
 }
