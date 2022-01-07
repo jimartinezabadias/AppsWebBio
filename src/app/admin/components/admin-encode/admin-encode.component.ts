@@ -6,7 +6,7 @@ import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 import { EncodeUsersDataSource } from './encodeUsersDataSource';
 import { InviteFormComponent } from './invite-form-component/invite-form.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Parser, transforms } from 'json2csv';
 import { PlatformLocation } from '@angular/common';
 
@@ -18,10 +18,28 @@ const SEPARATOR = "_";
   templateUrl: './admin-encode.component.html',
   styleUrls: ['admin-encode.component.scss','../admin.component.scss'],
 })
-export class AdminEncodeComponent implements OnInit{
+export class AdminEncodeComponent implements OnInit {
 
   @ViewChild(MatPaginator) private _paginator: MatPaginator;
   private _pageIndex: number = 0;
+  private _csvFields = [
+    "uid",
+    "name",
+    "email",
+    "creationDate",
+    "abandonedByUser",
+    "personalInfo_age",
+    "personalInfo_educationLevel",
+    "personalInfo_gender",
+    "personalInfo_occupation",
+    "personalInfo_ongoingCareer",
+    "healthInfo_cronicMedicines",
+    "healthInfo_hasSleepDisorder",
+    "healthInfo_sleepDisorders",
+    "healthInfo_takesCronicMedicine",
+    "dayOne_somnolenceDegree",
+    "link_audios"
+  ];
 
   public usersDataSource: EncodeUsersDataSource;
   public totalTestsCounter: any = { count: -1 };
@@ -29,14 +47,13 @@ export class AdminEncodeComponent implements OnInit{
 
   // Columnas de la tabla que se van a mostrar
   public displayedColumns: string[] = ["name", "email", "link" ,"creationDate" ];
-
+  
   constructor(
     private _encodeUserService: EncodeUserService,
     private _dialog: MatDialog,
     private _dbService: DataDbService,
     private _router: Router,
-    private _route: ActivatedRoute,
-    private platformLocation: PlatformLocation) {}
+    private _platformLocation: PlatformLocation) {}
   
   ngOnInit(): void 
   {
@@ -79,6 +96,19 @@ export class AdminEncodeComponent implements OnInit{
     this._router.navigate(['/admin/encode/', uid]);
   }
 
+  public async downloadCSV() {
+    let encodeUsers = await this._dbService.getAllEncodeUsersData();
+    let temp = JSON.parse(JSON.stringify(encodeUsers));
+    let downloadPrefix = (this._platformLocation as any).location.origin + "/admin/encode/";
+    for (let i = 0; i < temp.length; i++) {
+      temp[i].link_audios = downloadPrefix + temp[i].uid + "/audios";
+      temp[i].creationDate = new Date(temp[i].creationDate.seconds*1000);
+    }
+
+    let csvString = this.generateCSV(temp);
+    this.openDownloadWindow(csvString);
+  }
+
   private _dialogClosedObserver = async (userData: { name: string, email: string }) => {
     if (userData)
     {
@@ -91,59 +121,17 @@ export class AdminEncodeComponent implements OnInit{
     this.totalTestsCounter = counterData.payload.data();
   }
 
-  private downloadCSV(csv) {
+  private openDownloadWindow(csvString: string) {
     // Download
-    const blob = new Blob([csv], { type: 'text/csv' });
+    const blob = new Blob([csvString], { type: 'text/csv' });
     const url= window.URL.createObjectURL(blob);
     window.open(url);
   }
 
-  private generateCSV(temp) {
-    // CSV
+  private generateCSV(temp: string): string {
     const flatOptions = transforms.flatten({ objects: true, arrays: true, separator: SEPARATOR });
-    let fields = this._getFields();
-    const json2csvParser = new Parser({ fields: fields, transforms: [ flatOptions ] });
-    const csv = json2csvParser.parse(temp);
-
-    this.downloadCSV(csv);
+    const json2csvParser = new Parser({ fields: this._csvFields, transforms: [ flatOptions ] });
+    
+    return json2csvParser.parse(temp);
   }
-
-  async getData() {
-    let encodeUsers = await this._dbService.getAllEncodeUsersData();
-    let temp = JSON.parse(JSON.stringify(encodeUsers));
-    let prefix = (this.platformLocation as any).location.origin + "/audios/";
-    for (let i = 0; i < temp.length; i++) {
-      temp[i].link_audios = prefix + temp[i].uid;
-      temp[i].creationDate = new Date(temp[i].creationDate.seconds*1000);
-    }
-    this.generateCSV(temp);
-  }
-
-  // Returns the column names of the csv in the correct order
-  private _getFields(): Array<string> {
-
-    // Set static fields
-    let fields = [
-      "uid",
-      "name",
-      "email",
-      "creationDate",
-      "abandonedByUser",
-      "personalInfo_age",
-      "personalInfo_educationLevel",
-      "personalInfo_gender",
-      "personalInfo_occupation",
-      "personalInfo_ongoingCareer",
-      "healthInfo_cronicMedicines",
-      "healthInfo_hasSleepDisorder",
-      "healthInfo_sleepDisorders",
-      "healthInfo_takesCronicMedicine",
-      "dayOne_somnolenceDegree",
-      "link_audios"
-    ];
-
-    return fields;
-
-  }
-
 }

@@ -39,7 +39,7 @@ const routes: Routes = [
         canActivate: [ AdminAuthGuard ]
       },
       {
-        path: 'audios/:userId',
+        path: ':userId/audios',
         component: AudiosDownload,
         canActivate: [ AdminAuthGuard ]
       }
