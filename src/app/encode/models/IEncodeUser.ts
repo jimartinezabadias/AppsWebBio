@@ -13,7 +13,7 @@ export interface IEncodeUser {
     creationDate: Date | firestore.FieldValue | null;
     googleFormsResponses: IEncodeGoogleFormResponse[] | null;
     personalInfo: IEncodeUserPersonalInfo | null;
-    sessionOne: IEncodeSessionOne | null;
+    sessionOne: IEncodeSessionOne;
     sessionTwo: IEncodeSessionTwo | null;
     healthInfo: IEncodeUserHealthInfo | null;
     abandonedByUser: boolean | null;

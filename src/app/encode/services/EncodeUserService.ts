@@ -5,6 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { IEncodeSettings } from "../models/IEncodeSettings";
 import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
 import { Observable } from "rxjs";
+import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
 
 @Injectable({
     providedIn: 'root'
@@ -24,6 +25,12 @@ export class EncodeUserService {
     {
         const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
         const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserId);
+        const newSessionOne: IEncodeSessionOne = { 
+            somnolenceDegree: null,
+            audios: null,
+            completed: false
+        };
+          
         const newUser: IEncodeUser = {
             uid: newUserId, 
             name: userData.name, 
@@ -31,7 +38,7 @@ export class EncodeUserService {
             googleFormsResponses: googleFormsResponses,
             creationDate: null,
             personalInfo: null,
-            sessionOne: null,
+            sessionOne: newSessionOne,
             sessionTwo: null,
             healthInfo: null,
             abandonedByUser: false,

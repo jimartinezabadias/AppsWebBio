@@ -19,5 +19,5 @@ export class EncodeWellcomeComponent implements OnInit {
   {
     this.userName = this._userService.user.name;
   }
-
+  
 }

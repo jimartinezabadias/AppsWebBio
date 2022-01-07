@@ -16,6 +16,9 @@ export class EncodeAbandonedGuard implements CanActivate {
   }
   
   private async checkAbandoned(route: ActivatedRouteSnapshot): Promise<boolean | UrlTree> {
+    
+    console.log(this._userService.user);
+    
     const userId: string = route.paramMap.get('userId');
     
     if (await this._userService.loadUserAbandonedState(userId))
