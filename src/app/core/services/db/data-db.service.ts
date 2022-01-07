@@ -11,9 +11,8 @@ import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';
 import { IEncodeSettings } from 'src/app/encode/models/IEncodeSettings';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
-import { IEncodeAudio } from 'src/app/encode/models/IEncodeAudio';
 import { IEncodeGoogleFormResponse } from 'src/app/encode/models/IEncodeGoogleFormResponse';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({

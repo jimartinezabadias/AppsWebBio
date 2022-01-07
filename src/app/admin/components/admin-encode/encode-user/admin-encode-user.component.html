@@ -1,9 +1,9 @@
 <div class="containerAll">
     <app-header-admin></app-header-admin>
     <div class="contains-body">
-        <div class="titleAndButton">
+        <!-- <div class="titleAndButton">
             <h1 class="title">Encode Admin</h1>
-        </div>
+        </div> -->
 
         <div *ngIf="user$ | async; then userTemplate else loading">
             <!-- template will replace this div -->
@@ -22,7 +22,11 @@
                     <h1 class="mat-display-1">{{ user.name }}</h1>
     
                     <div class="user-info">
+                        
+                        <!-- Email -->
                         <p>Email: {{ user.email }}</p>
+                        
+                        <!-- Estado -->
                         <div *ngIf="user.abandonedByUser; then abandoned else progress">
                             <!-- template will replace this div -->
                         </div>
@@ -30,136 +34,188 @@
                             <p>Estado: Abandono</p>
                         </ng-template>
                         <ng-template #progress>
-                            <div *ngIf="user.dayOne.completed">
-                                <p>Estado: Dia 1 Completado</p> 
-                            </div>
-                            <div *ngIf="!user.dayOne.completed">
+                            <div *ngIf="user.dayOne == null">
                                 <p>Estado: Dia 1 En progreso</p>
                             </div>
+                            <div *ngIf="user.dayOne != null && user.dayOne.completed">
+                                <p>Estado: Dia 1 Completado</p> 
+                            </div>
                         </ng-template>
+                        
+                        <!-- Link -->
                         <p>Link: <a target="_blank" href="{{ user.uid | encodeLink }}">{{ user.uid | encodeLink }}</a>
                             <button [cdkCopyToClipboard]="user.uid | encodeLink">
                                 <mat-icon aria-hidden="false" aria-label="copiar link">content_copy</mat-icon>
                             </button>
                         </p>
+
+                        <!-- Fecha Creacion -->
                         <p>Fecha de creación: {{ user.creationDate.toMillis() | date:'d/M/yyyy, h:mm a' }}</p>
 
                     </div>
     
                     <mat-tab-group>
+
+                        <!-- Tab Información Personal -->
                         <mat-tab label="Información Personal">
-                            <h3>Datos Sociodemográficos</h3>
-                            <div *ngIf="user.personalInfo">
-                                <p>Edad: {{ user.personalInfo.age }}</p>
 
-                                <div *ngIf="user.personalInfo.gender === 'genders.Male'">
-                                    <p>Género: {{genders.Male}}</p>
-                                </div>
-                                <div *ngIf="user.personalInfo.gender === 'genders.Female'">
-                                    <p>Género: {{genders.Female}}</p>
-                                </div>
-                                <div *ngIf="user.personalInfo.gender === 'genders.NonBinary'">
-                                    <p>Género: {{genders.NonBinary}}</p>
-                                </div>
-
-                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.incompleteSecondary'">
-                                    <p>Nivel educativo: {{educationLevels.incompleteSecondary}}</p>
-                                </div>
-                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.completeSecondary'">
-                                    <p>Nivel educativo: {{educationLevels.completeSecondary}}</p>
-                                </div>
-                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.incompleteTertiary'">
-                                    <p>Nivel educativo: {{educationLevels.incompleteTertiary}}</p>
-                                </div>
-                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.completeTertiary'">
-                                    <p>Nivel educativo: {{educationLevels.completeTertiary}}</p>
-                                </div>
-                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.incompleteBachelors'">
-                                    <p>Nivel educativo: {{educationLevels.incompleteBachelors}}</p>
-                                </div>
-                                <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.completeBachelors'">
-                                    <p>Nivel educativo: {{educationLevels.completeBachelors}}</p>
-                                </div>
-                                
-
-                                <div *ngIf="user.personalInfo.occupation.length > 0">
-                                    <p>Ocupación: {{ user.personalInfo.occupation }}</p>
-                                </div>
-
-                                <div *ngIf="user.personalInfo.ongoingCareer.length > 0">
-                                    <p>Carrera en curso: {{ user.personalInfo.ongoingCareer }}</p>
-                                </div>
-                            </div>
-
-                            <h3>Datos Salud</h3>
-                            <div *ngIf="user.healthInfo">
-                                <div *ngIf="user.healthInfo.hasSleepDisorder; then sleepDisorder else noSleepDisorder">
-                                    <!-- template will replace this div -->
-                                </div>
-                                <ng-template #sleepDisorder>
-                                    <p>Tiene un desorden del sueño.</p>
-                                    <p>El cual es: {{ user.healthInfo.sleepDisorders }}</p>
-                                </ng-template>
-                                <ng-template #noSleepDisorder>
-                                    <p>No tiene un desorden del sueño.</p>
-                                </ng-template>
-                                
-                                <div *ngIf="user.healthInfo.takesCronicMedicine; then cronicMedicine else noCronicMedicine">
-                                    <!-- template will replace this div -->
-                                </div>
-                                <ng-template #cronicMedicine>
-                                    <p>Consume medicación de forma crónica.</p>
-                                    <p>Las cuales son: {{ user.healthInfo.cronicMedicines }}</p>
-                                </ng-template>
-                                <ng-template #noCronicMedicine>
-                                    <p>No consume medicación de forma crónica.</p>
-                                </ng-template>
-                            </div>
-
-
-                            <h3>Consentimiento</h3>
-                            <p>Consentimiento otorgado.</p>
-                        </mat-tab>
-                        <mat-tab label="Dia 1">
-                            <h3>Escala de grado de somnolencia</h3>
-                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.totallyAwake">
-                                <p>{{somnolenceDegrees.totallyAwake}}</p>
-                            </div>
-                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.veryHigh">
-                                <p>{{somnolenceDegrees.veryHigh}}</p>
-                            </div>
-                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.relaxed">
-                                <p>{{somnolenceDegrees.relaxed}}</p>
-                            </div>
-                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.littleConfused">
-                                <p>{{somnolenceDegrees.littleConfused}}</p>
-                            </div>
-                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.confused">
-                                <p>{{somnolenceDegrees.confused}}</p>
-                            </div>
-                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.tired">
-                                <p>{{somnolenceDegrees.tired}}</p>
-                            </div>
-                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.almostSlept">
-                                <p>{{somnolenceDegrees.almostSlept}}</p>
-                            </div>
-                            <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.slept">
-                                <p>{{somnolenceDegrees.slept}}</p>
-                            </div>
-
-                            <h3>Audios</h3>
-                            <div class="audios-container" *ngIf="user.dayOne.audios">
-                                <audio *ngFor="let audio of user.dayOne.audios" controls>
-                                    <source [src]="audio.downloadURL" type="audio/webm"/>
-                                </audio>
-                            </div>
-                        </mat-tab>
-                        <mat-tab label="Dia 2">
-                            <div *ngIf="user.dayOne.completed && !(user.dayTwo.hasPerpetrator == false || user.dayTwo.hasPerpetrator == true); then buttonsStart else infoDayTwo">
+                            <div *ngIf="user.dayOne != null && user.dayOne.completed && !user.abandonedByUser; then personalInfoTemplate else noDataTemplate">
                                 <!-- template will replace this div -->
                             </div>
-                            <ng-template #buttonsStart>
-                                <h3>Habilitar Dia 2</h3>
+
+                            <!-- Sesión 1 Incompleta -->
+                            <ng-template #noDataTemplate>
+                                <p>aun sin datos</p>
+                            </ng-template>
+                            
+                            <!-- Datos personal info -->
+                            <ng-template #personalInfoTemplate>
+                                <h3>Datos Sociodemográficos</h3>
+                                <div *ngIf="user.personalInfo">
+                                    <p>Edad: {{ user.personalInfo.age }}</p>
+    
+                                    <div *ngIf="user.personalInfo.gender === 'genders.Male'">
+                                        <p>Género: {{genders.Male}}</p>
+                                    </div>
+                                    <div *ngIf="user.personalInfo.gender === 'genders.Female'">
+                                        <p>Género: {{genders.Female}}</p>
+                                    </div>
+                                    <div *ngIf="user.personalInfo.gender === 'genders.NonBinary'">
+                                        <p>Género: {{genders.NonBinary}}</p>
+                                    </div>
+    
+                                    <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.incompleteSecondary'">
+                                        <p>Nivel educativo: {{educationLevels.incompleteSecondary}}</p>
+                                    </div>
+                                    <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.completeSecondary'">
+                                        <p>Nivel educativo: {{educationLevels.completeSecondary}}</p>
+                                    </div>
+                                    <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.incompleteTertiary'">
+                                        <p>Nivel educativo: {{educationLevels.incompleteTertiary}}</p>
+                                    </div>
+                                    <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.completeTertiary'">
+                                        <p>Nivel educativo: {{educationLevels.completeTertiary}}</p>
+                                    </div>
+                                    <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.incompleteBachelors'">
+                                        <p>Nivel educativo: {{educationLevels.incompleteBachelors}}</p>
+                                    </div>
+                                    <div *ngIf="user.personalInfo.educationLevel === 'educationLevels.completeBachelors'">
+                                        <p>Nivel educativo: {{educationLevels.completeBachelors}}</p>
+                                    </div>
+                                    
+    
+                                    <div *ngIf="user.personalInfo.occupation.length > 0">
+                                        <p>Ocupación: {{ user.personalInfo.occupation }}</p>
+                                    </div>
+    
+                                    <div *ngIf="user.personalInfo.ongoingCareer.length > 0">
+                                        <p>Carrera en curso: {{ user.personalInfo.ongoingCareer }}</p>
+                                    </div>
+                                </div>
+    
+                                <h3>Datos Salud</h3>
+                                <div *ngIf="user.healthInfo">
+                                    <div *ngIf="user.healthInfo.hasSleepDisorder; then sleepDisorder else noSleepDisorder">
+                                        <!-- template will replace this div -->
+                                    </div>
+                                    <ng-template #sleepDisorder>
+                                        <p>Tiene un desorden del sueño.</p>
+                                        <p>El cual es: {{ user.healthInfo.sleepDisorders }}</p>
+                                    </ng-template>
+                                    <ng-template #noSleepDisorder>
+                                        <p>No tiene un desorden del sueño.</p>
+                                    </ng-template>
+                                    
+                                    <div *ngIf="user.healthInfo.takesCronicMedicine; then cronicMedicine else noCronicMedicine">
+                                        <!-- template will replace this div -->
+                                    </div>
+                                    <ng-template #cronicMedicine>
+                                        <p>Consume medicación de forma crónica.</p>
+                                        <p>Las cuales son: {{ user.healthInfo.cronicMedicines }}</p>
+                                    </ng-template>
+                                    <ng-template #noCronicMedicine>
+                                        <p>No consume medicación de forma crónica.</p>
+                                    </ng-template>
+                                </div>
+    
+                                <h3>Consentimiento</h3>
+                                <!-- TODO: mostrar consentimiento posta -->
+                                <p>Consentimiento otorgado.</p>
+                            </ng-template>
+
+                        </mat-tab>
+
+                        <!-- Tab Sesión 1 -->
+                        <mat-tab label="Sesión 1">
+                            
+                            <div *ngIf="user.dayOne != null && user.dayOne.completed && !user.abandonedByUser; then personalInfoTemplate else noDataTemplate">
+                                <!-- template will replace this div -->
+                            </div>
+                            
+                            <!-- Sesión 1 Incompleta -->
+                            <ng-template #noDataTemplate>
+                                <p>aun sin datos</p>
+                            </ng-template>
+                            
+                            <!-- Datos Sesión 1 -->
+                            <ng-template #personalInfoTemplate>
+
+                                <!-- Escala de grado de somnolencia -->
+                                <h3>Escala de grado de somnolencia</h3>
+                            
+                                <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.totallyAwake">
+                                    <p>{{somnolenceDegrees.totallyAwake}}</p>
+                                </div>
+                                <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.veryHigh">
+                                    <p>{{somnolenceDegrees.veryHigh}}</p>
+                                </div>
+                                <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.relaxed">
+                                    <p>{{somnolenceDegrees.relaxed}}</p>
+                                </div>
+                                <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.littleConfused">
+                                    <p>{{somnolenceDegrees.littleConfused}}</p>
+                                </div>
+                                <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.confused">
+                                    <p>{{somnolenceDegrees.confused}}</p>
+                                </div>
+                                <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.tired">
+                                    <p>{{somnolenceDegrees.tired}}</p>
+                                </div>
+                                <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.almostSlept">
+                                    <p>{{somnolenceDegrees.almostSlept}}</p>
+                                </div>
+                                <div *ngIf="user.dayOne.somnolenceDegree === somnolenceDegrees.slept">
+                                    <p>{{somnolenceDegrees.slept}}</p>
+                                </div>
+
+                                <!-- Audios -->
+                                <h3>Audios</h3>
+                                <div class="audios-container" *ngIf="user.dayOne.audios">
+                                    <audio *ngFor="let audio of user.dayOne.audios" controls>
+                                        <source [src]="audio.downloadURL" type="audio/webm"/>
+                                    </audio>
+                                </div>
+
+                            </ng-template>
+
+                        </mat-tab>
+                        
+                        <!-- Tab Sesión 2 -->
+                        <mat-tab label="Sesión 2">
+
+                            <div *ngIf="user.dayOne != null && user.dayOne.completed; then session2Template else noDataTemplate">
+                                <!-- template will replace this div -->
+                            </div>
+
+                            <!-- Sesión 1 Incompleta -->
+                            <ng-template #noDataTemplate>
+                                <p>aun sin datos</p>
+                            </ng-template>
+
+                            <!-- Sesión 2 -->
+                            <ng-template #session2Template>
+                                
+                                <h3>Habilitar Sesión 2</h3>
                                 <p>TODO: agregar opciones</p>
                                 <!-- <button mat-raised-button type="submit" class="start-daytwo-btn" (click)="startDayTwo(true)">
                                     Con Perpetrador
@@ -169,22 +225,33 @@
                                 <button mat-raised-button type="submit" class="start-daytwo-btn" (click)="startDayTwo(false)">
                                     Sin Perpetrador
                                 </button>   -->
-                            </ng-template>
-
-                            <ng-template #infoDayTwo>
-                                <div *ngIf="user.dayOne.completed == true">
-                                    <div *ngIf="user.dayTwo.completed == true || user.dayTwo.completed == false">
-                                        <h3>Escala de grado de somnolencia</h3>
-                                        <br>
-                                        <br>
-                                        <h3>Ronda de reconocimiento</h3>
-                                        <br>
-                                        <br>
-                                        <h3>Audios</h3>
-                                        <br>
-                                        <br>
-                                    </div>
+    
+                                <div *ngIf="user.dayTwo != null && user.dayTwo.completed; then session2Template else noDataTemplate">
+                                    <!-- template will replace this div -->
                                 </div>
+
+                                <!-- Sesión 2 Incompleta -->
+                                <ng-template #noDataTemplate>
+                                    <p>aun sin datos</p>
+                                </ng-template>
+
+                                <!-- Datos Sesión 2 -->
+                                <ng-template #session2Template>
+                                    <!-- <div *ngIf="user.dayOne.completed == true">
+                                        <div *ngIf="user.dayTwo.completed == true || user.dayTwo.completed == false">
+                                            <h3>Escala de grado de somnolencia</h3>
+                                            <br>
+                                            <br>
+                                            <h3>Ronda de reconocimiento</h3>
+                                            <br>
+                                            <br>
+                                            <h3>Audios</h3>
+                                            <br>
+                                            <br>
+                                        </div>
+                                    </div> -->
+                                </ng-template>
+
                             </ng-template>
 
                         </mat-tab>
