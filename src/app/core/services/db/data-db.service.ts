@@ -139,10 +139,7 @@ export class DataDbService {
 
   // Encode
   
-  public async saveEncodeDayOneResults(user: IEncodeUser): Promise<void> {
-    console.log("saving user data...");
-    console.log(user);
-
+  public async saveEncodeSessionOneResults(user: IEncodeUser): Promise<void> {
     const userObj = Object.assign({},user);
     
     await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).set(userObj);

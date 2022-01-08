@@ -4,55 +4,60 @@ import { Router } from "@angular/router";
 import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
+import { LazyDialogService } from '../services/lazy-dialog.service';
 
 @Component({
     selector: 'app-encode-end',
     templateUrl: './encode-end.component.html',
     styleUrls: ['../encode.component.scss','end.component.scss']
 })
-
 export class EncodeEndComponent implements OnInit, OnExit {
 
+  private _canNavigateToNextComponent: boolean = false;
+  
   public userName: string;
-  private exitValue = false;
 
-  constructor(private _userService: EncodeUserService, private dialog: MatDialog, private _router: Router) 
+  constructor(private _userService: EncodeUserService, 
+    private _router: Router,
+    private _lazyDialog: LazyDialogService,
+    private _dialog: MatDialog) 
   {
   }
 
   ngOnInit(): void 
   {
     this.userName = this._userService.user.name;
-    this.exitValue = false;
+    this._userService.user.sessionOne.completed = true;
     this.saveResults();
   }
 
-  private async saveResults() {
-    await this._userService.saveDayOneResults();
-  }
-
   onExit() {
-    if(this.exitValue == false) {
-      this._openDialog();
-    } else {
-      this._userService.user.abandonedByUser = true;
-      this._userService.saveDayOneResults();
+    if(this._canNavigateToNextComponent == true) {
       return true;
     }
+    
+    this._openDialog();
+  }
+
+  private async saveResults() {
+    await this._userService.saveSessionOneResults();
   }
 
   private async _openDialog() {
-    const dialogRef = this.dialog.open(ExitConfirmComponent, {});
+    const dialogRef = this._dialog.open(ExitConfirmComponent, {});
     dialogRef.afterClosed().subscribe(this._dialogClosedObserver);
   }
 
-  private _dialogClosedObserver = (result) => {
-    if(result) {
-      this.exitValue = true;
+  private _dialogClosedObserver = async (response: boolean): Promise<void> => {
+    if(response == true) {
+      this._userService.user.abandonedByUser = true;
+      this._userService.user.sessionOne.completed = true;
+      await this._userService.saveSessionOneResults();
+      this._canNavigateToNextComponent = true;
       this._router.navigate(["/"]);
-    } else {
-      this.exitValue = false;
     }
+    
+    this._lazyDialog.closeDialog();
   }
 
 }

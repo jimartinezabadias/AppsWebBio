@@ -23,12 +23,12 @@ export class AdminEncodeUserComponent implements OnInit {
 
   constructor(
     private _dbService: DataDbService,
-    private route: ActivatedRoute,
+    private _route: ActivatedRoute,
     private _userService: EncodeUserService) {}
 
   async ngOnInit(): Promise<void> 
   {
-    let userIdParam = this.route.snapshot.paramMap.get('userId');
+    let userIdParam = this._route.snapshot.paramMap.get('userId');
     this.user$ = from(this._dbService.getEncodeUser(userIdParam));
     this._userService.loadUser(userIdParam);
   }
@@ -37,7 +37,7 @@ export class AdminEncodeUserComponent implements OnInit {
   {
     const dayTwoData: IEncodeSessionTwo = { completed: false, perpetratorCondition: perpetratorCondition, somnolenceDegree: null };
     this._userService.user.sessionTwo = dayTwoData;
-    this._userService.saveDayOneResults();
+    this._userService.saveSessionOneResults();
     this.ngOnInit();
   }
 

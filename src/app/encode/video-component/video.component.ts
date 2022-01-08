@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +11,6 @@ import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.com
     templateUrl: './video.component.html',
     styleUrls: ['video.component.scss','../encode.component.scss']
 })
-
 export class EncodeVideoComponent implements OnExit {
 
   private _canNavigateToNextComponent: boolean = false;
@@ -59,7 +58,8 @@ export class EncodeVideoComponent implements OnExit {
   private _dialogClosedObserver = async (response: boolean): Promise<void> => {
     if(response == true) {
       this._userService.user.abandonedByUser = true;
-      await this._userService.saveDayOneResults();
+      this._userService.user.sessionOne.completed = true;
+      await this._userService.saveSessionOneResults();
       this._canNavigateToNextComponent = true;
       this._router.navigate(["/"]);
     }

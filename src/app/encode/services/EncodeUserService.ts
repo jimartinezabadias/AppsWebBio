@@ -90,9 +90,9 @@ export class EncodeUserService {
         return this._user$;
     }
 
-    public async saveDayOneResults() 
+    public async saveSessionOneResults() 
     {
-        await this._dbService.saveEncodeDayOneResults(this._user);
+        await this._dbService.saveEncodeSessionOneResults(this._user);
     }
     
     private getUserData(userid: string): Promise<IEncodeUser> 

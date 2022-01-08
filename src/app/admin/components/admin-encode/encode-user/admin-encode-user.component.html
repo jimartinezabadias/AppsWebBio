@@ -149,7 +149,7 @@
                         <!-- Tab Sesión 1 -->
                         <mat-tab label="Sesión 1">
                             
-                            <div *ngIf="user.sessionOne.completed; then personalInfoTemplate else noDataTemplate">
+                            <div *ngIf="user.sessionOne.completed; then sessionOneData else noDataTemplate">
                                 <!-- template will replace this div -->
                             </div>
                             
@@ -159,7 +159,7 @@
                             </ng-template>
                             
                             <!-- Datos Sesión 1 -->
-                            <ng-template #personalInfoTemplate>
+                            <ng-template #sessionOneData>
 
                                 <!-- Escala de grado de somnolencia -->
                                 <h3>Escala de grado de somnolencia</h3>
@@ -227,7 +227,7 @@
                                     Sin Perpetrador
                                 </button>   -->
     
-                                <div *ngIf="user.sessionTwo.completed; then sessionTwoData else noDataTemplate">
+                                <div *ngIf="user.sessionTwo != null && user.sessionTwo.completed; then sessionTwoData else noDataTemplate">
                                     <!-- template will replace this div -->
                                 </div>
 
