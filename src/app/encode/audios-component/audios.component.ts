@@ -29,6 +29,7 @@ export class EncodeAudiosComponent implements OnExit {
   }
   
   onExit() {
+    console.log('on exit');
     if(this.audiosReady == false) {
       if(this._exitValue == false) {
         this._openDialog();
@@ -58,6 +59,7 @@ export class EncodeAudiosComponent implements OnExit {
 
   onAudiosReady()
   {
+    console.log('navigating to end component');
     this._router.navigate(["../end"], { relativeTo: this._route });
   }
   

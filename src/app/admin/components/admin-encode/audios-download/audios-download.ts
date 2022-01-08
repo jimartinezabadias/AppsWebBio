@@ -9,7 +9,7 @@ import * as JSZip from 'jszip';
 @Component({
     selector: 'app-admin-audios-download',
     templateUrl: './audios-download.component.html',
-    styleUrls: ['./audios-download.component.scss','../../admin.component.scss'],
+    styleUrls: ['../../admin.component.scss'],
 })
 export class AudiosDownload implements OnInit{
 
@@ -24,7 +24,7 @@ export class AudiosDownload implements OnInit{
         const userData = await this._dbService.getEncodeUser(userIdParam);
         let userAudios = new Array<IEncodeAudio>();
 
-        if (userData.sessionOne != null) {
+        if (userData.sessionOne != null && userData.sessionOne.audios != null) {
             userData.sessionOne.audios.map((audio: IEncodeAudio) => {
                 userAudios.push(audio);
             })
@@ -57,7 +57,6 @@ export class AudiosDownload implements OnInit{
                 });
             }
             });
-        
         });
     }
 }

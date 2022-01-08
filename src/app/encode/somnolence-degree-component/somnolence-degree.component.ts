@@ -9,7 +9,6 @@ import { SomnolenceDegree } from "../constants";
     templateUrl: './somnolence-degree.component.html',
     styleUrls: ['somnolence-degree.component.scss','../encode.component.scss']
 })
-
 export class EncodeSomnolenceDegreeComponent implements OnInit {
 
   public somnolenceDegreeFormGroup: FormGroup;
@@ -26,7 +25,6 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
     this.somnolenceDegreeFormGroup = this._buildSomnolenceDegreeFormGroup();
   }
   
-
   ngOnInit(): void 
   {
   }
@@ -34,7 +32,6 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
   onSaveForm()
   {
     const formData: SomnolenceDegree = this.somnolenceDegreeFormGroup.get('somnolenceDegree').value;
-    console.log(this._userService.user);
     this._userService.user.sessionOne.somnolenceDegree = formData;
     this._router.navigate(["../google-forms"], { relativeTo: this._route });
   }

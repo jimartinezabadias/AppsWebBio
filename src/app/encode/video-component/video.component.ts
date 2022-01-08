@@ -12,71 +12,59 @@ import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.com
     styleUrls: ['video.component.scss','../encode.component.scss']
 })
 
-export class EncodeVideoComponent implements OnInit, OnExit {
+export class EncodeVideoComponent implements OnExit {
+
+  private _canNavigateToNextComponent: boolean = false;
 
   public videoSource = "assets/videos/videoEncode.mp4";
-  private dialogClosed;
-  private exitValue;
-    
+  
   constructor(
     private _userService: EncodeUserService, 
     private _router: Router, 
     private _route: ActivatedRoute, 
-    private lazyDialog: LazyDialogService, 
-    private dialog: MatDialog)
+    private _lazyDialog: LazyDialogService, 
+    private _dialog: MatDialog)
   {
-  }
-
-  ngOnInit(): void 
-  {
-    this.dialogClosed = false;
-    this.exitValue = false;
   }
 
   onExit() {
-    if(this.dialogClosed == false) {
-      if(this.exitValue == false) {
-        this._openDialog();
-      } else {
-        this._userService.user.abandonedByUser = true;
-        this._userService.saveDayOneResults();
-        return true;
-      }
-    } else {
+    if(this._canNavigateToNextComponent == true) {
       return true;
     }
-  }
-
-  private async _openDialog() {
-    const dialogRef = this.dialog.open(ExitConfirmComponent, {});
-    dialogRef.afterClosed().subscribe(this._dialogClosedObserver);
-  }
-
-  private _dialogClosedObserver = (result) => {
-    if(result) {
-      this.exitValue = true;
-      this.lazyDialog.closeDialog();
-      this._router.navigate(["/"]);
-    } else {
-      this.exitValue = false;
-    }
+    
+    this._openDialog();
   }
 
   async onVideoLaunched()
   {
-    const dialogRef = await this.lazyDialog.openDialog('video-dialog');
+    const dialogRef = await this._lazyDialog.openDialog('video-dialog');
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("cerró");
-      this.dialogClosed = true;
-      this._router.navigate(["/encode/"+location.pathname.split('/').slice()[2]+"/audios"]);
+    dialogRef.afterClosed().subscribe( () => {
+      this._canNavigateToNextComponent = true;
+      this._router.navigate(["../audios"], { relativeTo: this._route });
     });
   }
 
   skipVideo()
   {
-    this.dialogClosed = true;
+    this._canNavigateToNextComponent = true;
     this._router.navigate(["../audios"], { relativeTo: this._route });
+  }
+
+  private async _openDialog() {
+    const dialogRef = this._dialog.open(ExitConfirmComponent, {});
+    dialogRef.afterClosed().subscribe(this._dialogClosedObserver);
+  }
+
+  private _dialogClosedObserver = async (response: boolean): Promise<void> => {
+    if(response == true) {
+      this._userService.user.abandonedByUser = true;
+      await this._userService.saveDayOneResults();
+      this._canNavigateToNextComponent = true;
+      this._router.navigate(["/"]);
+    }
+    
+    this._lazyDialog.closeDialog();
   }
   
 }
