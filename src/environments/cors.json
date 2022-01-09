@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["https://desa.local:4200"],
+      "method": ["GET"],
+      "responseHeader": ["Content-Type"],
+      "maxAgeSeconds": 3600
+    }
+]

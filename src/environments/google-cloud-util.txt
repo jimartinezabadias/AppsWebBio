@@ -1,0 +1,15 @@
+00- Loguearse con cuenta de google
+$ docker exec -it node-investigar gcloud init
+
+01- Actualizar cors del bucket usando el archivo cors.json
+$ docker exec -it node-investigar gsutil cors set src/environments/cors.json gs://investigar-664cd.appspot.com
+
+02- Ver config de cors de un bucket
+$ docker exec -it node-investigar gsutil cors get gs://investigar-664cd.appspot.com
+
+Links de referencia:
+- Instalar google cloud sdk (nosotros lo instalamos adentro del container de desarrollo):
+https://cloud.google.com/storage/docs/gsutil_install#deb
+
+- Configurar CORS
+https://cloud.google.com/storage/docs/configuring-cors#gsutil

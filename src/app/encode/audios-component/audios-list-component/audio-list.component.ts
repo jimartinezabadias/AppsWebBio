@@ -30,8 +30,7 @@ export class EncodeAudioListComponent {
 
   private _newAudioObserver = async (newAudio: IEncodeInMemoryAudio) => {
     this.isUploadingNewAudio$.next(true);
-    const downloadUrl = this._storeAudioInFirebase(newAudio);
-    newAudio.downloadURL = await downloadUrl;
+    newAudio.downloadURL = await this._storeAudioInFirebase(newAudio);
     this._storeAudioInUser(newAudio);
     this.audios.push(newAudio);
     this.isUploadingNewAudio$.next(false);

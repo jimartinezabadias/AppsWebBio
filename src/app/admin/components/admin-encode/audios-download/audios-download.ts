@@ -2,8 +2,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { IEncodeAudio } from 'src/app/encode/models/IEncodeAudio';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
-import {HttpClient} from '@angular/common/http';
-import {saveAs} from 'file-saver/dist/FileSaver';
+import { HttpClient } from '@angular/common/http';
+import { saveAs } from 'file-saver/dist/FileSaver';
 import * as JSZip from 'jszip';
 
 @Component({
@@ -47,7 +47,7 @@ export class AudiosDownload implements OnInit{
         const zipFile: JSZip = new JSZip();
         let count = 0;
 
-        files.forEach(file => {
+        files.forEach( (file: IEncodeAudio) => {
             this._httpClient.get(file.downloadURL, {responseType: 'blob'}).subscribe(response => {
             zipFile.file(file.id, response, {binary: true});
             count++;
