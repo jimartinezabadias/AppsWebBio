@@ -6,6 +6,7 @@ import { IEncodeSessionTwo } from 'src/app/encode/models/IEncodeSessionTwo';
 import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 import { from, Observable } from 'rxjs';
 import { Gender, EducationLevel, SomnolenceDegree, PerpetratorCondition } from 'src/app/encode/constants';
+import { finalize, map, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-encode-user',
@@ -21,6 +22,15 @@ export class AdminEncodeUserComponent implements OnInit {
   public educationLevels = EducationLevel;
   public somnolenceDegrees = SomnolenceDegree;
 
+  get perpetratorConditions() 
+  {
+    return PerpetratorCondition;
+  }
+
+  get selecedPerpetratorCondition(): string {
+    return this._userService.user.sessionTwo?.perpetratorCondition;
+  }
+
   constructor(
     private _dbService: DataDbService,
     private _route: ActivatedRoute,
@@ -30,7 +40,14 @@ export class AdminEncodeUserComponent implements OnInit {
   {
     let userIdParam = this._route.snapshot.paramMap.get('userId');
     this.user$ = from(this._dbService.getEncodeUser(userIdParam));
-    this._userService.loadUser(userIdParam);
+    this.user$.pipe(
+      take(1), 
+      tap( (userData: IEncodeUser) => {
+        if (this._userService.user == null) {
+          this._userService.user = userData;
+        }
+      } ))
+      .subscribe();
   }
 
   public startDayTwo(perpetratorCondition: PerpetratorCondition) 

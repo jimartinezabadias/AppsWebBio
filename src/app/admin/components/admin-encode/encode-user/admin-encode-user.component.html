@@ -44,7 +44,7 @@
                         
                         <!-- Link -->
                         <p>Link: <a target="_blank" href="{{ user.uid | encodeLink }}">{{ user.uid | encodeLink }}</a>
-                            <button [cdkCopyToClipboard]="user.uid | encodeLink">
+                            <button [cdkCopyToClipboard]="user.uid | encodeLink" id="copyLink">
                                 <mat-icon aria-hidden="false" aria-label="copiar link">content_copy</mat-icon>
                             </button>
                         </p>
@@ -216,8 +216,23 @@
                             <!-- Sesión 2 -->
                             <ng-template #sessionTwo>
                                 
-                                <h3>Habilitar Sesión 2</h3>
-                                <p>TODO: agregar opciones</p>
+                                <h3>Condicion de perpetrador</h3>
+
+                                <mat-radio-group
+                                    aria-labelledby="example-radio-group-label"
+                                    class="perpetrator-radio-group">
+                                    <mat-radio-button class="perpetrator-radio-button" [value]="perpetratorConditions.A">
+                                        {{perpetratorConditions.A}}
+                                    </mat-radio-button>
+                                    <mat-radio-button class="perpetrator-radio-button" [value]="perpetratorConditions.B">
+                                        {{perpetratorConditions.B}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+
+                                <button mat-button class="save-form-btn">
+                                    Aplicar
+                                </button>   
+                                
                                 <!-- <button mat-raised-button type="submit" class="start-daytwo-btn" (click)="startDayTwo(true)">
                                     Con Perpetrador
                                 </button>

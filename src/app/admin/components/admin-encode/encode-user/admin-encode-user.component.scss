@@ -17,14 +17,13 @@
     margin: 0 0 25px;
 }
 
-button, input[type="submit"], input[type="reset"] {
+
+#copyLink {
 	background: none;
-	color: inherit;
 	border: none;
 	padding: 0;
-	font: inherit;
+    margin-left: 0.5rem;
 	cursor: pointer;
-	outline: inherit;
 }
 
 .audios-container
@@ -32,12 +31,19 @@ button, input[type="submit"], input[type="reset"] {
 	width: 300px;
 }
 
-.start-daytwo-btn 
+.perpetrator-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+  
+.perpetrator-radio-button {
+    margin: 5px;
+}
+
+.save-form-btn
 {
-    width: 160px;
-	background-color: #76ad2e;
-    color: #eeeeee;
-    font-size: large;
-    font-weight: 500;
-    padding: 0.5rem 0;
+    background-color: #76ad2e;
+    color: white;
+    padding: 0.16rem 0.72rem;
 }

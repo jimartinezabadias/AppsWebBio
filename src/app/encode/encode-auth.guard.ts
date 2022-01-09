@@ -6,6 +6,7 @@ import { EncodeUserService } from './services/EncodeUserService';
   providedIn: 'root'
 })
 export class EncodeAuthGuard implements CanActivate {
+  private _dbService: any;
   
   constructor(private _userService: EncodeUserService, private _router: Router) {}
 
@@ -30,7 +31,8 @@ export class EncodeAuthGuard implements CanActivate {
     }
     else if (route.children.length == 0)
     {
-      if (await this._userService.loadUser(userId))
+      this._userService.user = await this._dbService.getEncodeUser(userId);
+      if (this._userService.user != null)
       {
         // Redirect to the home page
         return this._router.parseUrl(url + '/bienvenido');

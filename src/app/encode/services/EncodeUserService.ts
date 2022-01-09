@@ -13,7 +13,6 @@ import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
 export class EncodeUserService {
     
     private _user: IEncodeUser = null;
-    private _user$: Observable<IEncodeUser> = null;
     
     constructor(private _dbService: DataDbService, private _http: HttpClient)
     {
@@ -50,23 +49,12 @@ export class EncodeUserService {
     }
 
     // searchs in db for user with given id and stores it if found. 
-    public async loadUser(userId: string): Promise<boolean> 
-    {
-        let user: IEncodeUser = await this.getUserData(userId);
-        if (user)
-        {
-            this._user = user;
-            return true;
-        }
-        return false;
-    }
-
-    // public loadUser$(userId: string): boolean 
+    // public async loadUser(userId: string): Promise<boolean> 
     // {
-    //     let user$: Observable<IEncodeUser> = this._dbService.getEncodeUser$(userId);
-    //     if (user$)
+    //     let user: IEncodeUser = await this.getUserData(userId);
+    //     if (user)
     //     {
-    //         this._user$ = user$;
+    //         this._user = user;
     //         return true;
     //     }
     //     return false;
@@ -85,20 +73,15 @@ export class EncodeUserService {
         return this._dbService.getEncodeUserForms$(this._user.uid);
     }
 
-    public user$(): Observable<IEncodeUser> 
-    {
-        return this._user$;
-    }
-
     public async saveSessionOneResults() 
     {
         await this._dbService.saveEncodeSessionOneResults(this._user);
     }
     
-    private getUserData(userid: string): Promise<IEncodeUser> 
-    {
-        return this._dbService.getEncodeUser(userid);
-    }
+    // private getUserData(userid: string): Promise<IEncodeUser> 
+    // {
+    //     return this._dbService.getEncodeUser(userid);
+    // }
 
     private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
         const encodeConfig: IEncodeSettings = await this._dbService.getEncodeSettings();

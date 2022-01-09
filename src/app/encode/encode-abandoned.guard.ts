@@ -6,6 +6,7 @@ import { EncodeUserService } from './services/EncodeUserService';
   providedIn: 'root'
 })
 export class EncodeAbandonedGuard implements CanActivate {
+  private _dbService: any;
   
   constructor(private _userService: EncodeUserService, private _router: Router) {}
 
@@ -18,7 +19,7 @@ export class EncodeAbandonedGuard implements CanActivate {
     // check if user isnt loaded
     if (this._userService.user == null) {
       const userId: string = route.paramMap.get('userId');
-      await this._userService.loadUser(userId);
+      this._userService.user = await this._dbService.getEncodeUser(userId);
     }
     
     if (this._userService.user.abandonedByUser)
