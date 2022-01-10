@@ -40,7 +40,7 @@ export class EncodeEndComponent implements OnInit, OnExit {
   }
 
   private async saveResults() {
-    await this._userService.saveSessionOneResults();
+    await this._userService.updateUserInDB();
   }
 
   private async _openDialog() {
@@ -52,7 +52,7 @@ export class EncodeEndComponent implements OnInit, OnExit {
     if(response == true) {
       this._userService.user.abandonedByUser = true;
       this._userService.user.sessionOne.completed = true;
-      await this._userService.saveSessionOneResults();
+      await this._userService.updateUserInDB();
       this._canNavigateToNextComponent = true;
       this._router.navigate(["/"]);
     }

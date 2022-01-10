@@ -14,7 +14,7 @@ export interface IEncodeUser {
     googleFormsResponses: IEncodeGoogleFormResponse[] | null;
     personalInfo: IEncodeUserPersonalInfo | null;
     sessionOne: IEncodeSessionOne;
-    sessionTwo: IEncodeSessionTwo | null;
+    sessionTwo: IEncodeSessionTwo;
     healthInfo: IEncodeUserHealthInfo | null;
     abandonedByUser: boolean | null;
     consent: string | null;

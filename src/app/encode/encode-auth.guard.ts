@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { DataDbService } from '../core/services/db/data-db.service';
 import { EncodeUserService } from './services/EncodeUserService';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EncodeAuthGuard implements CanActivate {
-  private _dbService: any;
   
-  constructor(private _userService: EncodeUserService, private _router: Router) {}
+  constructor(private _userService: EncodeUserService, private _router: Router, private _dbService: DataDbService) {}
 
   async canActivate(
     route: ActivatedRouteSnapshot,

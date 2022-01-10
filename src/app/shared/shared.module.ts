@@ -51,7 +51,7 @@ import { HeaderEncodeComponent } from './components/header-encode/header-encode.
     CommonModule,
     RouterModule,
     MaterialModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }

@@ -6,6 +6,7 @@ import { IEncodeSettings } from "../models/IEncodeSettings";
 import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
 import { Observable } from "rxjs";
 import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
+import { IEncodeSessionTwo } from "../models/IEncodeSessionTwo";
 
 @Injectable({
     providedIn: 'root'
@@ -24,11 +25,8 @@ export class EncodeUserService {
     {
         const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
         const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserId);
-        const newSessionOne: IEncodeSessionOne = { 
-            somnolenceDegree: null,
-            audios: null,
-            completed: false
-        };
+        const newSessionOne: IEncodeSessionOne = { completed: false, somnolenceDegree: null, audios: null };
+        const newSessionTwo: IEncodeSessionTwo = { completed: false, somnolenceDegree: null, perpetratorCondition: null };
           
         const newUser: IEncodeUser = {
             uid: newUserId, 
@@ -38,51 +36,34 @@ export class EncodeUserService {
             creationDate: null,
             personalInfo: null,
             sessionOne: newSessionOne,
-            sessionTwo: null,
+            sessionTwo: newSessionTwo,
             healthInfo: null,
             abandonedByUser: false,
             consent: null
         };
         
-        await this._dbService.saveEncodeUser(newUser);
+        await this._dbService.createEncodeUser(newUser);
         return newUser;
     }
-
-    // searchs in db for user with given id and stores it if found. 
-    // public async loadUser(userId: string): Promise<boolean> 
-    // {
-    //     let user: IEncodeUser = await this.getUserData(userId);
-    //     if (user)
-    //     {
-    //         this._user = user;
-    //         return true;
-    //     }
-    //     return false;
-    // }
 
     get user(): IEncodeUser 
     {
         return this._user;
     }
 
-    set user(value: IEncodeUser) {
-        this._user = value;
+    set user(user: IEncodeUser) {
+        this._user = user;
     }
 
     get googleForms$(): Observable<IEncodeGoogleFormResponse[]>{
         return this._dbService.getEncodeUserForms$(this._user.uid);
     }
 
-    public async saveSessionOneResults() 
+    public async updateUserInDB() 
     {
-        await this._dbService.saveEncodeSessionOneResults(this._user);
+        await this._dbService.updateEncodeUser(this._user);
     }
     
-    // private getUserData(userid: string): Promise<IEncodeUser> 
-    // {
-    //     return this._dbService.getEncodeUser(userid);
-    // }
-
     private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
         const encodeConfig: IEncodeSettings = await this._dbService.getEncodeSettings();
         const options = {

@@ -139,13 +139,12 @@ export class DataDbService {
 
   // Encode
   
-  public async saveEncodeSessionOneResults(user: IEncodeUser): Promise<void> {
+  public async updateEncodeUser(user: IEncodeUser): Promise<void> {
     const userObj = Object.assign({},user);
-    
     await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).set(userObj);
   }
 
-  public async saveEncodeUser(user: IEncodeUser): Promise<void> {
+  public async createEncodeUser(user: IEncodeUser): Promise<void> {
     user.creationDate = firestore.FieldValue.serverTimestamp();
     const userObj = Object.assign({},user);
     // TODO: change CreativesMetadataCounter to TestsMetadata
