@@ -19,6 +19,7 @@ export class EncodeAudiosComponent implements OnExit {
 
   private _canNavigateToNextComponent: boolean = false;
   private _wantsToExtend: boolean = true;
+  public noAudiosRecorded: boolean = false;
 
 
   constructor(
@@ -57,25 +58,31 @@ export class EncodeAudiosComponent implements OnExit {
 
   onAudiosReady()
   {
-    this._canNavigateToNextComponent = true;
+    if (this.audioListComponent.audios.length <= 0) {
+      this.noAudiosRecorded = true;
+    } else if (this.audioListComponent.audios.length > 0) {
+      this.noAudiosRecorded = false;
+      this._canNavigateToNextComponent = true;
 
-    if (this._wantsToExtend) {
-      const dialogRef = this._dialog.open(ExtendedRecallComponent, {});
-      dialogRef.afterClosed().subscribe(async (response: boolean): Promise<void> => {
-        if(response == true) {
-          this._wantsToExtend = false;
-        } else if (response == false) {
-          this._router.navigate(["../end"], { relativeTo: this._route });
+      if (this._wantsToExtend) {
+        const dialogRef = this._dialog.open(ExtendedRecallComponent, {});
+        dialogRef.afterClosed().subscribe(async (response: boolean): Promise<void> => {
+          if(response == true) {
+            this._wantsToExtend = false;
+          } else if (response == false) {
+            this._router.navigate(["../end"], { relativeTo: this._route });
+          }
+          
+          this._lazyDialog.closeDialog();
         }
-        
-        this._lazyDialog.closeDialog();
+        );
       }
-      );
+  
+      if (!this._wantsToExtend) {
+        this._router.navigate(["../end"], { relativeTo: this._route });
+      }
     }
 
-    if (!this._wantsToExtend) {
-      this._router.navigate(["../end"], { relativeTo: this._route });
-    }
   }
   
 }

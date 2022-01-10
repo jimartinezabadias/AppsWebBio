@@ -5,6 +5,9 @@
             <h1 class="title">Describí con el mayor detalle posible lo que viste y escuchaste en el video.</h1>
 
             <h1>Tocá la imagen del micrófono para hablar y el cuadrado para parar. Podes grabar el numero de audios que creas necesario.</h1>
+            
+            <h1 *ngIf="this.noAudiosRecorded" class="audios-warning">¡Por favor! Grabá al menos un audio antes de continuar.</h1>
+
             <app-audio-recorder></app-audio-recorder>
             <app-encode-audio-list #audioList></app-encode-audio-list>
 
