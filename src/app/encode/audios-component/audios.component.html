@@ -2,15 +2,16 @@
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
         <div class="audios">
+            <h1 class="title">Describí con el mayor detalle posible lo que viste y escuchaste en el video.</h1>
 
-            <h1 class="mat-display-1">Audios</h1>
+            <h1>Tocá la imagen del micrófono para hablar y el cuadrado para parar. Podes grabar el numero de audios que creas necesario.</h1>
             <app-audio-recorder></app-audio-recorder>
             <app-encode-audio-list #audioList></app-encode-audio-list>
 
             <mat-card-actions>
                 <a mat-raised-button 
                     (click)="onAudiosReady()"
-                    [disabled]="audioListComponent?.isUploadingNewAudio$ | async">Finalizar</a>
+                    [disabled]="audioListComponent?.isUploadingNewAudio$ | async">Continuar</a>
             </mat-card-actions>
         </div>
     </section>
