@@ -24,6 +24,7 @@ import { ExitConfirmComponent } from './exit-confirm-component/exit-confirm.comp
 import { EncodeGoogleFormsComponent } from './google-forms-component/encode-google-forms.component';
 import { ByPassSecurityPipe } from './google-forms-component/by-pass-security.pipe';
 import { EncodeAudioListComponent } from './audios-component/audios-list-component/audio-list.component';
+import { ExtendedRecallComponent } from './audios-component/extended-recall-component/extended-recall.component';
 import { EncodeAbandonedComponent } from './abandoned-component/encode-abandoned.component';
 
 @NgModule({
@@ -47,7 +48,8 @@ import { EncodeAbandonedComponent } from './abandoned-component/encode-abandoned
         ExitConfirmComponent,
         EncodeGoogleFormsComponent,
         ByPassSecurityPipe,
-        EncodeAudioListComponent
+        EncodeAudioListComponent,
+        ExtendedRecallComponent
     ],
     imports: [
         CommonModule,

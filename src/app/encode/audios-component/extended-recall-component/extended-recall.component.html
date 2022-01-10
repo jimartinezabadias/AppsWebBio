@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>¿Querés agregar más detalles?</h1>
+<div mat-dialog-content>
+    <h4>¡Podes volver a presionar grabar y brindarnos mas detalles! En caso de que no lo veas necesario, presiona NO.</h4>
+</div>
+<div class="mat-dialog-actions">
+    <button mat-button
+        (click)="onExtend(true)">
+        Si
+    </button>
+    <button mat-button
+        (click)="onExtend(false)"
+        cdkFocusInitial>
+        No
+    </button>
+</div>

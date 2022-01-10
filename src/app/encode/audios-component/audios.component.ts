@@ -5,6 +5,7 @@ import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { EncodeAudioListComponent } from './audios-list-component/audio-list.component';
+import { ExtendedRecallComponent } from './extended-recall-component/extended-recall.component';
 import { LazyDialogService } from '../services/lazy-dialog.service';
 
 @Component({
@@ -17,6 +18,8 @@ export class EncodeAudiosComponent implements OnExit {
   @ViewChild('audioList') public audioListComponent: EncodeAudioListComponent;
 
   private _canNavigateToNextComponent: boolean = false;
+  private _wantsToExtend: boolean = true;
+
 
   constructor(
     private _userService: EncodeUserService,
@@ -55,7 +58,24 @@ export class EncodeAudiosComponent implements OnExit {
   onAudiosReady()
   {
     this._canNavigateToNextComponent = true;
-    this._router.navigate(["../end"], { relativeTo: this._route });
+
+    if (this._wantsToExtend) {
+      const dialogRef = this._dialog.open(ExtendedRecallComponent, {});
+      dialogRef.afterClosed().subscribe(async (response: boolean): Promise<void> => {
+        if(response == true) {
+          this._wantsToExtend = false;
+        } else if (response == false) {
+          this._router.navigate(["../end"], { relativeTo: this._route });
+        }
+        
+        this._lazyDialog.closeDialog();
+      }
+      );
+    }
+
+    if (!this._wantsToExtend) {
+      this._router.navigate(["../end"], { relativeTo: this._route });
+    }
   }
   
 }
