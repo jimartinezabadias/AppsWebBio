@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IEncodeUser } from '../models/IEncodeUser';
 import { EncodeUserService } from '../services/EncodeUserService';
 
 @Component({
@@ -10,6 +11,7 @@ import { EncodeUserService } from '../services/EncodeUserService';
 export class EncodeWellcomeComponent implements OnInit {
 
   public userName: string;
+  public user: IEncodeUser;
 
   constructor(private _userService: EncodeUserService) 
   {
@@ -18,6 +20,7 @@ export class EncodeWellcomeComponent implements OnInit {
   ngOnInit(): void 
   {
     this.userName = this._userService.user.name;
+    this.user = this._userService.user;
   }
   
 }

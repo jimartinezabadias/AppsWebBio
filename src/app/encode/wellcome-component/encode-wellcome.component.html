@@ -2,54 +2,72 @@
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
         <div class="wellcome-message">
-            <h1 class="mat-display-1">¡Bienvenido {{ userName }}!</h1>
+
+            <div *ngIf="this.user.sessionOne.completed == false; then firstSession else secondSession">
+                <!-- template will replace this div -->
+            </div>
+
+            <ng-template #firstSession>
+                <h1 class="mat-display-1">¡Bienvenido a la sesion 1 {{ userName }}!</h1>
+            </ng-template>
+
+            <ng-template #secondSession>
+                <h1 *ngIf="this.user.sessionTwo.perpetratorCondition" class="mat-display-1">¡Bienvenido a la sesion 2 {{ userName }}!</h1>
+                <h1 *ngIf="!this.user.sessionTwo.perpetratorCondition" class="mat-display-1 warning">Sesion 2 en espera de ser habilitada.</h1>
+            </ng-template>
+
             <h4>
                 Muchas gracias por participar en esta investigación.
                 Tu participación es sumamente valiosa para nosotros.
             </h4>
 
-            <mat-card class="wellcome-card">
+            <div *ngIf="this.user.sessionOne.completed == false || this.user.sessionOne.completed == true && this.user.sessionTwo.perpetratorCondition; then wellcomeCard">
+                <!-- template will replace this div -->
+            </div>
+            <ng-template #wellcomeCard>
+                <mat-card class="wellcome-card">
 
-                <mat-card-content class="wellcome-card-content">
-
-                    <img src="assets/images/encode_wellcome_image.jpeg" alt=""/>
-                    <div class="list-and-button">
-
-                        <h3>Antes de empezar</h3>
-                        <mat-list>
-                            <mat-list-item>
-                                <mat-icon mat-list-icon
+                    <mat-card-content class="wellcome-card-content">
+    
+                        <img src="assets/images/encode_wellcome_image.jpeg" alt=""/>
+                        <div class="list-and-button">
+    
+                            <h3>Antes de empezar</h3>
+                            <mat-list>
+                                <mat-list-item>
+                                    <mat-icon mat-list-icon
+                                        color="accent">done</mat-icon>
+                                    <div class="mat-list-text">
+                                        Es necesario que estés en un ambiente con poco ruido.
+                                    </div>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <mat-icon mat-list-icon
+                                        color="accent">done</mat-icon>
+                                    <div class="mat-list-text">
+                                        Ésta práctica requiere tener micrófono y buena conexión. <br/>
+                                    </div>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <mat-icon mat-list-icon
                                     color="accent">done</mat-icon>
-                                <div class="mat-list-text">
-                                    Es necesario que estés en un ambiente con poco ruido.
-                                </div>
-                            </mat-list-item>
-                            <mat-list-item>
-                                <mat-icon mat-list-icon
-                                    color="accent">done</mat-icon>
-                                <div class="mat-list-text">
-                                    Ésta práctica requiere tener micrófono y buena conexión. <br/>
-                                </div>
-                            </mat-list-item>
-                            <mat-list-item>
-                                <mat-icon mat-list-icon
-                                color="accent">done</mat-icon>
-                                <div class="mat-list-text">
-                                    Necesitamos que compruebes su buen funcionamiento.
-                                </div>
-                            </mat-list-item>
-                            
-                        </mat-list>
-                        <a mat-raised-button
-                            class="btn"
-                            routerLink="../mic-test"
-                            routerLinkActive="active">
-                            Comprobar
-                        </a>
-                    </div>
-
-                </mat-card-content>
-            </mat-card>
+                                    <div class="mat-list-text">
+                                        Necesitamos que compruebes su buen funcionamiento.
+                                    </div>
+                                </mat-list-item>
+                                
+                            </mat-list>
+                            <a mat-raised-button 
+                                class="btn"
+                                routerLink="../mic-test"
+                                routerLinkActive="active">
+                                Comprobar
+                            </a>
+                        </div>
+    
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
         </div>
     </section>
 </section>
