@@ -4,10 +4,11 @@ import { IEncodeSessionOne } from "./IEncodeSessionOne";
 import { IEncodeSessionTwo } from "./IEncodeSessionTwo";
 import { IEncodeUserPersonalInfo } from "./IEncodeUserPersonalInfo";
 import { IEncodeUserHealthInfo } from "./IEncodeUserHealthInfo";
+import { IEncodeUserConsent } from "./IEncodeUserConsent";
 
 // EncodeUser stored in DB
 export interface IEncodeUser {
-    uid: string | null;
+    uid: string;
     name: string;
     email: string;
     creationDate: Date | firestore.FieldValue | null;
@@ -17,5 +18,5 @@ export interface IEncodeUser {
     sessionTwo: IEncodeSessionTwo;
     healthInfo: IEncodeUserHealthInfo | null;
     abandonedByUser: boolean | null;
-    consent: string | null;
+    consent: IEncodeUserConsent;
 }

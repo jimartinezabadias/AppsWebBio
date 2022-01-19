@@ -23,15 +23,17 @@ export class EncodeConsentComponent {
 
   onConsent()
   {
-    if (this._agreements.selectedOptions.selected.length < 4)
+    const selectedOptionsNumber = this._agreements.selectedOptions.selected.length;
+    if ( selectedOptionsNumber < 4)
     {
       console.log("falta checkear opciones");
     } 
     else
     {
-      let date =new Date();
-      let latest_date =this.datepipe.transform(date, 'yyyy-MM-dd');
-      this._userService.user.consent = latest_date; 
+      let date = new Date();
+      this._userService.user.consent.hasAccepted = true; 
+      let currentDate = this.datepipe.transform(date, 'yyyy-MM-dd');
+      this._userService.user.consent.date = currentDate; 
       this._router.navigate(["../personal-info"], { relativeTo: this._route });
     }
   }

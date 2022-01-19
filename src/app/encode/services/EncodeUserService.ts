@@ -7,6 +7,7 @@ import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
 import { Observable } from "rxjs";
 import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
 import { IEncodeSessionTwo } from "../models/IEncodeSessionTwo";
+import { IEncodeUserConsent } from "../models/IEncodeUserConsent";
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,8 @@ export class EncodeUserService {
         const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserId);
         const newSessionOne: IEncodeSessionOne = { completed: false, somnolenceDegree: null, audios: null };
         const newSessionTwo: IEncodeSessionTwo = { completed: false, somnolenceDegree: null, perpetratorCondition: null };
-          
+        const userConsent: IEncodeUserConsent = { hasAccepted: false, date: null };
+
         const newUser: IEncodeUser = {
             uid: newUserId, 
             name: userData.name, 
@@ -39,7 +41,7 @@ export class EncodeUserService {
             sessionTwo: newSessionTwo,
             healthInfo: null,
             abandonedByUser: false,
-            consent: null
+            consent: userConsent
         };
         
         await this._dbService.createEncodeUser(newUser);

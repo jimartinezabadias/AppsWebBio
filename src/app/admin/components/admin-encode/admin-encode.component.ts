@@ -28,6 +28,8 @@ export class AdminEncodeComponent implements OnInit {
     "email",
     "creationDate",
     "abandonedByUser",
+    "consent_hasAccepted",
+    "consent_date",
     "personalInfo_age",
     "personalInfo_educationLevel",
     "personalInfo_gender",
@@ -37,7 +39,11 @@ export class AdminEncodeComponent implements OnInit {
     "healthInfo_hasSleepDisorder",
     "healthInfo_sleepDisorders",
     "healthInfo_takesCronicMedicine",
-    "dayOne_somnolenceDegree",
+    "sessionOne_completed",
+    "sessionOne_somnolenceDegree",
+    "sessionTwo_completed",
+    "sessionTwo_somnolenceDegree",
+    "sessionTwo_perpetratorCondition",
     "link_audios"
   ];
 
