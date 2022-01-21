@@ -32,7 +32,12 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
   onSaveForm()
   {
     const formData: SomnolenceDegree = this.somnolenceDegreeFormGroup.get('somnolenceDegree').value;
-    this._userService.user.sessionOne.somnolenceDegree = formData;
+    if (!this._userService.user.sessionOne.completed) {
+      this._userService.user.sessionOne.somnolenceDegree = formData;
+    } else if (this._userService.user.sessionOne.completed) {
+      this._userService.user.sessionTwo.somnolenceDegree = formData;
+    }
+
     this._router.navigate(["../google-forms"], { relativeTo: this._route });
   }
 
