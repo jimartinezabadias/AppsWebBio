@@ -49,6 +49,7 @@ export class AudiosDownload implements OnInit{
 
         files.forEach( (file: IEncodeAudio) => {
             this._httpClient.get(file.downloadURL, {responseType: 'blob'}).subscribe(response => {
+            file.id = file.id + '.webm';
             zipFile.file(file.id, response, {binary: true});
             count++;
             if (count === files.length) {
