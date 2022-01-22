@@ -1,4 +1,4 @@
-export interface IEncodeSettings {
+export interface IEncodeGoogleFormsSettings {
     generatePreFilledResponsesScriptURL: string,
     googleFormsURLs: Array<string>
 }

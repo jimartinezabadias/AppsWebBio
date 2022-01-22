@@ -9,7 +9,7 @@ import { IRulitUser } from 'src/app/rulit/bits/RulitUserService';
 import { AdminCreativityComponent } from 'src/app/admin/components/admin-creativity/admin-creativity.component';
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';
-import { IEncodeSettings } from 'src/app/encode/models/IEncodeSettings';
+import { IEncodeGoogleFormsSettings } from 'src/app/encode/models/IEncodeGoogleFormsSettings';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 import { IEncodeGoogleFormResponse } from 'src/app/encode/models/IEncodeGoogleFormResponse';
 import { map } from 'rxjs/operators';
@@ -195,8 +195,8 @@ export class DataDbService {
     return ref.get();
   }
 
-  async getEncodeSettings(): Promise<IEncodeSettings> {
-    let cfg = await this.encodeConfigRef.doc<IEncodeSettings>("config").get().toPromise();
+  async getEncodeGoogleFormsSettings(): Promise<IEncodeGoogleFormsSettings> {
+    let cfg = await this.encodeConfigRef.doc<IEncodeGoogleFormsSettings>("googleFormsSettings").get().toPromise();
     return cfg.data();
   }
 

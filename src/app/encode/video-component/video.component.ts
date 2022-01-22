@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LazyDialogService } from '../services/lazy-dialog.service';
 import { OnExit } from '../exit.guard';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
+import { VIDEO_PATH } from '../constants';
 
 @Component({
     selector: 'app-encode-video',
@@ -15,8 +16,6 @@ export class EncodeVideoComponent implements OnExit {
 
   private _canNavigateToNextComponent: boolean = false;
 
-  public videoSource = "assets/videos/videoEncode.mp4";
-  
   constructor(
     private _userService: EncodeUserService, 
     private _router: Router, 
@@ -33,6 +32,10 @@ export class EncodeVideoComponent implements OnExit {
     
     this._openDialog();
   }
+
+  get videoSource(): string {
+    return VIDEO_PATH;
+  } 
 
   async onVideoLaunched()
   {

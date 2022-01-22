@@ -1,12 +1,19 @@
 export const ENCODE_TEST_URL: string = "/encode"; 
 
+export const VIDEO_PATH: string = "assets/videos/videoEncode.mp4";
+
+export enum PerpetratorId {
+    PERP_1,
+    PERP_2
+}
+
 export enum RecorderStatus
 {
     Ready = "Listo para grabar",
     Recording = "Grabando..."
 };
 
-export const REC_OPTIONS = {mimeType: 'audio/webm'};
+export const REC_OPTIONS = { mimeType: 'audio/webm' };
 
 export enum Gender
 {
