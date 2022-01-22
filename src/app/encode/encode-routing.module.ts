@@ -16,6 +16,7 @@ import { EncodeEndComponent } from './end-component/encode-end.component';
 import { ExitGuard } from './exit.guard';
 import { EncodeGoogleFormsComponent } from './google-forms-component/encode-google-forms.component';
 import { EncodeAbandonedGuard } from './encode-abandoned.guard';
+import { EncodeSuspectIdentificationComponent } from './suspect-identification-component/suspect-identification.component';
 
 
 const routes: Routes = [
@@ -77,6 +78,11 @@ const routes: Routes = [
                 path: 'end',
                 canDeactivate: [ExitGuard],
                 component: EncodeEndComponent
+            },
+            {
+                path: 'suspect-identification',
+                canDeactivate: [ExitGuard],
+                component: EncodeSuspectIdentificationComponent
             }
         ]
     }

@@ -1,0 +1,12 @@
+#task-breafing {
+    display: flex;
+    flex-flow: column;
+    grid-row-gap: 32px;
+    row-gap: 32px;
+    max-width: 64rem;
+    line-height: 1.32rem;
+}
+
+#continue-button{
+    align-self: center;
+}
