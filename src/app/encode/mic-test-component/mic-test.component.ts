@@ -53,15 +53,8 @@ export class EncodeMicTestComponent implements OnInit {
     dialogRef.afterClosed().subscribe(this._dialogClosedObserver);
   }
 
-  private _dialogClosedObserver = (result) => {
-    if (result)
-    {
-      this._router.navigate(["../video-test"], { relativeTo: this._route });
-    }
-    else
-    {
-      this._recorderService.deleteAudioAt(0);
-    }
+  private _dialogClosedObserver = (result: boolean) => {
+    (result == true) ? this._router.navigate(["../video-test"], { relativeTo: this._route }) : this._recorderService.deleteAudioAt(0);
   }
 
 }

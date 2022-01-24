@@ -17,7 +17,7 @@ import { EncodePersonalInfoComponent } from './personal-info-component/encode-pe
 import { EncodeHealthInfoComponent } from './health-info-component/health-info.component';
 import { EncodeSomnolenceDegreeComponent } from './somnolence-degree-component/somnolence-degree.component';
 import { EncodeVideoComponent } from './video-component/video.component';
-import { MyVideoComponent } from './video-component/dialogs/video-dialog/video-dialog.component';
+import { EncodeVideoPlayer } from './video-component/video-dialog/video-dialog.component';
 import { EncodeAudiosComponent } from './audios-component/audios.component';
 import { EncodeEndComponent } from './end-component/encode-end.component';
 import { ExitConfirmComponent } from './exit-confirm-component/exit-confirm.component';
@@ -43,7 +43,7 @@ import { EncodeSuspectIdentificationComponent } from './suspect-identification-c
         EncodeHealthInfoComponent,
         EncodeSomnolenceDegreeComponent,
         EncodeVideoComponent,
-        MyVideoComponent,
+        EncodeVideoPlayer,
         EncodeAudiosComponent,
         EncodeEndComponent,
         ExitConfirmComponent,
