@@ -27,6 +27,7 @@ import { EncodeAudioListComponent } from './audios-component/audios-list-compone
 import { ExtendedRecallComponent } from './audios-component/extended-recall-component/extended-recall.component';
 import { EncodeAbandonedComponent } from './abandoned-component/encode-abandoned.component';
 import { EncodeSuspectIdentificationComponent } from './suspect-identification-component/suspect-identification.component';
+import { EncodeSelectionComponent } from './selection-component/selection.component';
 
 @NgModule({
     declarations: [
@@ -52,6 +53,7 @@ import { EncodeSuspectIdentificationComponent } from './suspect-identification-c
         EncodeAudioListComponent,
         ExtendedRecallComponent,
         EncodeSuspectIdentificationComponent
+        EncodeSelectionComponent
     ],
     imports: [
         CommonModule,

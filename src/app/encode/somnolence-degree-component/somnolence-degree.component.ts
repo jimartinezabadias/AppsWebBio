@@ -38,7 +38,11 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
       this._userService.user.sessionTwo.somnolenceDegree = formData;
     }
 
-    this._router.navigate(["../google-forms"], { relativeTo: this._route });
+    if (this._userService.user.sessionOne.completed == true && this._userService.user.sessionTwo.perpetratorCondition) {
+      this._router.navigate(["../selection"], { relativeTo: this._route });
+    } else {
+      this._router.navigate(["../google-forms"], { relativeTo: this._route });
+    }
   }
 
   private _buildSomnolenceDegreeFormGroup(): FormGroup {

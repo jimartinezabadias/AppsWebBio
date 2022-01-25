@@ -17,6 +17,7 @@ import { ExitGuard } from './exit.guard';
 import { EncodeGoogleFormsComponent } from './google-forms-component/encode-google-forms.component';
 import { EncodeAbandonedGuard } from './encode-abandoned.guard';
 import { EncodeSuspectIdentificationComponent } from './suspect-identification-component/suspect-identification.component';
+import { EncodeSelectionComponent } from './selection-component/selection.component';
 
 
 const routes: Routes = [
@@ -43,6 +44,11 @@ const routes: Routes = [
             {
                 path: 'video-test',
                 component: EncodeVideoTestComponent
+            },
+            {
+                path: 'selection',
+                canDeactivate: [ExitGuard],
+                component: EncodeSelectionComponent
             },
             {
                 path: 'consent',
