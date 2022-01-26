@@ -4,8 +4,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
-import { VIDEO_PATH } from '../constants';
-import { EncodeVideoPlayer } from './video-dialog/video-dialog.component';
+import { VideoState, VIDEO_PATH } from '../constants';
+import { EncodeVideoPlayer } from './video-player/video-player.component';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -26,8 +26,7 @@ export class EncodeVideoComponent implements OnExit {
   }
 
   public onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    // TODO: agegar play/pausa cuando aparece el dialogo exit
-    // this._video.nativeElement.pause();
+    this._videoPlayerRef.componentInstance.videoState = VideoState.Pause;
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
     return exitDialogRef.afterClosed().toPromise<boolean>();
@@ -47,6 +46,7 @@ export class EncodeVideoComponent implements OnExit {
     };
 
     this._videoPlayerRef = this._dialog.open(EncodeVideoPlayer, videoPlayerDialogConfig);
+    this._videoPlayerRef.componentInstance.videoState = VideoState.Play;
     this._videoPlayerRef.afterClosed().subscribe(this._videoPlayerDialogClosed$);
   }
   
@@ -77,6 +77,7 @@ export class EncodeVideoComponent implements OnExit {
       return true;
     } 
 
+    this._videoPlayerRef.componentInstance.videoState = VideoState.Play;
     return false;
   }
 }

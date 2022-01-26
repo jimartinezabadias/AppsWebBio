@@ -13,6 +13,12 @@ export enum RecorderStatus
     Recording = "Grabando..."
 };
 
+export enum VideoState
+{
+    Play,
+    Pause
+};
+
 export const REC_OPTIONS = { mimeType: 'audio/webm' };
 
 export enum Gender
