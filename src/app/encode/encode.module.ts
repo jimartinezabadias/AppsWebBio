@@ -52,7 +52,7 @@ import { EncodeSelectionComponent } from './selection-component/selection.compon
         ByPassSecurityPipe,
         EncodeAudioListComponent,
         ExtendedRecallComponent,
-        EncodeSuspectIdentificationComponent
+        EncodeSuspectIdentificationComponent,
         EncodeSelectionComponent
     ],
     imports: [
