@@ -68,6 +68,6 @@ export enum SomnolenceDegree
 }
 
 export enum PerpetratorCondition {
-    A = "Sospechoso 1 Presente, Sospechoso 2 Ausente",
-    B = "Sospechoso 2 Presente, Sospechoso 1 Ausente"
+    A = "Perpetrador 1 Presente, Perpetrador 2 Ausente",
+    B = "Perpetrador 2 Presente, Perpetrador 1 Ausente"
 }

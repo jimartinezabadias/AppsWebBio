@@ -10,8 +10,11 @@ import { VideoState, VIDEO_PATH } from '../../constants';
 })
 export class EncodeVideoPlayer implements OnInit, OnChanges {
 
-  @ViewChild('video', { static: true }) private _video: ElementRef<HTMLVideoElement>;
-  @Input() set videoState(state: VideoState) {
+  @ViewChild('video', { static: true }) 
+  private _video: ElementRef<HTMLVideoElement>;
+  
+  @Input() 
+  set videoState(state: VideoState) {
     switch (state) {
       case VideoState.Play:
         this._video.nativeElement.play();

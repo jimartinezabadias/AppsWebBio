@@ -32,7 +32,8 @@ export class DataDbService {
   public creativesUsers = [];
   private encodeUserCollectionRef: AngularFirestoreCollection;
   private encodeConfigRef: AngularFirestoreCollection;
-  private encodeScreenshotCollectionRef: AngularFirestoreCollection;
+  private encodeScreenshotCollectionRef: AngularFirestoreCollection<IEncodeScreenshot>;
+  private encodeSuspectsRef: AngularFirestoreCollection<IEncodeSuspect>;
 
   constructor(private _afs: AngularFirestore, private _storage: AngularFireStorage, private http: HttpClient) { 
     this.creativesCollectionRef = _afs.collection<CreativeUser>('creatives-users', ref => ref.orderBy('dateStart', 'desc'));
@@ -43,6 +44,7 @@ export class DataDbService {
     this.rulitSolutionsRef = _afs.collection("rulit-solutions");
     this.encodeConfigRef = _afs.collection("encode-config");
     this.encodeScreenshotCollectionRef = _afs.collection<IEncodeScreenshot>("encode-config/tasksResources/screenshots");
+    this.encodeSuspectsRef = _afs.collection<IEncodeSuspect>("encode-config/tasksResources/suspects");
   } 
 
   // TODO: Theres no need for async
@@ -215,6 +217,15 @@ export class DataDbService {
     return screenshotDocument.data();
   }
 
+  async getEncodeSuspects(): Promise<Array<IEncodeSuspect>> {
+    const snapshot = await this.encodeSuspectsRef.ref.get();
+    let suspects = new Array<IEncodeSuspect>();
+    snapshot.docs.forEach( (doc: DocumentData) => {
+      suspects.push(doc.data());
+    });
+    return suspects;
+  }
+  
   public getCloudStorageFileRef(filePath: string): AngularFireStorageReference {
     return this._storage.ref(filePath);
   }
