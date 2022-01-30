@@ -26,7 +26,7 @@ import { ByPassSecurityPipe } from './google-forms-component/by-pass-security.pi
 import { EncodeAudioListComponent } from './audios-component/audios-list-component/audio-list.component';
 import { ExtendedRecallComponent } from './audios-component/extended-recall-component/extended-recall.component';
 import { EncodeAbandonedComponent } from './abandoned-component/encode-abandoned.component';
-import { EncodeSuspectIdentificationComponent } from './suspect-identification-component/suspect-identification.component';
+import { EncodeIdentificationTaskComponent } from './identification-task-component/identification-task.component';
 import { EncodeSelectionComponent } from './selection-component/selection.component';
 
 @NgModule({
@@ -52,7 +52,7 @@ import { EncodeSelectionComponent } from './selection-component/selection.compon
         ByPassSecurityPipe,
         EncodeAudioListComponent,
         ExtendedRecallComponent,
-        EncodeSuspectIdentificationComponent,
+        EncodeIdentificationTaskComponent,
         EncodeSelectionComponent
     ],
     imports: [

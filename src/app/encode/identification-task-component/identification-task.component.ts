@@ -8,13 +8,14 @@ import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { PerpetratorCondition } from '../constants';
 import { IEncodeSuspect } from '../models/IEncodeSuspect';
 import { DocumentReference } from '@angular/fire/firestore';
+import { EncodeSuspectIdentification } from './suspect-identification-component/suspect-identification.component';
 
 @Component({
-    selector: 'app-suspect-identification',
-    templateUrl: './suspect-identification.component.html',
-    styleUrls: ['suspect-identification.component.scss','../encode.component.scss']
+    selector: 'app-identification-task',
+    templateUrl: './identification-task.component.html',
+    styleUrls: ['identification-task.component.scss','../encode.component.scss']
 })
-export class EncodeSuspectIdentificationComponent implements OnExit {
+export class EncodeIdentificationTaskComponent implements OnExit {
   
   constructor(
     private _dbService: DataDbService,
@@ -61,13 +62,24 @@ export class EncodeSuspectIdentificationComponent implements OnExit {
     // segundo lineup: el perpetrador esta siempre ausente
     secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false);
     
-    console.log('primer lineup');
-    console.log(firstLineup);
-    console.log('segundo lineup');
-    console.log(secondLineup);
+    // open dialog
+
+    const identificationDialogConfig = { 
+      disableClose: true, 
+      closeOnNavigation: false,
+      backdropClass: 'backdropBackground',
+      panelClass: 'custom-background'
+    };
+
+    const identificationComponentRef = this._dialog.open(EncodeSuspectIdentification, identificationDialogConfig);
+    identificationComponentRef.componentInstance.lineup = firstLineup;
+    // antes de cerrar mostar nivel de confianza
+    // identificationComponentRef.beforeClosed().subscribe();
+    // despues de cerrar abrir la segunda ronda con el otro lineup
+    // identificationComponentRef.afterClosed().subscribe();
   }
 
-  private _getPerpetratorSuspects(suspectDocuments: DocumentReference<IEncodeSuspect>[]): Promise<Array<IEncodeSuspect>> {
+  private _getPerpetratorSuspects(suspectDocuments: Array<DocumentReference<IEncodeSuspect>>): Promise<Array<IEncodeSuspect>> {
     let suspects = new Array<Promise<IEncodeSuspect>>();
    
     suspectDocuments.forEach( docRef => {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { fromEvent, Observable } from 'rxjs';
 import { VideoState, VIDEO_PATH } from '../../constants';
@@ -8,7 +8,7 @@ import { VideoState, VIDEO_PATH } from '../../constants';
   templateUrl: './video-player.component.html',
   styleUrls: ['./video-player.component.scss']
 })
-export class EncodeVideoPlayer implements OnInit, OnChanges {
+export class EncodeVideoPlayer implements OnInit {
 
   @ViewChild('video', { static: true }) 
   private _video: ElementRef<HTMLVideoElement>;
@@ -42,16 +42,6 @@ export class EncodeVideoPlayer implements OnInit, OnChanges {
     this._video.nativeElement.volume= 0.8;
     this._videoEnded$ = fromEvent(this._video.nativeElement,'ended');
     this._videoEnded$.subscribe(this._videoEndedObserver);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    for (const propName in changes) {
-      const chng = changes[propName];
-      const cur  = JSON.stringify(chng.currentValue);
-      const prev = JSON.stringify(chng.previousValue);
-      console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-    }
-    console.log("changes");
   }
 
   private _videoEndedObserver = () => {
