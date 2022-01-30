@@ -32,7 +32,7 @@ export class DataDbService {
   private encodeUserCollectionRef: AngularFirestoreCollection;
   private encodeConfigRef: AngularFirestoreCollection;
   private encodeScreenshotCollectionRef: AngularFirestoreCollection<IEncodeScreenshot>;
-  private encodeSuspectsRef: AngularFirestoreCollection<IEncodeSuspect>;
+  private encodeSuspectCollectionRef: AngularFirestoreCollection<IEncodeSuspect>;
 
   constructor(private _afs: AngularFirestore, private _storage: AngularFireStorage, private http: HttpClient) { 
     this.creativesCollectionRef = _afs.collection<CreativeUser>('creatives-users', ref => ref.orderBy('dateStart', 'desc'));
@@ -43,7 +43,7 @@ export class DataDbService {
     this.rulitSolutionsRef = _afs.collection("rulit-solutions");
     this.encodeConfigRef = _afs.collection("encode-config");
     this.encodeScreenshotCollectionRef = _afs.collection<IEncodeScreenshot>("encode-config/tasksResources/screenshots");
-    this.encodeSuspectsRef = _afs.collection<IEncodeSuspect>("encode-config/tasksResources/suspects");
+    this.encodeSuspectCollectionRef = _afs.collection<IEncodeSuspect>("encode-config/tasksResources/suspects");
   } 
 
   // TODO: Theres no need for async
@@ -217,7 +217,7 @@ export class DataDbService {
   }
 
   async getEncodeSuspects(): Promise<Array<IEncodeSuspect>> {
-    const snapshot = await this.encodeSuspectsRef.ref.get();
+    const snapshot = await this.encodeSuspectCollectionRef.ref.get();
     let suspects = new Array<IEncodeSuspect>();
     snapshot.docs.forEach( (doc: DocumentData) => {
       suspects.push(doc.data());
@@ -226,7 +226,7 @@ export class DataDbService {
   }
 
   async getEncodeSuspect(suspectId: string): Promise<IEncodeSuspect> {
-    let suspectDocument = await this.encodeSuspectsRef.doc<IEncodeSuspect>(suspectId).get().toPromise();
+    let suspectDocument = await this.encodeSuspectCollectionRef.doc<IEncodeSuspect>(suspectId).get().toPromise();
     return suspectDocument.data();
   }
   

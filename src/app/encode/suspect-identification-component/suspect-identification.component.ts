@@ -25,44 +25,47 @@ export class EncodeSuspectIdentificationComponent implements OnExit {
   {
   }
 
-  onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree>{
+  onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     return true;
   }
 
   async openIdentificaton() {
-    const perpetratorCondition = this._userService.user.sessionTwo.perpetratorCondition;
+    const userPerpetratorCondition = this._userService.user.sessionTwo.perpetratorCondition;
     const taskResources = await this._dbService.getEncodeTasksResources();
-    const perp1suspects = this._getPerpetratorSuspects(taskResources.perpetrator1Suspects); 
-    const perp2suspects = this._getPerpetratorSuspects(taskResources.perpetrator2Suspects); 
+    const perp1suspects = await this._getPerpetratorSuspects(taskResources.perpetrator1Suspects); 
+    const perp2suspects = await this._getPerpetratorSuspects(taskResources.perpetrator2Suspects); 
+    
     let firstLineup: Array<IEncodeSuspect>;
     let secondLineup: Array<IEncodeSuspect>;
     
-    if(perpetratorCondition == PerpetratorCondition.A){
+    if(userPerpetratorCondition == PerpetratorCondition.A) {
+      // quitar uno de los de relleno
       firstLineup = perp1suspects;
-      // quitar uno de los de relleno
-      secondLineup = perp2suspects.filter( suspect => suspect.isPerpetrator == false );
+      secondLineup = perp2suspects.filter(suspect => suspect.isPerpetrator == false);
     }
     
-    if(perpetratorCondition == PerpetratorCondition.B){
+    if(userPerpetratorCondition == PerpetratorCondition.B) {
+      // quitar uno de los de relleno
       firstLineup = perp2suspects;
-      // quitar uno de los de relleno
-      secondLineup = perp1suspects.filter( suspect => suspect.isPerpetrator == false );
+      secondLineup = perp1suspects.filter(suspect => suspect.isPerpetrator == false);
     }
     
+    console.log('primer lineup');
     console.log(firstLineup);
+    console.log('segundo lineup');
     console.log(secondLineup);
   }
 
-  private _getPerpetratorSuspects(suspectDocuments: DocumentReference<IEncodeSuspect>[]): Array<IEncodeSuspect> {
-    let suspects = new Array<IEncodeSuspect>();
+  private _getPerpetratorSuspects(suspectDocuments: DocumentReference<IEncodeSuspect>[]): Promise<Array<IEncodeSuspect>> {
+    let suspects = new Array<Promise<IEncodeSuspect>>();
    
-    suspectDocuments.forEach( async docRef => {
+    suspectDocuments.forEach( docRef => {
       const suspectId = docRef.id;
-      const suspect = await this._dbService.getEncodeSuspect(suspectId);
+      const suspect = this._dbService.getEncodeSuspect(suspectId);
       suspects.push(suspect);
     });
 
-    return suspects;
+    return Promise.all(suspects);
   }
 
 }
