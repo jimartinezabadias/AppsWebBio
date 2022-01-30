@@ -39,16 +39,27 @@ export class EncodeSuspectIdentificationComponent implements OnExit {
     let secondLineup: Array<IEncodeSuspect>;
     
     if(userPerpetratorCondition == PerpetratorCondition.A) {
-      // quitar uno de los de relleno
       firstLineup = perp1suspects;
-      secondLineup = perp2suspects.filter(suspect => suspect.isPerpetrator == false);
+      secondLineup = perp2suspects;
     }
     
     if(userPerpetratorCondition == PerpetratorCondition.B) {
-      // quitar uno de los de relleno
       firstLineup = perp2suspects;
-      secondLineup = perp1suspects.filter(suspect => suspect.isPerpetrator == false);
+      secondLineup = perp1suspects;
     }
+
+    // shuffle
+    firstLineup = firstLineup.sort((a, b) => 0.5 - Math.random());
+    secondLineup = secondLineup.sort((a, b) => 0.5 - Math.random());
+
+    // primer lineup: se quita uno de los sospechosos de relleno
+    const fillerIndex = firstLineup.findIndex(suspect => suspect.isPerpetrator == false);
+    if (fillerIndex > -1) {
+      firstLineup.splice(fillerIndex, 1);
+    }
+
+    // segundo lineup: el perpetrador esta siempre ausente
+    secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false);
     
     console.log('primer lineup');
     console.log(firstLineup);
