@@ -1,6 +1,6 @@
-export const ENCODE_TEST_URL: string = "/encode"; 
+export const ENCODE_TEST_URL = "/encode"; 
 
-export const VIDEO_PATH: string = "assets/videos/videoEncode.mp4";
+export const VIDEO_PATH = "assets/videos/videoEncode.mp4";
 
 export const SelectionPairs = {
     "pair_1" : {
@@ -23,6 +23,9 @@ export enum PerpetratorId {
     PERP_1,
     PERP_2
 }
+export const Perpetrator1Id = "PERP_1";
+
+export const Perpetrator2Id = "PERP_2";
 
 export enum RecorderStatus
 {

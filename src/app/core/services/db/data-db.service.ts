@@ -17,7 +17,6 @@ import { IEncodeSuspect } from 'src/app/encode/models/IEncodeSuspect';
 import { IEncodeTasksResources } from 'src/app/encode/models/IEncodeTasksResources';
 import { IEncodeScreenshot } from 'src/app/encode/models/IEncodeScreenshot';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -224,6 +223,11 @@ export class DataDbService {
       suspects.push(doc.data());
     });
     return suspects;
+  }
+
+  async getEncodeSuspect(suspectId: string): Promise<IEncodeSuspect> {
+    let suspectDocument = await this.encodeSuspectsRef.doc<IEncodeSuspect>(suspectId).get().toPromise();
+    return suspectDocument.data();
   }
   
   public getCloudStorageFileRef(filePath: string): AngularFireStorageReference {
