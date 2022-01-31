@@ -17,6 +17,8 @@ import { EncodeSuspectIdentification } from './suspect-identification-component/
 })
 export class EncodeIdentificationTaskComponent implements OnExit {
   
+  public isIdentifing: boolean = false;
+  
   constructor(
     private _dbService: DataDbService,
     private _userService: EncodeUserService, 
