@@ -1,0 +1,30 @@
+.selectionComponent
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 42rem;
+    row-gap: 8px;
+}
+
+.card-content
+{
+    display: flex;
+    flex-flow: column;
+    row-gap: 2rem;
+    align-items: flex-start;
+    margin-top: 1rem;
+    margin-left: 16px;
+}
+
+.save-form-btn 
+{
+    max-width: 200px;
+}
+
+.mat-card-title 
+{
+    color: #4a4067;
+    font-weight: 400;
+    font-size: 1.8em;
+}
