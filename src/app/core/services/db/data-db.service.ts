@@ -229,7 +229,7 @@ export class DataDbService {
     let suspectDocument = await this.encodeSuspectCollectionRef.doc<IEncodeSuspect>(suspectId).get().toPromise();
     return suspectDocument.data();
   }
-  
+
   public getCloudStorageFileRef(filePath: string): AngularFireStorageReference {
     return this._storage.ref(filePath);
   }

@@ -61,18 +61,28 @@ export class EncodeIdentificationTaskComponent implements OnExit {
 
     // segundo lineup: el perpetrador esta siempre ausente
     secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false);
+
+    console.log("firstLineup");
+    console.log(firstLineup);
+    console.log("secondLineup");
+    console.log(secondLineup);
+
+    secondLineup.forEach(async suspect => {
+      const suspectImageUrl = await this._dbService.getCloudStorageFileRef(suspect.photo).getDownloadURL().toPromise<string>();
+      console.log(suspectImageUrl);
+    });
     
     // open dialog
 
-    const identificationDialogConfig = { 
-      disableClose: true, 
-      closeOnNavigation: false,
-      backdropClass: 'backdropBackground',
-      panelClass: 'custom-background'
-    };
+    // const identificationDialogConfig = { 
+    //   disableClose: true, 
+    //   closeOnNavigation: false,
+    //   backdropClass: 'backdropBackground',
+    //   panelClass: 'custom-background'
+    // };
 
-    const identificationComponentRef = this._dialog.open(EncodeSuspectIdentification, identificationDialogConfig);
-    identificationComponentRef.componentInstance.lineup = firstLineup;
+    // const identificationComponentRef = this._dialog.open(EncodeSuspectIdentification, identificationDialogConfig);
+    // identificationComponentRef.componentInstance.lineup = firstLineup;
     // antes de cerrar mostar nivel de confianza
     // identificationComponentRef.beforeClosed().subscribe();
     // despues de cerrar abrir la segunda ronda con el otro lineup
