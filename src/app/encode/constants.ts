@@ -2,19 +2,19 @@ export const ENCODE_TEST_URL: string = "/encode";
 
 export const VIDEO_PATH: string = "assets/videos/videoEncode.mp4";
 
-export interface SelectionPairs {
+export const SelectionPairs = {
     "pair_0" : {
-        fakeImage: "app/encode/selection-component/screenshots/0_fakeImage.png",
-        realImage: "app/encode/selection-component/screenshots/0_realImage.png"
+        fakeImage: "assets/screenshots/0_fakeImage.png",
+        realImage: "assets/screenshots/0_realImage.png"
     },
     "pair_1" : {
-        fakeImage: "app/encode/selection-component/screenshots/1_fakeImage.png",
-        realImage: "app/encode/selection-component/screenshots/1_realImage.png"
+        fakeImage: "assets/screenshots/1_fakeImage.png",
+        realImage: "assets/screenshots/1_realImage.png"
     }
 };
   
-export interface SelectionScreenshots {
-    selectionPairs: SelectionPairs;
+export const SelectionScreenshots = {
+    selectionPairs: SelectionPairs
 };
 
 export enum PerpetratorId {

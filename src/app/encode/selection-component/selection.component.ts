@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { SelectionScreenshots } from 'src/app/encode/constants';
 
 @Component({
     selector: 'app-encode-selection',
@@ -10,6 +11,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class EncodeSelectionComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  public images = SelectionScreenshots.selectionPairs;
 
   constructor(private _router: Router,
               private _route: ActivatedRoute,
