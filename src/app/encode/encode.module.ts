@@ -28,6 +28,7 @@ import { ExtendedRecallComponent } from './audios-component/extended-recall-comp
 import { EncodeAbandonedComponent } from './abandoned-component/encode-abandoned.component';
 import { EncodeIdentificationTaskComponent } from './identification-task-component/identification-task.component';
 import { EncodeSelectionComponent } from './selection-component/selection.component';
+import { EncodeIdentificationDirective } from './identification-task-component/identification.directive';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import { EncodeSelectionComponent } from './selection-component/selection.compon
         EncodeAudioListComponent,
         ExtendedRecallComponent,
         EncodeIdentificationTaskComponent,
-        EncodeSelectionComponent
+        EncodeSelectionComponent,
+        EncodeIdentificationDirective
     ],
     imports: [
         CommonModule,

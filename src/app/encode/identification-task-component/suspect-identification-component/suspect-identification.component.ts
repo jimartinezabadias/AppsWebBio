@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { IEncodeSuspect } from '../../models/IEncodeSuspect';
 
 @Component({
@@ -15,7 +14,7 @@ export class EncodeSuspectIdentification {
     console.log(lineup);
   };
 
-  constructor(public suspectIdentificationDialogRef: MatDialogRef<EncodeSuspectIdentification>) 
+  constructor() 
   {
   }
 
