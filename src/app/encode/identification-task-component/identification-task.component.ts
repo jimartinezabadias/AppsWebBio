@@ -69,10 +69,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     // console.log("secondLineup");
     // console.log(secondLineup);
 
-    secondLineup.forEach(async suspect => {
-      const suspectImageUrl = await this._dbService.getCloudStorageFileRef(suspect.photo).getDownloadURL().toPromise<string>();
-      console.log(suspectImageUrl);
-    });
+    
 
     const viewContainerRef = this.identificationHost.viewContainerRef;
     viewContainerRef.clear();
