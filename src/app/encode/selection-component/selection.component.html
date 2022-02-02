@@ -18,8 +18,8 @@
                             <mat-button-toggle><img class="selection-image" src={{images.pair_0.fakeImage}}/></mat-button-toggle>
                             <mat-button-toggle><img class="selection-image" src={{images.pair_0.realImage}}/></mat-button-toggle>
                         </mat-button-toggle-group>
-                        <div>
-                            <button mat-button matStepperNext>Next</button>
+                        <div class="stepper-buttons">
+                            <button mat-button matStepperNext>SIGUIENTE</button>
                         </div>
                         </form>
                     </mat-step>
@@ -31,8 +31,7 @@
                             <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
                                     required>
                         </mat-form-field>
-                        <div>
-                            <button mat-button matStepperPrevious>Back</button>
+                        <div class="stepper-buttons">
                             <button mat-button matStepperNext>Next</button>
                         </div>
                         </form>
@@ -40,9 +39,9 @@
                     <mat-step>
                         <ng-template matStepLabel>Done</ng-template>
                         <p>You are now done.</p>
-                        <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button (click)="stepper.reset()">Reset</button>
+                        <div class="stepper-buttons">
+                            <button mat-button matStepperPrevious>Back</button>
+                            <button mat-button (click)="stepper.reset()">Reset</button>
                         </div>
                     </mat-step>
                     </mat-stepper>

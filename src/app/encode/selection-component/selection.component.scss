@@ -10,15 +10,24 @@
 {
     display: flex;
     flex-flow: column;
-    row-gap: 2rem;
     align-items: flex-start;
     margin-top: 1rem;
-    margin-left: 16px;
+}
+
+.mat-card
+{
+    padding: 0;
+    background: none;
+    box-shadow: none;
+}
+
+.mat-stepper-horizontal, .mat-stepper-vertical 
+{
+    background: none;
 }
 
 .selection-image {
-    width: 48%;
-    padding: 8px;
+    width: 100%;
 }
 
 .save-form-btn 
@@ -33,6 +42,62 @@
     font-size: 1.8em;
 }
 
-:host ::ng-deep .mat-horizontal-stepper-header-container {
+:host ::ng-deep .mat-horizontal-stepper-header-container 
+{
     display: none;
-  }
+}
+
+.mat-button-toggle-checked 
+{
+    background-color: #e0e0e0;
+    color: rgba(0,0,0,.54);
+    border: solid 4px #76ad2e;
+}
+
+.mat-button-toggle-group-appearance-standard 
+{
+    border: none;
+}
+
+:host ::ng-deep .mat-button-toggle-group-appearance-standard .mat-button-toggle+.mat-button-toggle-checked 
+{
+    border-left: solid 4px #76ad2e;
+}
+
+.mat-button-toggle 
+{
+    width: 49%;
+}
+
+:host ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content 
+{
+    padding: 0 0;
+}
+
+.mat-button-toggle-group 
+{
+    justify-content: space-between;
+}
+
+.mat-button-toggle-appearance-standard 
+{
+    background: none;
+}
+
+.stepper-buttons
+{
+    width: 100%;
+    padding-top: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.stepper-buttons button
+{
+    width: 20%;
+    background-color: #76ad2e;
+    color: #eeeeee;
+    font-size: large;
+    font-weight: 500;
+    padding: 0.5rem 0;
+}
