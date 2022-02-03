@@ -11,8 +11,8 @@
                 <mat-card-content class="card-content">
                       
                     <mat-stepper linear #stepper>
-                        <mat-step *ngFor="let pair of imagesPairs" [stepControl]="firstFormGroup" [optional]="true">
-                            <form [formGroup]="firstFormGroup">
+                        <mat-step *ngFor="let pair of imagesPairs" [optional]="true">
+                            <form>
                             <mat-button-toggle-group>
                                 <mat-button-toggle (click)="onSelection(pair.value.fakeImage)">
                                     <img class="selection-image" src={{pair.value.fakeImage}}/>

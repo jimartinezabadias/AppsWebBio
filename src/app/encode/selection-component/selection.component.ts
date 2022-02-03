@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { EncodeUserService } from '../services/EncodeUserService';
 import { SelectionScreenshots } from 'src/app/encode/constants';
 
 @Component({
@@ -18,33 +19,27 @@ export class EncodeSelectionComponent implements OnInit {
 
   constructor(private _router: Router,
               private _route: ActivatedRoute,
-              private _formBuilder: FormBuilder) 
+              private _formBuilder: FormBuilder,
+              private _userService: EncodeUserService) 
   {
   }
 
   ngOnInit() 
   {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required],
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: '',
-    });
-
     this.imagesPairs = Object.entries(SelectionScreenshots.selectionPairs).map(([type, value]) => ({type, value}));
     console.log(this.imagesPairs);
   }
 
   onSelection(selectionValue): any
   {
-    console.log(selectionValue);
+    //guardar selectionValue en interface
+    //this._userService.user 
     this.selectionMade = true;
   }
 
   onConfirm(): any 
   {
     if (this.currentStep < 12) {
-      console.log("hola");
       this.currentStep = this.currentStep + 1;
       this.selectionMade = false;
     } else if (this.currentStep == 12) {
