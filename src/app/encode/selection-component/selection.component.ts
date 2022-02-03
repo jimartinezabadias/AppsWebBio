@@ -1,6 +1,5 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { SelectionScreenshots } from 'src/app/encode/constants';
 
@@ -10,8 +9,6 @@ import { SelectionScreenshots } from 'src/app/encode/constants';
     styleUrls: ['selection.component.scss','../encode.component.scss']
 })
 export class EncodeSelectionComponent implements OnInit {
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
   public imagesPairs;
   public steps = 12;
   public currentStep = 0;
@@ -19,7 +16,6 @@ export class EncodeSelectionComponent implements OnInit {
 
   constructor(private _router: Router,
               private _route: ActivatedRoute,
-              private _formBuilder: FormBuilder,
               private _userService: EncodeUserService) 
   {
   }
@@ -27,7 +23,6 @@ export class EncodeSelectionComponent implements OnInit {
   ngOnInit() 
   {
     this.imagesPairs = Object.entries(SelectionScreenshots.selectionPairs).map(([type, value]) => ({type, value}));
-    console.log(this.imagesPairs);
   }
 
   onSelection(selectionValue): any
