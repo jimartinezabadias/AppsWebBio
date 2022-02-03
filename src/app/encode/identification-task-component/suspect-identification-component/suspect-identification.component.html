@@ -1,5 +1,9 @@
 <h1>{{ identificationTitle }}</h1>
 
 <div id="lineup">
-    <img *ngFor="let suspect of lineup; index as i;" [src]="suspect.photoDownloadUrl" alt=""/>
+    <div *ngFor="let suspect of lineup; index as i;"
+        class="suspect">
+        <img  [src]="suspect.photoDownloadUrl" alt=""/>
+        <mat-radio-button value="suspect">Sospechoso {{i + 1}}</mat-radio-button>
+    </div>
 </div>
