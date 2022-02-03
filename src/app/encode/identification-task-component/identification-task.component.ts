@@ -4,7 +4,7 @@ import { UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { Observable } from 'rxjs';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
-import { PerpetratorCondition } from '../constants';
+import { IdentificationTitle1, PerpetratorCondition } from '../constants';
 import { IEncodeSuspect } from '../models/IEncodeSuspect';
 import { DocumentReference } from '@angular/fire/firestore';
 import { EncodeSuspectIdentification } from './suspect-identification-component/suspect-identification.component';
@@ -52,8 +52,8 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     }
 
     // shuffle
-    firstLineup = firstLineup.sort((a, b) => 0.5 - Math.random());
-    secondLineup = secondLineup.sort((a, b) => 0.5 - Math.random());
+    // firstLineup = firstLineup.sort((a, b) => 0.5 - Math.random());
+    // secondLineup = secondLineup.sort((a, b) => 0.5 - Math.random());
 
     // primer lineup: se quita uno de los sospechosos de relleno
     const fillerIndex = firstLineup.findIndex(suspect => suspect.isPerpetrator == false);
@@ -63,38 +63,16 @@ export class EncodeIdentificationTaskComponent implements OnExit {
 
     // segundo lineup: el perpetrador esta siempre ausente
     secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false);
-
-    // console.log("firstLineup");
-    // console.log(firstLineup);
-    // console.log("secondLineup");
-    // console.log(secondLineup);
-
     
-
     const viewContainerRef = this.identificationHost.viewContainerRef;
     viewContainerRef.clear();
 
-    const factory = this._cfr.resolveComponentFactory(EncodeSuspectIdentification);
-    const componentRef = viewContainerRef.createComponent<EncodeSuspectIdentification>(factory);
+    const componentFactory = this._cfr.resolveComponentFactory(EncodeSuspectIdentification);
+    const componentRef = viewContainerRef.createComponent<EncodeSuspectIdentification>(componentFactory);
+    componentRef.instance.identificationTitle = IdentificationTitle1;
     componentRef.instance.lineup = firstLineup;
 
-    this.isIdentifing = true;
-    
-    // open dialog
-
-    // const identificationDialogConfig = { 
-    //   disableClose: true, 
-    //   closeOnNavigation: false,
-    //   backdropClass: 'backdropBackground',
-    //   panelClass: 'custom-background'
-    // };
-
-    // const identificationComponentRef = this._dialog.open(EncodeSuspectIdentification, identificationDialogConfig);
-    // identificationComponentRef.componentInstance.lineup = firstLineup;
-    // antes de cerrar mostar nivel de confianza
-    // identificationComponentRef.beforeClosed().subscribe();
-    // despues de cerrar abrir la segunda ronda con el otro lineup
-    // identificationComponentRef.afterClosed().subscribe();
+    this.isIdentifing = true; 
   }
 
   private _getPerpetratorSuspects(suspectDocuments: Array<DocumentReference<IEncodeSuspect>>): Promise<Array<IEncodeSuspect>> {

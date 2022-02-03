@@ -27,6 +27,10 @@ export const Perpetrator1Id = "PERP_1";
 
 export const Perpetrator2Id = "PERP_2";
 
+export const IdentificationTitle1 = "Ronda 1 de 2";
+
+export const IdentificationTitle2 = "Ronda 2 de 2";
+
 export enum RecorderStatus
 {
     Ready = "Listo para grabar",
@@ -74,3 +78,4 @@ export enum PerpetratorCondition {
     A = "Perpetrador 1 Presente, Perpetrador 2 Ausente",
     B = "Perpetrador 2 Presente, Perpetrador 1 Ausente"
 }
+

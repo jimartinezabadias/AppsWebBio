@@ -29,6 +29,7 @@ import { EncodeAbandonedComponent } from './abandoned-component/encode-abandoned
 import { EncodeIdentificationTaskComponent } from './identification-task-component/identification-task.component';
 import { EncodeSelectionComponent } from './selection-component/selection.component';
 import { EncodeIdentificationDirective } from './identification-task-component/identification.directive';
+import { EncodeSuspectIdentification } from './identification-task-component/suspect-identification-component/suspect-identification.component';
 
 @NgModule({
     declarations: [
@@ -55,7 +56,8 @@ import { EncodeIdentificationDirective } from './identification-task-component/i
         ExtendedRecallComponent,
         EncodeIdentificationTaskComponent,
         EncodeSelectionComponent,
-        EncodeIdentificationDirective
+        EncodeIdentificationDirective,
+        EncodeSuspectIdentification
     ],
     imports: [
         CommonModule,
