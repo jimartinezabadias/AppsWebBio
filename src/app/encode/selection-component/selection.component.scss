@@ -92,7 +92,7 @@
     justify-content: center;
 }
 
-.stepper-buttons button
+.stepper-buttons .mat-button
 {
     width: 20%;
     background-color: #76ad2e;
@@ -100,4 +100,9 @@
     font-size: large;
     font-weight: 500;
     padding: 0.5rem 0;
+}
+
+.stepper-buttons .mat-button-disabled
+{
+    background-color: #76ad2e94;
 }

@@ -11,39 +11,24 @@
                 <mat-card-content class="card-content">
                       
                     <mat-stepper linear #stepper>
-                    <mat-step [stepControl]="firstFormGroup">
-                        <form [formGroup]="firstFormGroup">
-                        <ng-template matStepLabel>Fill out your name</ng-template>
-                        <mat-button-toggle-group>
-                            <mat-button-toggle><img class="selection-image" src={{images.pair_0.fakeImage}}/></mat-button-toggle>
-                            <mat-button-toggle><img class="selection-image" src={{images.pair_0.realImage}}/></mat-button-toggle>
-                        </mat-button-toggle-group>
-                        <div class="stepper-buttons">
-                            <button mat-button matStepperNext>SIGUIENTE</button>
-                        </div>
-                        </form>
-                    </mat-step>
-                    <mat-step [stepControl]="secondFormGroup">
-                        <form [formGroup]="secondFormGroup">
-                        <ng-template matStepLabel>Fill out your address</ng-template>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Address</mat-label>
-                            <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                                    required>
-                        </mat-form-field>
-                        <div class="stepper-buttons">
-                            <button mat-button matStepperNext>Next</button>
-                        </div>
-                        </form>
-                    </mat-step>
-                    <mat-step>
-                        <ng-template matStepLabel>Done</ng-template>
-                        <p>You are now done.</p>
-                        <div class="stepper-buttons">
-                            <button mat-button matStepperPrevious>Back</button>
-                            <button mat-button (click)="stepper.reset()">Reset</button>
-                        </div>
-                    </mat-step>
+                        <mat-step *ngFor="let pair of imagesPairs" [stepControl]="firstFormGroup" [optional]="true">
+                            <form [formGroup]="firstFormGroup">
+                            <mat-button-toggle-group>
+                                <mat-button-toggle (click)="onSelection(pair.value.fakeImage)">
+                                    <img class="selection-image" src={{pair.value.fakeImage}}/>
+                                </mat-button-toggle>
+                                <mat-button-toggle (click)="onSelection(pair.value.realImage)">
+                                    <img class="selection-image" src={{pair.value.realImage}}/>
+                                </mat-button-toggle>
+                            </mat-button-toggle-group>
+                            <div class="stepper-buttons">
+                                <button [disabled]="!selectionMade" (click)="onConfirm()" mat-button matStepperNext>SIGUIENTE</button>
+                            </div>
+                            <div class="stepper-buttons">
+                                <h4>Seleccionadas {{currentStep}}/{{steps}}</h4>
+                            </div>
+                            </form>
+                        </mat-step>
                     </mat-stepper>
 
                 </mat-card-content>
