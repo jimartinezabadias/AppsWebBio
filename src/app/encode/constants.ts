@@ -27,9 +27,9 @@ export const Perpetrator1Id = "PERP_1";
 
 export const Perpetrator2Id = "PERP_2";
 
-export const IdentificationTitle1 = "Ronda 1 de 2";
+export const Room1Title = "Ronda 1 de 2";
 
-export const IdentificationTitle2 = "Ronda 2 de 2";
+export const Room2Title = "Ronda 2 de 2";
 
 export enum RecorderStatus
 {

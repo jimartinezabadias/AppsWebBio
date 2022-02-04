@@ -2,7 +2,7 @@
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
         
-        <div *ngIf="isIdentifing == false; then taskBreafing else identificationComponent">
+        <div *ngIf="isIdentifing == false; then taskBreafing else identificationRoomComponent">
             <!-- template will replace this div -->
         </div>
 
@@ -21,7 +21,7 @@
             </div>
         </ng-template>
 
-        <ng-template #identificationComponent identificationHost></ng-template>
+        <ng-template identificationRoomHost #identificationRoomComponent></ng-template>
         
     </section>
 

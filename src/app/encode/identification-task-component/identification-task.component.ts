@@ -4,11 +4,11 @@ import { UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { Observable } from 'rxjs';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
-import { IdentificationTitle1, PerpetratorCondition } from '../constants';
+import { Room1Title, PerpetratorCondition } from '../constants';
 import { IEncodeSuspect } from '../models/IEncodeSuspect';
 import { DocumentReference } from '@angular/fire/firestore';
-import { EncodeSuspectIdentification } from './suspect-identification-component/suspect-identification.component';
-import { EncodeIdentificationDirective } from './identification.directive';
+import { EncodeIdentificationRoom } from './identification-room-component/identification-room.component';
+import { EncodeIdentificationRoomDirective } from './identification-room.directive';
 
 @Component({
     selector: 'app-identification-task',
@@ -19,7 +19,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   
   public isIdentifing: boolean = false;
 
-  @ViewChild(EncodeIdentificationDirective, {static: true}) identificationHost!: EncodeIdentificationDirective;
+  @ViewChild(EncodeIdentificationRoomDirective, {static: true}) identificationRoomHost!: EncodeIdentificationRoomDirective;
   
   constructor(
     private _dbService: DataDbService,
@@ -51,10 +51,6 @@ export class EncodeIdentificationTaskComponent implements OnExit {
       secondLineup = perp1suspects;
     }
 
-    // shuffle
-    // firstLineup = firstLineup.sort((a, b) => 0.5 - Math.random());
-    // secondLineup = secondLineup.sort((a, b) => 0.5 - Math.random());
-
     // primer lineup: se quita uno de los sospechosos de relleno
     const fillerIndex = firstLineup.findIndex(suspect => suspect.isPerpetrator == false);
     if (fillerIndex > -1) {
@@ -64,13 +60,13 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     // segundo lineup: el perpetrador esta siempre ausente
     secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false);
     
-    const viewContainerRef = this.identificationHost.viewContainerRef;
+    const viewContainerRef = this.identificationRoomHost.viewContainerRef;
     viewContainerRef.clear();
 
-    const componentFactory = this._cfr.resolveComponentFactory(EncodeSuspectIdentification);
-    const componentRef = viewContainerRef.createComponent<EncodeSuspectIdentification>(componentFactory);
-    componentRef.instance.identificationTitle = IdentificationTitle1;
-    componentRef.instance.lineup = firstLineup;
+    const componentFactory = this._cfr.resolveComponentFactory(EncodeIdentificationRoom);
+    const roomComponentRef = viewContainerRef.createComponent<EncodeIdentificationRoom>(componentFactory);
+    roomComponentRef.instance.roomTitle = Room1Title;
+    roomComponentRef.instance.lineup = firstLineup;
 
     this.isIdentifing = true; 
   }

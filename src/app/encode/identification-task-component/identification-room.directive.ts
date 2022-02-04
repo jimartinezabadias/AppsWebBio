@@ -1,8 +1,8 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[identificationHost]',
+  selector: '[identificationRoomHost]',
 })
-export class EncodeIdentificationDirective {
+export class EncodeIdentificationRoomDirective {
   constructor(public viewContainerRef: ViewContainerRef) { }
 }

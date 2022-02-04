@@ -28,8 +28,9 @@ import { ExtendedRecallComponent } from './audios-component/extended-recall-comp
 import { EncodeAbandonedComponent } from './abandoned-component/encode-abandoned.component';
 import { EncodeIdentificationTaskComponent } from './identification-task-component/identification-task.component';
 import { EncodeSelectionComponent } from './selection-component/selection.component';
-import { EncodeIdentificationDirective } from './identification-task-component/identification.directive';
-import { EncodeSuspectIdentification } from './identification-task-component/suspect-identification-component/suspect-identification.component';
+import { EncodeIdentificationRoomDirective } from './identification-task-component/identification-room.directive';
+import { EncodeIdentificationRoom } from './identification-task-component/identification-room-component/identification-room.component';
+import { EncodeSuspect } from './identification-task-component/identification-room-component/suspect-component/suspect.component';
 
 @NgModule({
     declarations: [
@@ -56,8 +57,9 @@ import { EncodeSuspectIdentification } from './identification-task-component/sus
         ExtendedRecallComponent,
         EncodeIdentificationTaskComponent,
         EncodeSelectionComponent,
-        EncodeIdentificationDirective,
-        EncodeSuspectIdentification
+        EncodeIdentificationRoomDirective,
+        EncodeIdentificationRoom,
+        EncodeSuspect
     ],
     imports: [
         CommonModule,

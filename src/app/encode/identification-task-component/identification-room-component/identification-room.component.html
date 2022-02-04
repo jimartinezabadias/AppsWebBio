@@ -1,0 +1,10 @@
+<h1>{{ roomTitle }}</h1>
+
+<div id="lineup">
+    <div *ngFor="let suspect of lineup; index as i;"
+        class="suspect">
+        <app-encode-suspect [suspectNumber]="i + 1"
+            [suspect]="suspect">
+        </app-encode-suspect>
+    </div>
+</div>
