@@ -11,6 +11,8 @@ export class EncodeIdentificationRoom {
   
   private _lineup: Array<IEncodeSuspect>;
 
+  public selectedSuspect: IEncodeSuspect|null;
+
   @Input() public roomTitle: typeof Room1Title| typeof Room2Title;
 
   @Input() 
@@ -27,16 +29,11 @@ export class EncodeIdentificationRoom {
 
   constructor() 
   {
-    // this._lineup = new Array<IEncodeSuspect>();
+    this.selectedSuspect = null;
   }
 
-  // ngAfterViewInit(): void {
-  //   this._lineup.forEach(async suspect => {
-  //     const suspectImageUrl = await this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL().toPromise<string>();
-  //     suspect.photoDownloadUrl = suspectImageUrl;
-  //   });
-    
-  //   console.log(this._lineup);
-  // }
+  public updateSelectedSuspect($event){
+    console.log($event);
+  }
 
 }

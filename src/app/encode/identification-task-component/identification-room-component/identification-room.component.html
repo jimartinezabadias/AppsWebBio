@@ -1,10 +1,19 @@
-<h1>{{ roomTitle }}</h1>
+<div id="identification-room-container">
+    <h1>{{ roomTitle }}</h1>
 
-<div id="lineup">
-    <div *ngFor="let suspect of lineup; index as i;"
-        class="suspect">
-        <app-encode-suspect [suspectNumber]="i + 1"
-            [suspect]="suspect">
+    <div id="lineup">
+        <app-encode-suspect *ngFor="let suspect of lineup; index as i;"
+            [suspectNumber]="i + 1"
+            [suspect]="suspect"
+            [isSelected]="false"
+            (selectedSuspectChange)="updateSelectedSuspect($event)">
         </app-encode-suspect>
     </div>
+    
+    <button mat-raised-button 
+        color="primary"
+        [disabled]="selectedSuspect == null">
+            Elegir
+    </button>
 </div>
+

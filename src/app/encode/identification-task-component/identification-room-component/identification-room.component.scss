@@ -1,3 +1,10 @@
+#identification-room-container {
+    display: flex;
+    flex-flow: column;
+    row-gap: 32px;
+    align-items: center;
+}
+
 #lineup {
     display: flex;
     flex-flow: row;
