@@ -14,10 +14,10 @@
                         <mat-step *ngFor="let pair of imagesPairs" [optional]="true">
                             <form>
                             <mat-button-toggle-group>
-                                <mat-button-toggle (click)="onSelection(pair.value.fakeImage)">
+                                <mat-button-toggle (click)="onSelection(pair.value.fakeImage, false)">
                                     <img class="selection-image" src={{pair.value.fakeImage}}/>
                                 </mat-button-toggle>
-                                <mat-button-toggle (click)="onSelection(pair.value.realImage)">
+                                <mat-button-toggle (click)="onSelection(pair.value.realImage, true)">
                                     <img class="selection-image" src={{pair.value.realImage}}/>
                                 </mat-button-toggle>
                             </mat-button-toggle-group>

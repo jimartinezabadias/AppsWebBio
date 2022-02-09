@@ -3,13 +3,13 @@ export const ENCODE_TEST_URL: string = "/encode";
 export const VIDEO_PATH: string = "assets/videos/videoEncode.mp4";
 
 export const SelectionPairs = {
-    "pair_0" : {
-        fakeImage: "assets/screenshots/0_fakeImage.png",
-        realImage: "assets/screenshots/0_realImage.png"
-    },
     "pair_1" : {
         fakeImage: "assets/screenshots/1_fakeImage.png",
         realImage: "assets/screenshots/1_realImage.png"
+    },
+    "pair_2" : {
+        fakeImage: "assets/screenshots/2_fakeImage.png",
+        realImage: "assets/screenshots/2_realImage.png"
     }
 };
   

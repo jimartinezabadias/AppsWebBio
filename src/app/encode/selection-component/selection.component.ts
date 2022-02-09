@@ -28,20 +28,19 @@ export class EncodeSelectionComponent implements OnInit {
     this.imagesPairs = Object.entries(SelectionScreenshots.selectionPairs).map(([type, value]) => ({type, value}));
   }
 
-  onSelection(selectionValue): any
+  onSelection(selectionValue, isReal): any
   {
-    this.userChoice = { pair: this.currentStep.toString(), imageURL: selectionValue };
+    this.userChoice = { pairNumber: this.currentStep, isReal: isReal, imageURL: selectionValue };
     this.selectionMade = true;
   }
 
   onConfirm(): any 
   {
-    if (this.currentStep < 12) {
+    if (this.currentStep < 13) {
       this.userChoices.push(this.userChoice);
       this.currentStep = this.currentStep + 1;
       this.selectionMade = false;
-      console.log(this.userChoices);
-    } else if (this.currentStep == 12) {
+    } else if (this.currentStep == 13) {
       this._userService.user.sessionTwo.imageSelections = this.userChoices;
       //routear a ordenamiento
       //this._router.navigate(["../consent"], { relativeTo: this._route });

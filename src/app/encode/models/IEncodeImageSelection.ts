@@ -1,4 +1,5 @@
 export interface IEncodeImageSelection {
-    pair: string | null;
+    pairNumber: number | null;
+    isReal : boolean | null;
     imageURL: string | null;
 }
