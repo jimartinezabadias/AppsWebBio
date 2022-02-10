@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IEncodeSuspect } from '../../models/IEncodeSuspect';
 import { Room1Title, Room2Title } from '../../constants';
 
@@ -23,6 +23,9 @@ export class EncodeIdentificationRoom {
     this._lineup = lineup;
   };
 
+  @Output()
+  public suspectIdentified = new EventEmitter();
+
   get lineup(): Array<IEncodeSuspect> {
     return this._lineup;
   }
@@ -32,8 +35,15 @@ export class EncodeIdentificationRoom {
     this.selectedSuspect = null;
   }
 
-  public updateSelectedSuspect($event){
-    console.log($event);
+  public selectedSuspectChange(suspectId: string){
+    this.selectedSuspect = this._lineup.find( suspect => suspect.id == suspectId);
+  }
+
+  public identifySuspect(): void {
+    // todo
+    // abrir nivel de confianza
+    // emitir una respuesta usando la interfaz
+    this.suspectIdentified.emit(this.selectedSuspect.id);
   }
 
 }

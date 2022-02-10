@@ -1,4 +1,6 @@
 <div class="suspect">
-    <img  [src]="suspectImageUrl" alt=""/>
-    <mat-radio-button #suspectSelectButton value="suspect">Sospechoso {{ suspectNumber }}</mat-radio-button>
+    <img [src]="suspectImageUrl" 
+        (click)="selectSuspect()"
+        alt=""/>
+    <mat-radio-button #suspectSelectButton value="suspect">Sospechoso {{ suspectIndex }}</mat-radio-button>
 </div>

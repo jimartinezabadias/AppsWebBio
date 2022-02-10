@@ -3,16 +3,17 @@
 
     <div id="lineup">
         <app-encode-suspect *ngFor="let suspect of lineup; index as i;"
-            [suspectNumber]="i + 1"
+            [suspectIndex]="i + 1"
             [suspect]="suspect"
             [isSelected]="false"
-            (selectedSuspectChange)="updateSelectedSuspect($event)">
+            (selectSuspectEvent)="selectedSuspectChange($event)">
         </app-encode-suspect>
     </div>
     
     <button mat-raised-button 
         color="primary"
-        [disabled]="selectedSuspect == null">
+        [disabled]="selectedSuspect == null"
+        (click)="identifySuspect()">
             Elegir
     </button>
 </div>

@@ -9,6 +9,7 @@ import { IEncodeSuspect } from '../models/IEncodeSuspect';
 import { DocumentReference } from '@angular/fire/firestore';
 import { EncodeIdentificationRoom } from './identification-room-component/identification-room.component';
 import { EncodeIdentificationRoomDirective } from './identification-room.directive';
+import { IEncodeIdentificationResponse } from '../models/IEncodeIdentificationResponse';
 
 @Component({
     selector: 'app-identification-task',
@@ -35,8 +36,8 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   async openIdentificaton() {
     const userPerpetratorCondition = this._userService.user.sessionTwo.perpetratorCondition;
     const taskResources = await this._dbService.getEncodeTasksResources();
-    const perp1suspects = await this._getPerpetratorSuspects(taskResources.perpetrator1Suspects); 
-    const perp2suspects = await this._getPerpetratorSuspects(taskResources.perpetrator2Suspects); 
+    const perp1suspects = await this._getSuspectsOfBeing(taskResources.perpetrator1Suspects); 
+    const perp2suspects = await this._getSuspectsOfBeing(taskResources.perpetrator2Suspects); 
     
     taskResources.perpetrator1Suspects.forEach( (suspectDocRef, index: number) => {
       perp1suspects[index].id = suspectDocRef.id;
@@ -45,11 +46,6 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     taskResources.perpetrator2Suspects.forEach( (suspectDocRef, index: number) => {
       perp2suspects[index].id = suspectDocRef.id;
     });
-
-    console.log(perp1suspects.length);
-    console.log(perp2suspects.length);
-    console.log(perp1suspects);
-    console.log(perp2suspects);
     
     let firstLineup: Array<IEncodeSuspect>;
     let secondLineup: Array<IEncodeSuspect>;
@@ -80,11 +76,23 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     const roomComponentRef = viewContainerRef.createComponent<EncodeIdentificationRoom>(componentFactory);
     roomComponentRef.instance.roomTitle = Room1Title;
     roomComponentRef.instance.lineup = firstLineup;
+    roomComponentRef.instance.suspectIdentified.subscribe(this.onSuspectIdentified);
 
     this.isIdentifing = true; 
   }
 
-  private _getPerpetratorSuspects(suspectDocuments: Array<DocumentReference<IEncodeSuspect>>): Promise<Array<IEncodeSuspect>> {
+  // todo
+  // recibir respuesta en vez de id
+  // response: IEncodeIdentificationResponse
+  public onSuspectIdentified(suspectId: string): void {
+    // todo
+    console.log("respuesta identification: " + suspectId);
+    // guardar respuesta
+    // cerrar room actual
+    // abrir proximo room
+  }
+
+  private _getSuspectsOfBeing(suspectDocuments: Array<DocumentReference<IEncodeSuspect>>): Promise<Array<IEncodeSuspect>> {
     let suspects = new Array<Promise<IEncodeSuspect>>();
    
     suspectDocuments.forEach( async docRef => {

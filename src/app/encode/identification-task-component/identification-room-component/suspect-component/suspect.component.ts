@@ -17,21 +17,28 @@ export class EncodeSuspect implements AfterViewInit{
   private _selectedRadioButton: MatRadioButton;
   
   public suspectImageUrl: string;
-  
-  @Input() 
-  public suspectNumber: number;
+  private _suspectIndex: number;
   
   @Input() 
   set suspect(suspect: IEncodeSuspect) {
     this._suspect = suspect;
+  };
+
+  @Input() 
+  set suspectIndex(index: number) {
+    this._suspectIndex = index;
   };
   
   @Input() 
   set isSelected(isSelected: boolean) {
     this._isSelected = isSelected;
   };
+
+  get suspectIndex(): number {
+    return this._suspectIndex;
+  }
   
-  @Output() selectedSuspectChange = new EventEmitter();
+  @Output() public selectSuspectEvent = new EventEmitter();
   
   constructor(private _dbService: DataDbService) 
   {
@@ -39,11 +46,12 @@ export class EncodeSuspect implements AfterViewInit{
   
   async ngAfterViewInit(): Promise<void> {
     this.suspectImageUrl = await this._dbService.getCloudStorageFileRef(this._suspect.photoStorageRef).getDownloadURL().toPromise<string>();
-    this._selectedRadioButton.change.subscribe(this._suspectChangeObserver$);
+    this._selectedRadioButton.change.subscribe(this.selectSuspect);
   }
 
-  private _suspectChangeObserver$ = (buttonChange: MatRadioChange) => {
-    this.selectedSuspectChange.emit(buttonChange);
+  public selectSuspect = () => {
+    this._isSelected = true;
+    this.selectSuspectEvent.emit(this._suspect.id);
   }
 
 }
