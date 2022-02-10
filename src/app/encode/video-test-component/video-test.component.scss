@@ -11,10 +11,11 @@
 {
     display: flex;
     flex-flow: column;
+    grid-row-gap: 2rem;
     row-gap: 2rem;
     align-items: flex-start;
     margin-top: 1rem;
-    margin-left: 16px;
+    padding: 6px;
 }
 
 .videoQuestions
