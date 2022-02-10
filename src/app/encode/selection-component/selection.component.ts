@@ -12,6 +12,7 @@ import { IEncodeImageSelection } from "../models/IEncodeImageSelection";
 export class EncodeSelectionComponent implements OnInit {
   public imagesPairs;
   public steps = 12;
+  public random_pairs = [];
   public currentStep = 0;
   public selectionMade = false;
   public userChoices: Array<IEncodeImageSelection> = [];
@@ -26,6 +27,12 @@ export class EncodeSelectionComponent implements OnInit {
   ngOnInit() 
   {
     this.imagesPairs = Object.entries(SelectionScreenshots.selectionPairs).map(([type, value]) => ({type, value}));
+
+    for (let i = 0; i <= this.steps; i++) {
+      this.random_pairs.push(Math.floor(Math.random() * (1 - 0 + 1) + 0));
+    }
+    console.log(this.imagesPairs);
+    console.log(this.random_pairs);
   }
 
   onSelection(selectionValue, isReal): any

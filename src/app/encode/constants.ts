@@ -5,11 +5,13 @@ export const VIDEO_PATH: string = "assets/videos/videoEncode.mp4";
 export const SelectionPairs = {
     "pair_1" : {
         fakeImage: "assets/screenshots/1_fakeImage.png",
-        realImage: "assets/screenshots/1_realImage.png"
+        realImage: "assets/screenshots/1_realImage.png",
+        pairNumber: 1
     },
     "pair_2" : {
         fakeImage: "assets/screenshots/2_fakeImage.png",
-        realImage: "assets/screenshots/2_realImage.png"
+        realImage: "assets/screenshots/2_realImage.png",
+        pairNumber: 2
     }
 };
   
