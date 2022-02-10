@@ -38,6 +38,19 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     const perp1suspects = await this._getPerpetratorSuspects(taskResources.perpetrator1Suspects); 
     const perp2suspects = await this._getPerpetratorSuspects(taskResources.perpetrator2Suspects); 
     
+    taskResources.perpetrator1Suspects.forEach( (suspectDocRef, index: number) => {
+      perp1suspects[index].id = suspectDocRef.id;
+    });
+    
+    taskResources.perpetrator2Suspects.forEach( (suspectDocRef, index: number) => {
+      perp2suspects[index].id = suspectDocRef.id;
+    });
+
+    console.log(perp1suspects.length);
+    console.log(perp2suspects.length);
+    console.log(perp1suspects);
+    console.log(perp2suspects);
+    
     let firstLineup: Array<IEncodeSuspect>;
     let secondLineup: Array<IEncodeSuspect>;
     
@@ -74,7 +87,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   private _getPerpetratorSuspects(suspectDocuments: Array<DocumentReference<IEncodeSuspect>>): Promise<Array<IEncodeSuspect>> {
     let suspects = new Array<Promise<IEncodeSuspect>>();
    
-    suspectDocuments.forEach( docRef => {
+    suspectDocuments.forEach( async docRef => {
       const suspectId = docRef.id;
       const suspect = this._dbService.getEncodeSuspect(suspectId);
       suspects.push(suspect);
@@ -82,5 +95,4 @@ export class EncodeIdentificationTaskComponent implements OnExit {
 
     return Promise.all(suspects);
   }
-
 }
