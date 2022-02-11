@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { SelectionScreenshots } from 'src/app/encode/constants';
-import { IEncodeImageSelection } from "../models/IEncodeImageSelection";
+import { IEncodeImageSelectionResponse } from "../models/IEncodeImageSelectionResponse";
 
 @Component({
     selector: 'app-encode-selection',
@@ -15,8 +15,8 @@ export class EncodeSelectionComponent implements OnInit {
   public random_pairs = [];
   public currentStep = 0;
   public selectionMade = false;
-  public userChoices: Array<IEncodeImageSelection> = [];
-  public userChoice: IEncodeImageSelection;
+  public userChoices: Array<IEncodeImageSelectionResponse> = [];
+  public userChoice: IEncodeImageSelectionResponse;
 
   constructor(private _router: Router,
               private _route: ActivatedRoute,
@@ -48,7 +48,7 @@ export class EncodeSelectionComponent implements OnInit {
       this.currentStep = this.currentStep + 1;
       this.selectionMade = false;
     } else if (this.currentStep == 13) {
-      this._userService.user.sessionTwo.imageSelections = this.userChoices;
+      this._userService.user.sessionTwo.imageSelectionResponse = this.userChoices;
       //routear a ordenamiento
       //this._router.navigate(["../consent"], { relativeTo: this._route });
     }
