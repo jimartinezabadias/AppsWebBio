@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, ComponentRef, ViewChild } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
@@ -17,6 +17,8 @@ import { IEncodeIdentificationResponse } from '../models/IEncodeIdentificationRe
     styleUrls: ['identification-task.component.scss','../encode.component.scss']
 })
 export class EncodeIdentificationTaskComponent implements OnExit {
+  
+  private _actualRoomRef: ComponentRef<EncodeIdentificationRoom>;
   
   public isIdentifing: boolean = false;
 
@@ -73,10 +75,11 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     viewContainerRef.clear();
 
     const componentFactory = this._cfr.resolveComponentFactory(EncodeIdentificationRoom);
-    const roomComponentRef = viewContainerRef.createComponent<EncodeIdentificationRoom>(componentFactory);
-    roomComponentRef.instance.roomTitle = Room1Title;
-    roomComponentRef.instance.lineup = firstLineup;
-    roomComponentRef.instance.suspectIdentified.subscribe(this.onSuspectIdentified);
+    this._actualRoomRef = viewContainerRef.createComponent<EncodeIdentificationRoom>(componentFactory);
+    this._actualRoomRef.instance.roomTitle = Room1Title;
+    this._actualRoomRef.instance.lineup = firstLineup;
+    this._actualRoomRef.instance.suspectIdentified.subscribe(this.onSuspectIdentified);
+    console.log(this._actualRoomRef);
 
     this.isIdentifing = true; 
   }
@@ -84,11 +87,12 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   // todo
   // recibir respuesta en vez de id
   // response: IEncodeIdentificationResponse
-  public onSuspectIdentified(suspectId: string): void {
-    // todo
+  private onSuspectIdentified = (suspectId: string): void => {
     console.log("respuesta identification: " + suspectId);
+    this._actualRoomRef.destroy();
+    this.isIdentifing = false;
+    // todo
     // guardar respuesta
-    // cerrar room actual
     // abrir proximo room
   }
 
