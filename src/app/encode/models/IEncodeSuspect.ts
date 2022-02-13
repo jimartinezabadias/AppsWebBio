@@ -1,8 +1,8 @@
-import { Perpetrator1Id, Perpetrator2Id } from "../constants";
+import { PERPETRATOR_1_ID, PERPETRATOR_2_ID } from "../constants";
 
 export interface IEncodeSuspect {
     id: string|null;
     photoStorageRef: string;
     isPerpetrator: boolean;
-    suspectOfBeing: typeof Perpetrator1Id | typeof Perpetrator2Id
+    suspectOfBeing: typeof PERPETRATOR_1_ID|typeof PERPETRATOR_2_ID|null;
 }

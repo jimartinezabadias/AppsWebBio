@@ -19,17 +19,15 @@ export const SelectionScreenshots = {
     selectionPairs: SelectionPairs
 };
 
-export enum PerpetratorId {
-    PERP_1,
-    PERP_2
-}
-export const Perpetrator1Id = "PERP_1";
+export const PERPETRATOR_1_ID = "PERP_1";
 
-export const Perpetrator2Id = "PERP_2";
+export const PERPETRATOR_2_ID = "PERP_2";
 
-export const Room1Title = "Ronda 1 de 2";
+export const ABSENT_SUSPECT_ID = "0";
 
-export const Room2Title = "Ronda 2 de 2";
+export const ROOM_1_TITLE = "Ronda 1 de 2";
+
+export const ROOM_2_TITLE = "Ronda 2 de 2";
 
 export enum RecorderStatus
 {

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatRadioButton, MatRadioChange } from '@angular/material/radio';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
+import { ABSENT_SUSPECT_ID } from 'src/app/encode/constants';
 import { IEncodeSuspect } from 'src/app/encode/models/IEncodeSuspect';
 
 @Component({
@@ -12,12 +13,12 @@ export class EncodeSuspect implements AfterViewInit{
   
   private _suspect: IEncodeSuspect;
   private _isSelected: boolean;
+  private _suspectIndex: number;
   
   @ViewChild('suspectSelectButton') 
   private _selectedRadioButton: MatRadioButton;
   
   public suspectImageUrl: string;
-  private _suspectIndex: number;
   
   @Input() 
   set suspect(suspect: IEncodeSuspect) {
@@ -34,6 +35,14 @@ export class EncodeSuspect implements AfterViewInit{
     this._isSelected = isSelected;
   };
 
+  get suspectId(): string {
+    return this._suspect.id;
+  }
+
+  get absentSuspectId(): string {
+    return ABSENT_SUSPECT_ID;
+  }
+  
   get suspectIndex(): number {
     return this._suspectIndex;
   }

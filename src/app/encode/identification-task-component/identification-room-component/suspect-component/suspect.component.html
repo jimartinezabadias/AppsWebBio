@@ -2,5 +2,16 @@
     <img [src]="suspectImageUrl" 
         (click)="selectSuspect()"
         alt=""/>
-    <mat-radio-button #suspectSelectButton value="suspect">Sospechoso {{ suspectIndex }}</mat-radio-button>
+    
+    <div *ngIf="suspectId == absentSuspectId; then absentSuspectButton else suspectButton">
+        <!-- template will replace this div -->
+    </div>
+    
+    <ng-template #suspectButton>
+        <mat-radio-button #suspectSelectButton value="suspect">Sospechoso {{ suspectIndex }}</mat-radio-button>
+    </ng-template>
+
+    <ng-template #absentSuspectButton>
+        <mat-radio-button #suspectSelectButton value="suspect">No está</mat-radio-button>
+    </ng-template>
 </div>

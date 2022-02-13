@@ -4,7 +4,7 @@ import { UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { Observable } from 'rxjs';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
-import { Room1Title, PerpetratorCondition } from '../constants';
+import { ROOM_1_TITLE, PerpetratorCondition } from '../constants';
 import { IEncodeSuspect } from '../models/IEncodeSuspect';
 import { DocumentReference } from '@angular/fire/firestore';
 import { EncodeIdentificationRoom } from './identification-room-component/identification-room.component';
@@ -76,10 +76,9 @@ export class EncodeIdentificationTaskComponent implements OnExit {
 
     const componentFactory = this._cfr.resolveComponentFactory(EncodeIdentificationRoom);
     this._actualRoomRef = viewContainerRef.createComponent<EncodeIdentificationRoom>(componentFactory);
-    this._actualRoomRef.instance.roomTitle = Room1Title;
+    this._actualRoomRef.instance.roomTitle = ROOM_1_TITLE;
     this._actualRoomRef.instance.lineup = firstLineup;
     this._actualRoomRef.instance.suspectIdentified.subscribe(this.onSuspectIdentified);
-    console.log(this._actualRoomRef);
 
     this.isIdentifing = true; 
   }

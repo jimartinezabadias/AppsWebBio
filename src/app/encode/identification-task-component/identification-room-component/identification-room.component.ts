@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IEncodeSuspect } from '../../models/IEncodeSuspect';
-import { Room1Title, Room2Title } from '../../constants';
+import { ABSENT_SUSPECT_ID, ROOM_1_TITLE, ROOM_2_TITLE } from '../../constants';
 
 @Component({
   selector: 'app-encode-identification-room',
@@ -13,13 +13,17 @@ export class EncodeIdentificationRoom {
 
   public selectedSuspect: IEncodeSuspect|null;
 
-  @Input() public roomTitle: typeof Room1Title| typeof Room2Title;
+  @Input() public roomTitle: typeof ROOM_1_TITLE| typeof ROOM_2_TITLE;
 
   @Input() 
   set lineup(lineup: Array<IEncodeSuspect>) {
     // shuffle
     lineup.sort((a, b) => 0.5 - Math.random());
-    
+
+    // place the absent suspect last
+    const asi = lineup.findIndex(suspect => suspect.id == ABSENT_SUSPECT_ID);
+    lineup.push(lineup.splice(asi, 1)[0]);
+
     this._lineup = lineup;
   };
 
