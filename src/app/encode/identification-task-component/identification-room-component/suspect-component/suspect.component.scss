@@ -2,9 +2,22 @@
     display: flex;
     flex-flow: column;
     align-items: center;
-    row-gap: 16px;
+    margin-bottom: 16px;
 }
 
-.suspect>img{
+.suspect>img {
     max-height: 285px;
+}
+
+.suspect>img:hover {
+    cursor: pointer;
+}
+
+.suspect>img.selected {
+    border: 4px solid green;
+    margin: -4px;
+}
+
+.suspect>mat-radio-button {
+    margin: 16px 0;
 }

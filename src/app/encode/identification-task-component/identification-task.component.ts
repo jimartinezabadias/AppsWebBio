@@ -4,7 +4,7 @@ import { UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { Observable } from 'rxjs';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
-import { ROOM_1_TITLE, PerpetratorCondition } from '../constants';
+import { ROOM_1_TITLE, PerpetratorCondition, ABSENT_SUSPECT_ID } from '../constants';
 import { IEncodeSuspect } from '../models/IEncodeSuspect';
 import { DocumentReference } from '@angular/fire/firestore';
 import { EncodeIdentificationRoom } from './identification-room-component/identification-room.component';
@@ -41,6 +41,9 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     const perp1suspects = await this._getSuspectsOfBeing(taskResources.perpetrator1Suspects); 
     const perp2suspects = await this._getSuspectsOfBeing(taskResources.perpetrator2Suspects); 
     
+    console.log(perp1suspects)
+    console.log(perp2suspects)
+
     taskResources.perpetrator1Suspects.forEach( (suspectDocRef, index: number) => {
       perp1suspects[index].id = suspectDocRef.id;
     });
@@ -62,14 +65,18 @@ export class EncodeIdentificationTaskComponent implements OnExit {
       secondLineup = perp1suspects;
     }
 
+    // shuffle
+    firstLineup.sort((a, b) => 0.5 - Math.random());
+    secondLineup.sort((a, b) => 0.5 - Math.random());
+
     // primer lineup: se quita uno de los sospechosos de relleno
-    const fillerIndex = firstLineup.findIndex(suspect => suspect.isPerpetrator == false);
+    const fillerIndex = firstLineup.findIndex(suspect => suspect.isPerpetrator == false && suspect.id != ABSENT_SUSPECT_ID);
     if (fillerIndex > -1) {
       firstLineup.splice(fillerIndex, 1);
     }
 
     // segundo lineup: el perpetrador esta siempre ausente
-    secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false);
+    secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false && suspect.id != ABSENT_SUSPECT_ID);
     
     const viewContainerRef = this.identificationRoomHost.viewContainerRef;
     viewContainerRef.clear();

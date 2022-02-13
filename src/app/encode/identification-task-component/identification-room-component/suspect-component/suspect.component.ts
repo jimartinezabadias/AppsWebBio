@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { MatRadioButton, MatRadioChange } from '@angular/material/radio';
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { MatRadioButton } from '@angular/material/radio';
+import { Subject } from 'rxjs';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { ABSENT_SUSPECT_ID } from 'src/app/encode/constants';
 import { IEncodeSuspect } from 'src/app/encode/models/IEncodeSuspect';
@@ -12,11 +13,12 @@ import { IEncodeSuspect } from 'src/app/encode/models/IEncodeSuspect';
 export class EncodeSuspect implements AfterViewInit{
   
   private _suspect: IEncodeSuspect;
+  private _selectedSuspectSource: Subject<IEncodeSuspect>;
   private _isSelected: boolean;
   private _suspectIndex: number;
   
   @ViewChild('suspectSelectButton') 
-  private _selectedRadioButton: MatRadioButton;
+  private _selectRadioButton: MatRadioButton;
   
   public suspectImageUrl: string;
   
@@ -31,8 +33,14 @@ export class EncodeSuspect implements AfterViewInit{
   };
   
   @Input() 
-  set isSelected(isSelected: boolean) {
-    this._isSelected = isSelected;
+  set selectedSuspectSource(selectedSuspectSource: Subject<IEncodeSuspect|null>) {
+    this._selectedSuspectSource = selectedSuspectSource;
+    this._selectedSuspectSource.asObservable()
+      .subscribe(this._selectedSuspectChange$);
+  };
+
+  get isSelected(): boolean {
+    return this._isSelected;
   };
 
   get suspectId(): string {
@@ -47,20 +55,30 @@ export class EncodeSuspect implements AfterViewInit{
     return this._suspectIndex;
   }
   
-  @Output() public selectSuspectEvent = new EventEmitter();
-  
   constructor(private _dbService: DataDbService) 
   {
   }
   
   async ngAfterViewInit(): Promise<void> {
     this.suspectImageUrl = await this._dbService.getCloudStorageFileRef(this._suspect.photoStorageRef).getDownloadURL().toPromise<string>();
-    this._selectedRadioButton.change.subscribe(this.selectSuspect);
+    this._selectRadioButton.change.subscribe(this.selectSuspect);
   }
 
   public selectSuspect = () => {
-    this._isSelected = true;
-    this.selectSuspectEvent.emit(this._suspect.id);
+    this._selectedSuspectSource.next(this._suspect);
+  }
+
+  private _selectedSuspectChange$ = (suspect: IEncodeSuspect|null) => {
+      if (suspect === null) return;
+      
+      if (suspect.id === this._suspect.id) {
+        this._isSelected = true;
+        this._selectRadioButton.checked = true;
+        return;
+      }
+      
+      this._isSelected = false;
+      this._selectRadioButton.checked = false;
   }
 
 }

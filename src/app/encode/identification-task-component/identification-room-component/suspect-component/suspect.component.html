@@ -1,5 +1,6 @@
 <div class="suspect">
     <img [src]="suspectImageUrl" 
+        [ngClass]="{'selected': isSelected === true}"
         (click)="selectSuspect()"
         alt=""/>
     

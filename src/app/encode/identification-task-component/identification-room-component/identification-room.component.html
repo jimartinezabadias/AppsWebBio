@@ -5,16 +5,16 @@
         <app-encode-suspect *ngFor="let suspect of lineup; index as i;"
             [suspectIndex]="i + 1"
             [suspect]="suspect"
-            [isSelected]="false"
-            (selectSuspectEvent)="selectedSuspectChange($event)">
+            [selectedSuspectSource]="selectedSuspectSource">
         </app-encode-suspect>
     </div>
     
     <button mat-raised-button 
         color="primary"
-        [disabled]="selectedSuspect == null"
+        [disabled]="(selectedSuspect$ | async) === null"
         (click)="identifySuspect()">
-            Elegir
+        <!-- [disabled]="selectedSuspect == null" -->
+        Elegir
     </button>
 </div>
 

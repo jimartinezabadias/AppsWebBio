@@ -9,4 +9,11 @@
     display: flex;
     flex-flow: row;
     column-gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: -16px;
+}
+
+#lineup > .suspect {
+
 }
