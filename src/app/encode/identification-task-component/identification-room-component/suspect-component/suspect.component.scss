@@ -1,6 +1,10 @@
 .suspect {
     display: flex;
     flex-flow: column;
-    row-gap: 16px;
     align-items: center;
+    row-gap: 16px;
+}
+
+.suspect>img{
+    max-height: 285px;
 }
