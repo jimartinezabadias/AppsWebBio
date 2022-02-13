@@ -31,6 +31,7 @@ import { EncodeSelectionComponent } from './selection-component/selection.compon
 import { EncodeIdentificationRoomDirective } from './identification-task-component/identification-room.directive';
 import { EncodeIdentificationRoom } from './identification-task-component/identification-room-component/identification-room.component';
 import { EncodeSuspect } from './identification-task-component/identification-room-component/suspect-component/suspect.component';
+import { ConfidenceDialogComponent } from './identification-task-component/identification-room-component/confidence-component/confidence.component';
 
 @NgModule({
     declarations: [
@@ -59,7 +60,8 @@ import { EncodeSuspect } from './identification-task-component/identification-ro
         EncodeSelectionComponent,
         EncodeIdentificationRoomDirective,
         EncodeIdentificationRoom,
-        EncodeSuspect
+        EncodeSuspect,
+        ConfidenceDialogComponent
     ],
     imports: [
         CommonModule,

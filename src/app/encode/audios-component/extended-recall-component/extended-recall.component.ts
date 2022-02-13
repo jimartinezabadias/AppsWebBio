@@ -1,11 +1,10 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SafeResourceUrl } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-extended-recall',
     templateUrl: './extended-recall.component.html',
-    styleUrls: ['../../encode.component.scss', 'extended-recall.component.scss']
+    styleUrls: ['extended-recall.component.scss', '../../encode.component.scss']
 })
 export class ExtendedRecallComponent {
 

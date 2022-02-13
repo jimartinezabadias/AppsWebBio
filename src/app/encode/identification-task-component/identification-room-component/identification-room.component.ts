@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IEncodeSuspect } from '../../models/IEncodeSuspect';
 import { ABSENT_SUSPECT_ID, ROOM_1_TITLE, ROOM_2_TITLE } from '../../constants';
+import { IEncodeIdentificationResponse } from '../../models/IEncodeIdentificationResponse';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfidenceDialogComponent } from './confidence-component/confidence.component';
 
 @Component({
   selector: 'app-encode-identification-room',
@@ -13,7 +16,8 @@ export class EncodeIdentificationRoom {
 
   public selectedSuspect: IEncodeSuspect|null;
 
-  @Input() public roomTitle: typeof ROOM_1_TITLE| typeof ROOM_2_TITLE;
+  @Input() 
+  public roomTitle: typeof ROOM_1_TITLE| typeof ROOM_2_TITLE;
 
   @Input() 
   set lineup(lineup: Array<IEncodeSuspect>) {
@@ -34,7 +38,7 @@ export class EncodeIdentificationRoom {
     return this._lineup;
   }
 
-  constructor() 
+  constructor(private _dialogService: MatDialog) 
   {
     this.selectedSuspect = null;
   }
@@ -48,6 +52,16 @@ export class EncodeIdentificationRoom {
     // abrir nivel de confianza
     // emitir una respuesta usando la interfaz
     this.suspectIdentified.emit(this.selectedSuspect.id);
+
+    const confidenceDialogRef = this._dialogService.open(ConfidenceDialogComponent, {});
+    // extendDialogRef.afterClosed().subscribe(async (response: boolean): Promise<void> => {
+    //   if(response == true) {
+    //     this._wantsToExtend = false;
+    //   } else if (response == false) {
+    //     this._navigateToEndComponent();
+    //   }
+      
+    //   extendDialogRef.close();
   }
 
 }
