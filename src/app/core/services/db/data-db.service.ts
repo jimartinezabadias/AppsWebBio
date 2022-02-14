@@ -13,6 +13,9 @@ import { IEncodeGoogleFormsSettings } from 'src/app/encode/models/IEncodeGoogleF
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 import { IEncodeGoogleFormResponse } from 'src/app/encode/models/IEncodeGoogleFormResponse';
 import { map } from 'rxjs/operators';
+import { IEncodeSuspect } from 'src/app/encode/models/IEncodeSuspect';
+import { IEncodeTasksResources } from 'src/app/encode/models/IEncodeTasksResources';
+import { IEncodeScreenshot } from 'src/app/encode/models/IEncodeScreenshot';
 
 
 @Injectable({
@@ -29,6 +32,7 @@ export class DataDbService {
   public creativesUsers = [];
   private encodeUserCollectionRef: AngularFirestoreCollection;
   private encodeConfigRef: AngularFirestoreCollection;
+  private encodeScreenshotCollectionRef: AngularFirestoreCollection;
 
   constructor(private _afs: AngularFirestore, private _storage: AngularFireStorage, private http: HttpClient) { 
     this.creativesCollectionRef = _afs.collection<CreativeUser>('creatives-users', ref => ref.orderBy('dateStart', 'desc'));
@@ -38,6 +42,7 @@ export class DataDbService {
     this.rulitConfigRef = _afs.collection("rulit-config");
     this.rulitSolutionsRef = _afs.collection("rulit-solutions");
     this.encodeConfigRef = _afs.collection("encode-config");
+    this.encodeScreenshotCollectionRef = _afs.collection<IEncodeScreenshot>("encode-config/tasksResources/screenshots");
   } 
 
   // TODO: Theres no need for async
@@ -200,7 +205,17 @@ export class DataDbService {
     return cfg.data();
   }
 
-  public setCloudStorageFileRef(filePath: string): AngularFireStorageReference{
+  async getEncodeTasksResources(): Promise<IEncodeTasksResources> {
+    let resources = await this.encodeConfigRef.doc<IEncodeTasksResources>("tasksResources").get().toPromise();
+    return resources.data();
+  }
+
+  async getEncodeScreenshotPair(screenshotPairId: string): Promise<IEncodeScreenshot> {
+    let screenshotDocument = await this.encodeScreenshotCollectionRef.doc<IEncodeScreenshot>(screenshotPairId).get().toPromise();
+    return screenshotDocument.data();
+  }
+
+  public getCloudStorageFileRef(filePath: string): AngularFireStorageReference {
     return this._storage.ref(filePath);
   }
   

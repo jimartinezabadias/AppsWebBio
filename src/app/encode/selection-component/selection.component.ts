@@ -3,6 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { SelectionScreenshots } from 'src/app/encode/constants';
 import { IEncodeImageSelectionResponse } from "../models/IEncodeImageSelectionResponse";
+import { DataDbService } from 'src/app/core/services/db/data-db.service';
+import { DocumentReference } from '@angular/fire/firestore';
+import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
+import { IEncodeScreenshotPair } from '../models/IEncodeScreenshotPair';
 
 @Component({
     selector: 'app-encode-selection',
@@ -20,19 +24,49 @@ export class EncodeSelectionComponent implements OnInit {
 
   constructor(private _router: Router,
               private _route: ActivatedRoute,
+              private _dbService: DataDbService,
               private _userService: EncodeUserService) 
   {
   }
 
+  async getScreenshotPairs() 
+  {
+    const taskResources = await this._dbService.getEncodeTasksResources();
+    console.log(taskResources);
+    let pairs_temp = [];
+
+    this.imagesPairs = await this._getScreenshot(taskResources.screenshotsPairs);
+
+    console.log(this.imagesPairs);
+    let pair = 0;
+    for (let i = 0; i <= this.imagesPairs.length; i++) {
+      if ((i % 2) != 0) {
+        pair++;
+        let newPair: IEncodeScreenshotPair = {
+          pairNumber: pair,
+          fakeImage: await this._dbService.getCloudStorageFileRef(this.imagesPairs[i].imageStorageRef).getDownloadURL().toPromise<string>(),
+          realImage: await this._dbService.getCloudStorageFileRef(this.imagesPairs[i-1].imageStorageRef).getDownloadURL().toPromise<string>()
+        };
+        
+        pairs_temp.push(newPair);
+      }
+
+    }
+    
+    this.imagesPairs = pairs_temp;
+    //this.imagesPairs = Object.entries(this.imagesPairs).map(([type, value]) => ({type, value}));
+    console.log(this.imagesPairs);
+  }
+
   ngOnInit() 
   {
-    this.imagesPairs = Object.entries(SelectionScreenshots.selectionPairs).map(([type, value]) => ({type, value}));
+    this.getScreenshotPairs();
 
-    for (let i = 0; i <= this.steps; i++) {
+    for (let i = 0; i < this.steps; i++) {
       this.random_pairs.push(Math.floor(Math.random() * (1 - 0 + 1) + 0));
     }
-    console.log(this.imagesPairs);
-    console.log(this.random_pairs);
+
+    console.log(this.random_pairs.length);
   }
 
   onSelection(selectionValue, isReal): any
@@ -52,6 +86,18 @@ export class EncodeSelectionComponent implements OnInit {
       //routear a ordenamiento
       //this._router.navigate(["../consent"], { relativeTo: this._route });
     }
+  }
+
+  private _getScreenshot(screenshotDocuments: Array<DocumentReference<IEncodeScreenshot>>): Promise<Array<IEncodeScreenshot>> {
+    let screenshots = new Array<Promise<IEncodeScreenshot>>();
+
+    screenshotDocuments.forEach( async docRef => {
+      const screenshotId = docRef.id;
+      const screenshot = this._dbService.getEncodeScreenshotPair(screenshotId);
+      screenshots.push(screenshot);
+    });
+
+    return Promise.all(screenshots);
   }
 
 }

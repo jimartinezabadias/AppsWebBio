@@ -14,23 +14,23 @@
                         <mat-step *ngFor="let pair of imagesPairs" [optional]="true">
                             <form>
                                 <mat-button-toggle-group>
-                                    <div *ngIf="random_pairs[pair.value.pairNumber] == 0; then first else second">
+                                    <div *ngIf="random_pairs[pair.pairNumber] == 0; then first else second">
                                         <!-- template will replace this div -->
                                     </div>
                                     <ng-template #first>
-                                        <mat-button-toggle (click)="onSelection(pair.value.fakeImage, false)">
-                                            <img class="selection-image" src={{pair.value.fakeImage}}/>
+                                        <mat-button-toggle (click)="onSelection(pair.fakeImage, false)">
+                                            <img class="selection-image" src={{pair.fakeImage}}/>
                                         </mat-button-toggle>
-                                        <mat-button-toggle (click)="onSelection(pair.value.realImage, true)">
-                                            <img class="selection-image" src={{pair.value.realImage}}/>
+                                        <mat-button-toggle (click)="onSelection(pair.realImage, true)">
+                                            <img class="selection-image" src={{pair.realImage}}/>
                                         </mat-button-toggle>
                                     </ng-template>
                                     <ng-template #second>
-                                        <mat-button-toggle (click)="onSelection(pair.value.realImage, true)">
-                                            <img class="selection-image" src={{pair.value.realImage}}/>
+                                        <mat-button-toggle (click)="onSelection(pair.realImage, true)">
+                                            <img class="selection-image" src={{pair.realImage}}/>
                                         </mat-button-toggle>
-                                        <mat-button-toggle (click)="onSelection(pair.value.fakeImage, false)">
-                                            <img class="selection-image" src={{pair.value.fakeImage}}/>
+                                        <mat-button-toggle (click)="onSelection(pair.fakeImage, false)">
+                                            <img class="selection-image" src={{pair.fakeImage}}/>
                                         </mat-button-toggle>
                                     </ng-template>
                                 </mat-button-toggle-group>
