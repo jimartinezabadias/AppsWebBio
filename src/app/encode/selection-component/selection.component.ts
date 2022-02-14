@@ -32,12 +32,12 @@ export class EncodeSelectionComponent implements OnInit {
   async getScreenshotPairs() 
   {
     const taskResources = await this._dbService.getEncodeTasksResources();
-    console.log(taskResources);
+    
     let pairs_temp = [];
 
     this.imagesPairs = await this._getScreenshot(taskResources.screenshotsPairs);
 
-    console.log(this.imagesPairs);
+    
     let pair = 0;
     for (let i = 0; i <= this.imagesPairs.length; i++) {
       if ((i % 2) != 0) {
@@ -65,8 +65,6 @@ export class EncodeSelectionComponent implements OnInit {
     for (let i = 0; i < this.steps; i++) {
       this.random_pairs.push(Math.floor(Math.random() * (1 - 0 + 1) + 0));
     }
-
-    console.log(this.random_pairs.length);
   }
 
   onSelection(selectionValue, isReal): any
@@ -93,7 +91,7 @@ export class EncodeSelectionComponent implements OnInit {
 
     screenshotDocuments.forEach( async docRef => {
       const screenshotId = docRef.id;
-      const screenshot = this._dbService.getEncodeScreenshotPair(screenshotId);
+      const screenshot = this._dbService.getEncodeScreenshot(screenshotId);
       screenshots.push(screenshot);
     });
 

@@ -210,8 +210,8 @@ export class DataDbService {
     return resources.data();
   }
 
-  async getEncodeScreenshotPair(screenshotPairId: string): Promise<IEncodeScreenshot> {
-    let screenshotDocument = await this.encodeScreenshotCollectionRef.doc<IEncodeScreenshot>(screenshotPairId).get().toPromise();
+  async getEncodeScreenshot(screenshotId: string): Promise<IEncodeScreenshot> {
+    let screenshotDocument = await this.encodeScreenshotCollectionRef.doc<IEncodeScreenshot>(screenshotId).get().toPromise();
     return screenshotDocument.data();
   }
 
