@@ -14,6 +14,8 @@ import { Observable, Subject } from 'rxjs';
 export class EncodeIdentificationRoom implements OnInit {
   
   private _lineup: Array<IEncodeSuspect>;
+  private _selectedSuspect: IEncodeSuspect;
+
   
   public selectedSuspectSource = new Subject<IEncodeSuspect>();
   public selectedSuspect$: Observable<IEncodeSuspect|null>;
@@ -44,6 +46,7 @@ export class EncodeIdentificationRoom implements OnInit {
 
   ngOnInit(): void {
     this.selectedSuspect$ = this.selectedSuspectSource.asObservable();
+    this.selectedSuspect$.subscribe(this._selectedSuspectChange$);
   }
 
   public identifySuspect(): void {
@@ -52,6 +55,7 @@ export class EncodeIdentificationRoom implements OnInit {
     // this.suspectIdentified.emit(this.selectedSuspect.id);
 
     const confidenceDialogRef = this._dialogService.open(ConfidenceDialogComponent, {});
+    confidenceDialogRef.componentInstance.suspectPhotoUrl = this._selectedSuspect.photoImageUrl;
     // extendDialogRef.afterClosed().subscribe(async (response: boolean): Promise<void> => {
     //   if(response == true) {
     //     this._wantsToExtend = false;
@@ -60,6 +64,10 @@ export class EncodeIdentificationRoom implements OnInit {
     //   }
       
     //   extendDialogRef.close();
+  }
+
+  private _selectedSuspectChange$ = (suspect: IEncodeSuspect|null) => {
+    this._selectedSuspect = suspect;
   }
 
 }

@@ -22,6 +22,22 @@ export class EncodeSuspect implements AfterViewInit{
   get suspectPhotoUrl(): string {
     return this._suspect.photoImageUrl;
   };
+
+  get isSelected(): boolean {
+    return this._isSelected;
+  };
+
+  get suspectId(): string {
+    return this._suspect.id;
+  }
+
+  get absentSuspectId(): string {
+    return ABSENT_SUSPECT_ID;
+  }
+  
+  get suspectIndex(): number {
+    return this._suspectIndex;
+  }
   
   @Input() 
   set suspect(suspect: IEncodeSuspect) {
@@ -40,22 +56,6 @@ export class EncodeSuspect implements AfterViewInit{
       .subscribe(this._selectedSuspectChange$);
   };
 
-  get isSelected(): boolean {
-    return this._isSelected;
-  };
-
-  get suspectId(): string {
-    return this._suspect.id;
-  }
-
-  get absentSuspectId(): string {
-    return ABSENT_SUSPECT_ID;
-  }
-  
-  get suspectIndex(): number {
-    return this._suspectIndex;
-  }
-  
   constructor() 
   {
   }
@@ -71,14 +71,8 @@ export class EncodeSuspect implements AfterViewInit{
   }
 
   private _selectedSuspectChange$ = (suspect: IEncodeSuspect|null) => {
-    
     if (suspect === null) return;
-    
     if (suspect.id === this._suspect.id) return;
-    
-    
-    console.log("selected suspect changed, deselecting");
-    console.log(this._suspect);
 
     this._isSelected = false;
     this._suspectButton.checked = false;
