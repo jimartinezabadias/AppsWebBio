@@ -44,12 +44,16 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     console.log(perp1suspects)
     console.log(perp2suspects)
 
-    taskResources.perpetrator1Suspects.forEach( (suspectDocRef, index: number) => {
-      perp1suspects[index].id = suspectDocRef.id;
+    taskResources.perpetrator1Suspects.forEach( async (suspectDocRef, index: number) => {
+      const suspect = perp1suspects[index];
+      suspect.id = suspectDocRef.id;
+      suspect.photoImageUrl = await this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL().toPromise<string>();
     });
     
-    taskResources.perpetrator2Suspects.forEach( (suspectDocRef, index: number) => {
-      perp2suspects[index].id = suspectDocRef.id;
+    taskResources.perpetrator2Suspects.forEach( async (suspectDocRef, index: number) => {
+      const suspect = perp2suspects[index];
+      suspect.id = suspectDocRef.id;
+      suspect.photoImageUrl = await this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL().toPromise<string>();
     });
     
     let firstLineup: Array<IEncodeSuspect>;

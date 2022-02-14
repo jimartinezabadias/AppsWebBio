@@ -1,18 +1,18 @@
 <div class="suspect">
-    <img [src]="suspectImageUrl" 
+    <img [src]="suspectPhotoUrl" 
         [ngClass]="{'selected': isSelected === true}"
         (click)="selectSuspect()"
         alt=""/>
     
-    <div *ngIf="suspectId == absentSuspectId; then absentSuspectButton else suspectButton">
+    <div *ngIf="suspectId == absentSuspectId; then absentSuspectButton else regularSuspectButton">
         <!-- template will replace this div -->
     </div>
     
-    <ng-template #suspectButton>
-        <mat-radio-button #suspectSelectButton value="suspect">Sospechoso {{ suspectIndex }}</mat-radio-button>
+    <ng-template #regularSuspectButton>
+        <mat-radio-button #suspectButton value="suspect">Sospechoso {{ suspectIndex }}</mat-radio-button>
     </ng-template>
 
     <ng-template #absentSuspectButton>
-        <mat-radio-button #suspectSelectButton value="suspect">No está</mat-radio-button>
+        <mat-radio-button #suspectButton value="suspect">No está</mat-radio-button>
     </ng-template>
 </div>
