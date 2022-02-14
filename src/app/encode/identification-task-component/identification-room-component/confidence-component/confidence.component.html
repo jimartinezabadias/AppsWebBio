@@ -1,7 +1,15 @@
-<h1 mat-dialog-title>Nivel de confianza</h1>
-<div mat-dialog-content>
-    <img [src]="suspectPhotoUrl" alt="">
+<div mat-dialog-content id="dialogContent">
+    <div id="photoColumn">
+        <img [src]="suspectPhotoUrl" alt="">
+        <p>Tu elección</p>
+    </div>
+
+    <div id="confidenceColumn">
+        <h1 mat-dialog-title>Indicanos el nivel de confianza con la elección que hiciste</h1>
+        <p>Seleccionálo en la barra que se encuentra debajo teniendo en cuenta que 0 es Nada seguro y 100 totalmente seguro.</p>
+        <!-- TODO: add slider and continue button -->
+    </div>
 </div>
-<div class="mat-dialog-actions">
+<!-- <div class="mat-dialog-actions">
   
-</div>
+</div> -->

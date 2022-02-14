@@ -1,0 +1,22 @@
+#dialogContent {
+    display: flex;
+    flex-flow: row;
+    column-gap: 32px;
+    max-width: 640px;
+}
+
+#photoColumn {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+#confidenceColumn {
+    display: flex;
+    flex-flow: column;
+    align-content: flex-start;
+}
+
+#confidenceColumn>h1 {
+    text-align: inherit;
+}
