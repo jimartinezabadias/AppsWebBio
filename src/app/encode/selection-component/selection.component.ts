@@ -21,6 +21,7 @@ export class EncodeSelectionComponent implements OnInit {
   public selectionMade = false;
   public userChoices: Array<IEncodeImageSelectionResponse> = [];
   public userChoice: IEncodeImageSelectionResponse;
+  public imagesPairsLoaded = false;
 
   constructor(private _router: Router,
               private _route: ActivatedRoute,
@@ -39,32 +40,32 @@ export class EncodeSelectionComponent implements OnInit {
 
     
     let pair = 0;
-    for (let i = 0; i <= this.imagesPairs.length; i++) {
-      if ((i % 2) != 0) {
-        pair++;
-        let newPair: IEncodeScreenshotPair = {
-          pairNumber: pair,
-          fakeImage: await this._dbService.getCloudStorageFileRef(this.imagesPairs[i].imageStorageRef).getDownloadURL().toPromise<string>(),
-          realImage: await this._dbService.getCloudStorageFileRef(this.imagesPairs[i-1].imageStorageRef).getDownloadURL().toPromise<string>()
-        };
-        
-        pairs_temp.push(newPair);
-      }
-
+    for (let i = 1; i <= this.imagesPairs.length; i+=2) {
+      pair++;
+      let newPair: IEncodeScreenshotPair = {
+        pairNumber: pair,
+        fakeImage: await this._dbService.getCloudStorageFileRef(this.imagesPairs[i].imageStorageRef).getDownloadURL().toPromise<string>(),
+        realImage: await this._dbService.getCloudStorageFileRef(this.imagesPairs[i-1].imageStorageRef).getDownloadURL().toPromise<string>()
+      };
+      
+      pairs_temp.push(newPair);
     }
     
     this.imagesPairs = pairs_temp;
     //this.imagesPairs = Object.entries(this.imagesPairs).map(([type, value]) => ({type, value}));
     console.log(this.imagesPairs);
+    this.imagesPairsLoaded = true;
   }
 
   ngOnInit() 
   {
     this.getScreenshotPairs();
 
-    for (let i = 0; i < this.steps; i++) {
+    for (let i = 0; i <= this.steps; i++) {
       this.random_pairs.push(Math.floor(Math.random() * (1 - 0 + 1) + 0));
     }
+
+    console.log(this.random_pairs);
   }
 
   onSelection(selectionValue, isReal): any
