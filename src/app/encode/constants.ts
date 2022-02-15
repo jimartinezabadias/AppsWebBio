@@ -1,48 +1,12 @@
 export const ENCODE_TEST_URL = "/encode"; 
 
-export const VIDEO_PATH = "assets/videos/videoEncode.mp4";
+// Admin
+export enum PerpetratorCondition {
+    A = "Perpetrador 1 Presente, Perpetrador 2 Ausente",
+    B = "Perpetrador 2 Presente, Perpetrador 1 Ausente"
+}
 
-export const SelectionPairs = {
-    "pair_1" : {
-        fakeImage: "assets/screenshots/1_fakeImage.png",
-        realImage: "assets/screenshots/1_realImage.png",
-        pairNumber: 1
-    },
-    "pair_2" : {
-        fakeImage: "assets/screenshots/2_fakeImage.png",
-        realImage: "assets/screenshots/2_realImage.png",
-        pairNumber: 2
-    }
-};
-  
-export const SelectionScreenshots = {
-    selectionPairs: SelectionPairs
-};
-
-export const PERPETRATOR_1_ID = "PERP_1";
-
-export const PERPETRATOR_2_ID = "PERP_2";
-
-export const ABSENT_SUSPECT_ID = "0";
-
-export const ROOM_1_TITLE = "Ronda 1 de 2";
-
-export const ROOM_2_TITLE = "Ronda 2 de 2";
-
-export enum RecorderStatus
-{
-    Ready = "Listo para grabar",
-    Recording = "Grabando..."
-};
-
-export enum VideoState
-{
-    Play,
-    Pause
-};
-
-export const REC_OPTIONS = { mimeType: 'audio/webm' };
-
+// Personal info
 export enum Gender
 {
     Male = "Masculino",
@@ -72,8 +36,43 @@ export enum SomnolenceDegree
     slept= "Dormido."
 }
 
-export enum PerpetratorCondition {
-    A = "Perpetrador 1 Presente, Perpetrador 2 Ausente",
-    B = "Perpetrador 2 Presente, Perpetrador 1 Ausente"
-}
+// Video
+export const VIDEO_PATH = "assets/videos/videoEncode.mp4";
+export enum VideoState
+{
+    Play,
+    Pause
+};
 
+// Audio recorder
+export const REC_OPTIONS = { mimeType: 'audio/webm' };
+export enum RecorderStatus
+{
+    Ready = "Listo para grabar",
+    Recording = "Grabando..."
+};
+
+// Identification task
+export const PERPETRATOR_1_ID = "PERP_1";
+export const PERPETRATOR_2_ID = "PERP_2";
+export const ABSENT_SUSPECT_ID = "0";
+export const ROOM_1_TITLE = "Ronda 1 de 2";
+export const ROOM_2_TITLE = "Ronda 2 de 2";
+
+// Todo: borrar si no se usan
+export const SelectionPairs = {
+    "pair_1" : {
+        fakeImage: "assets/screenshots/1_fakeImage.png",
+        realImage: "assets/screenshots/1_realImage.png",
+        pairNumber: 1
+    },
+    "pair_2" : {
+        fakeImage: "assets/screenshots/2_fakeImage.png",
+        realImage: "assets/screenshots/2_realImage.png",
+        pairNumber: 2
+    }
+};
+  
+export const SelectionScreenshots = {
+    selectionPairs: SelectionPairs
+};

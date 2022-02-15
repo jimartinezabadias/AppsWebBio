@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, ComponentRef, ViewChild } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { UrlTree } from '@angular/router';
+import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { Observable } from 'rxjs';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
@@ -27,7 +27,9 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   constructor(
     private _dbService: DataDbService,
     private _userService: EncodeUserService, 
-    private _cfr: ComponentFactoryResolver)
+    private _cfr: ComponentFactoryResolver,
+    private _router: Router,
+    private _route: ActivatedRoute)
   {
   }
 
@@ -92,6 +94,10 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     this._actualRoomRef.instance.suspectIdentified.subscribe(this.onSuspectIdentified);
 
     this.isIdentifing = true; 
+  }
+
+  public skipIdentificaton(): void {
+    this._router.navigate(["../selection"], { relativeTo: this._route });
   }
 
   // todo

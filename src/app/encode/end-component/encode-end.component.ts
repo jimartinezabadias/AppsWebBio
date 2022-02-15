@@ -26,7 +26,6 @@ export class EncodeEndComponent implements OnInit, OnExit {
   }
 
   public onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    
     return this._router.navigate(["/"]);
   }
 
