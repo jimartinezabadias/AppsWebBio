@@ -9,21 +9,31 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class ConfidenceDialogComponent {
   
   private _suspectPhotoUrl: string;
-
-  get suspectPhotoUrl(): string {
-    return this._suspectPhotoUrl;
-  }
+  private _confidenceLevel: number = 0;
 
   @Input() 
   set suspectPhotoUrl(suspectPhotoUrl: string) {
     this._suspectPhotoUrl = suspectPhotoUrl;
   };
+
+  get suspectPhotoUrl(): string {
+    return this._suspectPhotoUrl;
+  };
+
+  set confidenceLevel(level: number) {
+    this._confidenceLevel = level;
+  }
+
+  get confidenceLevel(): number {
+    return this._confidenceLevel;
+  }
   
   constructor(public dialogRef: MatDialogRef<ConfidenceDialogComponent>) 
   {
   }
 
-  submitResponse(result: number): void {
+  submitConfidenceLevel(result: number): void {
+    console.log(result);
     this.dialogRef.close(result);
   }
 

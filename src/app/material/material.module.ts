@@ -22,7 +22,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatPaginatorIntlES } from './custom/mat-paginator-intl_ES';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSliderModule } from "@angular/material/slider";
 
 @NgModule({
   declarations: [],
@@ -48,7 +49,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatRadioModule,
     MatTabsModule,
     MatStepperModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatSliderModule
   ],
   exports: [
     MatButtonModule,
@@ -71,7 +73,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatRadioModule,
     MatTabsModule,
     MatStepperModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatSliderModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlES}]
 })

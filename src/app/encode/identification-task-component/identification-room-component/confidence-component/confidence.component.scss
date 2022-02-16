@@ -11,6 +11,10 @@
     align-items: center;
 }
 
+#photoColumn>img {
+    max-height: 285px;
+}
+
 #confidenceColumn {
     display: flex;
     flex-flow: column;

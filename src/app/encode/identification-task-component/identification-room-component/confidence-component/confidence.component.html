@@ -8,6 +8,19 @@
         <h1 mat-dialog-title>Indicanos el nivel de confianza con la elección que hiciste</h1>
         <p>Seleccionálo en la barra que se encuentra debajo teniendo en cuenta que 0 es Nada seguro y 100 totalmente seguro.</p>
         <!-- TODO: add slider and continue button -->
+        <mat-slider
+            max="100"
+            min="0"
+            thumbLabel="true"
+            [(ngModel)]="confidenceLevel">
+        </mat-slider>
+        <p>Tu nivel de confianza: {{ confidenceLevel }}</p>
+        <!-- <mat-slider aria-label="unit(s)"></mat-slider> -->
+        <button mat-button
+            (click)="submitConfidenceLevel(confidenceLevel)"
+            cdkFocusInitial>
+            Continuar
+        </button>
     </div>
 </div>
 <!-- <div class="mat-dialog-actions">

@@ -16,7 +16,6 @@ export class EncodeIdentificationRoom implements OnInit {
   private _lineup: Array<IEncodeSuspect>;
   private _selectedSuspect: IEncodeSuspect;
 
-  
   public selectedSuspectSource = new Subject<IEncodeSuspect>();
   public selectedSuspect$: Observable<IEncodeSuspect|null>;
   
@@ -34,7 +33,7 @@ export class EncodeIdentificationRoom implements OnInit {
   };
 
   @Output()
-  public suspectIdentified = new EventEmitter();
+  public suspectIdentified = new EventEmitter<IEncodeIdentificationResponse>();
 
   get lineup(): Array<IEncodeSuspect> {
     return this._lineup;
@@ -56,6 +55,7 @@ export class EncodeIdentificationRoom implements OnInit {
 
     const confidenceDialogRef = this._dialogService.open(ConfidenceDialogComponent, {});
     confidenceDialogRef.componentInstance.suspectPhotoUrl = this._selectedSuspect.photoImageUrl;
+
     // extendDialogRef.afterClosed().subscribe(async (response: boolean): Promise<void> => {
     //   if(response == true) {
     //     this._wantsToExtend = false;

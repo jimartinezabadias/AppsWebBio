@@ -6,14 +6,8 @@
 }
 
 #lineup {
-    display: flex;
-    flex-flow: row;
-    column-gap: 32px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: -16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 16px;
 }
 
-#lineup > .suspect {
-
-}
