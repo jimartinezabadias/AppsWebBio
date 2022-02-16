@@ -58,21 +58,3 @@ export const PERPETRATOR_2_ID = "PERP_2";
 export const ABSENT_SUSPECT_ID = "0";
 export const ROOM_1_TITLE = "Ronda 1 de 2";
 export const ROOM_2_TITLE = "Ronda 2 de 2";
-
-// Todo: borrar si no se usan
-export const SelectionPairs = {
-    "pair_1" : {
-        fakeImage: "assets/screenshots/1_fakeImage.png",
-        realImage: "assets/screenshots/1_realImage.png",
-        pairNumber: 1
-    },
-    "pair_2" : {
-        fakeImage: "assets/screenshots/2_fakeImage.png",
-        realImage: "assets/screenshots/2_realImage.png",
-        pairNumber: 2
-    }
-};
-  
-export const SelectionScreenshots = {
-    selectionPairs: SelectionPairs
-};

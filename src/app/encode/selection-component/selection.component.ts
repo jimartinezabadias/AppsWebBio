@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { SelectionScreenshots } from 'src/app/encode/constants';
 import { IEncodeImageSelectionResponse } from "../models/IEncodeImageSelectionResponse";
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { DocumentReference } from '@angular/fire/firestore';
