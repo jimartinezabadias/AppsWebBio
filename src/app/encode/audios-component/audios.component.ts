@@ -61,9 +61,14 @@ export class EncodeAudiosComponent implements OnExit {
     }
   }
 
-  private _navigateToEndComponent() {
+  private async _navigateToEndComponent() {
     this.onExit = () => true;
-    this._router.navigate(["../end"], { relativeTo: this._route });
+    if (this._userService.user.sessionOne.completed == true && this._userService.user.sessionTwo.perpetratorCondition) {
+      this._router.navigate(["../selection"], { relativeTo: this._route });
+    } else {
+      //si estamos en sesion 1
+      this._router.navigate(["../end"], { relativeTo: this._route });
+    }
   }
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {

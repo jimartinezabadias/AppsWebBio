@@ -97,7 +97,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   }
 
   public skipIdentificaton(): void {
-    this._router.navigate(["../selection"], { relativeTo: this._route });
+    this._router.navigate(["../audios"], { relativeTo: this._route });
   }
 
   // todo

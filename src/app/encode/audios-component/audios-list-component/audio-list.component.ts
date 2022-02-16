@@ -52,12 +52,24 @@ export class EncodeAudioListComponent {
 
   private _storeAudioInUser(newAudio: IEncodeInMemoryAudio) {
     const audioDbData: IEncodeAudio = { id: newAudio.id, downloadURL: newAudio.downloadURL };
-    if (this._userService.user.sessionOne.audios == null)
+    if (this._userService.user.sessionOne.completed == true && this._userService.user.sessionTwo.perpetratorCondition) 
     {
-      this._userService.user.sessionOne.audios = new Array<IEncodeAudio>();
+      //si estamos en sesion 2
+      if (this._userService.user.sessionTwo.audios == null)
+      {
+        this._userService.user.sessionTwo.audios = new Array<IEncodeAudio>();
+      }
+  
+      this._userService.user.sessionTwo.audios.push(audioDbData);
+    } else {
+      //si estamos en sesion 1
+      if (this._userService.user.sessionOne.audios == null)
+      {
+        this._userService.user.sessionOne.audios = new Array<IEncodeAudio>();
+      }
+  
+      this._userService.user.sessionOne.audios.push(audioDbData);
     }
-
-    this._userService.user.sessionOne.audios.push(audioDbData);
   }
 
 }

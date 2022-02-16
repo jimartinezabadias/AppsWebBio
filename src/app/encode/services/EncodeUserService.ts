@@ -29,7 +29,7 @@ export class EncodeUserService {
         const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserId);
         const imageSelectionResponse: Array<IEncodeImageSelectionResponse> = null;
         const newSessionOne: IEncodeSessionOne = { completed: false, somnolenceDegree: null, audios: null };
-        const newSessionTwo: IEncodeSessionTwo = { completed: false, somnolenceDegree: null, perpetratorCondition: null, identificationResponse: null, imageSelectionResponse: imageSelectionResponse };
+        const newSessionTwo: IEncodeSessionTwo = { completed: false, somnolenceDegree: null, perpetratorCondition: null, identificationResponse: null, audios: null, imageSelectionResponse: imageSelectionResponse };
         const userConsent: IEncodeUserConsent = { hasAccepted: false, date: null };
 
         const newUser: IEncodeUser = {
