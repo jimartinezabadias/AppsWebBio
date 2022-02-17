@@ -33,7 +33,6 @@ export class ConfidenceDialogComponent {
   }
 
   submitConfidenceLevel(result: number): void {
-    console.log(result);
     this.dialogRef.close(result);
   }
 

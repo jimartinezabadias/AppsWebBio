@@ -24,7 +24,7 @@ export class EncodeIdentificationRoom implements OnInit {
 
   @Input() 
   set lineup(lineup: Array<IEncodeSuspect>) {
-    // place the absent suspect last
+    // place the absent suspect option last
     const asi = lineup.findIndex(suspect => suspect.id == ABSENT_SUSPECT_ID);
     lineup.push(lineup.splice(asi, 1)[0]);
 
@@ -33,7 +33,7 @@ export class EncodeIdentificationRoom implements OnInit {
   };
 
   @Output()
-  public suspectIdentified = new EventEmitter<IEncodeIdentificationResponse>();
+  public suspectIdentifiedEvent = new EventEmitter<IEncodeIdentificationResponse>();
 
   get lineup(): Array<IEncodeSuspect> {
     return this._lineup;
@@ -48,26 +48,28 @@ export class EncodeIdentificationRoom implements OnInit {
     this.selectedSuspect$.subscribe(this._selectedSuspectChange$);
   }
 
-  public identifySuspect(): void {
-    // todo
-    // emitir una respuesta usando la interfaz
-    // this.suspectIdentified.emit(this.selectedSuspect.id);
-
+  public async identifySuspect(): Promise<void> {
     const confidenceDialogRef = this._dialogService.open(ConfidenceDialogComponent, {});
     confidenceDialogRef.componentInstance.suspectPhotoUrl = this._selectedSuspect.photoImageUrl;
-
-    // extendDialogRef.afterClosed().subscribe(async (response: boolean): Promise<void> => {
-    //   if(response == true) {
-    //     this._wantsToExtend = false;
-    //   } else if (response == false) {
-    //     this._navigateToEndComponent();
-    //   }
-      
-    //   extendDialogRef.close();
+    
+    const dialogClose$ = confidenceDialogRef.afterClosed();
+    dialogClose$.subscribe(this._confidenceDialogClose$);
+    await dialogClose$.toPromise();
+    
+    confidenceDialogRef.close();
   }
 
   private _selectedSuspectChange$ = (suspect: IEncodeSuspect|null) => {
     this._selectedSuspect = suspect;
+  }
+
+  private _confidenceDialogClose$ = (confidenceResponse: number): void => {
+    let identificationResponse: IEncodeIdentificationResponse = {
+      selectedSuspect: this._selectedSuspect,
+      confidenceLevel: confidenceResponse
+    };
+    
+    this.suspectIdentifiedEvent.emit(identificationResponse);
   }
 
 }

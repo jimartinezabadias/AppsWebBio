@@ -42,9 +42,6 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     const taskResources = await this._dbService.getEncodeTasksResources();
     const perp1suspects = await this._getSuspectsOfBeing(taskResources.perpetrator1Suspects); 
     const perp2suspects = await this._getSuspectsOfBeing(taskResources.perpetrator2Suspects); 
-    
-    console.log(perp1suspects)
-    console.log(perp2suspects)
 
     taskResources.perpetrator1Suspects.forEach( async (suspectDocRef, index: number) => {
       const suspect = perp1suspects[index];
@@ -91,7 +88,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     this._actualRoomRef = viewContainerRef.createComponent<EncodeIdentificationRoom>(componentFactory);
     this._actualRoomRef.instance.roomTitle = ROOM_1_TITLE;
     this._actualRoomRef.instance.lineup = firstLineup;
-    this._actualRoomRef.instance.suspectIdentified.subscribe(this.onSuspectIdentified);
+    this._actualRoomRef.instance.suspectIdentifiedEvent.subscribe(this.onSuspectIdentified);
 
     this.isIdentifing = true; 
   }
@@ -100,11 +97,9 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     this._router.navigate(["../audios"], { relativeTo: this._route });
   }
 
-  // todo
-  // recibir respuesta en vez de id
-  // response: IEncodeIdentificationResponse
-  private onSuspectIdentified = (suspectId: string): void => {
-    console.log("respuesta identification: " + suspectId);
+  private onSuspectIdentified = (response: IEncodeIdentificationResponse): void => {
+    console.log("respuesta identification: ");
+    console.log(response);
     this._actualRoomRef.destroy();
     this.isIdentifing = false;
     // todo
