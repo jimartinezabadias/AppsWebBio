@@ -18,7 +18,7 @@ export class EncodeIdentificationRoom implements OnInit {
 
   public selectedSuspectSource = new Subject<IEncodeSuspect>();
   public selectedSuspect$: Observable<IEncodeSuspect|null>;
-  
+
   @Input() 
   public roomTitle: typeof ROOM_1_TITLE| typeof ROOM_2_TITLE;
 

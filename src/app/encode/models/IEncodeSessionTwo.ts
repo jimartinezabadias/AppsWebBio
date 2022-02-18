@@ -5,9 +5,12 @@ import { IEncodeAudio } from "./IEncodeAudio";
 
 export interface IEncodeSessionTwo {
     somnolenceDegree: SomnolenceDegree;
+    // todo
+    // usar un array de dos posiciones para representar la condicion ?
+    // perpetratorCondition: Array<typeof PERPETRATOR_1_ID | typeof PERPETRATOR_2_ID>;
     perpetratorCondition: PerpetratorCondition | null;
     imageSelectionResponse: IEncodeImageSelectionResponse[] | null;
     audios: Array<IEncodeAudio> | null;
-    identificationResponse: Map< typeof PERPETRATOR_1_ID | typeof PERPETRATOR_2_ID , IEncodeIdentificationResponse> | null;
+    identificationResponse:  IEncodeIdentificationResponse[] | null;
     completed: boolean | null;
 }

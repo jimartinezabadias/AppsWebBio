@@ -38,23 +38,15 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   }
 
   async openIdentificaton() {
+    this.isIdentifing = true; 
     const userPerpetratorCondition = this._userService.user.sessionTwo.perpetratorCondition;
     const taskResources = await this._dbService.getEncodeTasksResources();
     const perp1suspects = await this._getSuspectsOfBeing(taskResources.perpetrator1Suspects); 
     const perp2suspects = await this._getSuspectsOfBeing(taskResources.perpetrator2Suspects); 
 
-    taskResources.perpetrator1Suspects.forEach( async (suspectDocRef, index: number) => {
-      const suspect = perp1suspects[index];
-      suspect.id = suspectDocRef.id;
-      suspect.photoImageUrl = await this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL().toPromise<string>();
-    });
-    
-    taskResources.perpetrator2Suspects.forEach( async (suspectDocRef, index: number) => {
-      const suspect = perp2suspects[index];
-      suspect.id = suspectDocRef.id;
-      suspect.photoImageUrl = await this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL().toPromise<string>();
-    });
-    
+    this._getSuspectsPhotos(taskResources.perpetrator1Suspects, perp1suspects);
+    this._getSuspectsPhotos(taskResources.perpetrator2Suspects, perp2suspects);
+   
     let firstLineup: Array<IEncodeSuspect>;
     let secondLineup: Array<IEncodeSuspect>;
     
@@ -88,9 +80,14 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     this._actualRoomRef = viewContainerRef.createComponent<EncodeIdentificationRoom>(componentFactory);
     this._actualRoomRef.instance.roomTitle = ROOM_1_TITLE;
     this._actualRoomRef.instance.lineup = firstLineup;
-    this._actualRoomRef.instance.suspectIdentifiedEvent.subscribe(this.onSuspectIdentified);
-
-    this.isIdentifing = true; 
+    
+    const identifySuspect1 = this._actualRoomRef.instance.suspectIdentifiedEvent;
+    identifySuspect1.subscribe(this.onSuspectIdentified);
+    
+    await identifySuspect1.toPromise();
+    
+    // todo
+    // abrir proximo room
   }
 
   public skipIdentificaton(): void {
@@ -98,13 +95,14 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   }
 
   private onSuspectIdentified = (response: IEncodeIdentificationResponse): void => {
-    console.log("respuesta identification: ");
-    console.log(response);
+    response.selectedSuspect.photoImageUrl = null;
+    if (this._userService.user.sessionTwo.identificationResponse == null) {
+      this._userService.user.sessionTwo.identificationResponse = new Array<IEncodeIdentificationResponse>();
+    }
+
+    this._userService.user.sessionTwo.identificationResponse.push(response);
     this._actualRoomRef.destroy();
     this.isIdentifing = false;
-    // todo
-    // guardar respuesta
-    // abrir proximo room
   }
 
   private _getSuspectsOfBeing(suspectDocuments: Array<DocumentReference<IEncodeSuspect>>): Promise<Array<IEncodeSuspect>> {
@@ -117,5 +115,13 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     });
 
     return Promise.all(suspects);
+  }
+
+  private _getSuspectsPhotos(perpSuspectsDocs: DocumentReference<IEncodeSuspect>[], perpSuspects: IEncodeSuspect[]): void {
+    perpSuspectsDocs.forEach( async (suspectDocRef, index: number) => {
+      const suspect = perpSuspects[index];
+      suspect.id = suspectDocRef.id;
+      suspect.photoImageUrl = await this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL().toPromise<string>();
+    });
   }
 }
