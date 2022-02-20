@@ -70,6 +70,7 @@ export class EncodeIdentificationRoom implements OnInit {
     };
     
     this.suspectIdentifiedEvent.emit(identificationResponse);
+    this.suspectIdentifiedEvent.complete();
   }
 
 }

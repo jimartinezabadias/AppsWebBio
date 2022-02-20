@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { Observable } from 'rxjs';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
-import { ROOM_1_TITLE, PerpetratorCondition, ABSENT_SUSPECT_ID } from '../constants';
+import { ROOM_1_TITLE, PerpetratorCondition, ABSENT_SUSPECT_ID, ROOM_2_TITLE } from '../constants';
 import { IEncodeSuspect } from '../models/IEncodeSuspect';
 import { DocumentReference } from '@angular/fire/firestore';
 import { EncodeIdentificationRoom } from './identification-room-component/identification-room.component';
@@ -17,8 +17,6 @@ import { IEncodeIdentificationResponse } from '../models/IEncodeIdentificationRe
     styleUrls: ['identification-task.component.scss','../encode.component.scss']
 })
 export class EncodeIdentificationTaskComponent implements OnExit {
-  
-  private _actualRoomRef: ComponentRef<EncodeIdentificationRoom>;
   
   public isIdentifing: boolean = false;
 
@@ -72,37 +70,40 @@ export class EncodeIdentificationTaskComponent implements OnExit {
 
     // segundo lineup: el perpetrador esta siempre ausente
     secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false && suspect.id != ABSENT_SUSPECT_ID);
+  
+    // cargo el primer room
+    let actualRoomRef = this._createRoomComponent(ROOM_1_TITLE, firstLineup); 
+    const firstRoomResult = actualRoomRef.instance.suspectIdentifiedEvent;
+    firstRoomResult.subscribe(this.saveIdentificationResponse);
     
-    const viewContainerRef = this.identificationRoomHost.viewContainerRef;
-    viewContainerRef.clear();
+    await firstRoomResult.toPromise();
 
-    const componentFactory = this._cfr.resolveComponentFactory(EncodeIdentificationRoom);
-    this._actualRoomRef = viewContainerRef.createComponent<EncodeIdentificationRoom>(componentFactory);
-    this._actualRoomRef.instance.roomTitle = ROOM_1_TITLE;
-    this._actualRoomRef.instance.lineup = firstLineup;
+    this.isIdentifing = false;
+    actualRoomRef.destroy();
+
+    // cargo el segundo room
+    actualRoomRef = this._createRoomComponent(ROOM_2_TITLE, secondLineup); 
+    const secondRoomResult = actualRoomRef.instance.suspectIdentifiedEvent;
+    secondRoomResult.subscribe(this.saveIdentificationResponse);
     
-    const identifySuspect1 = this._actualRoomRef.instance.suspectIdentifiedEvent;
-    identifySuspect1.subscribe(this.onSuspectIdentified);
-    
-    await identifySuspect1.toPromise();
-    
-    // todo
-    // abrir proximo room
+    this.isIdentifing = true;
+    await secondRoomResult.toPromise();
+
+    this.isIdentifing = false;
+    actualRoomRef.destroy();
   }
 
   public skipIdentificaton(): void {
     this._router.navigate(["../audios"], { relativeTo: this._route });
   }
 
-  private onSuspectIdentified = (response: IEncodeIdentificationResponse): void => {
+  private saveIdentificationResponse = (response: IEncodeIdentificationResponse): void => {
     response.selectedSuspect.photoImageUrl = null;
     if (this._userService.user.sessionTwo.identificationResponse == null) {
       this._userService.user.sessionTwo.identificationResponse = new Array<IEncodeIdentificationResponse>();
     }
 
     this._userService.user.sessionTwo.identificationResponse.push(response);
-    this._actualRoomRef.destroy();
-    this.isIdentifing = false;
   }
 
   private _getSuspectsOfBeing(suspectDocuments: Array<DocumentReference<IEncodeSuspect>>): Promise<Array<IEncodeSuspect>> {
@@ -123,5 +124,19 @@ export class EncodeIdentificationTaskComponent implements OnExit {
       suspect.id = suspectDocRef.id;
       suspect.photoImageUrl = await this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL().toPromise<string>();
     });
+  }
+
+  private _createRoomComponent(
+    roomTitle: typeof ROOM_1_TITLE | typeof ROOM_2_TITLE, 
+    firstLineup: Array<IEncodeSuspect>): ComponentRef<EncodeIdentificationRoom> 
+  {
+    const componentFactory = this._cfr.resolveComponentFactory(EncodeIdentificationRoom);
+    const viewContainerRef = this.identificationRoomHost.viewContainerRef;
+    viewContainerRef.clear();
+    const componentRef = viewContainerRef.createComponent<EncodeIdentificationRoom>(componentFactory);
+    componentRef.instance.roomTitle = roomTitle;
+    componentRef.instance.lineup = firstLineup;
+
+    return componentRef;
   }
 }
