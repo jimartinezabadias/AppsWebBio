@@ -69,7 +69,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     }
 
     // segundo lineup: el perpetrador esta siempre ausente
-    secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false && suspect.id != ABSENT_SUSPECT_ID);
+    secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false || suspect.id != ABSENT_SUSPECT_ID);
   
     // cargo el primer room
     let actualRoomRef = this._createRoomComponent(ROOM_1_TITLE, firstLineup); 
@@ -91,9 +91,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
 
     this.isIdentifing = false;
     actualRoomRef.destroy();
-  }
 
-  public skipIdentificaton(): void {
     this._router.navigate(["../audios"], { relativeTo: this._route });
   }
 
