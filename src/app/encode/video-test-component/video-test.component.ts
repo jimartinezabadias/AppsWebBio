@@ -28,9 +28,11 @@ export class EncodeVideoTestComponent {
 
   onConfirm(): any 
   {
-    if (this._userService.user.sessionOne.completed == true && this._userService.user.sessionTwo.perpetratorCondition) {
+    if (this._userService.session == 2) 
+    {
       this._router.navigate(["../somnolence-degree"], { relativeTo: this._route });
-    } else {
+    } else if (this._userService.session == 1) 
+    {
       this._router.navigate(["../consent"], { relativeTo: this._route });
     }
   }

@@ -63,6 +63,17 @@ export class EncodeUserService {
         return (this._user == null) ? null : this._dbService.getEncodeUserForms$(this._user.uid);
     }
 
+    get session()
+    {
+        if (this._user.sessionOne.completed == true && this._user.sessionTwo.perpetratorCondition) 
+        {
+            return 2;
+        } else 
+        {
+            return 1;
+        }
+    }
+
     public async updateUserInDB() 
     {
         if (this._user == null) return ;

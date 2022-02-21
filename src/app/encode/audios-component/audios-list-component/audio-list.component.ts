@@ -52,7 +52,7 @@ export class EncodeAudioListComponent {
 
   private _storeAudioInUser(newAudio: IEncodeInMemoryAudio) {
     const audioDbData: IEncodeAudio = { id: newAudio.id, downloadURL: newAudio.downloadURL };
-    if (this._userService.user.sessionOne.completed == true && this._userService.user.sessionTwo.perpetratorCondition) 
+    if (this._userService.session == 2) 
     {
       //si estamos en sesion 2
       if (this._userService.user.sessionTwo.audios == null)
@@ -61,7 +61,7 @@ export class EncodeAudioListComponent {
       }
   
       this._userService.user.sessionTwo.audios.push(audioDbData);
-    } else {
+    } else if (this._userService.session == 1) {
       //si estamos en sesion 1
       if (this._userService.user.sessionOne.audios == null)
       {
