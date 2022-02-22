@@ -1,0 +1,30 @@
+<section class="container">
+    <app-header-encode></app-header-encode>
+    <section class="main-app-section">
+        
+        <div *ngIf="isTaskRunning == true; then sortingTaskTemplate else taskBreafingTemplate">
+            <!-- template will replace this div -->
+        </div>
+
+        <ng-template #taskBreafingTemplate>
+            <h1 class="title">Tarea de Ordenamiento</h1>     
+
+            <div id="task-breafing">
+                <p>Ahora te voy a pedir que ordenes temporalmente, de manera cronológica las imágenes que seleccionaste.</p>
+                <button mat-raised-button 
+                    id="continue-button" 
+                    color="primary" 
+                    aria-label="continuar"
+                    (click)="startTask()">
+                    Continuar
+                </button>
+            </div>
+        </ng-template>
+
+        <ng-template #sortingTaskTemplate>
+            <img *ngFor="let screenshot of lineup" [src]="screenshot.imageURL" alt="">
+        </ng-template>
+        
+    </section>
+
+</section>

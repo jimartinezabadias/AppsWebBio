@@ -18,6 +18,7 @@ import { EncodeGoogleFormsComponent } from './google-forms-component/encode-goog
 import { EncodeAbandonedGuard } from './encode-abandoned.guard';
 import { EncodeIdentificationTaskComponent } from './identification-task-component/identification-task.component';
 import { EncodeSelectionComponent } from './selection-component/selection.component';
+import { EncodeSortingTaskComponent } from './sorting-task-component/sorting-task.component';
 
 
 const routes: Routes = [
@@ -89,6 +90,11 @@ const routes: Routes = [
                 path: 'suspect-identification',
                 canDeactivate: [ExitGuard],
                 component: EncodeIdentificationTaskComponent
+            },
+            {
+                path: 'sorting',
+                canDeactivate: [ExitGuard],
+                component: EncodeSortingTaskComponent
             }
         ]
     }
