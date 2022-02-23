@@ -75,7 +75,7 @@ export class EncodeSelectionComponent implements OnInit {
       }
     } else {
       //routear a ordenamiento
-      this._router.navigate(["../ordering"], { relativeTo: this._route });
+      this._router.navigate(["../sorting"], { relativeTo: this._route });
     }
   }
 

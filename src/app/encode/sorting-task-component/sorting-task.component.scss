@@ -10,3 +10,14 @@
 #continue-button{
     align-self: center;
 }
+
+#screenshots-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap:16px;
+    width: 70%;
+  }
+
+.grid-image {
+    max-width: 100%;
+}

@@ -22,7 +22,11 @@
         </ng-template>
 
         <ng-template #sortingTaskTemplate>
-            <img *ngFor="let screenshot of lineup" [src]="screenshot.imageURL" alt="">
+            <div id="screenshots-grid">
+                <app-grid-image *ngFor="let screenshot of lineup" 
+                    [screenshot]="screenshot">
+                </app-grid-image>
+            </div>
         </ng-template>
         
     </section>
