@@ -6,6 +6,7 @@ import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { DocumentReference } from '@angular/fire/firestore';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
 import { IEncodeScreenshotPair } from '../models/IEncodeScreenshotPair';
+import { cpuUsage } from 'process';
 
 @Component({
     selector: 'app-encode-selection',
@@ -18,6 +19,8 @@ export class EncodeSelectionComponent implements OnInit {
   public random_pairs = [];
   public currentStep = 0;
   public selectionMade = false;
+  public started = false;
+  public completed = false;
   public userChoices: Array<IEncodeImageSelectionResponse> = [];
   public userChoice: IEncodeImageSelectionResponse;
   public imagesPairsLoaded = false;
@@ -69,20 +72,34 @@ export class EncodeSelectionComponent implements OnInit {
 
   onSelection(selectionValue, isReal): any
   {
-    this.userChoice = { pairNumber: this.currentStep, isReal: isReal, imageURL: selectionValue };
+    this.userChoice = { pairNumber: this.currentStep+1, isReal: isReal, imageURL: selectionValue };
     this.selectionMade = true;
+  }
+
+  continue() {
+    if (this.completed == false) {
+      if (this.started == false) {
+        this.started = true;
+      }
+    } else {
+      //routear a ordenamiento
+      this._router.navigate(["../ordering"], { relativeTo: this._route });
+    }
   }
 
   onConfirm(): any 
   {
-    if (this.currentStep < 13) {
+    console.log("currentStep: ", this.currentStep)
+    if (this.currentStep < 12) {
       this.userChoices.push(this.userChoice);
       this.currentStep = this.currentStep + 1;
       this.selectionMade = false;
-    } else if (this.currentStep == 13) {
+    }
+    console.log("userChoices: ", this.userChoices)
+    if (this.userChoices.length == 12) {
+      this.started = false;
+      this.completed = true;
       this._userService.user.sessionTwo.imageSelectionResponse = this.userChoices;
-      //routear a ordenamiento
-      //this._router.navigate(["../consent"], { relativeTo: this._route });
     }
   }
 

@@ -4,59 +4,85 @@
 
         <div class="selectionComponent">
 
-            <h1 class="title">Seleccioná la foto que corresponde con lo que viste en el video.</h1>
-
-            <div *ngIf="imagesPairsLoaded == true; then selectionTemplate else loading">
+            <div *ngIf="started == true; then selectionStarted else selectionStopped">
                 <!-- template will replace this div -->
             </div>
-    
-            <!-- loading -->
-            <ng-template #loading>
-                <p>Cargando...</p>
+
+            <!-- selectionStopped -->
+            <ng-template #selectionStopped>
+                <h1 class="title">Tarea de Selección</h1>
+
+                <p *ngIf="completed == false">Ahora te voy a pedir que selecciones de entre 12 pares de fotos la que corresponde con las imágenes que viste en el video.</p>
+                <p *ngIf="completed == true">¡Ya seleccionaste las imagenes! Por favor, continua al siguiente paso.</p>
+                <div class="stepper-buttons" *ngIf="completed == true">
+                    <h4>Seleccionadas {{currentStep}}/{{steps}}</h4>
+                </div>
+                <button mat-raised-button 
+                    id="continue-button" 
+                    color="primary" 
+                    aria-label="continuar"
+                    (click)="continue()">
+                    Continuar
+                </button>
             </ng-template>
 
-            <ng-template #selectionTemplate>
-                <mat-card>
-                
-                    <mat-card-content class="card-content">
-                          
-                        <mat-stepper linear #stepper>
-                            <mat-step *ngFor="let pair of imagesPairs" [optional]="true">
-                                <form>
-                                    <mat-button-toggle-group>
-                                        <div *ngIf="random_pairs[pair.pairNumber] == 0; then first else second">
-                                            <!-- template will replace this div -->
+            <!-- selectionStarted -->
+            <ng-template #selectionStarted>
+                <h1 class="title">Seleccioná la foto que corresponde con lo que viste en el video.</h1>
+
+                <div *ngIf="imagesPairsLoaded == true; then selectionTemplate else loading">
+                    <!-- template will replace this div -->
+                </div>
+        
+                <!-- loading -->
+                <ng-template #loading>
+                    <p>Cargando...</p>
+                </ng-template>
+
+                <ng-template #selectionTemplate>
+                    <mat-card>
+                    
+                        <mat-card-content class="card-content">
+                            
+                            <mat-stepper linear #stepper>
+                                <mat-step *ngFor="let pair of imagesPairs" [optional]="true">
+                                    <form>
+                                        <mat-button-toggle-group>
+                                            <div *ngIf="random_pairs[pair.pairNumber] == 0; then first else second">
+                                                <!-- template will replace this div -->
+                                            </div>
+                                            <ng-template #first>
+                                                <mat-button-toggle (click)="onSelection(pair.fakeImage, false)">
+                                                    <img class="selection-image" src={{pair.fakeImage}}/>
+                                                </mat-button-toggle>
+                                                <mat-button-toggle (click)="onSelection(pair.realImage, true)">
+                                                    <img class="selection-image" src={{pair.realImage}}/>
+                                                </mat-button-toggle>
+                                            </ng-template>
+                                            <ng-template #second>
+                                                <mat-button-toggle (click)="onSelection(pair.realImage, true)">
+                                                    <img class="selection-image" src={{pair.realImage}}/>
+                                                </mat-button-toggle>
+                                                <mat-button-toggle (click)="onSelection(pair.fakeImage, false)">
+                                                    <img class="selection-image" src={{pair.fakeImage}}/>
+                                                </mat-button-toggle>
+                                            </ng-template>
+                                        </mat-button-toggle-group>
+                                        <div class="stepper-buttons">
+                                            <button [disabled]="!selectionMade" (click)="onConfirm()" mat-button matStepperNext>SIGUIENTE</button>
                                         </div>
-                                        <ng-template #first>
-                                            <mat-button-toggle (click)="onSelection(pair.fakeImage, false)">
-                                                <img class="selection-image" src={{pair.fakeImage}}/>
-                                            </mat-button-toggle>
-                                            <mat-button-toggle (click)="onSelection(pair.realImage, true)">
-                                                <img class="selection-image" src={{pair.realImage}}/>
-                                            </mat-button-toggle>
-                                        </ng-template>
-                                        <ng-template #second>
-                                            <mat-button-toggle (click)="onSelection(pair.realImage, true)">
-                                                <img class="selection-image" src={{pair.realImage}}/>
-                                            </mat-button-toggle>
-                                            <mat-button-toggle (click)="onSelection(pair.fakeImage, false)">
-                                                <img class="selection-image" src={{pair.fakeImage}}/>
-                                            </mat-button-toggle>
-                                        </ng-template>
-                                    </mat-button-toggle-group>
-                                    <div class="stepper-buttons">
-                                        <button [disabled]="!selectionMade" (click)="onConfirm()" mat-button matStepperNext>SIGUIENTE</button>
-                                    </div>
-                                    <div class="stepper-buttons">
-                                        <h4>Seleccionadas {{currentStep}}/{{steps}}</h4>
-                                    </div>
-                                </form>
-                            </mat-step>
-                        </mat-stepper>
-    
-                    </mat-card-content>
-    
-                </mat-card>
+                                        <div class="stepper-buttons">
+                                            <h4>Seleccionadas {{currentStep}}/{{steps}}</h4>
+                                        </div>
+                                    </form>
+                                </mat-step>
+                            </mat-stepper>
+        
+                        </mat-card-content>
+        
+                    </mat-card>
+                </ng-template>
+
             </ng-template>
             
         </div>
