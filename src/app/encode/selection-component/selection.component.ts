@@ -1,12 +1,9 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { IEncodeImageSelectionResponse } from "../models/IEncodeImageSelectionResponse";
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { DocumentReference } from '@angular/fire/firestore';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
-import { IEncodeScreenshotPair } from '../models/IEncodeScreenshotPair';
-import { cpuUsage } from 'process';
 
 @Component({
     selector: 'app-encode-selection',
@@ -14,15 +11,15 @@ import { cpuUsage } from 'process';
     styleUrls: ['selection.component.scss','../encode.component.scss']
 })
 export class EncodeSelectionComponent implements OnInit {
-  public imagesPairs;
+  public imagesPairs: IEncodeScreenshot[];
   public steps = 12;
   public random_pairs = [];
   public currentStep = 0;
   public selectionMade = false;
   public started = false;
   public completed = false;
-  public userChoices: Array<IEncodeImageSelectionResponse> = [];
-  public userChoice: IEncodeImageSelectionResponse;
+  public userChoices: Array<IEncodeScreenshot> = [];
+  public userChoice: IEncodeScreenshot;
   public imagesPairsLoaded = false;
 
   constructor(private _router: Router,
@@ -35,26 +32,19 @@ export class EncodeSelectionComponent implements OnInit {
   async getScreenshotPairs() 
   {
     const taskResources = await this._dbService.getEncodeTasksResources();
-    
-    let pairs_temp = [];
-
     this.imagesPairs = await this._getScreenshot(taskResources.screenshotsPairs);
 
-    
-    let pair = 0;
-    for (let i = 1; i <= this.imagesPairs.length; i+=2) {
-      pair++;
-      let newPair: IEncodeScreenshotPair = {
-        pairNumber: pair,
-        fakeImage: await this._dbService.getCloudStorageFileRef(this.imagesPairs[i].imageStorageRef).getDownloadURL().toPromise<string>(),
-        realImage: await this._dbService.getCloudStorageFileRef(this.imagesPairs[i-1].imageStorageRef).getDownloadURL().toPromise<string>()
-      };
+    this.imagesPairs.forEach( async (screenshot: IEncodeScreenshot, index) => {
+      screenshot.id = taskResources.screenshotsPairs[index].id;
+      screenshot.imageURL = await this._dbService.getCloudStorageFileRef(screenshot.imageStorageRef).getDownloadURL().toPromise<string>();
+    });
       
-      pairs_temp.push(newPair);
-    }
-    
-    this.imagesPairs = pairs_temp;
-    //this.imagesPairs = Object.entries(this.imagesPairs).map(([type, value]) => ({type, value}));
+    let pairNumber = 1;
+    this.imagesPairs.forEach( (screenshot: IEncodeScreenshot, index) => {
+      screenshot.pairNumber = pairNumber ;
+      if ((index % 2) == 1) pairNumber++;
+    });
+
     console.log(this.imagesPairs);
     this.imagesPairsLoaded = true;
   }
@@ -70,10 +60,15 @@ export class EncodeSelectionComponent implements OnInit {
     console.log(this.random_pairs);
   }
 
-  onSelection(selectionValue, isReal): any
+  onSelection(selectionValue, isReal): void
   {
-    this.userChoice = { pairNumber: this.currentStep+1, isReal: isReal, imageURL: selectionValue };
-    this.selectionMade = true;
+    // this.userChoice = { 
+    //   pairNumber: this.currentStep + 1, 
+    //   isReal: isReal, 
+    //   imageURL: selectionValue 
+    // };
+
+    // this.selectionMade = true;
   }
 
   continue() {

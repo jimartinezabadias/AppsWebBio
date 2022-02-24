@@ -8,7 +8,6 @@ import { Observable } from "rxjs";
 import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
 import { IEncodeSessionTwo } from "../models/IEncodeSessionTwo";
 import { IEncodeUserConsent } from "../models/IEncodeUserConsent";
-import { IEncodeImageSelectionResponse } from "../models/IEncodeImageSelectionResponse";
 import { SessionsEnum } from "../constants";
 
 @Injectable({
@@ -28,9 +27,22 @@ export class EncodeUserService {
     {
         const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
         const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserId);
-        const imageSelectionResponse: Array<IEncodeImageSelectionResponse> = null;
-        const newSessionOne: IEncodeSessionOne = { completed: false, somnolenceDegree: null, audios: null };
-        const newSessionTwo: IEncodeSessionTwo = { completed: false, somnolenceDegree: null, perpetratorCondition: null, identificationResponse: null, audios: null, imageSelectionResponse: imageSelectionResponse };
+        
+        const newSessionOne: IEncodeSessionOne = { 
+            completed: false, 
+            somnolenceDegree: null, 
+            audios: null 
+        };
+
+        const newSessionTwo: IEncodeSessionTwo = { 
+            completed: false, 
+            somnolenceDegree: null, 
+            perpetratorCondition: null, 
+            identificationResponse: null, 
+            audios: null, 
+            imageSelectionResponse: null 
+        };
+        
         const userConsent: IEncodeUserConsent = { hasAccepted: false, date: null };
 
         const newUser: IEncodeUser = {
