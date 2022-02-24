@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { SomnolenceDegree } from "../constants";
+import { SessionsEnum, SomnolenceDegree } from "../constants";
 
 @Component({
     selector: 'app-encode-somnolence-degree',
@@ -38,10 +38,10 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
       this._userService.user.sessionTwo.somnolenceDegree = formData;
     }
 
-    if (this._userService.session == 2) 
+    if (this._userService.session == SessionsEnum.SessionTwo) 
     {
       this._router.navigate(["../suspect-identification"], { relativeTo: this._route });
-    } else if (this._userService.session == 1) 
+    } else if (this._userService.session == SessionsEnum.SessionOne) 
     {
       this._router.navigate(["../google-forms"], { relativeTo: this._route });
     }

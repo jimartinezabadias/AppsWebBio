@@ -1,4 +1,9 @@
-export const ENCODE_TEST_URL = "/encode"; 
+export const ENCODE_TEST_URL = "/encode";
+
+export enum SessionsEnum {
+    SessionOne,
+    SessionTwo
+}
 
 // Admin
 export enum PerpetratorCondition {

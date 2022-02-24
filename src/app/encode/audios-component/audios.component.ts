@@ -7,6 +7,7 @@ import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.com
 import { EncodeAudioListComponent } from './audios-list-component/audio-list.component';
 import { ExtendedRecallComponent } from './extended-recall-component/extended-recall.component';
 import { Observable } from 'rxjs';
+import { SessionsEnum } from '../constants';
 
 @Component({
     selector: 'app-encode-audios',
@@ -61,13 +62,18 @@ export class EncodeAudiosComponent implements OnExit {
     }
   }
 
-  private async _navigateToEndComponent() {
+  private async _navigateToEndComponent(): Promise<void> {
     this.onExit = () => true;
-    if (this._userService.session == 2) {
+    
+    if (this._userService.session == SessionsEnum.SessionTwo) {
       this._router.navigate(["../selection"], { relativeTo: this._route });
-    } else if (this._userService.session == 1) {
+      return;
+    }  
+    
+    if (this._userService.session == SessionsEnum.SessionOne) {
       //si estamos en sesion 1
       this._router.navigate(["../end"], { relativeTo: this._route });
+      return;
     }
   }
 

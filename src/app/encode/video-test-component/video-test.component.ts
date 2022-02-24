@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SessionsEnum } from '../constants';
 import { EncodeUserService } from '../services/EncodeUserService';
 
 @Component({
@@ -26,14 +27,18 @@ export class EncodeVideoTestComponent {
     this._video.nativeElement.volume= 0.8;
   }
 
-  onConfirm(): any 
+  onConfirm(): void 
   {
-    if (this._userService.session == 2) 
+    if (this._userService.session == SessionsEnum.SessionTwo) 
     {
       this._router.navigate(["../somnolence-degree"], { relativeTo: this._route });
-    } else if (this._userService.session == 1) 
+      return;
+    } 
+    
+    if (this._userService.session == SessionsEnum.SessionOne) 
     {
       this._router.navigate(["../consent"], { relativeTo: this._route });
+      return;
     }
   }
 

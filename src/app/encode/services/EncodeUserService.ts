@@ -9,6 +9,7 @@ import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
 import { IEncodeSessionTwo } from "../models/IEncodeSessionTwo";
 import { IEncodeUserConsent } from "../models/IEncodeUserConsent";
 import { IEncodeImageSelectionResponse } from "../models/IEncodeImageSelectionResponse";
+import { SessionsEnum } from "../constants";
 
 @Injectable({
     providedIn: 'root'
@@ -63,14 +64,14 @@ export class EncodeUserService {
         return (this._user == null) ? null : this._dbService.getEncodeUserForms$(this._user.uid);
     }
 
-    get session()
+    get session(): SessionsEnum
     {
         if (this._user.sessionOne.completed == true && this._user.sessionTwo.perpetratorCondition) 
         {
-            return 2;
+            return SessionsEnum.SessionTwo;
         } else 
         {
-            return 1;
+            return SessionsEnum.SessionOne;
         }
     }
 

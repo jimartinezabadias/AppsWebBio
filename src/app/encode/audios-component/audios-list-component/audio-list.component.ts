@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
+import { SessionsEnum } from '../../constants';
 import { IEncodeAudio } from '../../models/IEncodeAudio';
 import { IEncodeInMemoryAudio } from '../../models/IEncodeInMemoryAudio';
 import { AudioRecorderService } from '../../services/AudioRecorderService';
@@ -50,25 +51,28 @@ export class EncodeAudioListComponent {
     return url$;
   }
 
-  private _storeAudioInUser(newAudio: IEncodeInMemoryAudio) {
+  private _storeAudioInUser(newAudio: IEncodeInMemoryAudio): void {
     const audioDbData: IEncodeAudio = { id: newAudio.id, downloadURL: newAudio.downloadURL };
-    if (this._userService.session == 2) 
+    
+    if (this._userService.session == SessionsEnum.SessionTwo) 
     {
-      //si estamos en sesion 2
       if (this._userService.user.sessionTwo.audios == null)
       {
         this._userService.user.sessionTwo.audios = new Array<IEncodeAudio>();
       }
   
       this._userService.user.sessionTwo.audios.push(audioDbData);
-    } else if (this._userService.session == 1) {
-      //si estamos en sesion 1
+      return;
+    } 
+    
+    if (this._userService.session == SessionsEnum.SessionOne) {
       if (this._userService.user.sessionOne.audios == null)
       {
         this._userService.user.sessionOne.audios = new Array<IEncodeAudio>();
       }
   
       this._userService.user.sessionOne.audios.push(audioDbData);
+      return;
     }
   }
 
