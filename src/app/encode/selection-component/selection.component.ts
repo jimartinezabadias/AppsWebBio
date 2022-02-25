@@ -53,22 +53,19 @@ export class EncodeSelectionComponent implements OnInit {
   {
     this.getScreenshotPairs();
 
-    for (let i = 0; i <= this.steps; i++) {
+    for (let i = 0; i < this.steps; i++) {
       this.random_pairs.push(Math.floor(Math.random() * (1 - 0 + 1) + 0));
     }
 
     console.log(this.random_pairs);
   }
 
-  onSelection(selectionValue, isReal): void
+  onSelection(image): void
   {
-    // this.userChoice = { 
-    //   pairNumber: this.currentStep + 1, 
-    //   isReal: isReal, 
-    //   imageURL: selectionValue 
-    // };
+    console.log(image);
+    this.userChoice = image;
 
-    // this.selectionMade = true;
+    this.selectionMade = true;
   }
 
   continue() {
