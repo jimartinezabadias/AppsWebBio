@@ -118,17 +118,10 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
   ngOnInit(): void {
     // Posta
     // this.lineup = this._userService.user.sessionTwo.imageSelectionResponse;
-    
     // Test
     this.lineup = testResponseConstant;
-
-    this.timeline$ = this._timelineSubject.asObservable();
     
-    // Test
-    this.timeline$.subscribe((updatedTimeline) => {
-      console.log("timeline updated");
-      console.log(updatedTimeline);
-    });
+    this.timeline$ = this._timelineSubject.asObservable();
   }
 
   onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
@@ -136,8 +129,6 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
   }
 
   public startTask(): void {
-    console.log("starting sort task");
-    // console.log(this._userService.user.sessionTwo.imageSelectionResponse);
     this.isTaskRunning = true;
   }
 

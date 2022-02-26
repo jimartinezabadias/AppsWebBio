@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IEncodeScreenshot } from '../../models/IEncodeScreenshot';
 
@@ -7,13 +7,27 @@ import { IEncodeScreenshot } from '../../models/IEncodeScreenshot';
     templateUrl: './grid-image.component.html',
     styleUrls: ['grid-image.component.scss']
 })
-export class EncodeGridImageComponent implements OnInit {
+export class EncodeGridImageComponent {
 
+  private _screenshot: IEncodeScreenshot;
+  private _timeline$: Observable<IEncodeScreenshot[]>;
+  
+  public isSelected: boolean = false;
+  
   @Input() 
-  public screenshot: IEncodeScreenshot;
-
+  set screenshot(screenshot: IEncodeScreenshot) {
+    this._screenshot = screenshot;
+  };
+  
+  get imageURL (): string {
+    return this._screenshot.imageURL;
+  }
+  
   @Input() 
-  public timeline$: Observable<IEncodeScreenshot[]>;
+  set timeline$(timeline$: Observable<IEncodeScreenshot[]>) {
+    this._timeline$ = timeline$;
+    this._timeline$.subscribe(this._onTimelineChange);
+  }
 
   @Output()
   public addScreenshotToTimelineEvent = new EventEmitter<IEncodeScreenshot>();
@@ -22,13 +36,14 @@ export class EncodeGridImageComponent implements OnInit {
   {
   }
 
-  ngOnInit(): void {
-  }
-
   public addToTimeline() {
-    // console.log("add to timeline");
-    // console.log(this.screenshot);
-    this.addScreenshotToTimelineEvent.emit(this.screenshot);
+    this.addScreenshotToTimelineEvent.emit(this._screenshot);
   }
 
+  private _onTimelineChange = (newTimeline: Array<IEncodeScreenshot>): void => {
+    this.isSelected = false;
+    newTimeline.forEach( (screenshot: IEncodeScreenshot) => {
+      if (screenshot.id === this._screenshot.id) this.isSelected = true;
+    }); 
+  }
 }

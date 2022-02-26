@@ -1,5 +1,5 @@
-<div id="image">
-    <img [src]="screenshot.imageURL" alt="">
+<div id="image" [class.selected]="isSelected">
+    <img [src]="imageURL" alt="">
     <div id="image__overlay"></div>
     <div id="icons">
         <mat-icon id="icon--add-to-timeline" (click)="addToTimeline()">add_to_photos</mat-icon>
