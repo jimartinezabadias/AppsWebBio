@@ -2,7 +2,7 @@
     <img [src]="screenshot.imageURL" alt="">
     <div id="image__overlay"></div>
     <div id="icons">
-        <mat-icon id="icon--add-to-timeline">add_to_photos</mat-icon>
+        <mat-icon id="icon--add-to-timeline" (click)="addToTimeline()">add_to_photos</mat-icon>
         <mat-icon id="icon--open-in-full">open_in_full</mat-icon>
         <mat-icon id="icon--add-check">library_add_check</mat-icon>
 

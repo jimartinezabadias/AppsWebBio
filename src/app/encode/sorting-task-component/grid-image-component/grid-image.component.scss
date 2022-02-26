@@ -59,3 +59,8 @@
     justify-self: center;
     align-self: center;
 }
+
+#icon--add-to-timeline:hover,
+#icon--open-in-full:hover {
+    cursor: pointer;
+}

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
 
@@ -100,9 +100,12 @@ const testResponseConstant: IEncodeScreenshot[] = [
 })
 export class EncodeSortingTaskComponent implements OnInit, OnExit {
   
-  public isTaskRunning: boolean = false;
+  private _timeline = new Array<IEncodeScreenshot>();
+  private _timelineSubject = new Subject<IEncodeScreenshot[]>();
 
+  public isTaskRunning: boolean = false;
   public lineup: Array<IEncodeScreenshot>;
+  public timeline$: Observable<IEncodeScreenshot[]>;
 
   constructor(
     private _dbService: DataDbService,
@@ -118,6 +121,14 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
     
     // Test
     this.lineup = testResponseConstant;
+
+    this.timeline$ = this._timelineSubject.asObservable();
+    
+    // Test
+    this.timeline$.subscribe((updatedTimeline) => {
+      console.log("timeline updated");
+      console.log(updatedTimeline);
+    });
   }
 
   onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
@@ -126,7 +137,12 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
 
   public startTask(): void {
     console.log("starting sort task");
-    console.log(this._userService.user.sessionTwo.imageSelectionResponse);
+    // console.log(this._userService.user.sessionTwo.imageSelectionResponse);
     this.isTaskRunning = true;
+  }
+
+  public onAddScreenshotToTimelineEvent(screenshot: IEncodeScreenshot): void {
+    this._timeline.push(screenshot);
+    this._timelineSubject.next(this._timeline);
   }
 }
