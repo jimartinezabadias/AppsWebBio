@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IEncodeImageSelectionResponse } from '../../models/IEncodeImageSelectionResponse';
+import { IEncodeScreenshot } from '../../models/IEncodeScreenshot';
 
 @Component({
     selector: 'app-grid-image',
@@ -9,7 +9,7 @@ import { IEncodeImageSelectionResponse } from '../../models/IEncodeImageSelectio
 export class EncodeGridImageComponent implements OnInit {
 
   @Input() 
-  public screenshot: IEncodeImageSelectionResponse;
+  public screenshot: IEncodeScreenshot;
 
   constructor()
   {
