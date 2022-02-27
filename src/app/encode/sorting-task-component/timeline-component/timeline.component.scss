@@ -1,0 +1,12 @@
+#timeline {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 16px;
+    margin-top: 32px;;
+}
+
+.timeline--slot.empty {
+    width: 64px;
+    height: 32px;
+    border: 2px dashed gray;
+}

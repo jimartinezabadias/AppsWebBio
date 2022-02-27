@@ -1,1 +1,8 @@
-<p>timeline</p>
+<div id="timeline">
+    <div *ngFor="let screenshot of componentTimeline" 
+        class="timeline--slot"
+        [class.empty]="!screenshot">
+        <img *ngIf="screenshot" 
+            [src]="screenshot.imageURL" alt=""/>
+    </div>
+</div>
