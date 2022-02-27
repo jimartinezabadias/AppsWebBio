@@ -49,7 +49,7 @@ export class EncodeIdentificationRoom implements OnInit {
   }
 
   public async identifySuspect(): Promise<void> {
-    const confidenceDialogRef = this._dialogService.open(ConfidenceDialogComponent, {});
+    const confidenceDialogRef = this._dialogService.open(ConfidenceDialogComponent);
     confidenceDialogRef.componentInstance.suspectPhotoUrl = this._selectedSuspect.photoImageUrl;
     
     const dialogClose$ = confidenceDialogRef.afterClosed();

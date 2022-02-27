@@ -34,6 +34,7 @@ import { EncodeSuspect } from './identification-task-component/identification-ro
 import { ConfidenceDialogComponent } from './identification-task-component/identification-room-component/confidence-component/confidence.component';
 import { EncodeSortingTaskComponent } from './sorting-task-component/sorting-task.component';
 import { EncodeGridImageComponent } from './sorting-task-component/grid-image-component/grid-image.component';
+import { EncodeFullImageComponent } from './sorting-task-component/grid-image-component/full-image-component/full-image.component';
 
 @NgModule({
     declarations: [
@@ -65,7 +66,8 @@ import { EncodeGridImageComponent } from './sorting-task-component/grid-image-co
         EncodeSuspect,
         ConfidenceDialogComponent,
         EncodeSortingTaskComponent,
-        EncodeGridImageComponent
+        EncodeGridImageComponent,
+        EncodeFullImageComponent
     ],
     imports: [
         CommonModule,

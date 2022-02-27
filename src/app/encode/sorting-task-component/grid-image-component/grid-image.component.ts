@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { IEncodeScreenshot } from '../../models/IEncodeScreenshot';
+import { EncodeFullImageComponent } from './full-image-component/full-image.component';
 
 @Component({
     selector: 'app-grid-image',
@@ -32,12 +34,17 @@ export class EncodeGridImageComponent {
   @Output()
   public addScreenshotToTimelineEvent = new EventEmitter<IEncodeScreenshot>();
 
-  constructor()
+  constructor(private _dialogService: MatDialog)
   {
   }
 
-  public addToTimeline() {
+  public addToTimeline(): void {
     this.addScreenshotToTimelineEvent.emit(this._screenshot);
+  }
+
+  public openInFull(): void {
+    const imageDialogRef = this._dialogService.open(EncodeFullImageComponent);
+    imageDialogRef.componentInstance.imageUrl = this.imageURL;
   }
 
   private _onTimelineChange = (newTimeline: Array<IEncodeScreenshot>): void => {

@@ -1,10 +1,23 @@
 <div id="image" [class.selected]="isSelected">
     <img [src]="imageURL" alt="">
     <div id="image__overlay"></div>
-    <div id="icons">
-        <mat-icon id="icon--add-to-timeline" (click)="addToTimeline()">add_to_photos</mat-icon>
-        <mat-icon id="icon--open-in-full">open_in_full</mat-icon>
-        <mat-icon id="icon--add-check">library_add_check</mat-icon>
+    <div id="buttons">
+        <button mat-icon-button 
+            id="button--add-to-timeline" 
+            (click)="addToTimeline()">
+            <mat-icon>add_to_photos</mat-icon>
+        </button>
+        <button mat-icon-button 
+            id="button--open-in-full" 
+            (click)="openInFull()">
+            <mat-icon>open_in_full</mat-icon>
+        </button>
+        <button mat-icon-button 
+            id="button--add-check" 
+            (click)="addToTimeline()"
+            disabled="true">
+            <mat-icon>library_add_check</mat-icon>
+        </button>
 
         <!-- Este va en las fotos del timeline para deseleccionarlas -->
         <!-- <mat-icon>do_disturb_on</mat-icon> -->
