@@ -13,3 +13,7 @@
 .timeline--slot.empty {
     border: 2px dashed gray;
 }
+
+.timeline--slot > img {
+    width: 100%;
+}

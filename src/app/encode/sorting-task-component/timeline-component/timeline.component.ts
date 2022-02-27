@@ -10,7 +10,7 @@ import { IEncodeScreenshot } from '../../models/IEncodeScreenshot';
 })
 export class EncodeTimelineComponent {
 
-  public componentTimeline =  new Array<IEncodeScreenshot | null>(MAX_TIMELINE_SCREENSHOTS);
+  public timeline =  new Array<IEncodeScreenshot | null>(MAX_TIMELINE_SCREENSHOTS);
 
   @Input() 
   set timeline$(timeline$: Observable<Array<IEncodeScreenshot | null>>) {
@@ -23,7 +23,7 @@ export class EncodeTimelineComponent {
 
   private _onTimelineChange = (newTimeline: Array<IEncodeScreenshot | null>): void => {
     console.log("updating timeline component _onTimelineChange");
-    // todo update component timeline
+    this.timeline = newTimeline;
   }
 
 }
