@@ -22,13 +22,14 @@
         </ng-template>
 
         <ng-template #sortingTaskTemplate>
-            <div id="screenshots-grid">
-                <app-grid-image *ngFor="let screenshot of lineup" 
-                    [screenshot]="screenshot"
-                    [timeline$]="timeline$"
-                    (addScreenshotToTimelineEvent)="onAddScreenshotToTimelineEvent($event)">
-                </app-grid-image>
-            </div>
+                <div id="screenshots-grid">
+                    <app-grid-image *ngFor="let screenshot of lineup" 
+                        [screenshot]="screenshot"
+                        [timeline$]="timeline$"
+                        (addScreenshotToTimelineEvent)="onAddScreenshotToTimelineEvent($event)">
+                    </app-grid-image>
+                </div>
+                <app-timeline></app-timeline>
         </ng-template>
         
     </section>
