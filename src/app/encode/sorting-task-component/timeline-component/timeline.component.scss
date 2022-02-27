@@ -5,8 +5,11 @@
     margin-top: 32px;;
 }
 
-.timeline--slot.empty {
+.timeline--slot {
     width: 64px;
     height: 32px;
+}
+
+.timeline--slot.empty {
     border: 2px dashed gray;
 }

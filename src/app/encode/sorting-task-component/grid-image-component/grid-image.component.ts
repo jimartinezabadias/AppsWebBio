@@ -12,7 +12,6 @@ import { EncodeFullImageComponent } from './full-image-component/full-image.comp
 export class EncodeGridImageComponent {
 
   private _screenshot: IEncodeScreenshot;
-  private _timeline$: Observable<IEncodeScreenshot[]>;
   
   public isSelected: boolean = false;
   
@@ -26,9 +25,8 @@ export class EncodeGridImageComponent {
   }
   
   @Input() 
-  set timeline$(timeline$: Observable<IEncodeScreenshot[]>) {
-    this._timeline$ = timeline$;
-    this._timeline$.subscribe(this._onTimelineChange);
+  set timeline$(timeline$: Observable<Array<IEncodeScreenshot | null>>) {
+    timeline$.subscribe(this._onTimelineChange);
   }
 
   @Output()
@@ -47,10 +45,10 @@ export class EncodeGridImageComponent {
     imageDialogRef.componentInstance.imageUrl = this.imageURL;
   }
 
-  private _onTimelineChange = (newTimeline: Array<IEncodeScreenshot>): void => {
+  private _onTimelineChange = (newTimeline: Array<IEncodeScreenshot | null>): void => {
     this.isSelected = false;
-    newTimeline.forEach( (screenshot: IEncodeScreenshot) => {
-      if (screenshot.id === this._screenshot.id) this.isSelected = true;
+    newTimeline.forEach( (screenshot: IEncodeScreenshot | null) => {
+      if (screenshot?.id === this._screenshot.id) this.isSelected = true;
     }); 
   }
 }

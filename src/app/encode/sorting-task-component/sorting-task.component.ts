@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { EncodeUserService } from '../services/EncodeUserService';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
+import { UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { Observable, Subject } from 'rxjs';
-import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
+import { MAX_TIMELINE_SCREENSHOTS } from '../constants';
 
 const testResponseConstant: IEncodeScreenshot[] = [
   {
@@ -100,18 +99,14 @@ const testResponseConstant: IEncodeScreenshot[] = [
 })
 export class EncodeSortingTaskComponent implements OnInit, OnExit {
   
-  private _timeline = new Array<IEncodeScreenshot>();
-  private _timelineSubject = new Subject<IEncodeScreenshot[]>();
+  private _timeline = new Array<IEncodeScreenshot | null>(MAX_TIMELINE_SCREENSHOTS).fill(null);
+  private _timelineSubject = new Subject<Array<IEncodeScreenshot | null>>();
 
   public isTaskRunning: boolean = false;
   public lineup: Array<IEncodeScreenshot>;
-  public timeline$: Observable<IEncodeScreenshot[]>;
+  public timeline$: Observable<Array<IEncodeScreenshot | null>>;
 
-  constructor(
-    private _dbService: DataDbService,
-    private _userService: EncodeUserService,
-    private _router: Router,
-    private _route: ActivatedRoute)
+  constructor()
   {
   }
 
@@ -133,7 +128,8 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
   }
 
   public onAddScreenshotToTimelineEvent(screenshot: IEncodeScreenshot): void {
-    this._timeline.push(screenshot);
+    const emptyIndex = this._timeline.indexOf(null);
+    this._timeline[emptyIndex] = screenshot;
     this._timelineSubject.next(this._timeline);
   }
 }

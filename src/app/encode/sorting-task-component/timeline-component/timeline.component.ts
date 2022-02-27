@@ -9,25 +9,19 @@ import { IEncodeScreenshot } from '../../models/IEncodeScreenshot';
     styleUrls: ['timeline.component.scss']
 })
 export class EncodeTimelineComponent {
-  
-  private _timeline$: Observable<IEncodeScreenshot[]>;
 
   public componentTimeline =  new Array<IEncodeScreenshot | null>(MAX_TIMELINE_SCREENSHOTS);
 
   @Input() 
-  set timeline$(timeline$: Observable<IEncodeScreenshot[]>) {
-    this._timeline$ = timeline$;
-    this._timeline$.subscribe(this._onTimelineChange);
+  set timeline$(timeline$: Observable<Array<IEncodeScreenshot | null>>) {
+    timeline$.subscribe(this._onTimelineChange);
   }
   
   constructor()
   {
-    // for (let index = 0; index < MAX_TIMELINE_SCREENSHOTS; index++) {
-    //   this.componentTimeline.push(null);
-    // }
   }
 
-  private _onTimelineChange = (newTimeline: Array<IEncodeScreenshot>): void => {
+  private _onTimelineChange = (newTimeline: Array<IEncodeScreenshot | null>): void => {
     console.log("updating timeline component _onTimelineChange");
     // todo update component timeline
   }
