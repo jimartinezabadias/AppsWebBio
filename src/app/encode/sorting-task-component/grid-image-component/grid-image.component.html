@@ -4,12 +4,16 @@
     <div id="buttons">
         <button mat-icon-button 
             id="button--add-to-timeline" 
-            (click)="addToTimeline()">
+            (click)="addToTimeline()"
+            matTooltip="Agregar a la lista"
+            matTooltipShowDelay="1000">
             <mat-icon>add_to_photos</mat-icon>
         </button>
         <button mat-icon-button 
             id="button--open-in-full" 
-            (click)="openInFull()">
+            (click)="openInFull()"
+            matTooltip="Ver en pantalla completa"
+            matTooltipShowDelay="1000">
             <mat-icon>open_in_full</mat-icon>
         </button>
         <button mat-icon-button 
@@ -18,8 +22,5 @@
             disabled="true">
             <mat-icon>library_add_check</mat-icon>
         </button>
-
-        <!-- Este va en las fotos del timeline para deseleccionarlas -->
-        <!-- <mat-icon>do_disturb_on</mat-icon> -->
     </div>
 </div>

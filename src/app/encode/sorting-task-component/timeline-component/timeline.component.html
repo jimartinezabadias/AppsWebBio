@@ -7,7 +7,9 @@
         <div *ngIf="screenshot"
             id="overlay">
             <button mat-icon-button  
-                (click)="removefromTimeline(screenshot)">
+                (click)="removefromTimeline(screenshot)"
+                matTooltip="Borrar de la lista"
+                matTooltipShowDelay="1000">
                 <mat-icon>do_disturb_on</mat-icon>
             </button>
         </div>
