@@ -33,7 +33,8 @@
                 </app-grid-image>
             </div>
             <!-- Timeline -->
-            <app-timeline [timeline$]="timeline$">
+            <app-timeline [timeline$]="timeline$"
+                (removeScreenshotFromTimelineEvent)="onRemoveScreenshotFromTimelineEvent($event)">
             </app-timeline>
         </ng-template>
         

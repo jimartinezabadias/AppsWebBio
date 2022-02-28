@@ -127,9 +127,18 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
     this.isTaskRunning = true;
   }
 
-  public onAddScreenshotToTimelineEvent(screenshot: IEncodeScreenshot): void {
-    const emptyIndex = this._timeline.indexOf(null);
-    this._timeline[emptyIndex] = screenshot;
+  public onAddScreenshotToTimelineEvent(addedScreenshot: IEncodeScreenshot): void {
+    const firstEmptyIndex = this._timeline.indexOf(null);
+    
+    this._timeline[firstEmptyIndex] = addedScreenshot;
+    this._timelineSubject.next(this._timeline);
+  }
+  
+  public onRemoveScreenshotFromTimelineEvent(removedScreenshot: IEncodeScreenshot): void {
+    const removedScreenshotIndex = this._timeline
+      .findIndex(screenshot => screenshot?.id === removedScreenshot.id);
+    
+    this._timeline[removedScreenshotIndex] = null;
     this._timelineSubject.next(this._timeline);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MAX_TIMELINE_SCREENSHOTS } from '../../constants';
 import { IEncodeScreenshot } from '../../models/IEncodeScreenshot';
@@ -16,18 +16,19 @@ export class EncodeTimelineComponent {
   set timeline$(timeline$: Observable<Array<IEncodeScreenshot | null>>) {
     timeline$.subscribe(this._onTimelineChange);
   }
+
+  @Output()
+  public removeScreenshotFromTimelineEvent = new EventEmitter<IEncodeScreenshot>();
   
   constructor()
   {
   }
 
   public removefromTimeline(screenshot: IEncodeScreenshot): void {
-    console.log("removing screenshot:");
-    console.log(screenshot);
+    this.removeScreenshotFromTimelineEvent.emit(screenshot);
   }
 
   private _onTimelineChange = (newTimeline: Array<IEncodeScreenshot | null>): void => {
-    console.log("updating timeline component _onTimelineChange");
     this.timeline = newTimeline;
   }
 
