@@ -66,3 +66,4 @@ export const ROOM_2_TITLE = "Ronda 2 de 2";
 
 // Sorting task
 export const MAX_TIMELINE_SCREENSHOTS = 12;
+export const HAS_CURSOR_CLASS = 'hasCursor';

@@ -5,22 +5,36 @@
     margin-top: 32px;;
 }
 
-.timeline--slot {
+.timeline-slot {
     position: relative;
     min-width: 99px;
     min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.timeline--slot.empty {
+.timeline-slot.empty {
     border: 2px dashed gray;
 }
 
-.timeline--slot > img {
+.timeline-slot.hasCursor > #cursor {
+    visibility: visible;
+}
+
+#cursor {
+    position: absolute;
+    bottom: -40px;
+    transform: scale(1.6);
+    visibility: hidden;
+}
+
+.timeline-slot > img {
     width: 100%;
     height: 100%;
 }
 
-.timeline--slot:hover #overlay {
+.timeline-slot:hover #overlay {
     visibility: visible;
 }
 
