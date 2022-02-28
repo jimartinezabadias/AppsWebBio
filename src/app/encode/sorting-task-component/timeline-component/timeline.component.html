@@ -4,5 +4,12 @@
         [class.empty]="!screenshot">
         <img *ngIf="screenshot" 
             [src]="screenshot.imageURL" alt=""/>
+        <div *ngIf="screenshot"
+            id="overlay">
+            <button mat-icon-button  
+                (click)="removefromTimeline(screenshot)">
+                <mat-icon>do_disturb_on</mat-icon>
+            </button>
+        </div>
     </div>
 </div>

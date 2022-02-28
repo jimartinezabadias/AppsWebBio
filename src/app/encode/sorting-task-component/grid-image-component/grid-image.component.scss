@@ -9,20 +9,20 @@
     height: 100%;
 }
 
-#image:not(.selected):hover > #image__overlay, 
+#image:not(.selected):hover > #image--overlay, 
 #image:not(.selected):hover > #buttons,
 #image:not(.selected):hover #button--add-to-timeline,
 #image:not(.selected):hover #button--open-in-full {
     visibility: visible;
 }
 
-#image.selected > #image__overlay,
+#image.selected > #image--overlay,
 #image.selected > #buttons,
 #image.selected #button--add-check {
     visibility: visible;
 } 
 
-#image__overlay {
+#image--overlay {
     position: absolute;
     top: 0;
     left: 0;

@@ -21,6 +21,11 @@ export class EncodeTimelineComponent {
   {
   }
 
+  public removefromTimeline(screenshot: IEncodeScreenshot): void {
+    console.log("removing screenshot:");
+    console.log(screenshot);
+  }
+
   private _onTimelineChange = (newTimeline: Array<IEncodeScreenshot | null>): void => {
     console.log("updating timeline component _onTimelineChange");
     this.timeline = newTimeline;

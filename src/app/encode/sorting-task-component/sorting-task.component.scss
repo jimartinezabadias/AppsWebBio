@@ -1,3 +1,7 @@
+.main-app-section > * {
+    max-width: 80%;
+}
+
 #task-breafing {
     display: flex;
     flex-flow: column;
@@ -15,6 +19,5 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap:16px;
-    width: 70%;
   }
   
