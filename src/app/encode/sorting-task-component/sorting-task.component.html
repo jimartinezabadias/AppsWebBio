@@ -11,8 +11,7 @@
 
             <div id="task-breafing">
                 <p>Ahora te voy a pedir que ordenes temporalmente, de manera cronológica las imágenes que seleccionaste.</p>
-                <button mat-raised-button 
-                    id="continue-button" 
+                <button mat-raised-button
                     color="primary" 
                     aria-label="continuar"
                     (click)="startTask()">
@@ -36,8 +35,17 @@
             <app-timeline [timeline$]="timeline$"
                 (removeScreenshotFromTimelineEvent)="onRemoveScreenshotFromTimelineEvent($event)">
             </app-timeline>
+
+            <button mat-raised-button 
+                class="finish-task-button"
+                color="primary" 
+                aria-label="finalizar"
+                (click)="finishTask()"
+                [disabled]="!isTimelineCompleted">
+                Finalizar
+            </button>
+
         </ng-template>
         
     </section>
-
 </section>

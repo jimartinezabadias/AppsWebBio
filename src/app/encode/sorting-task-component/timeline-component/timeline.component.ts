@@ -45,8 +45,8 @@ export class EncodeTimelineComponent implements AfterViewInit {
     this._slotList.map( slot => slot.nativeElement.classList.remove(HAS_CURSOR_CLASS));
 
     const firstEmptySlotIndex = this.timeline.indexOf(null);
-    let firstEmptySlot = this._slotList.get(firstEmptySlotIndex).nativeElement;
-    firstEmptySlot.classList.add(HAS_CURSOR_CLASS);
+    let firstEmptySlot = this._slotList.get(firstEmptySlotIndex)?.nativeElement;
+    firstEmptySlot?.classList.add(HAS_CURSOR_CLASS);
   }
 
 }

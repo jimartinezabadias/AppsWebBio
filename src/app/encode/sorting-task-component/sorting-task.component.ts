@@ -106,6 +106,11 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
   public lineup: Array<IEncodeScreenshot>;
   public timeline$: Observable<Array<IEncodeScreenshot | null>>;
 
+  get isTimelineCompleted(): boolean {
+    const filledSlots = this._timeline.filter(screenshot => screenshot != null).length;
+    return filledSlots == MAX_TIMELINE_SCREENSHOTS;
+  }
+
   constructor()
   {
   }
@@ -125,6 +130,12 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
 
   public startTask(): void {
     this.isTaskRunning = true;
+  }
+
+  public finishTask(): void {
+    this.isTaskRunning = false;
+    console.log("task finished with a timeline of")
+    console.log(this._timeline);
   }
 
   public onAddScreenshotToTimelineEvent(addedScreenshot: IEncodeScreenshot): void {
