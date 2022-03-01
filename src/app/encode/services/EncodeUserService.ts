@@ -36,11 +36,12 @@ export class EncodeUserService {
 
         const newSessionTwo: IEncodeSessionTwo = { 
             completed: false, 
-            somnolenceDegree: null, 
             perpetratorCondition: null, 
+            somnolenceDegree: null, 
             identificationResponse: null, 
             audios: null, 
-            imageSelectionResponse: null 
+            imageSelectionResponse: null,
+            imageSortingResponse: null
         };
         
         const userConsent: IEncodeUserConsent = { hasAccepted: false, date: null };

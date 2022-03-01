@@ -3,6 +3,7 @@ import { EncodeUserService } from '../services/EncodeUserService';
 import { Router, UrlTree } from "@angular/router";
 import { OnExit } from '../exit.guard';
 import { Observable } from 'rxjs';
+import { SessionsEnum } from '../constants';
 
 @Component({
     selector: 'app-encode-end',
@@ -13,6 +14,14 @@ export class EncodeEndComponent implements OnInit, OnExit {
   
   public userName: string;
 
+  get sessionsEnum(): typeof SessionsEnum {
+    return SessionsEnum;
+  }
+
+  get currentSession(): SessionsEnum {
+    return this._userService.session;
+  }
+
   constructor(private _userService: EncodeUserService, 
     private _router: Router) 
   {
@@ -21,12 +30,17 @@ export class EncodeEndComponent implements OnInit, OnExit {
   async ngOnInit(): Promise<void> 
   {
     this.userName = this._userService.user.name;
-    this._userService.user.sessionOne.completed = true;
+    
+    if (this._userService.session == SessionsEnum.SessionOne)
+      this._userService.user.sessionOne.completed = true;
+    
+    if (this._userService.session == SessionsEnum.SessionTwo)
+      this._userService.user.sessionTwo.completed = true;
+    
     await this._userService.updateUserInDB();
   }
 
   public onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     return this._router.navigate(["/"]);
   }
-
 }
