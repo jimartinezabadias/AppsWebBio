@@ -10,7 +10,8 @@
 
             <!-- selectionStopped -->
             <ng-template #selectionStopped>
-                <h1 class="title" *ngIf="completed == false">Ahora te voy a pedir que selecciones de entre 12 pares de fotos la que corresponde con las imágenes que viste en el video.</h1>
+                <h1 class="title" *ngIf="completed == false">Tarea de Selección</h1>
+                <p *ngIf="completed == false">Ahora te voy a pedir que selecciones de entre 12 pares de fotos la que corresponde con las imágenes que viste en el video.</p>
                 <h1 class="title" *ngIf="completed == true">¡Ya seleccionaste las imagenes! Por favor, continua al siguiente paso.</h1>
                 <div class="stepper-buttons" *ngIf="completed == true">
                     <h4>Seleccionadas {{currentStep}}/{{steps}}</h4>
