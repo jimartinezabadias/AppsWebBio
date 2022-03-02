@@ -35,7 +35,15 @@
                         </ng-template>
                         <ng-template #progress>
                             <div *ngIf="user.sessionOne.completed">
-                                <p>Estado: Dia 1 Completado</p> 
+                                <div *ngIf="user.sessionTwo.perpetratorCondition && user.sessionTwo.completed == true">
+                                    <p>Estado: Dia 2 Completado</p> 
+                                </div>
+                                <div *ngIf="user.sessionTwo.perpetratorCondition && user.sessionTwo.completed == false">
+                                    <p>Estado: Dia 2 En progreso</p> 
+                                </div>
+                                <div *ngIf="!user.sessionTwo.perpetratorCondition">
+                                    <p>Estado: Dia 1 Completado</p> 
+                                </div>
                             </div>
                             <div *ngIf="!user.sessionOne.completed">
                                 <p>Estado: Dia 1 En progreso</p>
