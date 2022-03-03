@@ -39,7 +39,7 @@ export class EncodeAudioListComponent {
 
   private async _storeAudioInFirebase(newAudio: IEncodeInMemoryAudio): Promise<string> 
   {
-    const filePath = `encode-audios/${this._userService.user.uid}/${newAudio.id}`;
+    const filePath = this._createAudioFilePath(newAudio.id);
     const fileRef = this._bdService.getCloudStorageFileRef(filePath);
     const uploadTask = this._bdService.uploadFileToCloudStorage(filePath, newAudio.rawData);
     
@@ -49,6 +49,12 @@ export class EncodeAudioListComponent {
     ).toPromise();
     
     return url$;
+  }
+
+  private _createAudioFilePath(audioFileName: string) {
+    const userId = this._userService.user.uid;
+    const sessionId = this._userService.session.valueOf();
+    return `encode-audios/${userId}/${sessionId}/${audioFileName}`;
   }
 
   private _storeAudioInUser(newAudio: IEncodeInMemoryAudio): void {

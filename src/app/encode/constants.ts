@@ -1,8 +1,8 @@
 export const ENCODE_TEST_URL = "/encode";
 
 export enum SessionsEnum {
-    SessionOne,
-    SessionTwo
+    SessionOne = 'session_1',
+    SessionTwo = 'session_2'
 }
 
 // Admin

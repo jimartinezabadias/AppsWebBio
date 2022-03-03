@@ -47,8 +47,8 @@ export class AudioRecorderService implements IAudioRecorder {
         const stop$ = fromEvent(this._mediaRecorder,"stop");
         stop$.subscribe((e: Event) => {
             const audioData: Blob = new Blob(this._recordedChunks, {type: "audio/webm"});
-            const randomId = uuidv4();
-            const newAudio: IEncodeInMemoryAudio = { id: randomId , rawData: audioData, downloadURL: null};
+            const audioId = this._createAudioId();
+            const newAudio: IEncodeInMemoryAudio = { id: audioId , rawData: audioData, downloadURL: null};
             this._audioList.push(newAudio);
             this.audioListChanged$.next(newAudio);
             this._recordedChunks = new Array();
@@ -56,7 +56,7 @@ export class AudioRecorderService implements IAudioRecorder {
 
         this._mediaRecorder.start();
     }
-    
+
     stopRecording(): void 
     {
         this.isRecording = false;
@@ -85,4 +85,9 @@ export class AudioRecorderService implements IAudioRecorder {
         }
     }
 
+    private _createAudioId(): string {
+        const randomId = uuidv4();
+        const audioNum = this._audioList.length;
+        return String(audioNum).padStart(3, '0') + '_' + randomId;
+    }
 }
