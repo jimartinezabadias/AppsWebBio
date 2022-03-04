@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IEncodeSuspect } from '../../models/IEncodeSuspect';
 import { ABSENT_SUSPECT_ID, ROOM_1_TITLE, ROOM_2_TITLE } from '../../constants';
 import { IEncodeIdentificationResponse } from '../../models/IEncodeIdentificationResponse';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfidenceDialogComponent } from './confidence-component/confidence.component';
 import { Observable, Subject } from 'rxjs';
 
@@ -49,7 +49,12 @@ export class EncodeIdentificationRoom implements OnInit {
   }
 
   public async identifySuspect(): Promise<void> {
-    const confidenceDialogRef = this._dialogService.open(ConfidenceDialogComponent);
+    const confidenceDialogConfig: MatDialogConfig = { 
+      disableClose: true, 
+      closeOnNavigation: false,
+    };
+
+    const confidenceDialogRef = this._dialogService.open(ConfidenceDialogComponent, confidenceDialogConfig);
     confidenceDialogRef.componentInstance.suspectPhotoUrl = this._selectedSuspect.photoImageUrl;
     
     const dialogClose$ = confidenceDialogRef.afterClosed();
@@ -59,7 +64,7 @@ export class EncodeIdentificationRoom implements OnInit {
     confidenceDialogRef.close();
   }
 
-  private _selectedSuspectChange$ = (suspect: IEncodeSuspect|null) => {
+  private _selectedSuspectChange$ = (suspect: IEncodeSuspect | null) => {
     this._selectedSuspect = suspect;
   }
 

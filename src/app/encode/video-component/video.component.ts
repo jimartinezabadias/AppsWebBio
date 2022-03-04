@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
@@ -38,7 +38,7 @@ export class EncodeVideoComponent implements OnExit {
 
   async onVideoLaunched()
   {
-    const videoPlayerDialogConfig = { 
+    const videoPlayerDialogConfig: MatDialogConfig = { 
       disableClose: true, 
       closeOnNavigation: false,
       backdropClass: 'backdropBackground',
