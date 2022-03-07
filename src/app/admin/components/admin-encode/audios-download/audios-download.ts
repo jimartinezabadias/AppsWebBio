@@ -35,13 +35,6 @@ export class AudiosDownload implements OnInit{
             }
         }
 
-        // TODO: agregar cuando dayTwo tenga audios
-        // if (userData.dayTwo != null) {
-        //     userData.dayTwo.audios.map((audio: IEncodeAudio) => {
-        //         userAudios.push(audio);
-        //     })
-        // }
-
         const zipFileName = "audios_" + userIdParam;
         
         this.downloadZippedFiles(userAudios, zipFileName);
