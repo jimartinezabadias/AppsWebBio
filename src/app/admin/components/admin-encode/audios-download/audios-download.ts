@@ -28,6 +28,11 @@ export class AudiosDownload implements OnInit{
             userData.sessionOne.audios.map((audio: IEncodeAudio) => {
                 userAudios.push(audio);
             })
+            if (userData.sessionTwo.audios != null) {
+                userData.sessionTwo.audios.map((audio: IEncodeAudio) => {
+                    userAudios.push(audio);
+                })
+            }
         }
 
         // TODO: agregar cuando dayTwo tenga audios
