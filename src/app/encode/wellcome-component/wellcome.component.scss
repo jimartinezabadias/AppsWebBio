@@ -35,9 +35,18 @@
     justify-content: center;
 }
 
-.btn
-{
+.btn {
+    font-size: larger;
+    padding: 12px 64px;
+    font-weight: 500;   
+    background-color: #4a4067;
+    color: white;
     margin-top: 2rem;
+    align-self: flex-end;
+}
+
+.btn:hover {
+    background-color: #4a4067cc;
 }
 
 .warning
