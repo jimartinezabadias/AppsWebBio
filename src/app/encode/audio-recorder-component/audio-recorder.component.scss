@@ -1,12 +1,12 @@
 .recorder
 {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     padding: 24px;
-    row-gap: 16px;
-    background-color: white;
-    border-radius: 16px;
+    column-gap: 16px;
+    background-color: #4a40670c;
+    border-radius: 1000px;
 }
 
 .recorder-display
@@ -14,43 +14,28 @@
     padding: 16px;
     background-color: white;
     text-align: center;
-    border-radius: 4px;
-    min-width: 128px;
+    border-radius: 6px;
+    min-width: 160px;
 }
 
-.recorder-controls
-{
-    display: flex;
-    flex-direction: row;
+.recorder-display * {
+    color: #312a45;
 }
 
-.rec-button
-{
-    margin-right: 16px;
+button * {
+    color: whitesmoke;
 }
 
 .mat-button-base
 {
-    width: 64px !important;
-    height: 64px !important;
+    width: 80px !important;
+    height: 80px !important;
 }
 
 .mat-icon {
-    transform: scale(1.32);
+    transform: scale(1.64);
 }
 
 .cdk-overlay-pane {
     max-width: 580px;
-}
-
-.mat-dialog-content > p
-{
-    font-size: 17px;
-    line-height: 24px;
-}
-
-.mat-dialog-title > h1
-{
-    margin-bottom: 5px;
-    text-align: left;
 }

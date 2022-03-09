@@ -1,15 +1,22 @@
-<h1 class="mat-dialog-title">Permite que Investigar utilice tu micrófono</h1>
+<h1 class="mat-dialog-title">Permitir uso de micrófono</h1>
 <div class="mat-dialog-content">
-    <p>
-        Investigar necesita acceder a tu micrófono para poder realizar
-        nuestros tests. Tendrás que confirmar esta decisión en cada navegador
-        que utilices.
-    </p>
+    <mat-list>
+        <mat-list-item>
+            <mat-icon mat-list-icon
+                color="accent">lens</mat-icon>
+            <p>Para poder realizar nuestros tests Investigar necesita acceder a tu micrófono.</p>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon mat-list-icon
+                color="accent">lens</mat-icon>
+            <p>Tendrás que confirmar esta decisión en tu navegador.</p>
+        </mat-list-item>
+    </mat-list>
 </div>
 <div mat-dialog-actions>
     <button mat-button
         (click)="onClose(true)"
         cdkFocusInitial>
-        Cerrar
+        Entendido
     </button>
 </div>

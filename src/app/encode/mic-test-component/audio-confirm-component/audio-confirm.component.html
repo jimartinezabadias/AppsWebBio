@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Escuchá tu grabación y confimá si se escucha bien.</h1>
+<h1 mat-dialog-title>¿Se escucha bien?</h1>
 <div mat-dialog-content>
     <audio controls autoplay>
         <source [src]="audio" type="audio/webm"/>
@@ -7,11 +7,11 @@
 <div mat-dialog-actions>
     <button mat-button
         (click)="onClose(false)">
-        No se escucha bien
+        No se escucha
     </button>
     <button mat-button
         (click)="onClose(true)"
         cdkFocusInitial>
-        Se escucha bien
+        Sí, se escucha bien
     </button>
 </div>

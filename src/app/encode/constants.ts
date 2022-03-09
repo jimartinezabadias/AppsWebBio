@@ -53,8 +53,8 @@ export enum VideoState
 export const REC_OPTIONS = { mimeType: 'audio/webm' };
 export enum RecorderStatus
 {
-    Ready = "Listo para grabar",
-    Recording = "Grabando..."
+    Ready = "Esperando para grabar",
+    Recording = "GRABANDO"
 };
 
 // Identification task

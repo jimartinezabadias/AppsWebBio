@@ -1,18 +1,11 @@
-<div class="recorder">
+<div class="recorder mat-elevation-z1">
+    <button mat-fab
+        class="button"
+        (click)="onRecButtonPressed()">
+        <mat-icon *ngIf="!recorderService.isRecording">mic</mat-icon>
+        <mat-icon *ngIf="recorderService.isRecording">stop</mat-icon>
+    </button>
     <div class="recorder-display">
         <span>{{status}}</span>
-    </div>
-    <div class="recorder-controls">
-        <button mat-fab 
-            class="rec-button"
-            (click)="onRec()"
-            [disabled]="recorderService.isRecording">
-            <mat-icon>mic</mat-icon>
-        </button>
-        <button mat-fab 
-            (click)="onStop()"
-            [disabled]="!recorderService.isRecording">
-            <mat-icon>stop</mat-icon>
-        </button>
     </div>
 </div>

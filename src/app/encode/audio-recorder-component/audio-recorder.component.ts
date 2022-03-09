@@ -18,10 +18,10 @@ export class AudioRecorderComponent implements OnInit {
   status: RecorderStatus;
   recorderService: AudioRecorderService;
 
-  constructor(recorder: AudioRecorderService, public dialog: MatDialog) 
+  constructor(private _recorder: AudioRecorderService, private _dialog: MatDialog) 
   {
     this._navigator = navigator;
-    this.recorderService = recorder;
+    this.recorderService = _recorder;
     this.status = RecorderStatus.Ready;
   }
 
@@ -29,35 +29,40 @@ export class AudioRecorderComponent implements OnInit {
   {
   }
 
-  private _openDialog(): void {
-    this._disclaimerDialog = this.dialog.open(AudioDisclaimerComponent, {
-      width: '580px'
-    });
+  public onRecButtonPressed(): void {
+    if (this.recorderService.isRecording)
+    {
+      this._stopRecording();
+      return;
+    }
+    
+    if (!this.recorderService.isRecording) {
+      this._startRecording();
+      return;
+    }
   }
 
-  public async onRec(): Promise<void>
+  private async _startRecording(): Promise<void>
   {
     if (!this.recorderService.isRecording)
     {
       try {
-        this._openDialog();
+        this._openDisclaimerDialog();
         this._stream = await this._navigator.mediaDevices.getUserMedia({audio: true, video: false});
-        if (this._disclaimerDialog.getState() === MatDialogState.OPEN){
+        if (this._disclaimerDialog.getState() === MatDialogState.OPEN) {
           this._disclaimerDialog.close();
         }
         this.recorderService.record(this._stream);
         this.status = RecorderStatus.Recording;
       } catch (error) {
-        if (this._disclaimerDialog.getState() === MatDialogState.CLOSED){
-          this._openDialog();
+        if (this._disclaimerDialog.getState() === MatDialogState.CLOSED) {
+          this._openDisclaimerDialog();
         }
-        console.log("error al acceder al microfono");
-        console.log(error);
       }
     }
   }
   
-  public onStop(): void
+  private _stopRecording(): void
   {
     if (this.recorderService.isRecording)
     {
@@ -67,4 +72,9 @@ export class AudioRecorderComponent implements OnInit {
     }
   }
 
+  private _openDisclaimerDialog(): void {
+    this._disclaimerDialog = this._dialog.open(AudioDisclaimerComponent, {
+      width: '580px'
+    });
+  }
 }
