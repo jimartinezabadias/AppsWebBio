@@ -53,7 +53,7 @@ export class EncodeGoogleFormsComponent implements OnInit, OnExit, AfterViewInit
     return false;
   }
 
-  public onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+  onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
     return exitDialogRef.afterClosed().toPromise<boolean>();

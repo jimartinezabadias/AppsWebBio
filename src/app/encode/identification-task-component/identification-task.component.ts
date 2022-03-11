@@ -3,6 +3,7 @@ import { EncodeUserService } from '../services/EncodeUserService';
 import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { ROOM_1_TITLE, PerpetratorCondition, ABSENT_SUSPECT_ID, ROOM_2_TITLE } from '../constants';
 import { IEncodeSuspect } from '../models/IEncodeSuspect';
@@ -10,6 +11,7 @@ import { DocumentReference } from '@angular/fire/firestore';
 import { EncodeIdentificationRoom } from './identification-room-component/identification-room.component';
 import { EncodeIdentificationRoomDirective } from './identification-room.directive';
 import { IEncodeIdentificationResponse } from '../models/IEncodeIdentificationResponse';
+import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 
 @Component({
     selector: 'app-identification-task',
@@ -27,12 +29,31 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     private _userService: EncodeUserService, 
     private _cfr: ComponentFactoryResolver,
     private _router: Router,
-    private _route: ActivatedRoute)
+    private _route: ActivatedRoute,
+    private _dialog: MatDialog)
   {
   }
 
   onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    return true;
+    const exitDialogRef = this._dialog.open(ExitConfirmComponent);
+    exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
+    return exitDialogRef.afterClosed().toPromise<boolean>();
+  }
+
+  private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
+    if (response == true){ 
+      this._abandonTest();
+      return true;
+    } 
+
+    return false;
+  }
+
+  private async _abandonTest() {
+    this._userService.user.abandonedByUser = true;
+    this._userService.user.sessionTwo.completed = true;
+    await this._userService.updateUserInDB();
+    this._router.navigate(["/"]);
   }
 
   async openIdentificaton() {
@@ -92,6 +113,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     this.isIdentifing = false;
     actualRoomRef.destroy();
 
+    this.onExit = () => true;
     this._router.navigate(["../audios"], { relativeTo: this._route });
   }
 
