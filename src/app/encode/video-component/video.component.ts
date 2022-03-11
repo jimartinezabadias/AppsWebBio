@@ -57,7 +57,11 @@ export class EncodeVideoComponent implements OnExit {
 
   private async _abandonTest() {
     this._userService.user.abandonedByUser = true;
-    this._userService.user.sessionOne.completed = true;
+    if (this._userService.session == 'session_1') {
+      this._userService.user.sessionOne.completed = true;
+    } else if (this._userService.session == 'session_2') {
+      this._userService.user.sessionTwo.completed = true;
+    }
     await this._userService.updateUserInDB();
     this._router.navigate(["/"]);
   }
