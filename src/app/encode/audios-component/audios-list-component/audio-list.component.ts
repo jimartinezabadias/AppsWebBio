@@ -54,6 +54,7 @@ export class EncodeAudioListComponent {
   private _createAudioFilePath(audioFileName: string) {
     const userId = this._userService.user.uid;
     const sessionId = this._userService.session.valueOf();
+    audioFileName = sessionId + '_' + audioFileName;
     return `encode-audios/${userId}/${sessionId}/${audioFileName}`;
   }
 
