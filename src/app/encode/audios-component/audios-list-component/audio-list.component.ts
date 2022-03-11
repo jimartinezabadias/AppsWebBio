@@ -31,6 +31,8 @@ export class EncodeAudioListComponent {
 
   private _newAudioObserver = async (newAudio: IEncodeInMemoryAudio) => {
     this.isUploadingNewAudio$.next(true);
+    const sessionId = this._userService.session.valueOf();
+    newAudio.id = sessionId + '_' + newAudio.id ;
     newAudio.downloadURL = await this._storeAudioInFirebase(newAudio);
     this._storeAudioInUser(newAudio);
     this.audios.push(newAudio);
@@ -54,7 +56,6 @@ export class EncodeAudioListComponent {
   private _createAudioFilePath(audioFileName: string) {
     const userId = this._userService.user.uid;
     const sessionId = this._userService.session.valueOf();
-    audioFileName = sessionId + '_' + audioFileName;
     return `encode-audios/${userId}/${sessionId}/${audioFileName}`;
   }
 
