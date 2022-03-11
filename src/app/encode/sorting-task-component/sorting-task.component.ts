@@ -5,6 +5,8 @@ import { Observable, Subject } from 'rxjs';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
 import { MAX_TIMELINE_SCREENSHOTS } from '../constants';
 import { EncodeUserService } from '../services/EncodeUserService';
+import { MatDialog } from '@angular/material/dialog';
+import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 
 @Component({
     selector: 'app-sorting-task',
@@ -27,17 +29,36 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
 
   constructor(private _userService: EncodeUserService,
     private _router: Router,
-    private _route: ActivatedRoute,)
+    private _route: ActivatedRoute,
+    private _dialog: MatDialog)
   {
+  }
+
+  onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    const exitDialogRef = this._dialog.open(ExitConfirmComponent);
+    exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
+    return exitDialogRef.afterClosed().toPromise<boolean>();
+  }
+
+  private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
+    if (response == true){ 
+      this._abandonTest();
+      return true;
+    } 
+
+    return false;
+  }
+
+  private async _abandonTest() {
+    this._userService.user.abandonedByUser = true;
+    this._userService.user.sessionTwo.completed = true;
+    await this._userService.updateUserInDB();
+    this._router.navigate(["/"]);
   }
 
   ngOnInit(): void {
     this.lineup = this._userService.user.sessionTwo.imageSelectionResponse;
     this.timeline$ = this._timelineSubject.asObservable();
-  }
-
-  onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    return true;
   }
 
   public startTask(): void {
@@ -46,6 +67,7 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
 
   public finishTask(): void {
     this._userService.user.sessionTwo.imageSortingResponse = this._timeline;
+    this.onExit = () => true;
     this._router.navigate(["../end"], { relativeTo: this._route });
   }
 
