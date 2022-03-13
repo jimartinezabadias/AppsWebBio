@@ -5,7 +5,7 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 @Component({
     selector: 'app-audio-confirm',
     templateUrl: './audio-confirm.component.html',
-    styleUrls: ['../../encode.component.scss']
+    styleUrls: ['audio-confirm.component.scss','../../encode.component.scss']
 })
 export class AudioConfirmComponent {
 
