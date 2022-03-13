@@ -3,11 +3,9 @@
     <section class="main-app-section">
 
         <div class="videoTest">
-
-            <h1 class="title">Mirá el video y decinos si podés verlo y escucharlo correctamente</h1>
+            <h1 class="title">Prueba de audio y video</h1>
 
             <mat-card>
-                
                 <mat-card-content class="card-content">
 
                     <video width="450" #video>
@@ -17,7 +15,6 @@
                     </video>
 
                     <div class="videoQuestions">
-
                         <div class="labelAndRadioContainer">
                             <label id="video-question-label">
                                 ¿La imagen se ve bien y de manera fluída?</label>
@@ -44,17 +41,16 @@
                     </div>
                     
                     <mat-card-actions>
-                        <button mat-raised-button type="submit" class="save-form-btn" (click)="onConfirm()">
-                            SIGUIENTE
+                        <button mat-raised-button 
+                            type="submit" 
+                            class="save-form-btn" 
+                            (click)="onConfirm()">
+                            Continuar
                         </button>   
                     </mat-card-actions>
 
                 </mat-card-content>
-
             </mat-card>
-            
         </div>
-                
     </section>
-    
 </section>
