@@ -8,16 +8,13 @@
                 <mat-card class="shipping-card">
                     
                     <mat-card-header>
-                        <mat-card-title>Grado de somnolencia</mat-card-title>
+                        <mat-card-title>¿Cuán alerta te sentís <b>en este momento</b>?</mat-card-title>
                     </mat-card-header>
                     
                     <mat-card-content class="form-fields">
                     
                         <!-- Grado de somnolencia -->
                         <div class="labelAndRadioContainer">
-                            <mat-card-subtitle>
-                                <label id="somnolence-degree-label">Este test es una forma rápida de detectar cuán alerta te sentís, selecioná el estado con el que te identifiques mejor en este momento:</label>
-                            </mat-card-subtitle>
                             
                             <mat-radio-group 
                                 aria-labelledby="somnolence-degree-label"
@@ -53,8 +50,14 @@
                         
                         <!-- Boton siguiente -->
                         <mat-card-actions>
-                            <button mat-raised-button type="submit" class="save-form-btn">
-                                SIGUIENTE
+                            <button mat-stroked-button
+                                (click)="back()">
+                                Volver
+                            </button>
+                            <button mat-raised-button 
+                                type="submit" 
+                                class="save-form-btn">
+                                Siguiente
                             </button>   
                         </mat-card-actions>
                         

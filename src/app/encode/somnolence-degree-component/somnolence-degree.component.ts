@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
@@ -20,7 +21,8 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
 
   constructor(private _router: Router,
     private _route: ActivatedRoute,
-    private _userService: EncodeUserService) 
+    private _userService: EncodeUserService,
+    private _location: Location) 
   {
     this.somnolenceDegreeFormGroup = this._buildSomnolenceDegreeFormGroup();
   }
@@ -45,6 +47,10 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
     {
       this._router.navigate(["../google-forms"], { relativeTo: this._route });
     }
+  }
+
+  back(): void {
+    this._location.back();
   }
 
   private _buildSomnolenceDegreeFormGroup(): FormGroup {
