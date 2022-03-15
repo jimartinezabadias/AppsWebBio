@@ -79,17 +79,11 @@ export class EncodeAudiosComponent implements OnExit {
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
     if (response == true){ 
-      this._abandonTest();
+      this._userService.abandonTest();
       return true;
     } 
 
     return false;
-  }
-
-  private async _abandonTest() {
-    this._userService.user.abandonedByUser = true;
-    await this._userService.updateUserInDB();
-    this._router.navigate(["/"]);
   }
 
 }

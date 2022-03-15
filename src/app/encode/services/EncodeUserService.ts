@@ -9,6 +9,7 @@ import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
 import { IEncodeSessionTwo } from "../models/IEncodeSessionTwo";
 import { IEncodeUserConsent } from "../models/IEncodeUserConsent";
 import { SessionsEnum } from "../constants";
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,7 @@ export class EncodeUserService {
     
     private _user: IEncodeUser = null;
     
-    constructor(private _dbService: DataDbService, private _http: HttpClient)
+    constructor(private _dbService: DataDbService, private _http: HttpClient, private _router: Router)
     {
     }    
     
@@ -93,6 +94,12 @@ export class EncodeUserService {
         if (this._user == null) return ;
         
         await this._dbService.updateEncodeUser(this._user);
+    }
+
+    public async abandonTest() {
+        this._user.abandonedByUser = true;
+        await this.updateUserInDB();
+        this._router.navigate(["/"]);
     }
     
     private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
