@@ -29,25 +29,35 @@
             <h4>Requisitos para participar</h4>
             <mat-list>
                 <mat-list-item>
-                    <mat-icon mat-list-icon>done</mat-icon>
-                    Ser mayor de 18 años
+                    <mat-icon mat-list-icon>lens</mat-icon>
+                    <p class="mat-list-text">
+                        Ser mayor de 18 años
+                    </p>
                 </mat-list-item>
                 <mat-list-item>
-                    <mat-icon mat-list-icon>done</mat-icon>
-                    No consumir psicofármacos
+                    <mat-icon mat-list-icon>lens</mat-icon>
+                    <p class="mat-list-text">
+                        No consumir psicofármacos
+                    </p>
                 </mat-list-item>
                 <mat-list-item>
-                    <mat-icon mat-list-icon>done</mat-icon>
-                    No tener desórdenes del ciclo sueño-vigilia
+                    <mat-icon mat-list-icon>lens</mat-icon>
+                    <p class="mat-list-text">
+                        No tener desórdenes del ciclo sueño-vigilia
+                    </p>
                 </mat-list-item>
                 <mat-list-item>
-                    <mat-icon mat-list-icon>done</mat-icon>
-                    Si participaste o estás participando en otro de nuestros estudios tenés que saber 
-                    que el presente estudio es independiente y por tanto, podés participar también.
+                    <mat-icon mat-list-icon>lens</mat-icon>
+                    <p class="mat-list-text">
+                        Si participaste o estás participando en otro de nuestros estudios tenés que saber 
+                        que el presente estudio es independiente y por tanto, podés participar también.
+                    </p>
                 </mat-list-item>
                 <mat-list-item>
-                    <mat-icon mat-list-icon>done</mat-icon>
-                    Contar con micrófono (puede ser de la computadora o de los auriculares). EXCLUYENTE.
+                    <mat-icon mat-list-icon>lens</mat-icon>
+                    <p class="mat-list-text">
+                        Contar con micrófono (puede ser de la computadora o de los auriculares). EXCLUYENTE.
+                    </p>
                 </mat-list-item>
             </mat-list>
 
@@ -77,27 +87,33 @@
                 respuestas de los/as participantes.
             </p>
 
-            <mat-selection-list #list_of_agreement>
-                <mat-list-option checkboxPosition="before">
-                    Doy mi consentimiento para realizar la tarea de forma online.
-                </mat-list-option>
-                <mat-list-option checkboxPosition="before">
-                    Entiendo que mi participación es voluntaria y
-                    cuento con el derecho de retirarme cuando lo desee.
-                </mat-list-option>
-                <mat-list-option checkboxPosition="before">
-                    Entiendo y consiento que mis respuestas se registren y
-                    almacenen de forma segura en una base de datos.
-                </mat-list-option>
-                <mat-list-option checkboxPosition="before">
-                    Entiendo y consiento que mis respuestas pueden usarse
-                    de forma anónima para investigaciones secundarias en el futuro.
-                </mat-list-option>
-            </mat-selection-list>
+            <div id="interactive-consent">
+                <h4>Dar consentimiento</h4>
 
-            <button mat-raised-button class="save-form-btn"
-                disabled="{{list_of_agreement.selectedOptions.selected.length < 4}}"
-                (click)="onConsent()">Doy mi consentimiento para participar</button>
+                <mat-selection-list #list_of_agreement>
+                    <mat-list-option checkboxPosition="before">
+                        Doy mi consentimiento para realizar la tarea de forma online.
+                    </mat-list-option>
+                    <mat-list-option checkboxPosition="before">
+                        Entiendo que mi participación es voluntaria y
+                        cuento con el derecho de retirarme cuando lo desee.
+                    </mat-list-option>
+                    <mat-list-option checkboxPosition="before">
+                        Entiendo y consiento que mis respuestas se registren y
+                        almacenen de forma segura en una base de datos.
+                    </mat-list-option>
+                    <mat-list-option checkboxPosition="before">
+                        Entiendo y consiento que mis respuestas pueden usarse
+                        de forma anónima para investigaciones secundarias en el futuro.
+                    </mat-list-option>
+                </mat-selection-list>
+    
+                <button mat-raised-button class="save-form-btn"
+                    disabled="{{list_of_agreement.selectedOptions.selected.length < 4}}"
+                    (click)="onConsent()">
+                    Confirmar
+                </button>
+            </div>
 
             <p>
                 Cualquier duda que tengas sobre el consentimiento informado podes corroborarlo comunicandote con el
