@@ -88,7 +88,6 @@ export class EncodeAudiosComponent implements OnExit {
 
   private async _abandonTest() {
     this._userService.user.abandonedByUser = true;
-    this._userService.user.sessionOne.completed = true;
     await this._userService.updateUserInDB();
     this._router.navigate(["/"]);
   }
