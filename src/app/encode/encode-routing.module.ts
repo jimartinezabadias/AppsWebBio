@@ -69,7 +69,6 @@ const routes: Routes = [
             },
             {
                 path: 'google-forms',
-                canDeactivate: [ExitGuard],
                 component: EncodeGoogleFormsComponent
             },
             {

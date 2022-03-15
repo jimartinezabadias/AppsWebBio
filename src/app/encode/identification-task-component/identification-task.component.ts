@@ -51,7 +51,6 @@ export class EncodeIdentificationTaskComponent implements OnExit {
 
   private async _abandonTest() {
     this._userService.user.abandonedByUser = true;
-    this._userService.user.sessionTwo.completed = true;
     await this._userService.updateUserInDB();
     this._router.navigate(["/"]);
   }
