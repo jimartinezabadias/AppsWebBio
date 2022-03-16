@@ -61,7 +61,12 @@ export class EncodeVideoComponent implements OnExit {
   }
 
   private _videoPlayerDialogClosed$ = async (result: boolean) => {
-    (result == true) ? this._navigateToAudios() : await this._userService.abandonTest();
+    (result == true) ? this._navigateToAudios() : this.userAbandoned();
+  }
+
+  private async userAbandoned() {
+    await this._userService.abandonTest()
+    this._router.navigate(["/"]);
   }
   
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean | UrlTree> => {

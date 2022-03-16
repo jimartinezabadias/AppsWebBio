@@ -43,8 +43,7 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean | UrlTree> => {
     if (response == true){ 
       await this._userService.abandonTest();
-      const redirectUrl: UrlTree = this._router.parseUrl('/');
-      return redirectUrl;
+      this._router.navigate(["/"]);
     } 
 
     return false;
