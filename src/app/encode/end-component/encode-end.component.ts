@@ -40,7 +40,7 @@ export class EncodeEndComponent implements OnInit, OnExit {
     await this._userService.updateUserInDB();
   }
 
-  public onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+  public onExit(): Observable<boolean> | Promise<boolean> | boolean {
     return this._router.navigate(["/"]);
   }
 }
