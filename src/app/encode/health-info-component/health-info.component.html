@@ -8,13 +8,10 @@
                 <mat-card>
                     
                     <mat-card-header>
-                        <mat-card-title>Datos sobre tu salud</mat-card-title>
+                        <mat-card-title>Datos sobre su salud</mat-card-title>
                     </mat-card-header>
                     
                     <mat-card-content class="form-fields">
-                        <mat-card-subtitle>
-                            La información que brindes es totalmente confidencial y solo se utilizará con fines académicos.
-                        </mat-card-subtitle>
                     
                         <div class="radioAndTextGroup">
 
@@ -74,11 +71,17 @@
                             </mat-form-field>
 
                         </div>
-                        
+                    
                         <!-- Boton siguiente -->
                         <mat-card-actions>
-                            <button mat-raised-button type="submit" class="save-form-btn">
-                                SIGUIENTE
+                            <button mat-stroked-button
+                                (click)="back()">
+                                Volver
+                            </button>
+                            <button mat-raised-button 
+                                type="submit" 
+                                class="save-form-btn">
+                                Siguiente
                             </button>   
                         </mat-card-actions>
                         
@@ -87,6 +90,10 @@
                 </mat-card>
 
             </form>
+
+            <p class="mat-caption">
+                * La información que brindes es totalmente confidencial y solo se utilizará con fines académicos.
+            </p>
 
         </div>
     </section>

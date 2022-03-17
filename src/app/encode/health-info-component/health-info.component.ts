@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IEncodeUserHealthInfo } from '../models/IEncodeUserHealthInfo';
@@ -36,7 +37,8 @@ export class EncodeHealthInfoComponent implements OnInit {
 
   constructor(private _router: Router,
     private _route: ActivatedRoute,
-    private _userService: EncodeUserService) 
+    private _userService: EncodeUserService,
+    private _location: Location) 
   {
     this.healthInfoFormGroup = this._buildHealthInfoFormGroup();
   }
@@ -47,7 +49,10 @@ export class EncodeHealthInfoComponent implements OnInit {
     this.hasSleepDisorder.valueChanges.subscribe(this._hasSleepDisorderObserver);
   }
 
-  
+  back(): void {
+    this._location.back();
+  }
+
   onSaveForm($event: any)
   {
     if (this.healthInfoFormGroup.valid)
