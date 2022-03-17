@@ -7,16 +7,19 @@
                 <mat-card>
                     
                     <mat-card-header>
-                        <mat-card-title>Información personal</mat-card-title>
+                        <mat-card-title>Datos personales</mat-card-title>
                     </mat-card-header>
                     
                     <mat-card-content class="form-fields">
                         <!-- Edad -->
-                        <mat-form-field class="full-width" appearance="fill">
+                        <mat-form-field class="full-width" 
+                            appearance="fill"
+                            hideRequiredMarker="false">
                             
                             <mat-label>Edad</mat-label>
                             
                             <input type="number" 
+                                required
                                 matInput  
                                 formControlName="age" 
                                 placeholder="18"
@@ -32,20 +35,23 @@
                         </mat-form-field>
 
                         <!-- Genero -->
-                        <mat-form-field appearance="fill">
+                        <mat-form-field appearance="fill"
+                            hideRequiredMarker="false">
 
                             <mat-label>Género</mat-label>
                             
-                            <mat-select formControlName="gender" name="gender">
-                            <mat-option value="genders.Male">
-                                {{genders.Male}}
-                            </mat-option>
-                            <mat-option value="genders.Female">
-                                {{genders.Female}}
-                            </mat-option>
-                            <mat-option value="genders.NonBinary">
-                                {{genders.NonBinary}}
-                            </mat-option>
+                            <mat-select formControlName="gender" 
+                                required
+                                name="gender">
+                                <mat-option value="genders.Male">
+                                    {{genders.Male}}
+                                </mat-option>
+                                <mat-option value="genders.Female">
+                                    {{genders.Female}}
+                                </mat-option>
+                                <mat-option value="genders.NonBinary">
+                                    {{genders.NonBinary}}
+                                </mat-option>
                             </mat-select>
 
                             <mat-error *ngIf="gender.hasError('required')">
@@ -55,11 +61,14 @@
                         </mat-form-field>
 
                         <!-- Max Educacion -->
-                        <mat-form-field appearance="fill">
+                        <mat-form-field appearance="fill"
+                            hideRequiredMarker="false">
 
                             <mat-label>Nivel educativo alcanzado</mat-label>
                             
-                            <mat-select formControlName="educationLevel" name="educationLevel">
+                            <mat-select formControlName="educationLevel" 
+                                required
+                                name="educationLevel">
                                 <mat-option value="educationLevels.incompleteSecondary">
                                     {{educationLevels.incompleteSecondary}}
                                 </mat-option>

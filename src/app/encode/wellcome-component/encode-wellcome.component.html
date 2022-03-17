@@ -16,10 +16,10 @@
                 <h1 *ngIf="!this.user.sessionTwo.perpetratorCondition" class="warning">Sesion 2 en espera de ser habilitada.</h1>
             </ng-template>
 
-            <h4>
+            <h3>
                 Muchas gracias por participar en esta investigación.
                 Tu participación es sumamente valiosa para nosotros.
-            </h4>
+            </h3>
 
             <div *ngIf="this.user.sessionOne.completed == false || this.user.sessionOne.completed == true && this.user.sessionTwo.perpetratorCondition; then wellcomeCard">
                 <!-- template will replace this div -->
