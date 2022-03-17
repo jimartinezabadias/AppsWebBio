@@ -12,11 +12,6 @@
     row-gap: 7px;
 }
 
-.mat-card-actions
-{
-    align-self: center;
-}
-
 .labelAndRadioContainer
 {
     display: flex;
@@ -59,7 +54,7 @@ mat-card-header {
 }
 
 .mat-card {
-    max-width: 33em;
+    width: 32rem;
 }
 
 .mat-card-actions {

@@ -10,6 +10,8 @@
     display: flex;
     flex-direction: column;
     row-gap: 7px;
+    padding: 1rem;
+    margin-top: 1rem;
 }
 
 .row
@@ -19,9 +21,9 @@
     column-gap: 2rem;
 }
 
-.mat-card-actions
-{
-    align-self: center;
+.mat-card-actions {
+    display: flex;
+    justify-content: end;
 }
 
 mat-card-header {
@@ -35,8 +37,10 @@ mat-card-header {
 .mat-card-title 
 {
     margin: 0 !important;
+    font-weight:normal;
+    color: whitesmoke;
 }
 
 .mat-card {
-    max-width: 33em;
+    width: 32rem;
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { Gender, EducationLevel } from '../constants';
-import { ActivatedRoute, Router } from '@angular/router';
 import { IEncodeUserPersonalInfo } from '../models/IEncodeUserPersonalInfo';
 
 @Component({
@@ -29,13 +30,18 @@ export class EncodePersonalInfoComponent implements OnInit {
 
   constructor(private _router: Router,
     private _route: ActivatedRoute,
-    private _userService: EncodeUserService) 
+    private _userService: EncodeUserService,
+    private _location: Location) 
   {
     this.personalInfoFormGroup = this._buildPersonalInfoFormGroup();
   }
   
   ngOnInit(): void 
   {
+  }
+
+  back(): void {
+    this._location.back();
   }
 
   onSaveForm($event: any)
