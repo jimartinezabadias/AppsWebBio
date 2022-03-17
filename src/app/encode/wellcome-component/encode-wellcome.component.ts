@@ -5,9 +5,8 @@ import { EncodeUserService } from '../services/EncodeUserService';
 @Component({
     selector: 'app-encode-wellcome',
     templateUrl: './encode-wellcome.component.html',
-    styleUrls: ['../encode.component.scss','wellcome.component.scss']
+    styleUrls: ['wellcome.component.scss', '../encode.component.scss']
 })
-
 export class EncodeWellcomeComponent implements OnInit {
 
   public userName: string;

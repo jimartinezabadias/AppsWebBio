@@ -1,17 +1,14 @@
-h1 {
+.wellcome-heading {
     color: #e33b88;
+    font-size: 2.3rem;
+    margin-top: 2rem;
+    margin-bottom: 0.25rem;
 }
 
 .wellcome-message
 {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-.wellcome-message > h1
-{
-    margin: 0;
 }
 
 .wellcome-card
@@ -39,12 +36,7 @@ h1 {
     justify-content: center;
 }
 
-.btn {
-    font-size: larger;
-    padding: 12px 64px;
-    font-weight: 500;   
-    background-color: #4a4067;
-    color: white;
+.save-form-btn {
     margin-top: 2rem;
     align-self: flex-end;
 }
@@ -56,4 +48,10 @@ h1 {
 .warning
 {
     color: #fd2727;
+}
+
+.mat-list .mat-list-icon {
+    width: 1rem;
+    height: 1rem;
+    font-size: 1rem;
 }

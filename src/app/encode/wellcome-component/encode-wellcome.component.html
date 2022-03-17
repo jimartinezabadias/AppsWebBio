@@ -8,12 +8,12 @@
             </div>
 
             <ng-template #firstSession>
-                <h1 class="mat-display-1">¡Bienvenido a la sesion 1 {{ userName }}!</h1>
+                <h1 class="wellcome-heading">¡Hola {{ userName }}, bienvenido/a!</h1>
             </ng-template>
 
             <ng-template #secondSession>
-                <h1 *ngIf="this.user.sessionTwo.perpetratorCondition" class="mat-display-1">¡Bienvenido a la sesion 2 {{ userName }}!</h1>
-                <h1 *ngIf="!this.user.sessionTwo.perpetratorCondition" class="mat-display-1 warning">Sesion 2 en espera de ser habilitada.</h1>
+                <h1 *ngIf="this.user.sessionTwo.perpetratorCondition" class="wellcome-heading">¡Bienvenido de vuelta {{ userName }}!</h1>
+                <h1 *ngIf="!this.user.sessionTwo.perpetratorCondition" class="warning">Sesion 2 en espera de ser habilitada.</h1>
             </ng-template>
 
             <h4>
@@ -58,7 +58,7 @@
                                 
                             </mat-list>
                             <a mat-raised-button 
-                                class="btn"
+                                class="save-form-btn" 
                                 routerLink="../mic-test"
                                 routerLinkActive="active">
                                 Comenzar
