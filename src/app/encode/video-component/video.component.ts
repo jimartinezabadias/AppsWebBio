@@ -69,7 +69,7 @@ export class EncodeVideoComponent implements OnExit {
     this._router.navigate(["/"]);
   }
   
-  private _exitDialogClosed$ = async (response: boolean): Promise<boolean | UrlTree> => {
+  private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
     if (response == true){ 
       this._videoPlayerRef.close(false);
       await this._userService.abandonTest();

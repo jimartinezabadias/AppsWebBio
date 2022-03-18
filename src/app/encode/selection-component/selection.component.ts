@@ -40,7 +40,7 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
     return exitDialogRef.afterClosed().toPromise<boolean>();
   }
 
-  private _exitDialogClosed$ = async (response: boolean): Promise<boolean | UrlTree> => {
+  private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
     if (response == true){ 
       await this._userService.abandonTest();
       this._router.navigate(["/"]);
