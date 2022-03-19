@@ -8,18 +8,23 @@
             </div>
 
             <ng-template #firstSession>
-                <h1 class="wellcome-heading"><b>{{ userName }},</b> ¡bienvenido/a!</h1>
+                    <h1 class="wellcome-heading"><b>{{ userName }},</b> ¡bienvenido/a!</h1>
+                    <h3>
+                        Muchas gracias por participar en esta investigación.
+                        Tu participación es sumamente valiosa para nosotros.
+                    </h3>
             </ng-template>
 
             <ng-template #secondSession>
-                <h1 *ngIf="this.user.sessionTwo.perpetratorCondition" class="wellcome-heading">¡Bienvenido de vuelta {{ userName }}!</h1>
+                <div *ngIf="this.user.sessionTwo.perpetratorCondition">
+                    <h1 class="wellcome-heading">¡Bienvenido de vuelta {{ userName }}!</h1>
+                    <h3>
+                        Muchas gracias por participar en esta investigación.
+                        Tu participación es sumamente valiosa para nosotros.
+                    </h3>
+                </div>
                 <h1 *ngIf="!this.user.sessionTwo.perpetratorCondition" class="warning">Sesion 2 en espera de ser habilitada.</h1>
             </ng-template>
-
-            <h3>
-                Muchas gracias por participar en esta investigación.
-                Tu participación es sumamente valiosa para nosotros.
-            </h3>
 
             <div *ngIf="this.user.sessionOne.completed == false || this.user.sessionOne.completed == true && this.user.sessionTwo.perpetratorCondition; then wellcomeCard">
                 <!-- template will replace this div -->
