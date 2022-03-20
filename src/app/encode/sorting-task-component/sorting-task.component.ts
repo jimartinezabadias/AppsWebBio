@@ -37,16 +37,23 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
   onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean | UrlTree>();
+    return exitDialogRef.afterClosed().toPromise<boolean>();
   }
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
     if (response == true){ 
-      await this._userService.abandonTest();
-      this._router.navigate(["/"]);
+      this._abandonTest();
+      return true;
     } 
 
     return false;
+  }
+
+  private async _abandonTest() {
+    this._userService.user.abandonedByUser = true;
+    this._userService.user.sessionTwo.completed = true;
+    await this._userService.updateUserInDB();
+    this._router.navigate(["/"]);
   }
 
   ngOnInit(): void {

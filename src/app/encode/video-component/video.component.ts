@@ -29,7 +29,7 @@ export class EncodeVideoComponent implements OnExit {
     this._videoPlayerRef.componentInstance.videoState = VideoState.Pause;
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean | UrlTree>();
+    return exitDialogRef.afterClosed().toPromise<boolean>();
   }
 
   get videoSource(): string {
@@ -54,26 +54,27 @@ export class EncodeVideoComponent implements OnExit {
   {
     this._navigateToAudios();
   }
+
+  private async _abandonTest() {
+    this._userService.user.abandonedByUser = true;
+    this._userService.user.sessionOne.completed = true;
+    await this._userService.updateUserInDB();
+    this._router.navigate(["/"]);
+  }
   
   private _navigateToAudios() {
     this.onExit = () => true;
     this._router.navigate(["../audios"], { relativeTo: this._route });
   }
 
-  private _videoPlayerDialogClosed$ = async (result: boolean) => {
-    (result == true) ? this._navigateToAudios() : this.userAbandoned();
-  }
-
-  private async userAbandoned() {
-    await this._userService.abandonTest()
-    this._router.navigate(["/"]);
+  private _videoPlayerDialogClosed$ = (result: boolean) => {
+    (result == true) ? this._navigateToAudios() : this._abandonTest();
   }
   
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
     if (response == true){ 
       this._videoPlayerRef.close(false);
-      const redirectUrl: UrlTree = this._router.parseUrl('/');
-      return redirectUrl;
+      return true;
     } 
 
     this._videoPlayerRef.componentInstance.videoState = VideoState.Play;

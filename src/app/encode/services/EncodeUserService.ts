@@ -94,11 +94,6 @@ export class EncodeUserService {
         
         await this._dbService.updateEncodeUser(this._user);
     }
-
-    public abandonTest(): Promise<void> {
-        this._user.abandonedByUser = true;
-        return this.updateUserInDB();
-    }
     
     private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
         const googleFormsSettings: IEncodeGoogleFormsSettings = await this._dbService.getEncodeGoogleFormsSettings();
