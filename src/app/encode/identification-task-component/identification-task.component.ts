@@ -34,10 +34,10 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   {
   }
 
-  onExit(): Observable<boolean> | Promise<boolean> | boolean {
+  onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean>();
+    return exitDialogRef.afterClosed().toPromise<boolean | UrlTree>();
   }
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {

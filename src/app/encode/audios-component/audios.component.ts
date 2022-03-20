@@ -29,10 +29,10 @@ export class EncodeAudiosComponent implements OnExit {
   {
   }
 
-  public onExit(): Observable<boolean> | Promise<boolean> | boolean {
+  public onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean>();
+    return exitDialogRef.afterClosed().toPromise<boolean | UrlTree>();
   }
 
   public onAudiosReady(): void
