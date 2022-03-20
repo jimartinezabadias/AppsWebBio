@@ -4,11 +4,7 @@ import { EncodeUserService } from '../services/EncodeUserService';
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { MatStepper } from '@angular/material/stepper';
 import { GoogleFormValidator } from './google-form-validator';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
-import { Observable } from 'rxjs';
-import { OnExit } from '../exit.guard';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +13,7 @@ import { OnExit } from '../exit.guard';
     styleUrls: ['encode-google-forms.component.scss','../encode.component.scss']
 })
 
-export class EncodeGoogleFormsComponent implements OnInit, OnExit, AfterViewInit {
+export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('stepper') stepper: MatStepper;
 
@@ -25,49 +21,14 @@ export class EncodeGoogleFormsComponent implements OnInit, OnExit, AfterViewInit
   
   public userForms: FormGroup;
 
-  constructor(
-    private _userService: EncodeUserService, 
-    private _formBuilder: FormBuilder, 
-    private _router: Router, 
-    private _route: ActivatedRoute,
-    private _dialog: MatDialog) 
+  constructor(private _userService: EncodeUserService, private _formBuilder: FormBuilder, private _router: Router, private _route: ActivatedRoute) 
   {
     this._userResponses = this._userService.user.googleFormsResponses;
-  }
-
-  private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
-    if (response == true){ 
-      console.log("a");
-      this._userService.user.abandonedByUser = true;
-      if (this._userService.session == 'session_1') {
-        this._userService.user.sessionOne.completed = true;
-      } else if (this._userService.session == 'session_2') {
-        this._userService.user.sessionTwo.completed = true;
-      }
-
-      await this._userService.updateUserInDB();
-      this._router.navigate(["/"]);
-      return true;
-    } 
-
-    return false;
-  }
-
-  onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    const exitDialogRef = this._dialog.open(ExitConfirmComponent);
-    exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean>();
   }
   
   get googleForms(): FormArray {
     return this.userForms.get('googleForms') as FormArray; 
   }
-
-  public navigateToVideo() {
-    this.onExit = () => true;
-    this._router.navigate(["../video"], { relativeTo: this._route });
-  }
-
   
   ngOnInit(): void {
     this.userForms = this._formBuilder.group({

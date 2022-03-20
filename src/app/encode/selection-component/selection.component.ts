@@ -1,20 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { DocumentReference } from '@angular/fire/firestore';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
-import { OnExit } from '../exit.guard';
-import { MatDialog } from '@angular/material/dialog';
-import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-encode-selection',
     templateUrl: './selection.component.html',
     styleUrls: ['selection.component.scss','../encode.component.scss']
 })
-export class EncodeSelectionComponent implements OnInit, OnExit {
+export class EncodeSelectionComponent implements OnInit {
   public imagesPairs: IEncodeScreenshot[];
   public steps = 12;
   public random_pairs = [];
@@ -29,31 +25,8 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
   constructor(private _router: Router,
               private _route: ActivatedRoute,
               private _dbService: DataDbService,
-              private _userService: EncodeUserService,
-              private _dialog: MatDialog) 
+              private _userService: EncodeUserService) 
   {
-  }
-
-  onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    const exitDialogRef = this._dialog.open(ExitConfirmComponent);
-    exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean>();
-  }
-
-  private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
-    if (response == true){ 
-      this._abandonTest();
-      return true;
-    } 
-
-    return false;
-  }
-
-  private async _abandonTest() {
-    this._userService.user.abandonedByUser = true;
-    this._userService.user.sessionTwo.completed = true;
-    await this._userService.updateUserInDB();
-    this._router.navigate(["/"]);
   }
 
   async getScreenshotPairs() 
@@ -102,7 +75,6 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
       }
     } else {
       //routear a ordenamiento
-      this.onExit = () => true;
       this._router.navigate(["../sorting"], { relativeTo: this._route });
     }
   }
