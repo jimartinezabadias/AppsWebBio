@@ -5,7 +5,8 @@
         <mat-icon *ngIf="!recorderService.isRecording">mic</mat-icon>
         <mat-icon *ngIf="recorderService.isRecording">stop</mat-icon>
     </button>
-    <div class="recorder-display">
+    <div class="recorder-display"
+        [class.recording] = "recorderService.isRecording">
         <span>{{status}}</span>
     </div>
 </div>

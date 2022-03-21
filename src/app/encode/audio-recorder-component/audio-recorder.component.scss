@@ -3,10 +3,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 24px;
-    column-gap: 16px;
+    padding: 0.75rem;
+    column-gap: 1.5rem;
     background-color: #4a40670c;
     border-radius: 1000px;
+    width: 20rem;
 }
 
 .recorder-display
@@ -18,8 +19,8 @@
     min-width: 160px;
 }
 
-.recorder-display * {
-    color: #312a45;
+.recorder-display.recording * {
+    color: #e33b88;
 }
 
 button * {

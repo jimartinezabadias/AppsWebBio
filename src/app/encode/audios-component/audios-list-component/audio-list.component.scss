@@ -1,6 +1,33 @@
-.audio-list
-{
+.audio-list {
     display: flex;
     flex-flow: column;
     align-items: center;
+    row-gap: 0.5rem;
+    margin-top: 1rem;
+    width: 20rem;
+}
+
+.audio {
+    display: flex;
+    flex-flow: row;
+    background-color: ghostwhite;
+    align-items: center;
+    width: 100%;
+    border-radius: 1rem;
+}
+
+.audio > * {
+    color: #76ad2e;
+}
+
+.audio > p {
+    margin: 1rem;
+}
+
+.audio.uploading > p {
+    color: gray;
+}
+
+.audio.uploading > .mat-spinner {
+    margin: 0 0.5rem;
 }

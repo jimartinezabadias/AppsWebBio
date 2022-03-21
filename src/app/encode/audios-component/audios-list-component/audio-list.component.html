@@ -1,11 +1,15 @@
 <section class="container">
     <div class="audio-list">
 
-        <div *ngFor="let audio of audios; let indexOfelement=index;">
-            <p>Audio nro {{indexOfelement + 1}}</p>
+        <div *ngFor="let audio of audios; let indexOfelement=index;"
+            class="audio mat-elevation-z1">
+            <p>Audio {{indexOfelement + 1}}</p>
+            <mat-icon >done_all</mat-icon>
         </div>
-        <div *ngIf="isUploadingNewAudio$ | async">
-            <p>(Subiendo ...)</p>
+        <div *ngIf="isUploadingNewAudio$ | async"
+            class="audio uploading">
+            <p>Subiendo audio...</p>
+            <mat-spinner [diameter]="32"></mat-spinner>
         </div>
     </div>
 </section>

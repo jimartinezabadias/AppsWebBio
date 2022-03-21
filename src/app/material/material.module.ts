@@ -25,6 +25,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSliderModule } from "@angular/material/slider";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -52,7 +53,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     MatStepperModule,
     MatButtonToggleModule,
     MatSliderModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule,
@@ -77,7 +79,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     MatStepperModule,
     MatButtonToggleModule,
     MatSliderModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlES}]
 })
