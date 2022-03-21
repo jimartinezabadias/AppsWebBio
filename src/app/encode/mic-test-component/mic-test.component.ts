@@ -26,6 +26,7 @@ export class EncodeMicTestComponent implements OnInit {
 
   ngOnInit(): void 
   {
+    this._recorderService.deleteAudioAt(0);
     this._recorderService.audioListChanged$.subscribe(
       { 
         next: (newAudio: IEncodeInMemoryAudio) => {
@@ -54,7 +55,7 @@ export class EncodeMicTestComponent implements OnInit {
   }
 
   private _dialogClosedObserver = (result: boolean) => {
-    (result == true) ? this._router.navigate(["../video-test"], { relativeTo: this._route }) : this._recorderService.deleteAudioAt(0);
+    (result == true) ? this._router.navigate(["../video-test"], { relativeTo: this._route }) && this.dialog.closeAll() : this._recorderService.deleteAudioAt(0);
   }
 
 }
