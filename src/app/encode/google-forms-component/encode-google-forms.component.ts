@@ -6,7 +6,6 @@ import { MatStepper } from '@angular/material/stepper';
 import { GoogleFormValidator } from './google-form-validator';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 @Component({
     selector: 'app-encode-google-forms',
     templateUrl: './encode-google-forms.component.html',
@@ -21,11 +20,15 @@ export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
   
   public userForms: FormGroup;
 
-  constructor(private _userService: EncodeUserService, private _formBuilder: FormBuilder, private _router: Router, private _route: ActivatedRoute) 
+  constructor(
+    private _userService: EncodeUserService, 
+    private _formBuilder: FormBuilder, 
+    private _router: Router, 
+    private _route: ActivatedRoute) 
   {
     this._userResponses = this._userService.user.googleFormsResponses;
   }
-  
+
   get googleForms(): FormArray {
     return this.userForms.get('googleForms') as FormArray; 
   }

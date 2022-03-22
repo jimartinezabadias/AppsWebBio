@@ -29,7 +29,7 @@ export class EncodeAudiosComponent implements OnExit {
   {
   }
 
-  public onExit(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+  public onExit(): Observable<boolean> | Promise<boolean> | boolean {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
     return exitDialogRef.afterClosed().toPromise<boolean>();
@@ -79,18 +79,11 @@ export class EncodeAudiosComponent implements OnExit {
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
     if (response == true){ 
-      this._abandonTest();
-      return true;
+      await this._userService.abandonTest();
+      this._router.navigate(["/"]);
     } 
 
     return false;
-  }
-
-  private async _abandonTest() {
-    this._userService.user.abandonedByUser = true;
-    this._userService.user.sessionOne.completed = true;
-    await this._userService.updateUserInDB();
-    this._router.navigate(["/"]);
   }
 
 }

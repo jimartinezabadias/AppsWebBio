@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { DocumentReference } from '@angular/fire/firestore';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
+import { OnExit } from '../exit.guard';
+import { MatDialog } from '@angular/material/dialog';
+import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-encode-selection',
     templateUrl: './selection.component.html',
     styleUrls: ['selection.component.scss','../encode.component.scss']
 })
-export class EncodeSelectionComponent implements OnInit {
+export class EncodeSelectionComponent implements OnInit, OnExit {
   public imagesPairs: IEncodeScreenshot[];
   public steps = 12;
   public random_pairs = [];
@@ -25,8 +29,24 @@ export class EncodeSelectionComponent implements OnInit {
   constructor(private _router: Router,
               private _route: ActivatedRoute,
               private _dbService: DataDbService,
-              private _userService: EncodeUserService) 
+              private _userService: EncodeUserService,
+              private _dialog: MatDialog) 
   {
+  }
+
+  onExit(): Observable<boolean> | Promise<boolean> | boolean {
+    const exitDialogRef = this._dialog.open(ExitConfirmComponent);
+    exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
+    return exitDialogRef.afterClosed().toPromise<boolean>();
+  }
+
+  private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
+    if (response == true){ 
+      await this._userService.abandonTest();
+      this._router.navigate(["/"]);
+    } 
+
+    return false;
   }
 
   async getScreenshotPairs() 
@@ -75,6 +95,7 @@ export class EncodeSelectionComponent implements OnInit {
       }
     } else {
       //routear a ordenamiento
+      this.onExit = () => true;
       this._router.navigate(["../sorting"], { relativeTo: this._route });
     }
   }

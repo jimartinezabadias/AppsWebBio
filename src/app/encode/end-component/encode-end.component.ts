@@ -39,7 +39,7 @@ export class EncodeEndComponent implements OnInit, OnExit {
     await this._userService.updateUserInDB();
   }
   
-  public onExit = (): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree>  => {
+  onExit(): Observable<boolean> | Promise<boolean> | boolean {
     return false;
   }
 }

@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 export class EncodeVideoComponent implements OnExit {
   
   private _videoPlayerRef: MatDialogRef<EncodeVideoPlayer>;
+  private videoLaunched = false;
 
   constructor(
     private _userService: EncodeUserService, 
@@ -25,16 +26,13 @@ export class EncodeVideoComponent implements OnExit {
   {
   }
 
-  public onExit = (): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> => {
-    if (this._videoPlayerRef) 
-      {
-        this._videoPlayerRef.componentInstance.videoState = VideoState.Pause;
-        const exitDialogRef = this._dialog.open(ExitConfirmComponent);
-        exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-        return exitDialogRef.afterClosed().toPromise<boolean>();
-      }
-    
-    return true;
+  public onExit(): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.videoLaunched) {
+      this._videoPlayerRef.componentInstance.videoState = VideoState.Pause;
+    }
+    const exitDialogRef = this._dialog.open(ExitConfirmComponent);
+    exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
+    return exitDialogRef.afterClosed().toPromise<boolean>();
   }
 
   get videoSource(): string {
@@ -53,17 +51,12 @@ export class EncodeVideoComponent implements OnExit {
     this._videoPlayerRef = this._dialog.open(EncodeVideoPlayer, videoPlayerDialogConfig);
     this._videoPlayerRef.componentInstance.videoState = VideoState.Play;
     this._videoPlayerRef.afterClosed().subscribe(this._videoPlayerDialogClosed$);
+    this.videoLaunched = true;
   }
   
   skipVideo()
   {
     this._navigateToAudios();
-  }
-
-  private async _abandonTest() {
-    this._userService.user.abandonedByUser = true;
-    await this._userService.updateUserInDB();
-    this._router.navigate(["/"]);
   }
   
   private _navigateToAudios() {
@@ -71,14 +64,22 @@ export class EncodeVideoComponent implements OnExit {
     this._router.navigate(["../audios"], { relativeTo: this._route });
   }
 
-  private _videoPlayerDialogClosed$ = (result: boolean) => {
-    (result == true) ? this._navigateToAudios() : this._abandonTest();
+  private _videoPlayerDialogClosed$ = async (result: boolean) => {
+    (result == true) ? this._navigateToAudios() : this.userAbandoned();
+  }
+
+  private async userAbandoned() {
+    await this._userService.abandonTest()
+    this._router.navigate(["/"]);
   }
   
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
     if (response == true){ 
-      this._videoPlayerRef.close(false);
-      return true;
+      if (this.videoLaunched) {
+        this._videoPlayerRef.close(false);
+      }
+      await this._userService.abandonTest();
+      this._router.navigate(["/"]);
     } 
 
     this._videoPlayerRef.componentInstance.videoState = VideoState.Play;
