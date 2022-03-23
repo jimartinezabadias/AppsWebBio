@@ -8,13 +8,15 @@
             <mat-card>
                 <mat-card-content class="card-content">
 
-                    <video width="450" #video>
+                    <video width="450" #video controls loop>
                         <source src="assets/videos/videoPruebaEncode.mp4"
                                 type="video/mp4">
                             Sorry, your browser doesn't support embedded videos.
                     </video>
 
                     <div class="videoQuestions">
+                        <p *ngIf="!isAudioGood || !isVideoGood" class="video-warning">Por favor, comprueba el funcionamiento de audio y video en tu computadora. 
+                            Vas a poder continuar cuando veas y escuches correctamente.</p>
                         <div class="labelAndRadioContainer">
                             <label id="video-question-label">
                                 ¿La imagen se ve bien y de manera fluída?</label>
@@ -44,6 +46,7 @@
                         <button mat-raised-button 
                             type="submit" 
                             class="save-form-btn" 
+                            [disabled]="!isAudioGood || !isVideoGood"
                             (click)="onConfirm()">
                             Continuar
                         </button>   
