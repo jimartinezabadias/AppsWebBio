@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { IEncodeInMemoryAudio } from '../models/IEncodeInMemoryAudio';
 import { AudioRecorderService } from '../services/AudioRecorderService';
 import { AudioConfirmComponent } from './audio-confirm-component/audio-confirm.component';
+import { SessionsEnum } from '../constants';
+import { EncodeUserService } from '../services/EncodeUserService';
 
 @Component({
     selector: 'app-encode-mic-test',
@@ -22,7 +24,8 @@ export class EncodeMicTestComponent implements OnInit, OnDestroy {
               private _route: ActivatedRoute,
               private _recorderService: AudioRecorderService,
               private _sanitizer: DomSanitizer,
-              public dialog: MatDialog) 
+              public dialog: MatDialog,
+              private _userService: EncodeUserService) 
   {
   }
   
@@ -60,8 +63,23 @@ export class EncodeMicTestComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(this._dialogClosedObserver);
   }
 
+  onConfirm(): void 
+  {
+    if (this._userService.session == SessionsEnum.SessionTwo) 
+    {
+      this._router.navigate(["../somnolence-degree"], { relativeTo: this._route });
+      return;
+    } 
+    
+    if (this._userService.session == SessionsEnum.SessionOne) 
+    {
+      this._router.navigate(["../consent"], { relativeTo: this._route });
+      return;
+    }
+  }
+
   private _dialogClosedObserver = (result: boolean) => {
-    (result == true) ? this._router.navigate(["../video-test"], { relativeTo: this._route }) : this._recorderService.deleteAudioAt(0);
+    (result == true) ? this.onConfirm() : this._recorderService.deleteAudioAt(0);
   }
 
 }
