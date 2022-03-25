@@ -1,13 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { EncodeAudioListComponent } from './audios-list-component/audio-list.component';
 import { ExtendedRecallComponent } from './extended-recall-component/extended-recall.component';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SessionsEnum } from '../constants';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-encode-audios',
@@ -16,10 +17,20 @@ import { SessionsEnum } from '../constants';
 })
 export class EncodeAudiosComponent implements OnExit {
 
-  @ViewChild('audioList') public audioListComponent: EncodeAudioListComponent;
+  @ViewChild('audioList') private audioListComponent: EncodeAudioListComponent;
   
   private _wantsToExtend: boolean = true;
-  public noAudiosRecorded: boolean = false;
+
+  get continueButtonDisabled$(): Observable<boolean> {
+    return (this.audioListComponent) ? this.audioListComponent.isUploadingNewAudio$
+      .pipe(
+        map((isUploading: boolean) => {
+          return isUploading || this.audioListComponent.audios.length == 0
+        })
+      )
+      : 
+      of(true);
+  }
 
   constructor(
     private _userService: EncodeUserService,
@@ -37,11 +48,7 @@ export class EncodeAudiosComponent implements OnExit {
 
   public onAudiosReady(): void
   {
-    if (this.audioListComponent.audios.length <= 0) {
-      this.noAudiosRecorded = true;
-    } else if (this.audioListComponent.audios.length > 0) {
-      this.noAudiosRecorded = false;
-
+    if (this.audioListComponent.isUploadingNewAudio$.getValue() == false && this.audioListComponent.audios.length > 0) {
       if (this._wantsToExtend) {
         const extendDialogRef = this._dialog.open(ExtendedRecallComponent, {});
         extendDialogRef.afterClosed().subscribe(async (response: boolean): Promise<void> => {
@@ -58,7 +65,7 @@ export class EncodeAudiosComponent implements OnExit {
   
       if (!this._wantsToExtend) {
         this._navigateToEndComponent();
-      }
+      } 
     }
   }
 

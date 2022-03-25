@@ -2,20 +2,45 @@
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
         <div class="audios">
-            <h1 class="title">Describí con el mayor detalle posible lo que viste y escuchaste en el video.</h1>
-
-            <h1>Tocá la imagen del micrófono para hablar y el cuadrado para parar. Podes grabar el numero de audios que creas necesario.</h1>
+            <h1>Describí con el mayor detalle posible lo que viste y escuchaste en el video</h1>
             
-            <h1 *ngIf="this.noAudiosRecorded" class="audios-warning">¡Por favor! Grabá al menos un audio antes de continuar.</h1>
+            <mat-card class="audios-card">
 
-            <app-audio-recorder></app-audio-recorder>
-            <app-encode-audio-list #audioList></app-encode-audio-list>
+                <mat-card-content class="audios-card-content">
 
-            <mat-card-actions>
-                <a mat-raised-button 
-                    (click)="onAudiosReady()"
-                    [disabled]="audioListComponent?.isUploadingNewAudio$ | async">Continuar</a>
-            </mat-card-actions>
+                    <div class="image-instructions">
+                        <img src="assets/images/encode_recording_audios.svg" alt=""/>
+                        <mat-list>
+                            <mat-list-item>
+                                <mat-icon mat-list-icon
+                                    color="accent">lens</mat-icon>
+                                <p class="mat-list-text">
+                                    Podes grabar el numero de audios que creas necesario
+                                </p>
+                            </mat-list-item>
+                            
+                        </mat-list>
+                    </div>
+                    
+                    <div class="recorder-and-list">
+
+                        <app-audio-recorder></app-audio-recorder>
+                        <app-encode-audio-list #audioList></app-encode-audio-list>
+
+                    </div>
+                    
+                    <a mat-raised-button
+                        class="save-form-btn"
+                        (click)="onAudiosReady()"
+                        [disabled]="continueButtonDisabled$ | async">
+                        Continuar
+                    </a>
+
+                </mat-card-content>
+            </mat-card>
+            
+            <!-- <h1 *ngIf="this.noAudiosRecorded" class="audios-warning">¡Por favor! Grabá al menos un audio antes de continuar.</h1> -->
+
         </div>
     </section>
 </section>
