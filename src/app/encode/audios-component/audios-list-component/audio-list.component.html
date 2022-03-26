@@ -1,15 +1,27 @@
-<!-- <section class="container"> -->
-    <section class="audio-list">
+<section class="audio-list">
 
-        <div *ngFor="let audio of audios; let indexOfelement=index;"
+    <div *ngIf="isUploadingNewAudio$ | async; then uploading else audioList">
+        <!-- template will replace this div -->
+    </div>
+
+    <ng-template #audioList>
+        <div *ngIf="audios.length == 0"
             class="audio mat-elevation-z1">
-            <p>Audio {{indexOfelement + 1}}</p>
+            <p id="empty-list-message">Lista de audios vacia</p>
+        </div>
+    
+        <div *ngIf="audios.length > 0"
+            class="audio mat-elevation-z1">
             <mat-icon >done_all</mat-icon>
+            <p>{{audios.length}} audios guardados</p>
         </div>
-        <div *ngIf="isUploadingNewAudio$ | async"
-            class="audio uploading">
-            <p>Subiendo audio...</p>
+    </ng-template>
+
+    <ng-template #uploading>
+        <div class="audio uploading mat-elevation-z1">
             <mat-spinner [diameter]="32"></mat-spinner>
+            <p>Subiendo audio...</p>
         </div>
-    </section>
-<!-- </section> -->
+    </ng-template>
+
+</section>

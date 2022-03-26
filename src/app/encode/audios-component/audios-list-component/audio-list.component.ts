@@ -26,6 +26,7 @@ export class EncodeAudioListComponent {
         next: this._newAudioObserver
       }
     );
+    
     this.isUploadingNewAudio$ = new BehaviorSubject(false);
   }
 
