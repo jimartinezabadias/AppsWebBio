@@ -4,12 +4,6 @@
     flex-flow: column;
 }
 
-// .audios-warning
-// {
-//     color: #fd2727;
-//     font-size: 20px;
-// }
-
 .audios-card
 {
     max-width: 56rem;
@@ -47,4 +41,15 @@
     justify-self: flex-end;
     grid-column: 2;
     grid-row: 2;
+    margin-bottom: 1rem !important;
+}
+
+.mat-list {
+    margin: 0 0 2rem 0;
+}
+
+.mat-list .mat-list-icon {
+    width: 0.5rem;
+    height: 0.5rem;
+    font-size: 0.5rem;
 }

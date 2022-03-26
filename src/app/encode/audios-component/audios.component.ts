@@ -21,7 +21,7 @@ export class EncodeAudiosComponent implements OnExit {
   
   private _wantsToExtend: boolean = true;
 
-  get continueButtonDisabled$(): Observable<boolean> {
+  get finishButtonDisabled$(): Observable<boolean> {
     return (this.audioListComponent) ? this.audioListComponent.isUploadingNewAudio$
       .pipe(
         map((isUploading: boolean) => {
