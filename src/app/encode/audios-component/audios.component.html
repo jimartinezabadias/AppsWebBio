@@ -11,41 +11,45 @@
                     <img class="image-instructions" 
                         src="assets/images/encode_recording_audios.svg" alt=""/>
                     
-                    <div class="recorder-and-list">
+                    <div id="right-column">
+                        
+                        <div class="instructions-recorder-and-list">
+    
+                            <mat-list>
+                                <mat-list-item>
+                                    <mat-icon mat-list-icon
+                                        color="accent">lens</mat-icon>
+                                    <p class="mat-list-text">
+                                        Grabá al menos un audio antes de finalizar
+                                    </p>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <mat-icon mat-list-icon
+                                        color="accent">lens</mat-icon>
+                                    <p class="mat-list-text">
+                                        Podes grabar la cantidad de audios que creas necesario
+                                    </p>
+                                </mat-list-item>
+                            </mat-list>
+    
+                            <app-audio-recorder></app-audio-recorder>
+                            <app-encode-audio-list #audioList></app-encode-audio-list>
+    
+                            
+    
+                        </div>
 
-                        <mat-list>
-                            <mat-list-item>
-                                <mat-icon mat-list-icon
-                                    color="accent">lens</mat-icon>
-                                <p class="mat-list-text">
-                                    Grabá al menos un audio antes de finalizar
-                                </p>
-                            </mat-list-item>
-                            <mat-list-item>
-                                <mat-icon mat-list-icon
-                                    color="accent">lens</mat-icon>
-                                <p class="mat-list-text">
-                                    Podes grabar la cantidad de audios que creas necesario
-                                </p>
-                            </mat-list-item>
-                        </mat-list>
-
-                        <app-audio-recorder></app-audio-recorder>
-                        <app-encode-audio-list #audioList></app-encode-audio-list>
+                        <a mat-raised-button
+                            class="save-form-btn"
+                            (click)="onAudiosReady()"
+                            [disabled]="finishButtonDisabled$ | async">
+                            Finalizar
+                        </a>
 
                     </div>
                     
-                    <a mat-raised-button
-                        class="save-form-btn"
-                        (click)="onAudiosReady()"
-                        [disabled]="finishButtonDisabled$ | async">
-                        Finalizar
-                    </a>
-
                 </mat-card-content>
             </mat-card>
-
-
         </div>
     </section>
 </section>
