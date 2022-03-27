@@ -10,6 +10,7 @@ export class AudioDisclaimerComponent {
 
   constructor(private _dialogRef: MatDialogRef<AudioDisclaimerComponent>) 
   {
+    _dialogRef.disableClose = true;
   }
 
   onClose(result: boolean): void {
