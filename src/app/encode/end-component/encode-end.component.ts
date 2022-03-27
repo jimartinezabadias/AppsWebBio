@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { UrlTree } from "@angular/router";
+import { Router } from "@angular/router";
 import { OnExit } from '../exit.guard';
 import { Observable } from 'rxjs';
 import { SessionsEnum } from '../constants';
@@ -22,7 +22,8 @@ export class EncodeEndComponent implements OnInit, OnExit {
     return this._userService.session;
   }
 
-  constructor(private _userService: EncodeUserService) 
+  constructor(private _userService: EncodeUserService,
+    private _router: Router) 
   {
   }
 
@@ -41,5 +42,10 @@ export class EncodeEndComponent implements OnInit, OnExit {
   
   onExit(): Observable<boolean> | Promise<boolean> | boolean {
     return false;
+  }
+
+  public goHome(): void {
+    this.onExit = () => true;
+    this._router.navigate(["/"]);
   }
 }

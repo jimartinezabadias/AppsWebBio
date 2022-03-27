@@ -2,52 +2,60 @@
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
 
-        <div *ngIf="currentSession == sessionsEnum.SessionOne" 
-            class="end-message">
-            <h1 class="mat-display-1">¡Muchas gracias por participar {{ userName }}!</h1>
+        <div class="end-message">
+            
+            <h1 *ngIf="currentSession == sessionsEnum.SessionOne">¡Muchas gracias por participar {{ userName }}!</h1>
+            <h1 *ngIf="currentSession == sessionsEnum.SessionTwo">¡Eso fue todo!</h1>
 
             <mat-card class="end-card">
 
                 <mat-card-content class="end-card-content">
 
-                    <div class="list-and-button">
+                    <img class="image-instructions" 
+                        src="assets/images/final-message.jpg" alt=""/>
 
-                        <mat-list>
+                    <div class="right-column">
+
+                        <mat-list *ngIf="currentSession == sessionsEnum.SessionOne">
                             <mat-list-item>
                                 <mat-icon mat-list-icon
-                                    color="accent">done</mat-icon>
+                                    color="accent">lens</mat-icon>
                                 <div class="mat-list-text">
                                     Tenés que volver a conectarte dentro de 7 días.
                                 </div>
                             </mat-list-item>
                             <mat-list-item>
                                 <mat-icon mat-list-icon
-                                    color="accent">done</mat-icon>
+                                    color="accent">lens</mat-icon>
                                 <div class="mat-list-text">
                                     Ese día te va a llegar automáticamente un mail con el link donde tenes que entrar. <br/>
                                 </div>
                             </mat-list-item>
                             <mat-list-item>
                                 <mat-icon mat-list-icon
-                                color="accent">done</mat-icon>
+                                color="accent">lens</mat-icon>
                                 <div class="mat-list-text">
                                     Hasta ese entonces, te vamos a pedir que por favor no comentes con nadie lo que hiciste hoy.
                                 </div>
                             </mat-list-item>
                             
                         </mat-list>
+
+                        <div *ngIf="currentSession == sessionsEnum.SessionTwo">
+                            <p>De parte de todxs lxs integrantes del Laboratorio de Sueño y Memoria te queremos agradecer por haber participado. Tu colaboración es muy importante para el avance de nuestros estudios. Te recordamos que por haber concluido el estudio estás participando por (completar). En caso de que hayas salido sorteado nos vamos a contactar con vos via email.</p>
+                            <p>Cualquier consulta que te haya quedado no dudes en contactarte con: (completar)</p>
+                        </div>
+
+                        <button mat-raised-button
+                            class="save-form-btn"
+                            (click)="goHome()">
+                            Volver al inicio
+                        </button>
+
                     </div>
 
                 </mat-card-content>
             </mat-card>
-        </div>
-
-        <div *ngIf="currentSession == sessionsEnum.SessionTwo"
-            id="session-two-message">
-            <h1 class="mat-display-1">¡Eso fue todo!</h1>
-
-            <p>De parte de todxs lxs integrantes del Laboratorio de Sueño y Memoria te queremos agradecer por haber participado. Tu colaboración es muy importante para el avance de nuestros estudios. Te recordamos que por haber concluido el estudio estás participando por (completar). En caso de que hayas salido sorteado nos vamos a contactar con vos via email.</p>
-            <p>Cualquier consulta que te haya quedado no dudes en contactarte con: (completar)</p>
         </div>
 
     </section>
