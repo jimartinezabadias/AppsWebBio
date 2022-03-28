@@ -10,10 +10,12 @@
     </div>
     
     <button mat-raised-button 
-        color="primary"
+        class="save-form-btn"
         [disabled]="(selectedSuspect$ | async) === null"
+        aria-label="elegir"
         (click)="identifySuspect()">
         Elegir
     </button>
+
 </div>
 

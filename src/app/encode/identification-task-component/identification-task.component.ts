@@ -21,6 +21,7 @@ import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.com
 export class EncodeIdentificationTaskComponent implements OnExit {
   
   public isIdentifing: boolean = false;
+  public isLoadingLineups: boolean = false;
 
   @ViewChild(EncodeIdentificationRoomDirective, {static: true}) identificationRoomHost!: EncodeIdentificationRoomDirective;
   
@@ -50,15 +51,15 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   }
 
   async openIdentificaton() {
-    this.isIdentifing = true; 
+    this.isLoadingLineups = true;
     const userPerpetratorCondition = this._userService.user.sessionTwo.perpetratorCondition;
     const taskResources = await this._dbService.getEncodeTasksResources();
     const perp1suspects = await this._getSuspectsOfBeing(taskResources.perpetrator1Suspects); 
     const perp2suspects = await this._getSuspectsOfBeing(taskResources.perpetrator2Suspects); 
-
+    
     this._getSuspectsPhotos(taskResources.perpetrator1Suspects, perp1suspects);
     this._getSuspectsPhotos(taskResources.perpetrator2Suspects, perp2suspects);
-   
+    
     let firstLineup: Array<IEncodeSuspect>;
     let secondLineup: Array<IEncodeSuspect>;
     
@@ -71,27 +72,29 @@ export class EncodeIdentificationTaskComponent implements OnExit {
       firstLineup = perp2suspects;
       secondLineup = perp1suspects;
     }
-
+    
     // shuffle
     firstLineup.sort((a, b) => 0.5 - Math.random());
     secondLineup.sort((a, b) => 0.5 - Math.random());
-
+    
     // primer lineup: se quita uno de los sospechosos de relleno
     const fillerIndex = firstLineup.findIndex(suspect => suspect.isPerpetrator == false && suspect.id != ABSENT_SUSPECT_ID);
     if (fillerIndex > -1) {
       firstLineup.splice(fillerIndex, 1);
     }
-
+    
     // segundo lineup: el perpetrador esta siempre ausente
     secondLineup = secondLineup.filter(suspect => suspect.isPerpetrator == false || suspect.id != ABSENT_SUSPECT_ID);
-  
+    
     // cargo el primer room
     let actualRoomRef = this._createRoomComponent(ROOM_1_TITLE, firstLineup); 
     const firstRoomResult = actualRoomRef.instance.suspectIdentifiedEvent;
     firstRoomResult.subscribe(this.saveIdentificationResponse);
     
+    this.isLoadingLineups = false;
+    this.isIdentifing = true; 
     await firstRoomResult.toPromise();
-
+    
     this.isIdentifing = false;
     actualRoomRef.destroy();
 

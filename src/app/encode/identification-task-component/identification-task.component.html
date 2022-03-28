@@ -7,10 +7,16 @@
         </div>
 
         <ng-template #taskBreafing>
-            <h1 class="title">Rondas de reconocimiento</h1>     
+            
+            <div *ngIf="isLoadingLineups">
+                <mat-spinner [diameter]="64"></mat-spinner>
+            </div>
 
-            <div id="task-breafing">
+            <div *ngIf="!isLoadingLineups"
+                id="task-breafing">
                 
+                <h1 class="title">Rondas de reconocimiento</h1>
+
                 <mat-list>
                     <mat-list-item>
                         <mat-icon mat-list-icon
@@ -45,6 +51,7 @@
                 </button>
 
             </div>
+            
         </ng-template>
 
         <ng-template #identificationRoomComponent

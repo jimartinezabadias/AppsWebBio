@@ -5,9 +5,10 @@
     row-gap: 32px;
     max-width: 32rem;
     line-height: 1.32rem;
+    align-items: center;
 }
 
-#continue-button{
+#continue-button {
     align-self: center;
 }
 
@@ -21,4 +22,9 @@
     width: 0.5rem;
     height: 0.5rem;
     font-size: 0.5rem;
+}
+
+.mat-spinner {
+    justify-self: center;
+    align-self: center;
 }

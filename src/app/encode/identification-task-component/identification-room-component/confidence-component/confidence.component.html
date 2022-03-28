@@ -1,25 +1,47 @@
-<div mat-dialog-content id="dialogContent">
+<h1 class="mat-dialog-title">Indicanos el nivel de confianza con la elección que hiciste</h1>
+<div mat-dialog-content>
+    
     <div id="photoColumn">
         <img [src]="suspectPhotoUrl" alt="">
         <p>Tu elección</p>
     </div>
 
     <div id="confidenceColumn">
-        <h1 mat-dialog-title>Indicanos el nivel de confianza con la elección que hiciste</h1>
-        <p>Seleccionálo en la barra que se encuentra debajo teniendo en cuenta que 0 es Nada seguro y 100 totalmente seguro.</p>
-        <!-- TODO: add slider and continue button -->
-        <mat-slider
-            max="100"
-            min="0"
-            thumbLabel="true"
-            [(ngModel)]="confidenceLevel">
-        </mat-slider>
-        <p>Tu nivel de confianza: {{ confidenceLevel }}</p>
-        <!-- <mat-slider aria-label="unit(s)"></mat-slider> -->
+       
+        <div id="instructions-and-slider">
+            
+            <mat-list>
+                <mat-list-item>
+                    <mat-icon mat-list-icon
+                        color="accent">lens</mat-icon>
+                    <p class="mat-list-text">
+                        Seleccionalo usando la barra que se encuentra debajo.
+                    </p>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon mat-list-icon
+                        color="accent">lens</mat-icon>
+                    <p class="mat-list-text">
+                        100 significa totalmente seguro y 0 es nada seguro.
+                    </p>
+                </mat-list-item>
+            </mat-list>
+            
+            <mat-slider
+                max="100"
+                min="0"
+                thumbLabel="true"
+                [(ngModel)]="confidenceLevel">
+            </mat-slider>
+            <p>Tu nivel de confianza: <b>{{ confidenceLevel }}</b></p>
+
+        </div>
+        
         <button mat-button
+            class="save-form-btn" 
             (click)="submitConfidenceLevel(confidenceLevel)"
             cdkFocusInitial>
-            Continuar
+            Confirmar
         </button>
     </div>
 </div>
