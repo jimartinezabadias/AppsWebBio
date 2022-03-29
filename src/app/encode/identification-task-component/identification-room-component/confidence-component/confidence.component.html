@@ -36,13 +36,21 @@
             <p>Tu nivel de confianza: <b>{{ confidenceLevel }}</b></p>
 
         </div>
-        
-        <button mat-button
-            class="save-form-btn" 
-            (click)="submitConfidenceLevel(confidenceLevel)"
-            cdkFocusInitial>
-            Confirmar
-        </button>
+
+        <div mat-dialog-actions>
+            <button mat-raised-button
+                color="primary"
+                (click)="this.dialogRef.close()"
+                cdkFocusInitial>
+                No se escucha
+            </button>
+            <button mat-raised-button
+                class="save-form-btn" 
+                (click)="submitConfidenceLevel(confidenceLevel)"
+                cdkFocusInitial>
+                Confirmar
+            </button>
+        </div>
     </div>
 </div>
 <!-- <div class="mat-dialog-actions">
