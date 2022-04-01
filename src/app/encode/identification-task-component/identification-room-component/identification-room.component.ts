@@ -68,14 +68,16 @@ export class EncodeIdentificationRoom implements OnInit {
     this._selectedSuspect = suspect;
   }
 
-  private _confidenceDialogClose$ = (confidenceResponse: number): void => {
-    let identificationResponse: IEncodeIdentificationResponse = {
-      selectedSuspect: this._selectedSuspect,
-      confidenceLevel: confidenceResponse
-    };
-    
-    this.suspectIdentifiedEvent.emit(identificationResponse);
-    this.suspectIdentifiedEvent.complete();
+  private _confidenceDialogClose$ = (confidenceResponse: number|boolean): void => {
+    if (typeof confidenceResponse === "number") {
+      let identificationResponse: IEncodeIdentificationResponse = {
+        selectedSuspect: this._selectedSuspect,
+        confidenceLevel: confidenceResponse
+      };
+
+      this.suspectIdentifiedEvent.emit(identificationResponse);
+      this.suspectIdentifiedEvent.complete();
+    }
   }
 
 }

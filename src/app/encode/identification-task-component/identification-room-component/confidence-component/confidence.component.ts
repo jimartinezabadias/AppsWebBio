@@ -32,7 +32,7 @@ export class ConfidenceDialogComponent {
   {
   }
 
-  submitConfidenceLevel(result: number): void {
+  submitConfidenceLevel(result: number|boolean): void {
     this.dialogRef.close(result);
   }
 

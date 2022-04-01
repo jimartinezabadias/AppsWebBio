@@ -40,15 +40,15 @@
         <div mat-dialog-actions>
             <button mat-raised-button
                 color="primary"
-                (click)="this.dialogRef.close()"
+                (click)="submitConfidenceLevel(false)"
                 cdkFocusInitial>
-                No se escucha
+                Cambiar Elección
             </button>
             <button mat-raised-button
                 class="save-form-btn" 
                 (click)="submitConfidenceLevel(confidenceLevel)"
                 cdkFocusInitial>
-                Confirmar
+                Elegir
             </button>
         </div>
     </div>
