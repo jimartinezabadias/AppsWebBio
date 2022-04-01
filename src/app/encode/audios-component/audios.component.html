@@ -4,7 +4,11 @@
         <div class="audios">
             
             <h1>Describí con el mayor detalle posible lo que viste y escuchaste en el video</h1>
-            
+            <div *ngIf="this.user.sessionTwo.perpetratorCondition && this.user.sessionOne.completed == true">
+                <h3>
+                    Relata los hechos de la misma forma que lo hiciste en el día 1.
+                </h3>
+            </div>
             <mat-card class="audios-card">
 
                 <mat-card-content class="audios-card-content">

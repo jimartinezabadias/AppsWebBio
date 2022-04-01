@@ -9,6 +9,7 @@ import { ExtendedRecallComponent } from './extended-recall-component/extended-re
 import { Observable, of } from 'rxjs';
 import { SessionsEnum } from '../constants';
 import { map } from 'rxjs/operators';
+import { IEncodeUser } from '../models/IEncodeUser';
 
 @Component({
     selector: 'app-encode-audios',
@@ -20,6 +21,7 @@ export class EncodeAudiosComponent implements OnExit {
   @ViewChild('audioList') private audioListComponent: EncodeAudioListComponent;
   
   private _wantsToExtend: boolean = true;
+  public user: IEncodeUser;
 
   get finishButtonDisabled$(): Observable<boolean> {
     return (this.audioListComponent) ? this.audioListComponent.isUploadingNewAudio$
@@ -38,6 +40,12 @@ export class EncodeAudiosComponent implements OnExit {
     private _route: ActivatedRoute,
     private _dialog: MatDialog) 
   {
+  }
+
+  ngOnInit(): void 
+  {
+    this.user = this._userService.user;
+    console.log(this.user);
   }
 
   public onExit(): Observable<boolean> | Promise<boolean> | boolean {
