@@ -5,6 +5,11 @@
     max-width: 44rem;
 }
 
+.mat-dialog-actions {
+    justify-content: flex-end;
+    margin-bottom: 0px;
+}
+
 #photoColumn {
     display: flex;
     flex-flow: column;
