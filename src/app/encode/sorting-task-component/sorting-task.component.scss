@@ -7,9 +7,11 @@
     flex-flow: column;
     grid-row-gap: 32px;
     row-gap: 32px;
-    max-width: 64rem;
+    max-width: 32rem;
     line-height: 1.32rem;
+    align-items: center;
 }
+
 
 button {
     align-self: center;
@@ -23,5 +25,17 @@ button {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap:16px;
-  }
+}
+
+.mat-list {
+    display: flex;
+    flex-flow: column;
+    row-gap: 0.5rem;
+}
+
+.mat-list .mat-list-icon {
+    width: 0.5rem;
+    height: 0.5rem;
+    font-size: 0.5rem;
+}
   

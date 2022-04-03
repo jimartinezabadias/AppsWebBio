@@ -7,16 +7,32 @@
         </div>
 
         <ng-template #taskBreafingTemplate>
-            <h1 class="title">Tarea de Ordenamiento</h1>     
-
             <div id="task-breafing">
-                <p>Ahora te voy a pedir que ordenes temporalmente, de manera cronológica las imágenes que seleccionaste.</p>
+
+                <h1 class="title">Tarea de Ordenamiento</h1>
+                
+                <mat-list>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon
+                            color="accent">lens</mat-icon>
+                        <p class="mat-list-text">Ahora te vamos a pedir que ordenes las imágenes que seleccionaste.</p>
+                    </mat-list-item>
+                    
+                    <mat-list-item>
+                        <mat-icon mat-list-icon
+                            color="accent">lens</mat-icon>
+                        <p class="mat-list-text">Ordenalas de forma temporal, según como aparecieron en el video.</p>
+                    </mat-list-item>
+                </mat-list>
+                
                 <button mat-raised-button
-                    color="primary" 
+                    color="primary"
+                    class="save-form-btn"
                     aria-label="continuar"
                     (click)="startTask()">
                     Continuar
                 </button>
+
             </div>
         </ng-template>
 
