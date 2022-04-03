@@ -10,24 +10,57 @@
 
             <!-- selectionStopped -->
             <ng-template #selectionStopped>
-                <h1 class="title" *ngIf="completed == false">Tarea de Selección</h1>
-                <p *ngIf="completed == false">Ahora te voy a pedir que selecciones de entre 12 pares de fotos la que corresponde con las imágenes que viste en el video.</p>
-                <h1 class="title" *ngIf="completed == true">¡Ya seleccionaste las imagenes! Por favor, continua al siguiente paso.</h1>
-                <div class="stepper-buttons" *ngIf="completed == true">
-                    <h4>Seleccionadas {{currentStep}}/{{steps}}</h4>
+                
+                <div *ngIf="!completed"
+                    class="task-breafing">
+                
+                    <h1 class="title">Tarea de Selección</h1>
+
+                    <mat-list>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon
+                                color="accent">lens</mat-icon>
+                            <p class="mat-list-text">Ahora te vamos a pedir que selecciones de entre 12 pares de fotos.</p>
+                        </mat-list-item>
+
+                        <mat-list-item>
+                            <mat-icon mat-list-icon
+                                color="accent">lens</mat-icon>
+                            <p class="mat-list-text">Tenés que seleccionar la que corresponde con lo que viste en el video.</p>
+                        </mat-list-item>
+                    </mat-list>
+
+                    <button mat-raised-button 
+                        class="save-form-btn"
+                        color="primary" 
+                        aria-label="continuar"
+                        (click)="continue()">
+                        Comenzar
+                    </button>
+
                 </div>
-                <button mat-raised-button 
-                    id="continue-button" 
-                    color="primary" 
-                    aria-label="continuar"
-                    (click)="continue()">
-                    Continuar
-                </button>
+
+                <div *ngIf="completed"
+                    class="task-breafing">
+                
+                    <h1 class="title">¡Ya seleccionaste las imagenes!</h1>
+
+                    <button mat-raised-button 
+                        class="save-form-btn"
+                        color="primary" 
+                        aria-label="continuar"
+                        (click)="continue()">
+                        Continuar
+                    </button>
+                    <p>Seleccionadas <b>{{currentStep}}/{{steps}}</b></p>
+
+                </div>
+                
             </ng-template>
 
             <!-- selectionStarted -->
             <ng-template #selectionStarted>
-                <h1 class="title">Seleccioná la foto que corresponde con lo que viste en el video.</h1>
+                <h1 class="title">Seleccioná la que corresponde con lo que viste en el video.</h1>
 
                 <div *ngIf="imagesPairsLoaded == true; then selectionTemplate else loading">
                     <!-- template will replace this div -->
@@ -75,10 +108,15 @@
                                         </ng-template>
 
                                         <div class="stepper-buttons">
-                                            <button [disabled]="!selectionMade" (click)="onConfirm()" mat-button matStepperNext>SIGUIENTE</button>
-                                        </div>
-                                        <div class="stepper-buttons">
-                                            <h4>Seleccionadas {{currentStep}}/{{steps}}</h4>
+                                            <button mat-raised-button
+                                                matStepperNext 
+                                                class="save-form-btn"
+                                                [disabled]="!selectionMade" 
+                                                (click)="onConfirm()" >
+                                                Siguiente
+                                            </button>
+                                            
+                                            <p>Seleccionadas <b>{{currentStep}}/{{steps}}</b></p>
                                         </div>
                                     </form>
                                     

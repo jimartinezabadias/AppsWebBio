@@ -6,6 +6,28 @@
     row-gap: 8px;
 }
 
+.task-breafing {
+    display: flex;
+    flex-flow: column;
+    grid-row-gap: 32px;
+    row-gap: 32px;
+    max-width: 32rem;
+    line-height: 1.32rem;
+    align-items: center;
+}
+
+.mat-list {
+    display: flex;
+    flex-flow: column;
+    row-gap: 0.5rem;
+}
+
+.mat-list .mat-list-icon {
+    width: 0.5rem;
+    height: 0.5rem;
+    font-size: 0.5rem;
+}
+
 .card-content
 {
     display: flex;
@@ -94,22 +116,18 @@
 .stepper-buttons
 {
     width: 100%;
-    padding-top: 16px;
+    padding-top: 3rem;
     display: flex;
-    justify-content: center;
-}
-
-.stepper-buttons .mat-button
-{
-    width: 20%;
-    background-color: #76ad2e;
-    color: #eeeeee;
-    font-size: large;
-    font-weight: 500;
-    padding: 0.5rem 0;
+    flex-direction: column;
+    align-items: center;
 }
 
 .stepper-buttons .mat-button-disabled
 {
     background-color: #76ad2e94;
+}
+
+.stepper-buttons h4
+{
+    margin-top: 0.5rem;
 }
