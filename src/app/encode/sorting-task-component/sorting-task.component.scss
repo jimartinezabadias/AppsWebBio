@@ -1,5 +1,5 @@
-.main-app-section > * {
-    max-width: 80%;
+.main-app-section {
+    margin-left: 2rem 0rem;
 }
 
 #task-breafing {
@@ -12,13 +12,12 @@
     align-items: center;
 }
 
-
 button {
     align-self: center;
 }
 
 .finish-task-button {
-    margin-top: 64px;
+    margin-top: 4rem;
 }
 
 #screenshots-grid {
