@@ -6,7 +6,7 @@
 
 #image > img {
     width: 100%;
-    height: 100%;
+    // height: 100%;
 }
 
 #image:not(.selected):hover > #image--overlay, 
@@ -43,6 +43,7 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     visibility: hidden;
+    color :#4A4067;
 }
 
 #button--add-to-timeline {
@@ -74,4 +75,9 @@
 #button--add-to-timeline:hover,
 #button--open-in-full:hover {
     cursor: pointer;
+    color :#312a45;
+}
+
+.full-image-overlay {
+    max-width: 90%;
 }

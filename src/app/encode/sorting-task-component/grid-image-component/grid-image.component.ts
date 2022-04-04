@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { IEncodeScreenshot } from '../../models/IEncodeScreenshot';
 import { EncodeFullImageComponent } from './full-image-component/full-image.component';
@@ -41,6 +41,7 @@ export class EncodeGridImageComponent {
   }
 
   public openInFull(): void {
+    const options: MatDialogConfig = { panelClass: "full-image-overlay"};
     const imageDialogRef = this._dialogService.open(EncodeFullImageComponent);
     imageDialogRef.componentInstance.imageUrl = this.imageURL;
   }

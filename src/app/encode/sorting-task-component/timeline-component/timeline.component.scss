@@ -2,20 +2,21 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     column-gap: 1rem;
-    margin-top: 3rem;;
+    margin-top: 3rem;
+    max-width: 80rem;
 }
 
 .timeline-slot {
     position: relative;
-    min-width: 99px;
-    min-height: 60px;
+    min-width: 76px;
+    min-height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .timeline-slot.empty {
-    border: 2px dashed gray;
+    border: 2px dashed #4a4067;
 }
 
 .timeline-slot.hasCursor > #cursor {
@@ -49,4 +50,5 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color :#4A4067;
 }
