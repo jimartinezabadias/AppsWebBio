@@ -23,6 +23,14 @@ export class EncodeAudiosComponent implements OnExit {
   private _wantsToExtend: boolean = true;
   public user: IEncodeUser;
 
+  get sessionsEnum(): typeof SessionsEnum {
+    return SessionsEnum;
+  }
+
+  get currentSession(): SessionsEnum {
+    return this._userService.session;
+  }
+
   get finishButtonDisabled$(): Observable<boolean> {
     return (this.audioListComponent) ? this.audioListComponent.isUploadingNewAudio$
       .pipe(
