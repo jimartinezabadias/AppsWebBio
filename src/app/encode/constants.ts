@@ -60,7 +60,7 @@ export enum RecorderStatus
 // Identification task
 export const PERPETRATOR_1_ID = "PERP_1";
 export const PERPETRATOR_2_ID = "PERP_2";
-export const ABSENT_SUSPECT_ID = "0";
+export const ABSENT_SUSPECT_ID = "00";
 export const ROOM_1_TITLE = "Ronda 1 de 2";
 export const ROOM_2_TITLE = "Ronda 2 de 2";
 
