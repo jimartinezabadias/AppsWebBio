@@ -22,6 +22,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   
   public isIdentifing: boolean = false;
   public isLoadingLineups: boolean = false;
+  public currentRoom: number = 1;
 
   @ViewChild(EncodeIdentificationRoomDirective, {static: true}) identificationRoomHost!: EncodeIdentificationRoomDirective;
   
@@ -99,18 +100,23 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     actualRoomRef.destroy();
 
     // cargo el segundo room
-    actualRoomRef = this._createRoomComponent(ROOM_2_TITLE, secondLineup); 
-    const secondRoomResult = actualRoomRef.instance.suspectIdentifiedEvent;
-    secondRoomResult.subscribe(this.saveIdentificationResponse);
+    this.isLoadingLineups = true;
+    this.currentRoom = 2;
     
-    this.isIdentifing = true;
-    await secondRoomResult.toPromise();
+    setTimeout(async () => {
+      actualRoomRef = this._createRoomComponent(ROOM_2_TITLE, secondLineup); 
+      const secondRoomResult = actualRoomRef.instance.suspectIdentifiedEvent;
+      secondRoomResult.subscribe(this.saveIdentificationResponse);
+      
+      this.isIdentifing = true;
+      await secondRoomResult.toPromise();
 
-    this.isIdentifing = false;
-    actualRoomRef.destroy();
-
-    this.onExit = () => true;
-    this._router.navigate(["../audios"], { relativeTo: this._route });
+      this.isIdentifing = false;
+      actualRoomRef.destroy();
+  
+      this.onExit = () => true;
+      this._router.navigate(["../audios"], { relativeTo: this._route });
+    }, 2000)
   }
 
   private saveIdentificationResponse = (response: IEncodeIdentificationResponse): void => {
