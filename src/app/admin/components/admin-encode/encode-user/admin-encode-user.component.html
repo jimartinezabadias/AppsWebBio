@@ -256,19 +256,43 @@
 
                                 <!-- Datos Sesión 2 -->
                                 <ng-template #sessionTwoData>
-                                    <!-- <div *ngIf="user.dayOne.completed == true">
-                                        <div *ngIf="user.dayTwo.completed == true || user.dayTwo.completed == false">
-                                            <h3>Escala de grado de somnolencia</h3>
-                                            <br>
-                                            <br>
-                                            <h3>Ronda de reconocimiento</h3>
-                                            <br>
-                                            <br>
-                                            <h3>Audios</h3>
-                                            <br>
-                                            <br>
-                                        </div>
-                                    </div> -->
+
+                                    <!-- Escala de grado de somnolencia -->
+                                    <h3>Escala de grado de somnolencia</h3>
+                                
+                                    <div *ngIf="user.sessionTwo.somnolenceDegree === somnolenceDegrees.totallyAwake">
+                                        <p>{{somnolenceDegrees.totallyAwake}}</p>
+                                    </div>
+                                    <div *ngIf="user.sessionTwo.somnolenceDegree === somnolenceDegrees.veryHigh">
+                                        <p>{{somnolenceDegrees.veryHigh}}</p>
+                                    </div>
+                                    <div *ngIf="user.sessionTwo.somnolenceDegree === somnolenceDegrees.relaxed">
+                                        <p>{{somnolenceDegrees.relaxed}}</p>
+                                    </div>
+                                    <div *ngIf="user.sessionTwo.somnolenceDegree === somnolenceDegrees.littleConfused">
+                                        <p>{{somnolenceDegrees.littleConfused}}</p>
+                                    </div>
+                                    <div *ngIf="user.sessionTwo.somnolenceDegree === somnolenceDegrees.confused">
+                                        <p>{{somnolenceDegrees.confused}}</p>
+                                    </div>
+                                    <div *ngIf="user.sessionTwo.somnolenceDegree === somnolenceDegrees.tired">
+                                        <p>{{somnolenceDegrees.tired}}</p>
+                                    </div>
+                                    <div *ngIf="user.sessionTwo.somnolenceDegree === somnolenceDegrees.almostSlept">
+                                        <p>{{somnolenceDegrees.almostSlept}}</p>
+                                    </div>
+                                    <div *ngIf="user.sessionTwo.somnolenceDegree === somnolenceDegrees.slept">
+                                        <p>{{somnolenceDegrees.slept}}</p>
+                                    </div>
+
+                                    <!-- Audios -->
+                                    <h3>Audios</h3>
+                                    <div class="audios-container" *ngIf="user.sessionTwo.audios">
+                                        <audio *ngFor="let audio of user.sessionTwo.audios" controls>
+                                            <source [src]="audio.downloadURL" type="audio/webm"/>
+                                        </audio>
+                                    </div>
+
                                 </ng-template>
 
                             </ng-template>
