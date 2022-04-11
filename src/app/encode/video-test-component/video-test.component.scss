@@ -1,3 +1,19 @@
+#video {
+    position: relative;
+}
+
+#video > button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    visibility: hidden;
+}
+
+#video:hover > button {
+    visibility: visible;
+}
+
 .videoTest
 {
     display: flex;

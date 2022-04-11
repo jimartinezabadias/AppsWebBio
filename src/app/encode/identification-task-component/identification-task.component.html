@@ -8,7 +8,8 @@
 
         <ng-template #taskBreafing>
             
-            <div *ngIf="isLoadingLineups">
+            <div *ngIf="isLoadingLineups"
+                id="loading-spinner">
                 <mat-spinner [diameter]="64"></mat-spinner>
                 <p *ngIf="this.currentRoom == 1">Cargando Ronda 1...</p>
                 <p *ngIf="this.currentRoom == 2">Cargando Ronda 2...</p>

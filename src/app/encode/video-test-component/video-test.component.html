@@ -8,11 +8,25 @@
             <mat-card>
                 <mat-card-content class="card-content">
 
-                    <video width="450" #video controls loop>
-                        <source src="assets/videos/videoPruebaEncode.mp4"
-                                type="video/mp4">
-                            Sorry, your browser doesn't support embedded videos.
-                    </video>
+                    <div id="video">
+                        <video width="450" #videoPlayer loop>
+                            <source src="assets/videos/videoPruebaEncode.mp4"
+                                type="video/mp4"/>
+                                Sorry, your browser doesn't support embedded videos.
+                        </video>
+                        <button mat-fab
+                            aria-label="Play"
+                            *ngIf="!isVideoPlaying"
+                            (click)="playVideo()">
+                            <mat-icon>play_arrow</mat-icon>
+                        </button>
+                        <button mat-fab
+                            aria-label="Pause"
+                            *ngIf="isVideoPlaying"
+                            (click)="pauseVideo()">
+                            <mat-icon>pause</mat-icon>
+                        </button>
+                    </div>
 
                     <div class="videoQuestions">
                         <p *ngIf="!isAudioGood || !isVideoGood" class="video-warning">Por favor, comprueba el funcionamiento de audio y video en tu computadora. 
