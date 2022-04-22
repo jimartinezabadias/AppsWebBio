@@ -17,7 +17,7 @@
 
         <!-- User logged in -->
         <ng-template #authenticated>
-            <div *ngIf="auth.user$ | async as user">
+            <div *ngIf="auth.user$ | async as user; else loading">
                 <h1>Resultados de los tests</h1>
                 <div class="testSelect__options">
                     <div class="testSelect__testLink" routerLink="/admin/creativity" routerLinkActive="active">
@@ -40,6 +40,14 @@
                     class="logout-btn">
                     <mat-icon>logout</mat-icon> Cerrar session</button>
             </div>
+
+            <ng-template #loading>
+                <div
+                    id="loading-spinner">
+                    <mat-spinner [diameter]="64"></mat-spinner>
+                    <p>Cargando...</p>
+                </div>
+            </ng-template>
         </ng-template>
         
         <p>Version 12272021</p>
