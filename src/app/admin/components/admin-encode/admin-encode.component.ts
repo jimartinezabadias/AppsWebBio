@@ -64,10 +64,6 @@ export class AdminEncodeComponent implements OnInit {
     "sessionTwo_imageSelectionResponse_5_id",
     "sessionTwo_imageSelectionResponse_6_id",
     "sessionTwo_imageSelectionResponse_7_id",
-    "sessionTwo_imageSelectionResponse_8_id",
-    "sessionTwo_imageSelectionResponse_9_id",
-    "sessionTwo_imageSelectionResponse_10_id",
-    "sessionTwo_imageSelectionResponse_11_id",
     "sessionTwo_imageSortingResponse_0_id",
     "sessionTwo_imageSortingResponse_1_id",
     "sessionTwo_imageSortingResponse_2_id",
@@ -76,10 +72,6 @@ export class AdminEncodeComponent implements OnInit {
     "sessionTwo_imageSortingResponse_5_id",
     "sessionTwo_imageSortingResponse_6_id",
     "sessionTwo_imageSortingResponse_7_id",
-    "sessionTwo_imageSortingResponse_8_id",
-    "sessionTwo_imageSortingResponse_9_id",
-    "sessionTwo_imageSortingResponse_10_id",
-    "sessionTwo_imageSortingResponse_11_id",
     "link_audios"
   ];
 

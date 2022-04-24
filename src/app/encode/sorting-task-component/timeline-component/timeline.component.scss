@@ -1,6 +1,6 @@
 #timeline {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     column-gap: 1rem;
     margin-top: 3rem;
     max-width: 80rem;
@@ -8,8 +8,8 @@
 
 .timeline-slot {
     position: relative;
-    min-width: 76px;
-    min-height: 42px;
+    width: 76px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;

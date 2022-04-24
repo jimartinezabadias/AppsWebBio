@@ -5,7 +5,6 @@
 #task-breafing {
     display: flex;
     flex-flow: column;
-    // grid-row-gap: 32px;
     row-gap: 2rem;
     max-width: 32rem;
     line-height: 1.32rem;
@@ -23,7 +22,7 @@ button {
 #screenshots-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap:16px;
+    gap:16px;
     max-width: 80rem;
 }
 
