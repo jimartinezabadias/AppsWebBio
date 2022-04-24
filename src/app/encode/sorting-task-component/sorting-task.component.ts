@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { Observable, Subject } from 'rxjs';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
-import { MAX_TIMELINE_SCREENSHOTS } from '../constants';
+import { SCREENSHOTS_COUNT } from '../constants';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
@@ -15,7 +15,7 @@ import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.com
 })
 export class EncodeSortingTaskComponent implements OnInit, OnExit {
   
-  private _timeline = new Array<IEncodeScreenshot | null>(MAX_TIMELINE_SCREENSHOTS).fill(null);
+  private _timeline = new Array<IEncodeScreenshot | null>(SCREENSHOTS_COUNT).fill(null);
   private _timelineSubject = new Subject<Array<IEncodeScreenshot | null>>();
 
   public isTaskRunning: boolean = false;
@@ -24,7 +24,7 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
 
   get isTimelineCompleted(): boolean {
     const filledSlots = this._timeline.filter(screenshot => screenshot != null).length;
-    return filledSlots == MAX_TIMELINE_SCREENSHOTS;
+    return filledSlots == SCREENSHOTS_COUNT;
   }
 
   constructor(private _userService: EncodeUserService,

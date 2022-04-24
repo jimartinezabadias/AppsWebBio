@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { DocumentReference } from '@angular/fire/firestore';
@@ -8,6 +8,7 @@ import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { Observable } from 'rxjs';
+import { SCREENSHOTS_COUNT } from '../constants';
 
 @Component({
     selector: 'app-encode-selection',
@@ -16,7 +17,7 @@ import { Observable } from 'rxjs';
 })
 export class EncodeSelectionComponent implements OnInit, OnExit {
   public imagesPairs: IEncodeScreenshot[];
-  public steps = 12;
+  public steps: number = SCREENSHOTS_COUNT;
   public random_pairs = [];
   public currentStep = 0;
   public selectionMade = false;
@@ -73,7 +74,7 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
   {
     this.getScreenshotPairs();
 
-    for (let i = 0; i < this.steps; i++) {
+    for (let i = 0; i < SCREENSHOTS_COUNT; i++) {
       this.random_pairs.push(Math.floor(Math.random() * (1 - 0 + 1) + 0));
     }
 
@@ -103,13 +104,13 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
   onConfirm(): any 
   {
     console.log("currentStep: ", this.currentStep)
-    if (this.currentStep < 12) {
+    if (this.currentStep < SCREENSHOTS_COUNT) {
       this.userChoices.push(this.userChoice);
       this.currentStep = this.currentStep + 1;
       this.selectionMade = false;
     }
     console.log("userChoices: ", this.userChoices)
-    if (this.userChoices.length == 12) {
+    if (this.userChoices.length == SCREENSHOTS_COUNT) {
       this.started = false;
       this.completed = true;
       this._userService.user.sessionTwo.imageSelectionResponse = this.userChoices;

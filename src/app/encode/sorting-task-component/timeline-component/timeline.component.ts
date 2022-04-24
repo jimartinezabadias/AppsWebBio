@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HAS_CURSOR_CLASS, MAX_TIMELINE_SCREENSHOTS } from '../../constants';
+import { HAS_CURSOR_CLASS, SCREENSHOTS_COUNT } from '../../constants';
 import { IEncodeScreenshot } from '../../models/IEncodeScreenshot';
 
 @Component({
@@ -10,7 +10,7 @@ import { IEncodeScreenshot } from '../../models/IEncodeScreenshot';
 })
 export class EncodeTimelineComponent implements AfterViewInit {
 
-  public timeline =  new Array<IEncodeScreenshot | null>(MAX_TIMELINE_SCREENSHOTS).fill(null);
+  public timeline =  new Array<IEncodeScreenshot | null>(SCREENSHOTS_COUNT).fill(null);
 
   @ViewChildren('timelineSlot') 
   private _slotList: QueryList<ElementRef<HTMLDivElement>>;
