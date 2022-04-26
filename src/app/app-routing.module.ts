@@ -39,11 +39,6 @@ const routes: Routes = [
     .then(m => m.TestCreativityModule)
   },
   {
-    path: 'test-result',
-    loadChildren: () => import('./test-result/test-result.module')
-    .then(m => m.TestResultModule)
-  },
-  {
     path: 'more-info',
     loadChildren: () => import('./more-info/more-info.module')
     .then(m => m.MoreInfoModule)
