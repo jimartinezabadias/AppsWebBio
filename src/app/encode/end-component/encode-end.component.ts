@@ -32,10 +32,10 @@ export class EncodeEndComponent implements OnInit, OnExit {
     this.userName = this._userService.user.name;
     
     if (this._userService.session == SessionsEnum.SessionOne)
-    this._userService.user.sessionOne.completed = true;
+      this._userService.user.sessionOne.completed = true;
     
     if (this._userService.session == SessionsEnum.SessionTwo)
-    this._userService.user.sessionTwo.completed = true;
+      this._userService.user.sessionTwo.completed = true;
     
     await this._userService.updateUserInDB();
   }

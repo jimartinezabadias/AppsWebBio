@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/admin/auth.service';
+import { VERSION_NUMBER } from '../constants';
 
 @Component({
   selector: 'app-admin',
@@ -9,6 +10,8 @@ import { AuthService } from 'src/app/admin/auth.service';
 })
 export class AdminComponent {
 
+  public versionNumber = VERSION_NUMBER;
+  
   constructor(
     private _router: Router,
     public auth: AuthService

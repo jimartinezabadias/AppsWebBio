@@ -45,6 +45,8 @@ export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
       newControl.statusChanges.subscribe(() => {
         if (newControl.status == 'VALID'){
           this.stepper.next();
+          let response = this._userService.user.googleFormsResponses.find(resp => resp.formID == preFilledResp.formID);
+          response.isResponded = true;
         }
       })
 

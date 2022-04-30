@@ -88,10 +88,8 @@ export class EncodeUserService {
         }
     }
 
-    public async updateUserInDB() 
-    {
+    public async updateUserInDB() {
         if (this._user == null) return ;
-        
         await this._dbService.updateEncodeUser(this._user);
     }
 
