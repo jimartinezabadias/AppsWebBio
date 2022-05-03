@@ -8,7 +8,13 @@
             </button>
         </div>
 
-        <div class="contains-tables mat-elevation-z8">
+        <div *ngIf="isLoading"
+            id="loading-spinner">
+            <mat-spinner [diameter]="64"></mat-spinner>
+            <p>Cargando...</p>
+        </div>
+
+        <div [style.visibility]="isLoading ? 'hidden' : 'visible'" class="contains-tables mat-elevation-z8">
             <mat-table [dataSource]="usersDataSource">      
         
                 <!-- Name -->

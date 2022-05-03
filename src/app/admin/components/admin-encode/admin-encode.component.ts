@@ -78,6 +78,7 @@ export class AdminEncodeComponent implements OnInit {
   public usersDataSource: EncodeUsersDataSource;
   public totalTestsCounter: any = { count: -1 };
   public pageSize: number = 5;
+  public isLoading: boolean = false
 
   // Columnas de la tabla que se van a mostrar
   public displayedColumns: string[] = ["name", "email", "link" ,"creationDate" ];
@@ -146,8 +147,10 @@ export class AdminEncodeComponent implements OnInit {
   private _inviteDialogClosed$ = async (userData: { name: string, email: string }) => {
     if (userData)
     {
+      this.isLoading = true;
       await this._encodeUserService.createNewUser(userData);
       this.usersDataSource.loadUsers(this.pageSize);
+      this.isLoading = false;
     }
   }
 
