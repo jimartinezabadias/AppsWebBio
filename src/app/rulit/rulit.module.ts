@@ -36,8 +36,7 @@ import { RulitTestService } from './bits/RulitTestService';
         CommonModule
     ],
     exports: [],
-    entryComponents: [ ScreenOrientationDialogComponent ],
-    providers: [ RulitUserService, RulitTestService ]
+    providers: [RulitUserService, RulitTestService]
 })
 
 export class RulitModule {}
