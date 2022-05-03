@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { ROOM_1_TITLE, PerpetratorCondition, ABSENT_SUSPECT_ID, ROOM_2_TITLE } from '../constants';
 import { IEncodeSuspect } from '../models/IEncodeSuspect';
-import { DocumentReference } from '@angular/fire/firestore';
+import { DocumentReference } from '@angular/fire/compat/firestore';
 import { EncodeIdentificationRoom } from './identification-room-component/identification-room.component';
 import { EncodeIdentificationRoomDirective } from './identification-room.directive';
 import { IEncodeIdentificationResponse } from '../models/IEncodeIdentificationResponse';

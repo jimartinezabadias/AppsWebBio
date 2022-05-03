@@ -1,4 +1,4 @@
-import { DocumentReference } from "@angular/fire/firestore";
+import { DocumentReference } from "@angular/fire/compat/firestore";
 import { IEncodeSuspect } from "./IEncodeSuspect";
 import { IEncodeScreenshot } from "./IEncodeScreenshot";
 

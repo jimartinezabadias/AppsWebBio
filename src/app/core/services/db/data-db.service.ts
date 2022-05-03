@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, DocumentData, DocumentReference, QuerySnapshot } from '@angular/fire/firestore';
-import { firestore } from 'firebase/app';
+import { AngularFirestore, AngularFirestoreCollection, DocumentData, DocumentReference, QuerySnapshot } from '@angular/fire/compat/firestore';
+import { firestore } from 'firebase/compat/app';
 
 import { CreativeUser } from './../../models/creative-user.interface';
 import { HttpClient } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { AdminCreativityComponent } from 'src/app/admin/components/admin-creativ
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';
 import { IEncodeGoogleFormsSettings } from 'src/app/encode/models/IEncodeGoogleFormsSettings';
-import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/compat/storage';
 import { IEncodeGoogleFormResponse } from 'src/app/encode/models/IEncodeGoogleFormResponse';
 import { map } from 'rxjs/operators';
 import { IEncodeSuspect } from 'src/app/encode/models/IEncodeSuspect';

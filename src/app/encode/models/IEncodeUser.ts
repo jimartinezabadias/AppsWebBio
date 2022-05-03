@@ -1,4 +1,4 @@
-import { firestore } from "firebase";
+import { firestore } from "firebase/compat";
 import { IEncodeGoogleFormResponse } from "./IEncodeGoogleFormResponse";
 import { IEncodeSessionOne } from "./IEncodeSessionOne";
 import { IEncodeSessionTwo } from "./IEncodeSessionTwo";

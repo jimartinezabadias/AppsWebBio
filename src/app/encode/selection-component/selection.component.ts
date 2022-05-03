@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
-import { DocumentReference } from '@angular/fire/firestore';
+import { DocumentReference } from '@angular/fire/compat/firestore';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
 import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';

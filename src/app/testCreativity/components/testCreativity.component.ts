@@ -8,7 +8,7 @@ import { DataDbService } from '../../core/services/db/data-db.service';
 
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { DocumentData, QuerySnapshot } from '@angular/fire/firestore';
+import { DocumentData, QuerySnapshot } from '@angular/fire/compat/firestore';
 
 @Component({
     selector: 'app-testcreativity',

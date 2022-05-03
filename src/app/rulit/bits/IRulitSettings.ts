@@ -1,4 +1,4 @@
-import { DocumentReference } from "@angular/fire/firestore";
+import { DocumentReference } from "@angular/fire/compat/firestore";
 
 export interface IRulitSettings {
     IS_TEST_OPEN: boolean,

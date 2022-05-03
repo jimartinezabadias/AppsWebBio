@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
-import firebase, { firestore } from "firebase/app";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
+import firebase, { firestore } from "firebase/compat/app";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/compat/firestore";
 
 import { Observable } from "rxjs";
 

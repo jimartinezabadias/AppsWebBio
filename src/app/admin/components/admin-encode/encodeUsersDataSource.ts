@@ -1,5 +1,5 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
-import { DocumentData, QuerySnapshot } from "@angular/fire/firestore";
+import { DocumentData, QuerySnapshot } from "@angular/fire/compat/firestore";
 import { BehaviorSubject, Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { DataDbService } from "src/app/core/services/db/data-db.service";

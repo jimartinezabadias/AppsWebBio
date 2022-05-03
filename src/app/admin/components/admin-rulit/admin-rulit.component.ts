@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import firebase from 'firebase';
+import firebase from 'firebase/compat';
 import { Parser, transforms } from 'json2csv';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';

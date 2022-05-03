@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { DocumentReference } from "@angular/fire/firestore";
+import { DocumentReference } from "@angular/fire/compat/firestore";
 import { DataDbService } from "src/app/core/services/db/data-db.service";
 import { NavigationService } from "src/app/navigation-service/navigation.service";
 import { DEFAULT_GRAPH_SOLUTION } from "./GraphUtils";
