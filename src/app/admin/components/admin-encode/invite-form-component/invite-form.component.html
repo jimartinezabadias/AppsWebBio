@@ -26,13 +26,13 @@
     </mat-form-field>
 
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-button (click)="onClose()">
+<div mat-dialog-actions>
+    <button mat-stroked-button (click)="onClose()">
         Cancelar
     </button>
-    <button mat-button (click)="onSave()"
+    <button mat-raised-button (click)="onSave()"
         [disabled]="!this.emailFormControl.valid || this.emailFormControl.value === '' || 
                     !this.nameFormControl.valid || this.nameFormControl.value === ''">
         Guardar
     </button>
-</mat-dialog-actions>
+</div>

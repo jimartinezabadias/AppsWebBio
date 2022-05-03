@@ -5,3 +5,13 @@
 .form>*{
     margin-bottom: 16px;
 }
+
+.mat-dialog-actions {
+    justify-content: flex-end;
+    margin-top: -1.25rem;
+}
+
+.mat-raised-button {
+    background-color: #3f51b5;
+    color: #fff;
+}
