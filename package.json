@@ -24,7 +24,7 @@
     "@angular/router": "~13.3.5",
     "@types/json2csv": "^5.0.1",
     "file-saver": "^2.0.5",
-    "firebase": "^7.24.0",
+    "firebase": "^9.7.0",
     "flexboxgrid": "^6.3.1",
     "json2csv": "^5.0.6",
     "ngx-filesaver": "^11.0.0",
