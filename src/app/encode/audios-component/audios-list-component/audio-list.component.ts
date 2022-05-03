@@ -32,7 +32,12 @@ export class EncodeAudioListComponent {
 
   private _newAudioObserver = async (newAudio: IEncodeInMemoryAudio) => {
     this.isUploadingNewAudio$.next(true);
-    const sessionId = this._userService.session.valueOf();
+    let sessionId = this._userService.session.valueOf();
+    if (sessionId == SessionsEnum.SessionOne) {
+      sessionId = "session-1";
+    } else if (sessionId == SessionsEnum.SessionTwo) {
+      sessionId = "session-2";
+    }
     newAudio.id = sessionId + '_' + newAudio.id ;
     newAudio.downloadURL = await this._storeAudioInFirebase(newAudio);
     this._storeAudioInUser(newAudio);

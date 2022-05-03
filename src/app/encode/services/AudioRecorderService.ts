@@ -3,8 +3,8 @@ import { fromEvent, Subject } from "rxjs";
 import { REC_OPTIONS } from "../constants";
 import { IEncodeAudio } from "../models/IEncodeAudio";
 import { IAudioRecorder } from "./IAudioRecorderService";
-import { v4 as uuidv4 } from 'uuid';
 import { IEncodeInMemoryAudio } from "../models/IEncodeInMemoryAudio";
+import { EncodeUserService } from "./EncodeUserService";
 
 @Injectable({
     providedIn: 'root'
@@ -14,11 +14,10 @@ export class AudioRecorderService implements IAudioRecorder {
     private _audioList: Array<IEncodeInMemoryAudio>;
     private _mediaRecorder: MediaRecorder;
     private _recordedChunks;
-    
     public isRecording: boolean;
     public audioListChanged$: Subject<IEncodeAudio>;
     
-    constructor()
+    constructor(private _userService: EncodeUserService)
     {
         this._audioList = new Array<IEncodeInMemoryAudio>();
         this.isRecording = false;
@@ -86,8 +85,7 @@ export class AudioRecorderService implements IAudioRecorder {
     }
 
     private _createAudioId(): string {
-        const randomId = uuidv4();
         const audioNum = this._audioList.length;
-        return String(audioNum).padStart(3, '0') + '_' + randomId;
+        return String(audioNum).padStart(3, '0') + '_' + this._userService.user.uid;
     }
 }
