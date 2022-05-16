@@ -200,9 +200,7 @@
                                 <!-- Audios -->
                                 <h3>Audios</h3>
                                 <div class="audios-container" *ngIf="user.sessionOne.audios">
-                                    <audio *ngFor="let audio of user.sessionOne.audios" controls>
-                                        <source [src]="audio.downloadURL" type="audio/webm"/>
-                                    </audio>
+                                    <p>El sujeto grabó {{user.sessionOne.audios.length}} audio/s en esta sesión.</p>
                                 </div>
 
                             </ng-template>
@@ -288,9 +286,7 @@
                                     <!-- Audios -->
                                     <h3>Audios</h3>
                                     <div class="audios-container" *ngIf="user.sessionTwo.audios">
-                                        <audio *ngFor="let audio of user.sessionTwo.audios" controls>
-                                            <source [src]="audio.downloadURL" type="audio/webm"/>
-                                        </audio>
+                                        <p>El sujeto grabó {{user.sessionTwo.audios.length}} audio/s en esta sesión.</p>
                                     </div>
 
                                 </ng-template>
