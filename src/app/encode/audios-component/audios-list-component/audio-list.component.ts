@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { firstValueFrom, tap, BehaviorSubject } from "rxjs";
+
 import { finalize } from 'rxjs/operators';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { SessionsEnum } from '../../constants';
@@ -51,12 +52,24 @@ export class EncodeAudioListComponent {
     const fileRef = this._bdService.getCloudStorageFileRef(filePath);
     const uploadTask = this._bdService.uploadFileToCloudStorage(filePath, newAudio.rawData);
     
-    let url$: Promise<string>;
-    await uploadTask.snapshotChanges().pipe(
-      finalize(() => url$ = fileRef.getDownloadURL().toPromise<string>() )
-    ).toPromise();
+    let url;
+    // const upload$ = uploadTask.snapshotChanges().pipe(
+    //   finalize(() => {
+    //     const url$ = fileRef.getDownloadURL();
+    //     url = await firstValueFrom(url$);
+    //   } )
+    // );
+    const upload$ = uploadTask.snapshotChanges();
+    upload$.pipe(
+      tap( async () => {
+        const url$ = fileRef.getDownloadURL();
+        url = await firstValueFrom(url$);
+      })
+    );
     
-    return url$;
+    url = firstValueFrom(upload$);
+
+    return url;
   }
 
   private _createAudioFilePath(audioFileName: string) {

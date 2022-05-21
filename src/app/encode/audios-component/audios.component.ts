@@ -2,14 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnExit } from '../exit.guard';
-import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { EncodeAudioListComponent } from './audios-list-component/audio-list.component';
 import { ExtendedRecallComponent } from './extended-recall-component/extended-recall.component';
-import { Observable, of } from 'rxjs';
 import { SessionsEnum } from '../constants';
-import { map } from 'rxjs/operators';
 import { IEncodeUser } from '../models/IEncodeUser';
+import { firstValueFrom, map, Observable, of } from "rxjs";
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-encode-audios',
@@ -56,10 +55,11 @@ export class EncodeAudiosComponent implements OnExit {
     console.log(this.user);
   }
 
-  public onExit(): Observable<boolean> | Promise<boolean> | boolean {
+  public async onExit(): Promise<any> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean>();
+    const afterClosed$ = exitDialogRef.afterClosed();
+    return await firstValueFrom(afterClosed$);
   }
 
   public onAudiosReady(): void
@@ -86,7 +86,7 @@ export class EncodeAudiosComponent implements OnExit {
   }
 
   private async _navigateToEndComponent(): Promise<void> {
-    this.onExit = () => true;
+    this.onExit = async () => true;
     
     if (this._userService.session == SessionsEnum.SessionTwo) {
       this._router.navigate(["../selection"], { relativeTo: this._route });

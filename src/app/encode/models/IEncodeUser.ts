@@ -1,4 +1,4 @@
-import { firestore } from "firebase/compat";
+import firebase from 'firebase/compat/app';
 import { IEncodeGoogleFormResponse } from "./IEncodeGoogleFormResponse";
 import { IEncodeSessionOne } from "./IEncodeSessionOne";
 import { IEncodeSessionTwo } from "./IEncodeSessionTwo";
@@ -11,7 +11,7 @@ export interface IEncodeUser {
     uid: string;
     name: string;
     email: string;
-    creationDate: Date | firestore.FieldValue | null;
+    creationDate: Date | firebase.firestore.FieldValue | null;
     googleFormsResponses: IEncodeGoogleFormResponse[] | null;
     personalInfo: IEncodeUserPersonalInfo | null;
     sessionOne: IEncodeSessionOne;

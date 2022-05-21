@@ -28,7 +28,7 @@
     "flexboxgrid": "^6.3.1",
     "json2csv": "^5.0.6",
     "ngx-filesaver": "^11.0.0",
-    "rxjs": "~6.6.7",
+    "rxjs": "^7.5.5",
     "safe-buffer": "^5.2.1",
     "swiper": "^6.5.1",
     "tslib": "^2.0.0",

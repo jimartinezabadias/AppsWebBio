@@ -1,20 +1,21 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
-import firebase, { firestore } from "firebase/compat/app";
+import firebase from "firebase/compat/app";
+
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/compat/firestore";
 
-import { Observable } from "rxjs";
 
 import { IAdminUser } from "./IAdminUser.model";
+import { firstValueFrom } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
-    user$: Observable<IAdminUser>;
+    user$: any;
     private _adminUserCollectionRef: AngularFirestoreCollection;
     
     constructor(
@@ -42,7 +43,8 @@ export class AuthService {
 
     private async _verifyUserIsAdmin(user: firebase.User)
     {
-        const userRef: firestore.DocumentSnapshot<IAdminUser> = await this._adminUserCollectionRef.doc<IAdminUser>(user.uid).get().toPromise();
+        const userRef$ = this._adminUserCollectionRef.doc<IAdminUser>(user.uid).get();
+        const userRef = await firstValueFrom(userRef$);
         if (userRef.exists)
         {
             return;

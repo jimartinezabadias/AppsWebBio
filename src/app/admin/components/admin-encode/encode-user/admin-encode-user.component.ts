@@ -2,9 +2,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
-import { from, Observable } from 'rxjs';
 import { Gender, EducationLevel, SomnolenceDegree, PerpetratorCondition } from 'src/app/encode/constants';
-import { take, tap } from 'rxjs/operators';
+import { Observable, from } from "rxjs";
+import { take, tap } from "rxjs/operators";
 
 @Component({
   selector: 'app-admin-encode-user',

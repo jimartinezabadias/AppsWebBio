@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, DocumentData, DocumentReference, QuerySnapshot } from '@angular/fire/compat/firestore';
-import { firestore } from 'firebase/compat/app';
+import { AngularFirestore, AngularFirestoreCollection, DocumentData, DocumentReference } from '@angular/fire/compat/firestore';
 
 import { CreativeUser } from './../../models/creative-user.interface';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { IRulitUser } from 'src/app/rulit/bits/RulitUserService';
 import { AdminCreativityComponent } from 'src/app/admin/components/admin-creativity/admin-creativity.component';
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
 import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';
 import { IEncodeGoogleFormsSettings } from 'src/app/encode/models/IEncodeGoogleFormsSettings';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/compat/storage';
-import { IEncodeGoogleFormResponse } from 'src/app/encode/models/IEncodeGoogleFormResponse';
-import { map } from 'rxjs/operators';
+// import { IEncodeGoogleFormResponse } from 'src/app/encode/models/IEncodeGoogleFormResponse';
 import { IEncodeSuspect } from 'src/app/encode/models/IEncodeSuspect';
 import { IEncodeTasksResources } from 'src/app/encode/models/IEncodeTasksResources';
 import { IEncodeScreenshot } from 'src/app/encode/models/IEncodeScreenshot';
+import firebase from 'firebase/compat/app';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -54,25 +53,25 @@ export class DataDbService {
     // let prevCounter = await this.getCreativesMetadataCounter().ref.get();
 
     // update and increment tests counter
-    this.getCreativesMetadataCounter().update( {"count": firestore.FieldValue.increment(1)} );
+    this.getCreativesMetadataCounter().update( {"count": firebase.firestore.FieldValue.increment(1)} );
 
   }
 
-  public getTestsFirstPage(pageSize: number = 3):  Observable<QuerySnapshot<CreativeUser>> {
+  public getTestsFirstPage(pageSize: number = 3): any {
     const testsRef = this._afs.collection<CreativeUser>('creatives-users', 
       ref => ref.orderBy('dateStart', 'desc').limit(pageSize));
     
     return testsRef.get();
   }
 
-  public getTestsNextPage(actualLast, pageSize: number = 3):  Observable<QuerySnapshot<CreativeUser>> {
+  public getTestsNextPage(actualLast, pageSize: number = 3):  any {
     const testsRef = this._afs.collection<CreativeUser>('creatives-users', 
       ref => ref.orderBy('dateStart', 'desc').startAfter(actualLast).limit(pageSize));
     
     return testsRef.get();
   }
   
-  public getTestsPrevPage(prevFirst,actualFirst, pageSize: number = 3):  Observable<QuerySnapshot<CreativeUser>> {
+  public getTestsPrevPage(prevFirst,actualFirst, pageSize: number = 3):  any {
     const testsRef = this._afs.collection<CreativeUser>('creatives-users', 
       ref => ref.orderBy('dateStart', 'desc').startAt(prevFirst).endBefore(actualFirst).limit(pageSize));
     
@@ -125,10 +124,10 @@ export class DataDbService {
   async saveRulitUserData(testUser: IRulitUser): Promise<void> {
     
     if ( testUser.nextTest === "long_memory_test" )
-      testUser.trainingDate = firestore.FieldValue.serverTimestamp();
+      testUser.trainingDate = firebase.firestore.FieldValue.serverTimestamp();
     
     if ( testUser.nextTest === "no_next_test" )
-      testUser.testDate = firestore.FieldValue.serverTimestamp();
+      testUser.testDate = firebase.firestore.FieldValue.serverTimestamp();
 
     await this.rulitUserCollectionRef.doc(testUser.userId).set(testUser);
   }
@@ -151,10 +150,10 @@ export class DataDbService {
   }
 
   public async createEncodeUser(user: IEncodeUser): Promise<void> {
-    user.creationDate = firestore.FieldValue.serverTimestamp();
+    user.creationDate = firebase.firestore.FieldValue.serverTimestamp();
     const userObj = Object.assign({},user);
     // TODO: change CreativesMetadataCounter to TestsMetadata
-    this.getEncodeMetadataCounter().update( {"count": firestore.FieldValue.increment(1)} );
+    this.getEncodeMetadataCounter().update( {"count": firebase.firestore.FieldValue.increment(1)} );
     await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).set(userObj);
   }
 
@@ -167,8 +166,8 @@ export class DataDbService {
   //   return this.encodeUserCollectionRef.doc<IEncodeUser>(userId).valueChanges();
   // }
 
-  public getEncodeUserForms$(userId: string): Observable<IEncodeGoogleFormResponse[]> {
-    return this.encodeUserCollectionRef.doc<IEncodeUser>(userId).valueChanges().pipe(map(user => user.googleFormsResponses));
+  public getEncodeUserForms$(userId: string): any {
+    return this.encodeUserCollectionRef.doc<IEncodeUser>(userId).valueChanges().pipe(map((user: { googleFormsResponses: any; }) => user.googleFormsResponses));
   }
 
   async getAllEncodeUsersData(): Promise<Array<IEncodeUser>> {
@@ -180,21 +179,21 @@ export class DataDbService {
     return users;
   }
 
-  public getEncodeFirstPage(pageSize: number = 3):  Observable<QuerySnapshot<IEncodeUser>> {
+  public getEncodeFirstPage(pageSize: number = 3): any {
     const ref = this._afs.collection<IEncodeUser>('encode-users', 
       ref => ref.orderBy('creationDate', 'desc').limit(pageSize));
     
     return ref.get();
   }
 
-  public getEncodesNextPage(actualLast, pageSize: number = 3):  Observable<QuerySnapshot<IEncodeUser>> {
+  public getEncodesNextPage(actualLast, pageSize: number = 3): any {
     const ref = this._afs.collection<IEncodeUser>('encode-users', 
       ref => ref.orderBy('creationDate', 'desc').startAfter(actualLast).limit(pageSize));
     
     return ref.get();
   }
 
-  public getEncodePrevPage(prevFirst,actualFirst, pageSize: number = 3):  Observable<QuerySnapshot<IEncodeUser>> {
+  public getEncodePrevPage(prevFirst,actualFirst, pageSize: number = 3): any {
     const ref = this._afs.collection<IEncodeUser>('encode-users', 
       ref => ref.orderBy('creationDate', 'desc').startAt(prevFirst).endBefore(actualFirst).limit(pageSize));
     

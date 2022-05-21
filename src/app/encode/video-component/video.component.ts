@@ -6,7 +6,7 @@ import { OnExit } from '../exit.guard';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { VideoState, VIDEO_PATH } from '../constants';
 import { EncodeVideoPlayer } from './video-player/video-player.component';
-import { Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-encode-video',
@@ -26,13 +26,11 @@ export class EncodeVideoComponent implements OnExit {
   {
   }
 
-  public onExit(): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.videoLaunched) {
-      this._videoPlayerRef.componentInstance.videoState = VideoState.Pause;
-    }
+  async onExit(): Promise<any> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean>();
+    const exit$ = exitDialogRef.afterClosed();
+    return await firstValueFrom(exit$);
   }
 
   get videoSource(): string {
@@ -60,7 +58,7 @@ export class EncodeVideoComponent implements OnExit {
   }
   
   private _navigateToAudios() {
-    this.onExit = () => true;
+    this.onExit = async () => true;
     this._router.navigate(["../audios"], { relativeTo: this._route });
   }
 

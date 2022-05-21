@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { DataDbService } from "src/app/core/services/db/data-db.service";
 import { IEncodeUser } from "src/app/encode/models/IEncodeUser";
+import firebase from "firebase/compat/app";
 
 export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
 

@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { DataDbService } from "../services/db/data-db.service";
 import { CreativeUser } from "./creative-user.interface";
+import firebase from "firebase/compat/app";
 
 export class CreativityTestsDataSource implements DataSource<CreativeUser> {
 

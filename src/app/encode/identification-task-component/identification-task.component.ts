@@ -1,8 +1,7 @@
-import { Component, ComponentFactoryResolver, ComponentRef, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ViewChild } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OnExit } from '../exit.guard';
-import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { ROOM_1_TITLE, PerpetratorCondition, ABSENT_SUSPECT_ID, ROOM_2_TITLE } from '../constants';
@@ -12,6 +11,8 @@ import { EncodeIdentificationRoom } from './identification-room-component/identi
 import { EncodeIdentificationRoomDirective } from './identification-room.directive';
 import { IEncodeIdentificationResponse } from '../models/IEncodeIdentificationResponse';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
+import { firstValueFrom } from 'rxjs';
+
 
 @Component({
     selector: 'app-identification-task',
@@ -28,18 +29,18 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   
   constructor(
     private _dbService: DataDbService,
-    private _userService: EncodeUserService, 
-    private _cfr: ComponentFactoryResolver,
+    private _userService: EncodeUserService,
     private _router: Router,
     private _route: ActivatedRoute,
     private _dialog: MatDialog)
   {
   }
 
-  onExit(): Observable<boolean> | Promise<boolean> | boolean {
+  async onExit(): Promise<any> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean>();
+    const exit$ = exitDialogRef.afterClosed();
+    return await firstValueFrom(exit$);
   }
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
@@ -114,7 +115,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
       this.isIdentifing = false;
       actualRoomRef.destroy();
   
-      this.onExit = () => true;
+      this.onExit = async () => true;
       this._router.navigate(["../audios"], { relativeTo: this._route });
     }, 2000)
   }
@@ -144,7 +145,8 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     perpSuspectsDocs.forEach( async (suspectDocRef, index: number) => {
       const suspect = perpSuspects[index];
       suspect.id = suspectDocRef.id;
-      suspect.photoImageUrl = await this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL().toPromise<string>();
+      const url$ = this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL();
+      suspect.photoImageUrl = await firstValueFrom(url$);
     });
   }
 
@@ -152,10 +154,9 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     roomTitle: typeof ROOM_1_TITLE | typeof ROOM_2_TITLE, 
     firstLineup: Array<IEncodeSuspect>): ComponentRef<EncodeIdentificationRoom> 
   {
-    const componentFactory = this._cfr.resolveComponentFactory(EncodeIdentificationRoom);
     const viewContainerRef = this.identificationRoomHost.viewContainerRef;
     viewContainerRef.clear();
-    const componentRef = viewContainerRef.createComponent<EncodeIdentificationRoom>(componentFactory);
+    const componentRef = viewContainerRef.createComponent(EncodeIdentificationRoom);
     componentRef.instance.roomTitle = roomTitle;
     componentRef.instance.lineup = firstLineup;
 

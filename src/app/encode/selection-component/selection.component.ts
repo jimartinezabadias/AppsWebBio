@@ -7,8 +7,9 @@ import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
 import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
-import { Observable } from 'rxjs';
 import { SCREENSHOTS_COUNT } from '../constants';
+import { firstValueFrom } from 'rxjs';
+
 
 @Component({
     selector: 'app-encode-selection',
@@ -35,10 +36,11 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
   {
   }
 
-  onExit(): Observable<boolean> | Promise<boolean> | boolean {
+  async onExit(): Promise<any> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean>();
+    const exit$ = exitDialogRef.afterClosed();
+    return await firstValueFrom(exit$);
   }
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
@@ -57,7 +59,8 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
 
     this.imagesPairs.forEach( async (screenshot: IEncodeScreenshot, index) => {
       screenshot.id = taskResources.screenshotsPairs[index].id;
-      screenshot.imageURL = await this._dbService.getCloudStorageFileRef(screenshot.imageStorageRef).getDownloadURL().toPromise<string>();
+      const url$ = this._dbService.getCloudStorageFileRef(screenshot.imageStorageRef).getDownloadURL();
+      screenshot.imageURL = await firstValueFrom(url$);
     });
       
     let pairNumber = 1;
@@ -96,7 +99,7 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
       }
     } else {
       //routear a ordenamiento
-      this.onExit = () => true;
+      this.onExit = async () => true;
       this._router.navigate(["../sorting"], { relativeTo: this._route });
     }
   }

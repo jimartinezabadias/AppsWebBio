@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {CanDeactivate} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanDeactivate, UrlTree } from '@angular/router';
 
-import {Observable} from 'rxjs';
 
 export interface OnExit {
-  onExit: () => Observable<boolean> | Promise<boolean> | boolean;
+  // onExit: () => Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree;
+  onExit: () => any;
 }
 
 @Injectable({

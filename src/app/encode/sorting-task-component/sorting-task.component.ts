@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { OnExit } from '../exit.guard';
-import { Observable, Subject } from 'rxjs';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
 import { SCREENSHOTS_COUNT } from '../constants';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
+import { firstValueFrom, Observable, Subject } from 'rxjs';
 
 @Component({
     selector: 'app-sorting-task',
@@ -34,10 +34,11 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
   {
   }
 
-  onExit(): Observable<boolean> | Promise<boolean> | boolean {
+  async onExit(): Promise<any> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    return exitDialogRef.afterClosed().toPromise<boolean>();
+    const exit$ = exitDialogRef.afterClosed();
+    return await firstValueFrom(exit$);
   }
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
@@ -60,7 +61,7 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
 
   public finishTask(): void {
     this._userService.user.sessionTwo.imageSortingResponse = this._timeline;
-    this.onExit = () => true;
+    this.onExit = async () => true;
     this._router.navigate(["../end"], { relativeTo: this._route });
   }
 
