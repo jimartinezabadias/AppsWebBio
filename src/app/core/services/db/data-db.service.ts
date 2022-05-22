@@ -146,7 +146,8 @@ export class DataDbService {
   
   public async updateEncodeUser(user: IEncodeUser): Promise<void> {
     const userObj = Object.assign({},user);
-    await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).set(userObj);
+    console.log(userObj);
+    await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).update(userObj);
   }
 
   public async createEncodeUser(user: IEncodeUser): Promise<void> {

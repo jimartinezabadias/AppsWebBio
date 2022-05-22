@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { firstValueFrom, tap, BehaviorSubject } from "rxjs";
 
-import { finalize } from 'rxjs/operators';
+import { BehaviorSubject, finalize, firstValueFrom, lastValueFrom, Observable, tap } from 'rxjs';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { SessionsEnum } from '../../constants';
 import { IEncodeAudio } from '../../models/IEncodeAudio';
@@ -46,30 +45,21 @@ export class EncodeAudioListComponent {
     this.isUploadingNewAudio$.next(false);
   }
 
-  private async _storeAudioInFirebase(newAudio: IEncodeInMemoryAudio): Promise<string> 
+  private async _storeAudioInFirebase(newAudio: IEncodeInMemoryAudio): Promise<any> 
   {
     const filePath = this._createAudioFilePath(newAudio.id);
     const fileRef = this._bdService.getCloudStorageFileRef(filePath);
     const uploadTask = this._bdService.uploadFileToCloudStorage(filePath, newAudio.rawData);
     
-    let url;
-    // const upload$ = uploadTask.snapshotChanges().pipe(
-    //   finalize(() => {
-    //     const url$ = fileRef.getDownloadURL();
-    //     url = await firstValueFrom(url$);
-    //   } )
-    // );
-    const upload$ = uploadTask.snapshotChanges();
-    upload$.pipe(
-      tap( async () => {
-        const url$ = fileRef.getDownloadURL();
-        url = await firstValueFrom(url$);
-      })
+    let url$: Observable<any>;
+    const task$ = uploadTask.snapshotChanges().pipe(
+      finalize(() => url$ = fileRef.getDownloadURL())
     );
-    
-    url = firstValueFrom(upload$);
 
-    return url;
+    await lastValueFrom(task$);
+    const downloadURL = await lastValueFrom(url$);
+    
+    return downloadURL;
   }
 
   private _createAudioFilePath(audioFileName: string) {
