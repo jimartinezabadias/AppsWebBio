@@ -11,7 +11,7 @@ import { EncodeIdentificationRoom } from './identification-room-component/identi
 import { EncodeIdentificationRoomDirective } from './identification-room.directive';
 import { IEncodeIdentificationResponse } from '../models/IEncodeIdentificationResponse';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
-import { firstValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 
 @Component({
@@ -40,7 +40,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
     const exit$ = exitDialogRef.afterClosed();
-    return await firstValueFrom(exit$);
+    return await lastValueFrom(exit$);
   }
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
@@ -146,7 +146,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
       const suspect = perpSuspects[index];
       suspect.id = suspectDocRef.id;
       const url$ = this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL();
-      suspect.photoImageUrl = await firstValueFrom(url$);
+      suspect.photoImageUrl = await lastValueFrom(url$);
     });
   }
 

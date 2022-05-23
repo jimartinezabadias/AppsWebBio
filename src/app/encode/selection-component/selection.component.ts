@@ -8,7 +8,7 @@ import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { SCREENSHOTS_COUNT } from '../constants';
-import { firstValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 
 @Component({
@@ -40,7 +40,7 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
     const exit$ = exitDialogRef.afterClosed();
-    return await firstValueFrom(exit$);
+    return await lastValueFrom(exit$);
   }
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
@@ -60,7 +60,7 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
     this.imagesPairs.forEach( async (screenshot: IEncodeScreenshot, index) => {
       screenshot.id = taskResources.screenshotsPairs[index].id;
       const url$ = this._dbService.getCloudStorageFileRef(screenshot.imageStorageRef).getDownloadURL();
-      screenshot.imageURL = await firstValueFrom(url$);
+      screenshot.imageURL = await lastValueFrom(url$);
     });
       
     let pairNumber = 1;

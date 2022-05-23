@@ -7,7 +7,7 @@ import { EncodeAudioListComponent } from './audios-list-component/audio-list.com
 import { ExtendedRecallComponent } from './extended-recall-component/extended-recall.component';
 import { SessionsEnum } from '../constants';
 import { IEncodeUser } from '../models/IEncodeUser';
-import { firstValueFrom, map, Observable, of } from "rxjs";
+import { lastValueFrom, map, Observable, of } from "rxjs";
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -59,7 +59,7 @@ export class EncodeAudiosComponent implements OnExit {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
     const afterClosed$ = exitDialogRef.afterClosed();
-    return await firstValueFrom(afterClosed$);
+    return await lastValueFrom(afterClosed$);
   }
 
   public onAudiosReady(): void

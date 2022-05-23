@@ -6,7 +6,7 @@ import { SCREENSHOTS_COUNT } from '../constants';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
-import { firstValueFrom, Observable, Subject } from 'rxjs';
+import { lastValueFrom, Observable, Subject } from 'rxjs';
 
 @Component({
     selector: 'app-sorting-task',
@@ -38,7 +38,7 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
     const exit$ = exitDialogRef.afterClosed();
-    return await firstValueFrom(exit$);
+    return await lastValueFrom(exit$);
   }
 
   private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {

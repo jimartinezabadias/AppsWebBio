@@ -6,7 +6,7 @@ import { OnExit } from '../exit.guard';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { VideoState, VIDEO_PATH } from '../constants';
 import { EncodeVideoPlayer } from './video-player/video-player.component';
-import { firstValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-encode-video',
@@ -30,7 +30,7 @@ export class EncodeVideoComponent implements OnExit {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
     const exit$ = exitDialogRef.afterClosed();
-    return await firstValueFrom(exit$);
+    return await lastValueFrom(exit$);
   }
 
   get videoSource(): string {

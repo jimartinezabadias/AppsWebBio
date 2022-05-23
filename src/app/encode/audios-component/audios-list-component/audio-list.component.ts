@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { BehaviorSubject, finalize, firstValueFrom, lastValueFrom, Observable, tap } from 'rxjs';
+import { BehaviorSubject, finalize, lastValueFrom, Observable, tap } from 'rxjs';
 import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { SessionsEnum } from '../../constants';
 import { IEncodeAudio } from '../../models/IEncodeAudio';

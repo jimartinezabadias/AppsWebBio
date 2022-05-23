@@ -8,7 +8,7 @@ import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/comp
 
 
 import { IAdminUser } from "./IAdminUser.model";
-import { firstValueFrom } from "rxjs";
+import { lastValueFrom } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -44,7 +44,7 @@ export class AuthService {
     private async _verifyUserIsAdmin(user: firebase.User)
     {
         const userRef$ = this._adminUserCollectionRef.doc<IAdminUser>(user.uid).get();
-        const userRef = await firstValueFrom(userRef$);
+        const userRef = await lastValueFrom(userRef$);
         if (userRef.exists)
         {
             return;
