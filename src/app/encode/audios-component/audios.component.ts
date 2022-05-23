@@ -52,13 +52,12 @@ export class EncodeAudiosComponent implements OnExit {
   ngOnInit(): void 
   {
     this.user = this._userService.user;
-    console.log(this.user);
   }
 
   public async onExit(): Promise<any> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    const afterClosed$ = exitDialogRef.afterClosed();
+    const afterClosed$ = exitDialogRef.afterClosed() as unknown as Observable<unknown>;
     return await lastValueFrom(afterClosed$);
   }
 

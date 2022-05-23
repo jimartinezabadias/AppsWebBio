@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { SCREENSHOTS_COUNT } from '../constants';
 import { lastValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
   async onExit(): Promise<any> {
     const exitDialogRef = this._dialog.open(ExitConfirmComponent);
     exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    const exit$ = exitDialogRef.afterClosed();
+    const exit$ = exitDialogRef.afterClosed() as unknown as Observable<unknown>;
     return await lastValueFrom(exit$);
   }
 
@@ -69,7 +70,6 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
       if ((index % 2) == 1) pairNumber++;
     });
 
-    console.log(this.imagesPairs);
     this.imagesPairsLoaded = true;
   }
 
@@ -86,7 +86,6 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
 
   onSelection(image): void
   {
-    console.log(image);
     this.userChoice = image;
 
     this.selectionMade = true;
@@ -106,13 +105,12 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
 
   onConfirm(): any 
   {
-    console.log("currentStep: ", this.currentStep)
     if (this.currentStep < SCREENSHOTS_COUNT) {
       this.userChoices.push(this.userChoice);
       this.currentStep = this.currentStep + 1;
       this.selectionMade = false;
     }
-    console.log("userChoices: ", this.userChoices)
+
     if (this.userChoices.length == SCREENSHOTS_COUNT) {
       this.started = false;
       this.completed = true;

@@ -121,8 +121,6 @@ export class AdminCreativityComponent implements AfterViewInit, OnInit {
            for (let index in headerList) {
               let head = headerList[index];
                line += ',' + array[i][head];
-              //  console.log(array[i]);
-               
            }    
            str += line + '\r\n';
        }

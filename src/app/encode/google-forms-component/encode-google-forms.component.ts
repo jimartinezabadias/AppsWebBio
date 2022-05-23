@@ -53,15 +53,4 @@ export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
       this.googleForms.push(newControl);
     });
   }
-
-  // public submitForms(): void {
-  //   console.log('navigating to video component');
-    // if (this.userForms.valid)
-    // {
-      // this._router.navigate(["../video"], { relativeTo: this._route });
-    // }
-
-    // Error: Error: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value for 'ng-valid': 'true'. 
-  // }
-
 }
