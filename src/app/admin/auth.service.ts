@@ -1,51 +1,47 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Optional } from "@angular/core";
 import { Router } from "@angular/router";
 
-import firebase from "firebase/compat/app";
+import { doc, Firestore, collection, CollectionReference, getDoc } from '@angular/fire/firestore';
 
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/compat/firestore";
-
-
-import { IAdminUser } from "./IAdminUser.model";
-import { lastValueFrom } from "rxjs";
+import { Auth, authState, GoogleAuthProvider, signInWithPopup, signOut, User } from "@angular/fire/auth";
+import { EMPTY, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
-    user$: any;
-    private _adminUserCollectionRef: AngularFirestoreCollection;
+    public readonly user$: Observable<User | null> = EMPTY;
+    private _adminUserCollectionRef: CollectionReference;
     
     constructor(
-        private _afAuth: AngularFireAuth,
-        private _afs: AngularFirestore,
+        @Optional() private _auth: Auth,
+        private _firestore: Firestore,
         private _router: Router
     )
     {
-        this.user$ = this._afAuth.authState;
-        this._adminUserCollectionRef = this._afs.collection<IAdminUser>("admin-users");
+        this.user$ = authState(this._auth);
+        this._adminUserCollectionRef = collection(this._firestore, "admin-users");
     }
 
     async googleLogin()
     {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        const credential = await this._afAuth.signInWithPopup(provider);
+        const credential = await signInWithPopup(this._auth, new GoogleAuthProvider());
         return this._verifyUserIsAdmin(credential.user);
     }
 
     async signOut()
     {
-        await this._afAuth.signOut();
+        await signOut(this._auth);
         this._router.navigate(["/"]);
     }
 
-    private async _verifyUserIsAdmin(user: firebase.User)
+    private async _verifyUserIsAdmin(user: User)
     {
-        const userRef$ = this._adminUserCollectionRef.doc<IAdminUser>(user.uid).get();
-        const userRef = await lastValueFrom(userRef$);
-        if (userRef.exists)
+        const userDocRef = doc(this._adminUserCollectionRef,user.uid);
+        const docSnap = await getDoc(userDocRef);
+        
+        if (docSnap.exists())
         {
             return;
         }
