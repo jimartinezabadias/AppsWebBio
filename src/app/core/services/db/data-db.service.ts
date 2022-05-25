@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, DocumentData, DocumentReference } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
 
 import { CreativeUser } from './../../models/creative-user.interface';
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +15,7 @@ import { IEncodeTasksResources } from 'src/app/encode/models/IEncodeTasksResourc
 import { IEncodeScreenshot } from 'src/app/encode/models/IEncodeScreenshot';
 import firebase from 'firebase/compat/app';
 import { map } from 'rxjs';
+import { collection, doc, DocumentData, Firestore, getDoc, limit, orderBy, query, getDocs, QuerySnapshot } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -22,22 +23,33 @@ import { map } from 'rxjs';
 
 export class DataDbService {
   
+  private _encodeUserCollectionRef;
+
+  // OLD
   private creativesCollectionRef: AngularFirestoreCollection<CreativeUser>;
   private creativesMetadataRef: AngularFirestoreCollection;
   private rulitUserCollectionRef: AngularFirestoreCollection;
   private rulitConfigRef: AngularFirestoreCollection;
   private rulitSolutionsRef: AngularFirestoreCollection;
   public creativesUsers = [];
-  private encodeUserCollectionRef: AngularFirestoreCollection;
+  private encodeUserCollectionRef_OLD: AngularFirestoreCollection;
   private encodeConfigRef: AngularFirestoreCollection;
   private encodeScreenshotCollectionRef: AngularFirestoreCollection<IEncodeScreenshot>;
   private encodeSuspectCollectionRef: AngularFirestoreCollection<IEncodeSuspect>;
 
-  constructor(private _afs: AngularFirestore, private _storage: AngularFireStorage, private http: HttpClient) { 
+  constructor(
+    private _firestore: Firestore,
+    private _afs: AngularFirestore, 
+    private _storage: AngularFireStorage, 
+    private http: HttpClient) { 
+    
+    this._encodeUserCollectionRef = collection(this._firestore, "encode-users");
+    
+    // OLD
     this.creativesCollectionRef = _afs.collection<CreativeUser>('creatives-users', ref => ref.orderBy('dateStart', 'desc'));
     this.creativesMetadataRef = _afs.collection('creatives-meta');
     this.rulitUserCollectionRef = _afs.collection<IRulitUser>('rulit-users');
-    this.encodeUserCollectionRef = _afs.collection<IEncodeUser>('encode-users');
+    this.encodeUserCollectionRef_OLD = _afs.collection<IEncodeUser>('encode-users');
     this.rulitConfigRef = _afs.collection("rulit-config");
     this.rulitSolutionsRef = _afs.collection("rulit-solutions");
     this.encodeConfigRef = _afs.collection("encode-config");
@@ -112,7 +124,7 @@ export class DataDbService {
   }
 
   public getNewEncodeDocumentRef(): DocumentReference {
-    return this.encodeUserCollectionRef.ref.doc();
+    return this.encodeUserCollectionRef_OLD.ref.doc();
   }
 
   async getRulitUserData(userId: string): Promise<IRulitUser> {
@@ -146,7 +158,7 @@ export class DataDbService {
   
   public async updateEncodeUser(user: IEncodeUser): Promise<void> {
     const userObj = Object.assign({},user);
-    await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).update(userObj);
+    await this.encodeUserCollectionRef_OLD.doc<IEncodeUser>(user.uid).update(userObj);
   }
 
   public async createEncodeUser(user: IEncodeUser): Promise<void> {
@@ -154,24 +166,31 @@ export class DataDbService {
     const userObj = Object.assign({},user);
     // TODO: change CreativesMetadataCounter to TestsMetadata
     this.getEncodeMetadataCounter().update( {"count": firebase.firestore.FieldValue.increment(1)} );
-    await this.encodeUserCollectionRef.doc<IEncodeUser>(user.uid).set(userObj);
+    await this.encodeUserCollectionRef_OLD.doc<IEncodeUser>(user.uid).set(userObj);
   }
 
-  public async getEncodeUser(userId: string): Promise<IEncodeUser> {
-    let userData = await this.encodeUserCollectionRef.doc<IEncodeUser>(userId).get().toPromise();
-    return userData.data();
+  public async getEncodeUser(userId: string)  {
+    console.log("asdf");
+    const userDocRef = doc(this._encodeUserCollectionRef,userId);
+    const docSnap = await getDoc(userDocRef);
+    return docSnap.data() as IEncodeUser;
+    // old
+    // let userData = await this.encodeUserCollectionRef_OLD.doc<IEncodeUser>(userId).get().toPromise();
+    // return userData.data();
   }
 
-  // public getEncodeUser$(userId: string): Observable<IEncodeUser> {
-  //   return this.encodeUserCollectionRef.doc<IEncodeUser>(userId).valueChanges();
+  // BKP
+  // public async getEncodeUser(userId: string): Promise<IEncodeUser> {
+  //   let userData = await this.encodeUserCollectionRef.doc<IEncodeUser>(userId).get().toPromise();
+  //   return userData.data();
   // }
 
   public getEncodeUserForms$(userId: string): any {
-    return this.encodeUserCollectionRef.doc<IEncodeUser>(userId).valueChanges().pipe(map((user: { googleFormsResponses: any; }) => user.googleFormsResponses));
+    return this.encodeUserCollectionRef_OLD.doc<IEncodeUser>(userId).valueChanges().pipe(map((user: { googleFormsResponses: any; }) => user.googleFormsResponses));
   }
 
   async getAllEncodeUsersData(): Promise<Array<IEncodeUser>> {
-    const snapshot = await this.encodeUserCollectionRef.ref.get();
+    const snapshot = await this.encodeUserCollectionRef_OLD.ref.get();
     let users = new Array<IEncodeUser>();
     snapshot.docs.forEach( (doc: DocumentData) => {
       users.push(doc.data());
@@ -180,10 +199,14 @@ export class DataDbService {
   }
 
   public getEncodeFirstPage(pageSize: number = 3): any {
-    const ref = this._afs.collection<IEncodeUser>('encode-users', 
-      ref => ref.orderBy('creationDate', 'desc').limit(pageSize));
+    const q = query<IEncodeUser>(this._encodeUserCollectionRef, orderBy("creationDate", "desc"), limit(pageSize));
+    return getDocs(q);
     
-    return ref.get();
+    // old
+    // const ref = this._afs.collection<IEncodeUser>('encode-users', 
+    //   ref => ref.orderBy('creationDate', 'desc').limit(pageSize));
+    
+    // return ref.get();
   }
 
   public getEncodesNextPage(actualLast, pageSize: number = 3): any {

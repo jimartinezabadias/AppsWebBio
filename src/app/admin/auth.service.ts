@@ -2,8 +2,8 @@ import { Injectable, Optional } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { doc, Firestore, collection, CollectionReference, getDoc } from '@angular/fire/firestore';
-
 import { Auth, authState, GoogleAuthProvider, signInWithPopup, signOut, User } from "@angular/fire/auth";
+
 import { EMPTY, Observable } from 'rxjs';
 
 @Injectable({
