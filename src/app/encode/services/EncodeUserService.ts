@@ -1,14 +1,15 @@
 import { Injectable } from "@angular/core";
-import { DataDbService } from "src/app/core/services/db/data-db.service";
 import { IEncodeUser } from "../models/IEncodeUser";
 import { HttpClient } from "@angular/common/http";
 import { IEncodeGoogleFormsSettings } from "../models/IEncodeGoogleFormsSettings";
 import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
-import { Observable } from "rxjs";
+import { lastValueFrom, Observable } from "rxjs";
 import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
 import { IEncodeSessionTwo } from "../models/IEncodeSessionTwo";
 import { IEncodeUserConsent } from "../models/IEncodeUserConsent";
 import { SessionsEnum } from "../constants";
+import { FirestoreService } from "src/app/core/firestore.service";
+import { serverTimestamp } from "@angular/fire/firestore";
 
 @Injectable({
     providedIn: 'root'
@@ -17,17 +18,17 @@ export class EncodeUserService {
     
     private _user: IEncodeUser = null;
     
-    constructor(private _dbService: DataDbService, private _http: HttpClient)
+    constructor(private _firestoreService: FirestoreService, private _http: HttpClient)
     {
     }    
     
     // creates and stores a new user
     // returns the created user
-    public async createNewUser(userData: {name: string, email: string}): Promise<IEncodeUser>
+    public async createNewUser(userData: {name: string, email: string}): Promise<IEncodeUser> | null
     {
-        const newUserId: string = this._dbService.getNewEncodeDocumentRef().id;
-        const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserId);
-        
+        const newUserRef = this._firestoreService.getEncodeNewUserDocumentRef();
+        const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserRef.id);
+
         const newSessionOne: IEncodeSessionOne = { 
             completed: false, 
             somnolenceDegree: null, 
@@ -46,12 +47,12 @@ export class EncodeUserService {
         
         const userConsent: IEncodeUserConsent = { hasAccepted: false, date: null };
 
-        const newUser: IEncodeUser = {
-            uid: newUserId, 
+        const newUserData: IEncodeUser = {
+            uid: newUserRef.id, 
             name: userData.name, 
             email: userData.email, 
             googleFormsResponses: googleFormsResponses,
-            creationDate: null,
+            creationDate: serverTimestamp(),
             personalInfo: null,
             sessionOne: newSessionOne,
             sessionTwo: newSessionTwo,
@@ -60,8 +61,8 @@ export class EncodeUserService {
             consent: userConsent
         };
         
-        await this._dbService.createEncodeUser(newUser);
-        return newUser;
+        await this._firestoreService.createNewEncodeUser(newUserData, newUserRef);
+        return newUserData;
     }
 
     get user(): IEncodeUser 
@@ -74,7 +75,8 @@ export class EncodeUserService {
     }
 
     get googleForms$(): Observable<IEncodeGoogleFormResponse[]> | null{
-        return (this._user == null) ? null : this._dbService.getEncodeUserForms$(this._user.uid);
+        // return (this._user == null) ? null : this._dbService.getEncodeUserForms$(this._user.uid);
+        return null;
     }
 
     get session(): SessionsEnum
@@ -89,8 +91,8 @@ export class EncodeUserService {
     }
 
     public async updateUserInDB() {
-        if (this._user == null) return ;
-        await this._dbService.updateEncodeUser(this._user);
+        // if (this._user == null) return ;
+        // await this._dbService.updateEncodeUser(this._user);
     }
 
     public abandonTest(): Promise<void> {
@@ -98,8 +100,8 @@ export class EncodeUserService {
         return this.updateUserInDB();
     }
     
-    private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
-        const googleFormsSettings: IEncodeGoogleFormsSettings = await this._dbService.getEncodeGoogleFormsSettings();
+    private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> | null {
+        const googleFormsSettings: IEncodeGoogleFormsSettings = await this._firestoreService.getEncodeGoogleFormsSettings();
         const options = {
             params: {
                 userId: newUserId,
@@ -107,6 +109,7 @@ export class EncodeUserService {
             }
         }
 
-        return this._http.get<IEncodeGoogleFormResponse[]>(googleFormsSettings.generatePreFilledResponsesScriptURL, options).toPromise();
+        const request$ = this._http.get<IEncodeGoogleFormResponse[]>(googleFormsSettings.generatePreFilledResponsesScriptURL, options);
+        return lastValueFrom(request$);
     }
 }
