@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { collection, doc, Firestore, CollectionReference, DocumentReference, getDoc, setDoc, query, orderBy, limit, getDocs, QuerySnapshot } from '@angular/fire/firestore';
+import { collection, doc, Firestore, CollectionReference, DocumentReference, getDoc, setDoc, query, orderBy, limit, getDocs, QuerySnapshot, startAt, endBefore } from '@angular/fire/firestore';
+import { startAfter } from 'firebase/firestore';
 import { IEncodeGoogleFormsSettings } from '../encode/models/IEncodeGoogleFormsSettings';
 import { IEncodeUser } from '../encode/models/IEncodeUser';
 
@@ -54,5 +55,15 @@ export class EncodeFirestoreService {
         const ref = doc(this._metadataCollectionRef, "encode-counter");
         return await getDoc(ref);
     }
+
+    public async getEncodesNextPage(actualLast, pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
+        const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"), limit(pageSize), startAfter(actualLast));
+        return await getDocs(q);
+    }
+
+    public async getEncodePrevPage(prevFirst, actualFirst, pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
+        const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"), limit(pageSize), startAt(prevFirst), endBefore(actualFirst));
+        return await getDocs(q);
+      }
 
 }

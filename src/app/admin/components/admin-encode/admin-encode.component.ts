@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs/operators';
@@ -10,15 +10,15 @@ import { Parser, transforms } from 'json2csv';
 import { encodeCSVFields } from '../../constants';
 import { EncodeFirestoreService } from "src/app/core/encodeFirestore.service";
 
-
 const SEPARATOR = "_";
+const PAGE_SIZE = 5;
 
 @Component({
   selector: 'app-admin-encode',
   templateUrl: './admin-encode.component.html',
   styleUrls: ['admin-encode.component.scss','../admin.component.scss'],
 })
-export class AdminEncodeComponent implements OnInit {
+export class AdminEncodeComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) private _paginator: MatPaginator;
   private _pageIndex: number = 0;
@@ -26,8 +26,8 @@ export class AdminEncodeComponent implements OnInit {
 
   public usersDataSource: EncodeUsersDataSource;
   public totalTestsCounter: { count: number } = { count: -1 };
-  public pageSize: number = 1;
-  public isLoading: boolean = false
+  public isLoading: boolean = false;
+  public pageSize = PAGE_SIZE;
 
   // Columnas de la tabla que se van a mostrar
   public displayedColumns: string[] = ["name", "email", "link" ,"creationDate" ];
@@ -42,7 +42,7 @@ export class AdminEncodeComponent implements OnInit {
   async ngOnInit(): Promise<void> 
   {
     this.usersDataSource = new EncodeUsersDataSource(this._encodeFirestoreService);
-    this.usersDataSource.loadUsers(this.pageSize);
+    this.usersDataSource.loadUsers(PAGE_SIZE);
 
     // Get total number of users
     const counter = await this._encodeFirestoreService.getEncodeMetadataCounter();
@@ -61,14 +61,18 @@ export class AdminEncodeComponent implements OnInit {
         .subscribe();
   }
 
+  ngOnDestroy(): void {
+    this.usersDataSource.disconnect();
+  }
+
   private _loadTestsPage() {
     if (this._pageIndex < this._paginator.pageIndex){
-      this.usersDataSource.loadNextPage(this.pageSize);
+      this.usersDataSource.loadNextPage(PAGE_SIZE);
       this._pageIndex = this._paginator.pageIndex;
       return;
     }
 
-    this.usersDataSource.loadPrevPage(this.pageSize);
+    this.usersDataSource.loadPrevPage(PAGE_SIZE);
     this._pageIndex = this._paginator.pageIndex;
   }
   
@@ -83,7 +87,7 @@ export class AdminEncodeComponent implements OnInit {
     {
       this.isLoading = true;
       await this._encodeUserService.createNewUser(userData);
-      this.usersDataSource.loadUsers(this.pageSize);
+      this.usersDataSource.loadUsers(PAGE_SIZE);
       this.isLoading = false;
     }
   }
