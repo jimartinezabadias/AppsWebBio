@@ -42,28 +42,27 @@ export class EncodeFirestoreService {
     }
 
     public createNewEncodeUser(user: IEncodeUser, userDocRef: DocumentReference): Promise<void> {
-        // const newUserRef = doc(this._encodeUserCollectionRef);
         return setDoc(userDocRef, user);
     }
 
-    public async getEncodeFirstPage(pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
+    public getEncodeFirstPage(pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
         const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"), limit(pageSize));
-        return await getDocs(q);
+        return getDocs(q);
     }
 
-    public async getEncodeMetadataCounter() {
+    public getEncodeMetadataCounter() {
         const ref = doc(this._metadataCollectionRef, "encode-counter");
-        return await getDoc(ref);
+        return getDoc(ref);
     }
 
-    public async getEncodesNextPage(actualLast, pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
+    public getEncodesNextPage(actualLast, pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
         const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"), limit(pageSize), startAfter(actualLast));
-        return await getDocs(q);
+        return getDocs(q);
     }
 
-    public async getEncodePrevPage(prevFirst, actualFirst, pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
+    public getEncodePrevPage(prevFirst, actualFirst, pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
         const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"), limit(pageSize), startAt(prevFirst), endBefore(actualFirst));
-        return await getDocs(q);
+        return getDocs(q);
       }
 
 }

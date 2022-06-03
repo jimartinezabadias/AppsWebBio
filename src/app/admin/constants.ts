@@ -1,6 +1,9 @@
 export const VERSION_NUMBER: string = "04302022";
 
-// ENCODE CONSTANTS
+// ENCODE ADMIN CONSTANTS
+
+export const CSV_SEPARATOR = "_";
+export const PAGE_SIZE = 1;
 
 export const encodeCSVFields = [
     "uid",

@@ -7,11 +7,9 @@ import { EncodeUsersDataSource } from './encodeUsersDataSource';
 import { InviteFormComponent } from './invite-form-component/invite-form.component';
 import { Router } from '@angular/router';
 import { Parser, transforms } from 'json2csv';
-import { encodeCSVFields } from '../../constants';
+import { CSV_SEPARATOR, encodeCSVFields, PAGE_SIZE } from '../../constants';
 import { EncodeFirestoreService } from "src/app/core/encodeFirestore.service";
 
-const SEPARATOR = "_";
-const PAGE_SIZE = 5;
 
 @Component({
   selector: 'app-admin-encode',
@@ -121,7 +119,7 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
   }
 
   private generateCSV(temp: string): string {
-    const flatOptions = transforms.flatten({ objects: true, arrays: true, separator: SEPARATOR });
+    const flatOptions = transforms.flatten({ objects: true, arrays: true, separator: CSV_SEPARATOR });
     const json2csvParser = new Parser({ fields: this._csvFields, transforms: [ flatOptions ] });
     
     return json2csvParser.parse(temp);
