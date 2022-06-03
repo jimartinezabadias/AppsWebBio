@@ -8,7 +8,7 @@ import { IEncodeUser } from '../encode/models/IEncodeUser';
 @Injectable({
   providedIn: 'root'
 })
-export class FirestoreService {
+export class EncodeFirestoreService {
   
     private _encodeUserCollectionRef: CollectionReference<IEncodeUser>;
     private _encodeConfigCollectionRef: CollectionReference;

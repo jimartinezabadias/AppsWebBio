@@ -8,7 +8,7 @@ import { EncodeUsersDataSource } from './encodeUsersDataSource';
 import { InviteFormComponent } from './invite-form-component/invite-form.component';
 import { Router } from '@angular/router';
 import { Parser, transforms } from 'json2csv';
-import { PlatformLocation } from '@angular/common';
+// import { PlatformLocation } from '@angular/common';
 import { encodeCSVFields } from '../../constants';
 
 
@@ -37,7 +37,8 @@ export class AdminEncodeComponent implements OnInit {
     private _encodeUserService: EncodeUserService,
     private _dialog: MatDialog,
     private _router: Router,
-    private _platformLocation: PlatformLocation) {}
+    // private _platformLocation: PlatformLocation
+    ) {}
   
   ngOnInit(): void 
   {

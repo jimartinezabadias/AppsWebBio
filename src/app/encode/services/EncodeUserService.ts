@@ -8,7 +8,7 @@ import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
 import { IEncodeSessionTwo } from "../models/IEncodeSessionTwo";
 import { IEncodeUserConsent } from "../models/IEncodeUserConsent";
 import { SessionsEnum } from "../constants";
-import { FirestoreService } from "src/app/core/firestore.service";
+import { EncodeFirestoreService } from "src/app/core/encodeFirestore.service";
 import { serverTimestamp } from "@angular/fire/firestore";
 
 @Injectable({
@@ -18,14 +18,13 @@ export class EncodeUserService {
     
     private _user: IEncodeUser = null;
     
-    constructor(private _firestoreService: FirestoreService, private _http: HttpClient)
+    constructor(private _firestoreService: EncodeFirestoreService, private _http: HttpClient)
     {
     }    
     
     // creates and stores a new user
     // returns the created user
-    public async createNewUser(userData: {name: string, email: string}): Promise<IEncodeUser> | null
-    {
+    public async createNewUser(userData: {name: string, email: string}): Promise<IEncodeUser> {
         const newUserRef = this._firestoreService.getEncodeNewUserDocumentRef();
         const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserRef.id);
 
@@ -74,7 +73,7 @@ export class EncodeUserService {
         this._user = user;
     }
 
-    get googleForms$(): Observable<IEncodeGoogleFormResponse[]> | null{
+    get googleForms$(): Observable<IEncodeGoogleFormResponse[]> {
         // return (this._user == null) ? null : this._dbService.getEncodeUserForms$(this._user.uid);
         return null;
     }
@@ -100,7 +99,7 @@ export class EncodeUserService {
         return this.updateUserInDB();
     }
     
-    private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> | null {
+    private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
         const googleFormsSettings: IEncodeGoogleFormsSettings = await this._firestoreService.getEncodeGoogleFormsSettings();
         const options = {
             params: {
