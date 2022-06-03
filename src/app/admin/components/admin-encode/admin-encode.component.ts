@@ -2,14 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs/operators';
-// import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
 import { EncodeUsersDataSource } from './encodeUsersDataSource';
 import { InviteFormComponent } from './invite-form-component/invite-form.component';
 import { Router } from '@angular/router';
 import { Parser, transforms } from 'json2csv';
-// import { PlatformLocation } from '@angular/common';
 import { encodeCSVFields } from '../../constants';
+import { EncodeFirestoreService } from "src/app/core/encodeFirestore.service";
 
 
 const SEPARATOR = "_";
@@ -26,8 +25,8 @@ export class AdminEncodeComponent implements OnInit {
   private _csvFields = encodeCSVFields;
 
   public usersDataSource: EncodeUsersDataSource;
-  public totalTestsCounter: any = { count: -1 };
-  public pageSize: number = 5;
+  public totalTestsCounter: { count: number } = { count: -1 };
+  public pageSize: number = 1;
   public isLoading: boolean = false
 
   // Columnas de la tabla que se van a mostrar
@@ -35,18 +34,19 @@ export class AdminEncodeComponent implements OnInit {
   
   constructor(
     private _encodeUserService: EncodeUserService,
+    private _encodeFirestoreService: EncodeFirestoreService,
     private _dialog: MatDialog,
-    private _router: Router,
-    // private _platformLocation: PlatformLocation
+    private _router: Router
     ) {}
   
-  ngOnInit(): void 
+  async ngOnInit(): Promise<void> 
   {
-    // this.usersDataSource = new EncodeUsersDataSource(this._dbService);
-    // this.usersDataSource.loadUsers(this.pageSize);
+    this.usersDataSource = new EncodeUsersDataSource(this._encodeFirestoreService);
+    this.usersDataSource.loadUsers(this.pageSize);
 
-    // // Get total number of users
-    // this._dbService.getEncodeMetadataCounter().snapshotChanges().subscribe( this._userCounterObserver );
+    // Get total number of users
+    const counter = await this._encodeFirestoreService.getEncodeMetadataCounter();
+    this.totalTestsCounter.count = counter.data().count;
   }
 
   ngAfterViewInit() {
@@ -65,8 +65,9 @@ export class AdminEncodeComponent implements OnInit {
     if (this._pageIndex < this._paginator.pageIndex){
       this.usersDataSource.loadNextPage(this.pageSize);
       this._pageIndex = this._paginator.pageIndex;
-      return
+      return;
     }
+
     this.usersDataSource.loadPrevPage(this.pageSize);
     this._pageIndex = this._paginator.pageIndex;
   }
@@ -74,7 +75,6 @@ export class AdminEncodeComponent implements OnInit {
   // INVITE
   public openInviteDialog(): void {
     const dialogRef = this._dialog.open(InviteFormComponent);
-
     dialogRef.afterClosed().subscribe(this._inviteDialogClosed$);
   }
 
@@ -104,8 +104,6 @@ export class AdminEncodeComponent implements OnInit {
     // let csvString = this.generateCSV(temp);
     // this.openDownloadWindow(csvString);
   }
-
-  
 
   private _userCounterObserver = (counterData) => {
     this.totalTestsCounter = counterData.payload.data();

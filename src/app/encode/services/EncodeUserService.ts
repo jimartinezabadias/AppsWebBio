@@ -18,14 +18,14 @@ export class EncodeUserService {
     
     private _user: IEncodeUser = null;
     
-    constructor(private _firestoreService: EncodeFirestoreService, private _http: HttpClient)
+    constructor(private _encodeFirestoreService: EncodeFirestoreService, private _http: HttpClient)
     {
     }    
     
     // creates and stores a new user
     // returns the created user
     public async createNewUser(userData: {name: string, email: string}): Promise<IEncodeUser> {
-        const newUserRef = this._firestoreService.getEncodeNewUserDocumentRef();
+        const newUserRef = this._encodeFirestoreService.getEncodeNewUserDocumentRef();
         const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserRef.id);
 
         const newSessionOne: IEncodeSessionOne = { 
@@ -60,7 +60,7 @@ export class EncodeUserService {
             consent: userConsent
         };
         
-        await this._firestoreService.createNewEncodeUser(newUserData, newUserRef);
+        await this._encodeFirestoreService.createNewEncodeUser(newUserData, newUserRef);
         return newUserData;
     }
 
@@ -100,7 +100,7 @@ export class EncodeUserService {
     }
     
     private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
-        const googleFormsSettings: IEncodeGoogleFormsSettings = await this._firestoreService.getEncodeGoogleFormsSettings();
+        const googleFormsSettings: IEncodeGoogleFormsSettings = await this._encodeFirestoreService.getEncodeGoogleFormsSettings();
         const options = {
             params: {
                 userId: newUserId,

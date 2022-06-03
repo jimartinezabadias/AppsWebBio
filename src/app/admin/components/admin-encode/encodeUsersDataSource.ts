@@ -1,22 +1,26 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
-import { DocumentData, QuerySnapshot } from "@angular/fire/compat/firestore";
 import { BehaviorSubject, Observable } from "rxjs";
-import { finalize } from "rxjs/operators";
-import { DataDbService } from "src/app/core/services/db/data-db.service";
 import { IEncodeUser } from "src/app/encode/models/IEncodeUser";
-import firebase from "firebase/compat/app";
+
+// import { finalize } from "rxjs/operators";
+// import { DataDbService } from "src/app/core/services/db/data-db.service";
+// import { DocumentData, QuerySnapshot } from "@angular/fire/compat/firestore";
+// import firebase from "firebase/compat/app";
+
+import { EncodeFirestoreService } from "src/app/core/encodeFirestore.service";
+import { DocumentData, DocumentSnapshot, QuerySnapshot } from "@angular/fire/firestore";
 
 export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
 
     private _usersSubject = new BehaviorSubject<IEncodeUser[]>([]);
     private _loadingSubject = new BehaviorSubject<boolean>(false);
-    private _actualFirstInPage: firebase.firestore.DocumentSnapshot<DocumentData> = null;
-    private _actualLastInPage: firebase.firestore.DocumentSnapshot<DocumentData> = null;
-    private _prevFirstQueue: Array<firebase.firestore.DocumentSnapshot<DocumentData>> = [];
+    private _actualPageFirstDoc: DocumentSnapshot<DocumentData> = null;
+    private _actualPageLastDoc: DocumentSnapshot<DocumentData> = null;
+    private _prevFirstQueue: Array<DocumentSnapshot<DocumentData>> = [];
 
     public loading$ = this._loadingSubject.asObservable();
 
-    constructor(private _dbService: DataDbService) {}
+    constructor(private _encodeFirestoreService: EncodeFirestoreService) {}
     
     public connect(collectionViewer: CollectionViewer): Observable<IEncodeUser[] | readonly IEncodeUser[]> 
     {
@@ -29,25 +33,24 @@ export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
         this._loadingSubject.complete();
     }
 
-    public loadUsers(pageSize: number)
+    public async loadUsers(pageSize: number)
     {
         this._loadingSubject.next(true);
 
-        this._dbService.getEncodeFirstPage(pageSize)
-            .pipe( finalize(() => this._loadingSubject.next(false)) )
-            .subscribe( users => this._loadNewResults(users));
-
+        const usersSnapshot = await this._encodeFirestoreService.getEncodeFirstPage(pageSize);
+        this._loadNewResults(usersSnapshot);
+        this._loadingSubject.next(false);
     }
 
     public loadNextPage(pageSize: number)
     {
         this._loadingSubject.next(true);
 
-        this._prevFirstQueue.push(this._actualFirstInPage);
+        this._prevFirstQueue.push(this._actualPageFirstDoc);
 
-        this._dbService.getEncodesNextPage(this._actualLastInPage, pageSize)
-            .pipe( finalize(() => this._loadingSubject.next(false)) )
-            .subscribe( tests => this._loadNewResults(tests));
+        // this._dbService.getEncodesNextPage(this._actualLastInPage, pageSize)
+        //     .pipe( finalize(() => this._loadingSubject.next(false)) )
+        //     .subscribe( tests => this._loadNewResults(tests));
     }
 
     public loadPrevPage(pageSize: number)
@@ -56,23 +59,26 @@ export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
 
         let prevFirst = this._prevFirstQueue.pop();
 
-        this._dbService.getEncodePrevPage( prevFirst, this._actualFirstInPage, pageSize)
-            .pipe( finalize(() => this._loadingSubject.next(false)) )
-            .subscribe( tests => this._loadNewResults(tests));
+        // this._dbService.getEncodePrevPage( prevFirst, this._actualFirstInPage, pageSize)
+        //     .pipe( finalize(() => this._loadingSubject.next(false)) )
+        //     .subscribe( tests => this._loadNewResults(tests));
     }
 
     private async _loadNewResults(results: QuerySnapshot<IEncodeUser>): Promise<void>
     {
-        if (results.docs.length > 0){
+        if (results.size > 0){
             let arrUsers: IEncodeUser[] = [];
             this._usersSubject.next(arrUsers);
                 
-            results.docs.forEach( user => {
-                arrUsers.push(user.data());
-            });
+            results.forEach(doc => {
+                arrUsers.push(doc.data() as IEncodeUser);
+            })
     
-            this._actualFirstInPage = await results.docs[0].ref.get();
-            this._actualLastInPage = await results.docs[results.size - 1].ref.get();
+            this._actualPageFirstDoc = results.docs[0];
+            this._actualPageLastDoc = results.docs[results.size - 1];
+
+            // this._actualPageFirstDoc = await results.docs[0].ref.get();
+            // this._actualPageLastDoc = await results.docs[results.size - 1].ref.get();
             
             this._usersSubject.next(arrUsers);
         }
