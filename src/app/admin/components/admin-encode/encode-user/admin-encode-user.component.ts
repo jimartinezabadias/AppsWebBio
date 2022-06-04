@@ -1,10 +1,10 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { IEncodeUser } from 'src/app/encode/models/IEncodeUser';
-import { Gender, EducationLevel, SomnolenceDegree, PerpetratorCondition } from 'src/app/encode/constants';
-import { Observable, from } from "rxjs";
-import { take, tap } from "rxjs/operators";
+import {  PerpetratorCondition, SomnolenceDegree } from 'src/app/encode/constants';
+
+import { EncodeUserService } from 'src/app/encode/services/EncodeUserService';
+import { EncodeFirestoreService } from 'src/app/core/encodeFirestore.service';
 
 @Component({
   selector: 'app-admin-encode-user',
@@ -13,45 +13,43 @@ import { take, tap } from "rxjs/operators";
 })
 export class AdminEncodeUserComponent implements OnInit {
 
-  private _user: IEncodeUser | null = null;
+  public user : IEncodeUser;
   
   // Columnas de la tabla que se van a mostrar
   public displayedColumns: string[] = ["email", "link", "creationDate" ];
-  public user$ : Observable<IEncodeUser>;
-  public genders = Gender;
-  public educationLevels = EducationLevel;
   public somnolenceDegrees = SomnolenceDegree;
   public selectedPerpetratorCondition: PerpetratorCondition | null = null;
 
   constructor(
-    private _dbService: DataDbService,
-    private _route: ActivatedRoute) {}
+    private _encodeUserService: EncodeUserService,
+    private _encodeFirestoreService: EncodeFirestoreService,
+    private _route: ActivatedRoute,
+    private _router: Router) {}
 
   get perpetratorConditions() 
   {
     return PerpetratorCondition;
   }
 
-  async ngOnInit(): Promise<void> 
+  ngOnInit() 
   {
     let userIdParam = this._route.snapshot.paramMap.get('userId');
-    this.user$ = from(this._dbService.getEncodeUser(userIdParam));
-    const userSubject = this.user$.pipe(
-      take(1), 
-      tap( (userData: IEncodeUser) => {
-        this._user = userData;
-        if (this._user.sessionTwo != null){
-          this.selectedPerpetratorCondition = this._user.sessionTwo.perpetratorCondition;
-        }
-
-        userSubject.unsubscribe();
-      } ))
-      .subscribe();
+    
+    if (this._encodeUserService.user && this._encodeUserService.user.uid == userIdParam ) {
+      this.user = this._encodeUserService.user;
+    } 
+    else {
+      this._router.navigate(['/admin/encode/']);
+    }
+    
+    if (this.user.sessionTwo != null){
+      this.selectedPerpetratorCondition = this.user.sessionTwo.perpetratorCondition;
+    }
   }
 
   public applyPerpetratorCondition(): void {
-    this._user.sessionTwo.perpetratorCondition = this.selectedPerpetratorCondition;
-    this._dbService.updateEncodeUser(this._user);
+    this.user.sessionTwo.perpetratorCondition = this.selectedPerpetratorCondition;
+    this._encodeFirestoreService.updateEncodeUser(this.user);
   }
 
 }

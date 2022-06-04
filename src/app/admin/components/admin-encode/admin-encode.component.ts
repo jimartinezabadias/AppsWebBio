@@ -22,7 +22,7 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
   private _pageIndex: number = 0;
   private _csvFields = encodeCSVFields;
 
-  public usersDataSource: EncodeUsersDataSource;
+  public encodeUserDataSource: EncodeUsersDataSource;
   public totalTestsCounter: { count: number } = { count: -1 };
   public isLoading: boolean = false;
   public pageSize = PAGE_SIZE;
@@ -39,8 +39,8 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
   
   async ngOnInit(): Promise<void> 
   {
-    this.usersDataSource = new EncodeUsersDataSource(this._encodeFirestoreService);
-    this.usersDataSource.loadUsers(PAGE_SIZE);
+    this.encodeUserDataSource = new EncodeUsersDataSource(this._encodeFirestoreService);
+    this.encodeUserDataSource.loadUsers(PAGE_SIZE);
 
     // Get total number of users
     const counter = await this._encodeFirestoreService.getEncodeMetadataCounter();
@@ -60,17 +60,17 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.usersDataSource.disconnect();
+    this.encodeUserDataSource.disconnect();
   }
 
   private _loadTestsPage() {
     if (this._pageIndex < this._paginator.pageIndex){
-      this.usersDataSource.loadNextPage(PAGE_SIZE);
+      this.encodeUserDataSource.loadNextPage(PAGE_SIZE);
       this._pageIndex = this._paginator.pageIndex;
       return;
     }
 
-    this.usersDataSource.loadPrevPage(PAGE_SIZE);
+    this.encodeUserDataSource.loadPrevPage(PAGE_SIZE);
     this._pageIndex = this._paginator.pageIndex;
   }
   
@@ -85,12 +85,16 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
     {
       this.isLoading = true;
       await this._encodeUserService.createNewUser(userData);
-      this.usersDataSource.loadUsers(PAGE_SIZE);
+      this.encodeUserDataSource.loadUsers(PAGE_SIZE);
       this.isLoading = false;
     }
   }
 
   public getUserResults(uid) {
+    if (this._encodeUserService.user?.uid != uid) {
+      this._encodeUserService.user = this.encodeUserDataSource.getUserData(uid);
+    }
+    
     this._router.navigate(['/admin/encode/', uid]);
   }
 
@@ -107,9 +111,9 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
     // this.openDownloadWindow(csvString);
   }
 
-  private _userCounterObserver = (counterData) => {
-    this.totalTestsCounter = counterData.payload.data();
-  }
+  // private _userCounterObserver = (counterData) => {
+  //   this.totalTestsCounter = counterData.payload.data();
+  // }
 
   private openDownloadWindow(csvString: string) {
     // Download

@@ -15,7 +15,7 @@
         </div>
 
         <div [style.visibility]="isLoading ? 'hidden' : 'visible'" class="contains-tables mat-elevation-z8">
-            <mat-table [dataSource]="usersDataSource">      
+            <mat-table [dataSource]="encodeUserDataSource">      
         
                 <!-- Name -->
                 <ng-container matColumnDef="name">

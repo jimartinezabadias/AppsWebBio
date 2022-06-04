@@ -5,6 +5,7 @@ import { IEncodeUser } from "src/app/encode/models/IEncodeUser";
 import { EncodeFirestoreService } from "src/app/core/encodeFirestore.service";
 import { DocumentData, DocumentSnapshot, QuerySnapshot } from "@angular/fire/firestore";
 
+
 export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
 
     private _usersSubject = new BehaviorSubject<IEncodeUser[]>([]);
@@ -58,6 +59,11 @@ export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
         this._loadingSubject.next(false);
     }
 
+    public getUserData(userId: string): IEncodeUser {
+        const usersData = this._usersSubject.getValue();
+        return usersData.find(user => user.uid == userId);
+    }
+
     private _loadNewResults(results: QuerySnapshot<IEncodeUser>): void
     {
         if (results.size > 0){
@@ -67,6 +73,10 @@ export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
             results.forEach(doc => {
                 arrUsers.push(doc.data() as IEncodeUser);
             })
+
+            // arrUsers.forEach(user => {
+            //     console.log(user);
+            // })
     
             this._actualPageFirstDoc = results.docs[0];
             this._actualPageLastDoc = results.docs[results.size - 1];
