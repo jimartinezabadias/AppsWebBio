@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { take, map, tap } from 'rxjs/operators';
+import { lastValueFrom } from 'rxjs';
+import { take, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/admin/auth.service';
 
 @Injectable({
@@ -16,9 +17,12 @@ export class AdminAuthGuard implements CanActivate {
   }
   
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
-    const isUserLoggedIn: boolean = await this._authService.user$.pipe(
-      take(1),
-      map(user => !!user)).toPromise();
+    const isUserLoggedIn = await lastValueFrom(this._authService.user$
+      .pipe(
+        take(1),
+        map(user => !!user)
+      )
+    );
     
     if (isUserLoggedIn){
       return true;
