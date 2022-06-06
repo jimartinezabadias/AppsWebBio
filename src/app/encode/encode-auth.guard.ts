@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { DataDbService } from '../core/services/db/data-db.service';
+import { EncodeFirestoreService } from '../core/encodeFirestore.service';
 import { EncodeUserService } from './services/EncodeUserService';
 
 @Injectable({
@@ -8,7 +8,10 @@ import { EncodeUserService } from './services/EncodeUserService';
 })
 export class EncodeAuthGuard implements CanActivate {
   
-  constructor(private _userService: EncodeUserService, private _router: Router, private _dbService: DataDbService) {}
+  constructor(
+    private _userService: EncodeUserService, 
+    private _router: Router,
+    private _encodeFirestoreService: EncodeFirestoreService) {}
 
   async canActivate(
     route: ActivatedRouteSnapshot,
@@ -31,7 +34,8 @@ export class EncodeAuthGuard implements CanActivate {
     }
     else if (route.children.length == 0)
     {
-      this._userService.user = await this._dbService.getEncodeUser(userId);
+      const userData = await this._encodeFirestoreService.getEncodeUser(userId);
+      this._userService.user = userData.data();
       if (this._userService.user != null)
       {
         // Redirect to the home page

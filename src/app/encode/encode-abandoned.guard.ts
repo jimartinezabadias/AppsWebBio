@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { DataDbService } from '../core/services/db/data-db.service';
+import { ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';
+import { EncodeFirestoreService } from '../core/encodeFirestore.service';
 import { EncodeUserService } from './services/EncodeUserService';
 
 @Injectable({
@@ -8,7 +8,10 @@ import { EncodeUserService } from './services/EncodeUserService';
 })
 export class EncodeAbandonedGuard implements CanActivate {
   
-  constructor(private _userService: EncodeUserService, private _router: Router, private _dbService: DataDbService) {}
+  constructor(
+    private _userService: EncodeUserService, 
+    private _router: Router,
+    private _encodeFirestoreService: EncodeFirestoreService) {}
 
   async canActivate(route: ActivatedRouteSnapshot): Promise<boolean | UrlTree> 
   {
@@ -19,7 +22,8 @@ export class EncodeAbandonedGuard implements CanActivate {
     // check if user isnt loaded
     if (this._userService.user == null) {
       const userId: string = route.paramMap.get('userId');
-      this._userService.user = await this._dbService.getEncodeUser(userId);
+      const userData = await this._encodeFirestoreService.getEncodeUser(userId);
+      this._userService.user = userData.data();
     }
     
     if (this._userService.user.abandonedByUser)
