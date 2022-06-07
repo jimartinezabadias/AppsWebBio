@@ -3,13 +3,13 @@ import { IEncodeUser } from "../models/IEncodeUser";
 import { HttpClient } from "@angular/common/http";
 import { IEncodeGoogleFormsSettings } from "../models/IEncodeGoogleFormsSettings";
 import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
-import { lastValueFrom, Observable } from "rxjs";
+import { EMPTY, lastValueFrom, Observable, of } from "rxjs";
 import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
 import { IEncodeSessionTwo } from "../models/IEncodeSessionTwo";
 import { IEncodeUserConsent } from "../models/IEncodeUserConsent";
 import { SessionsEnum } from "../constants";
 import { EncodeFirestoreService } from "src/app/core/encodeFirestore.service";
-import { serverTimestamp } from "@angular/fire/firestore";
+import { serverTimestamp, Unsubscribe } from "@angular/fire/firestore";
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +17,8 @@ import { serverTimestamp } from "@angular/fire/firestore";
 export class EncodeUserService {
     
     private _user: IEncodeUser = null;
+    private _googleFormsResponses$: Observable<IEncodeGoogleFormResponse[]> = null;
+    private _googleFormsSubscription$: Unsubscribe;
     
     constructor(private _encodeFirestoreService: EncodeFirestoreService, private _http: HttpClient)
     {
@@ -73,9 +75,14 @@ export class EncodeUserService {
         this._user = user;
     }
 
-    get googleForms$(): Observable<IEncodeGoogleFormResponse[]> {
-        // return (this._user == null) ? null : this._dbService.getEncodeUserForms$(this._user.uid);
-        return null;
+    // TODO
+    get googleFormsResponses$(): Observable<IEncodeGoogleFormResponse[]> {
+        
+        if (this._googleFormsResponses$ == null) {
+            this._googleFormsResponses$ = this._encodeFirestoreService.getEncodeGoogleFormsResponses$(this._user.uid);
+        }
+
+        return this._googleFormsResponses$;
     }
 
     get session(): SessionsEnum
@@ -97,6 +104,10 @@ export class EncodeUserService {
     public abandonTest(): Promise<void> {
         this._user.abandonedByUser = true;
         return this.updateUserInDB();
+    }
+
+    public unsubscribeGoogleForms(): void {
+        this._googleFormsSubscription$();
     }
     
     private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {

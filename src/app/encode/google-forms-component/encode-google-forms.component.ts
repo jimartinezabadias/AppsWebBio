@@ -3,7 +3,7 @@ import { IEncodeGoogleFormResponse } from '../models/IEncodeGoogleFormResponse';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { MatStepper } from '@angular/material/stepper';
-import { GoogleFormValidator } from './google-form-validator';
+import { googleForValidator } from './google-form-validator';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -41,9 +41,11 @@ export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this._userResponses.forEach(preFilledResp => {
-      let newControl = this._formBuilder.control({ preFilledURL: preFilledResp.preFilledURL }, null, GoogleFormValidator.googleFormResponse(this._userService));
+      const asyncValidatorFn = googleForValidator(this._userService);
+      let newControl = this._formBuilder.control({ preFilledURL: preFilledResp.preFilledURL }, null, asyncValidatorFn);
+      
       newControl.statusChanges.subscribe(() => {
-        if (newControl.status == 'VALID'){
+        if (newControl.valid) {
           this.stepper.next();
           let response = this._userService.user.googleFormsResponses.find(resp => resp.formID == preFilledResp.formID);
           response.isResponded = true;
