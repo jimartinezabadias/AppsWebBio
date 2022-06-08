@@ -3,7 +3,7 @@ import { IEncodeUser } from "../models/IEncodeUser";
 import { HttpClient } from "@angular/common/http";
 import { IEncodeGoogleFormsSettings } from "../models/IEncodeGoogleFormsSettings";
 import { IEncodeGoogleFormResponse } from "../models/IEncodeGoogleFormResponse";
-import { EMPTY, lastValueFrom, Observable, of } from "rxjs";
+import { lastValueFrom, Observable } from "rxjs";
 import { IEncodeSessionOne } from "../models/IEncodeSessionOne";
 import { IEncodeSessionTwo } from "../models/IEncodeSessionTwo";
 import { IEncodeUserConsent } from "../models/IEncodeUserConsent";

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { collection, doc, Firestore, CollectionReference, DocumentReference, getDoc, setDoc, query, orderBy, limit, getDocs, QuerySnapshot, startAt, endBefore, onSnapshot, docData } from '@angular/fire/firestore';
-import { Unsubscribe } from 'firebase/app-check';
+import { collection, doc, Firestore, CollectionReference, DocumentReference, getDoc, setDoc, query, orderBy, limit, getDocs, QuerySnapshot, startAt, endBefore, docData } from '@angular/fire/firestore';
 import { DocumentSnapshot, startAfter } from 'firebase/firestore';
 import { map, Observable } from 'rxjs';
 import { IEncodeGoogleFormResponse } from '../encode/models/IEncodeGoogleFormResponse';
@@ -78,12 +77,9 @@ export class EncodeFirestoreService {
         return setDoc(userDocRef, user);
     }
 
-    // Observable<IEncodeGoogleFormResponse[]>
     public getEncodeGoogleFormsResponses$(userId: string): Observable<IEncodeGoogleFormResponse[]> {
         const userDocRef = doc(this._encodeUserCollectionRef,userId);
+        // Devuelvo solo en arreglo de respuestas de GoogleForms
         return docData(userDocRef).pipe(map((user: IEncodeUser) => user.googleFormsResponses));
-        // return onSnapshot(userDocRef, callback);
-        // return this.encodeUserCollectionRef_OLD.doc<IEncodeUser>(userId).valueChanges().pipe(map((user: { googleFormsResponses: any; }) => user.googleFormsResponses));
-      }
-
+    }
 }

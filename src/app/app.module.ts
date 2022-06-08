@@ -7,9 +7,10 @@ import { HttpClientModule } from '@angular/common/http';
 // import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from "@angular/fire/compat/storage";
 import { environment } from './../environments/environment';
-import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -39,6 +40,7 @@ import { DatePipe } from '@angular/common';
     // AngularFirestoreModule,
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    provideStorage(() => getStorage()),
     AngularFireStorageModule
   ],
   providers: [ NavigationService, DatePipe ],

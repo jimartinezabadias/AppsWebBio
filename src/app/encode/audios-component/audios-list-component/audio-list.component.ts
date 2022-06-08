@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { BehaviorSubject, finalize, lastValueFrom, Observable, tap } from 'rxjs';
-import { DataDbService } from 'src/app/core/services/db/data-db.service';
+import { BehaviorSubject } from 'rxjs';
+import { EncodeStorageService } from 'src/app/core/encodeStorage.service';
 import { SessionsEnum } from '../../constants';
 import { IEncodeAudio } from '../../models/IEncodeAudio';
 import { IEncodeInMemoryAudio } from '../../models/IEncodeInMemoryAudio';
@@ -18,7 +18,9 @@ export class EncodeAudioListComponent {
   public audios: Array<IEncodeAudio>;
   public isUploadingNewAudio$: BehaviorSubject<boolean>;
 
-  constructor(private _recorderService: AudioRecorderService, private _bdService: DataDbService, private _userService: EncodeUserService) 
+  constructor(private _recorderService: AudioRecorderService, 
+    private _encodeStorageService: EncodeStorageService,
+    private _userService: EncodeUserService) 
   {
     this.audios = new Array<IEncodeAudio>();
     this._recorderService.audioListChanged$.subscribe(
@@ -45,20 +47,14 @@ export class EncodeAudioListComponent {
     this.isUploadingNewAudio$.next(false);
   }
 
-  private async _storeAudioInFirebase(newAudio: IEncodeInMemoryAudio): Promise<any> 
+  private async _storeAudioInFirebase(newAudio: IEncodeInMemoryAudio): Promise<string> 
   {
     const filePath = this._createAudioFilePath(newAudio.id);
-    const fileRef = this._bdService.getCloudStorageFileRef(filePath);
-    const uploadTask = this._bdService.uploadFileToCloudStorage(filePath, newAudio.rawData);
-    
-    let url$: Observable<any>;
-    const task$ = uploadTask.snapshotChanges().pipe(
-      finalize(() => url$ = fileRef.getDownloadURL())
-    );
 
-    await lastValueFrom(task$);
-    const downloadURL = await lastValueFrom(url$);
-    
+    const fileRef = this._encodeStorageService.getCloudStorageFileRef(filePath);
+    await this._encodeStorageService.uploadFileToCloudStorage(fileRef, newAudio.rawData);
+    const downloadURL = await this._encodeStorageService.getDownloadURL(fileRef);
+
     return downloadURL;
   }
 
