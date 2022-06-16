@@ -97,8 +97,8 @@ export class EncodeUserService {
     }
 
     public async updateUserInDB() {
-        // if (this._user == null) return ;
-        // await this._dbService.updateEncodeUser(this._user);
+        if (this._user == null) return ;
+        await this._encodeFirestoreService.updateEncodeUser(this._user);
     }
 
     public abandonTest(): Promise<void> {

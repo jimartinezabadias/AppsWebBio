@@ -72,7 +72,7 @@ export class EncodeFirestoreService {
         return getDoc(userDocRef);
     }
 
-    public async updateEncodeUser(user: IEncodeUser): Promise<void> {
+    public updateEncodeUser(user: IEncodeUser): Promise<void> {
         const userDocRef = doc(this._encodeUserCollectionRef, user.uid);
         return setDoc(userDocRef, user);
     }
