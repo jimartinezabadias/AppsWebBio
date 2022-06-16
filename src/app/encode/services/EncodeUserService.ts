@@ -63,6 +63,8 @@ export class EncodeUserService {
         };
         
         await this._encodeFirestoreService.createNewEncodeUser(newUserData, newUserRef);
+        await this._encodeFirestoreService.incrementEncodeUserCounter();
+
         return newUserData;
     }
 

@@ -85,6 +85,7 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
     {
       this.isLoading = true;
       await this._encodeUserService.createNewUser(userData);
+      this.totalTestsCounter.count++;
       this.encodeUserDataSource.loadUsers(PAGE_SIZE);
       this.isLoading = false;
     }
