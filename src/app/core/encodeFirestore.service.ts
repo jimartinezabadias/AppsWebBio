@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-
 import { collection, doc, Firestore, CollectionReference, DocumentReference, getDoc, setDoc, query, orderBy, limit, getDocs, QuerySnapshot, startAt, endBefore, docData, updateDoc, increment } from '@angular/fire/firestore';
-import { DocumentSnapshot, startAfter } from 'firebase/firestore';
+import { DocumentData, DocumentSnapshot, startAfter } from 'firebase/firestore';
 import { map, Observable } from 'rxjs';
 import { IEncodeGoogleFormResponse } from '../encode/models/IEncodeGoogleFormResponse';
 import { IEncodeGoogleFormsSettings } from '../encode/models/IEncodeGoogleFormsSettings';
+import { IEncodeSuspect } from '../encode/models/IEncodeSuspect';
 import { IEncodeUser } from '../encode/models/IEncodeUser';
 
 
@@ -15,6 +15,7 @@ export class EncodeFirestoreService {
   
     private _encodeUserCollectionRef: CollectionReference<IEncodeUser>;
     private _encodeConfigCollectionRef: CollectionReference;
+    private _encodeSuspectCollectionRef: CollectionReference<IEncodeSuspect>;
     private _metadataCollectionRef: CollectionReference;
 
     constructor(
@@ -22,6 +23,7 @@ export class EncodeFirestoreService {
     ) { 
         this._encodeUserCollectionRef = collection(this._firestore, "encode-users") as CollectionReference<IEncodeUser>;
         this._encodeConfigCollectionRef = collection(this._firestore, "encode-config");
+        this._encodeSuspectCollectionRef = collection(this._firestore, "encode-config/tasksResources/suspects") as CollectionReference<IEncodeSuspect>;
         this._metadataCollectionRef = collection(this._firestore, "creatives-meta");
     }
 
@@ -86,7 +88,18 @@ export class EncodeFirestoreService {
 
     public getEncodeGoogleFormsResponses$(userId: string): Observable<IEncodeGoogleFormResponse[]> {
         const userDocRef = doc(this._encodeUserCollectionRef,userId);
-        // Devuelvo solo en arreglo de respuestas de GoogleForms
+        // Devuelvo solo el arreglo de respuestas de GoogleForms
         return docData(userDocRef).pipe(map((user: IEncodeUser) => user.googleFormsResponses));
     }
+
+    public getEncodeTasksResources(): Promise<DocumentSnapshot<DocumentData>> {
+        const taskResourcesDocRef = doc(this._encodeConfigCollectionRef,"tasksResources");
+        return getDoc(taskResourcesDocRef);
+    }
+
+    public getEncodeSuspect(suspectId: string): Promise<DocumentSnapshot<IEncodeSuspect>> {
+        const suspectDocRef = doc(this._encodeSuspectCollectionRef, suspectId);
+        return getDoc(suspectDocRef);
+    }
+
 }

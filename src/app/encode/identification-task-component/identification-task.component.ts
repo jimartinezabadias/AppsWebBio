@@ -3,7 +3,6 @@ import { EncodeUserService } from '../services/EncodeUserService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
-import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { ROOM_1_TITLE, PerpetratorCondition, ABSENT_SUSPECT_ID, ROOM_2_TITLE } from '../constants';
 import { IEncodeSuspect } from '../models/IEncodeSuspect';
 import { DocumentReference } from '@angular/fire/compat/firestore';
@@ -12,6 +11,9 @@ import { EncodeIdentificationRoomDirective } from './identification-room.directi
 import { IEncodeIdentificationResponse } from '../models/IEncodeIdentificationResponse';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { lastValueFrom } from 'rxjs';
+import { EncodeFirestoreService } from 'src/app/core/encodeFirestore.service';
+import { DocumentSnapshot } from '@angular/fire/firestore';
+import { EncodeStorageService } from 'src/app/core/encodeStorage.service';
 
 
 @Component({
@@ -28,7 +30,9 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   @ViewChild(EncodeIdentificationRoomDirective, {static: true}) identificationRoomHost!: EncodeIdentificationRoomDirective;
   
   constructor(
-    private _dbService: DataDbService,
+    // private _dbService: DataDbService,
+    private _encodeFirestoreService: EncodeFirestoreService,
+    private _encodeStorageService: EncodeStorageService,
     private _userService: EncodeUserService,
     private _router: Router,
     private _route: ActivatedRoute,
@@ -55,9 +59,9 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   async openIdentificaton() {
     this.isLoadingLineups = true;
     const userPerpetratorCondition = this._userService.user.sessionTwo.perpetratorCondition;
-    const taskResources = await this._dbService.getEncodeTasksResources();
-    const perp1suspects = await this._getSuspectsOfBeing(taskResources.perpetrator1Suspects); 
-    const perp2suspects = await this._getSuspectsOfBeing(taskResources.perpetrator2Suspects); 
+    const taskResources = (await this._encodeFirestoreService.getEncodeTasksResources()).data();
+    const perp1suspects = (await this._getSuspectsOfBeing(taskResources.perpetrator1Suspects)).map(snap => snap.data()); 
+    const perp2suspects = (await this._getSuspectsOfBeing(taskResources.perpetrator2Suspects)).map(snap => snap.data()); 
     
     this._getSuspectsPhotos(taskResources.perpetrator1Suspects, perp1suspects);
     this._getSuspectsPhotos(taskResources.perpetrator2Suspects, perp2suspects);
@@ -95,7 +99,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     
     this.isLoadingLineups = false;
     this.isIdentifing = true; 
-    await firstRoomResult.toPromise();
+    await lastValueFrom(firstRoomResult);
     
     this.isIdentifing = false;
     actualRoomRef.destroy();
@@ -110,7 +114,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
       secondRoomResult.subscribe(this.saveIdentificationResponse);
       
       this.isIdentifing = true;
-      await secondRoomResult.toPromise();
+      await lastValueFrom(secondRoomResult);
 
       this.isIdentifing = false;
       actualRoomRef.destroy();
@@ -129,12 +133,12 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     this._userService.user.sessionTwo.identificationResponse.push(response);
   }
 
-  private _getSuspectsOfBeing(suspectDocuments: Array<DocumentReference<IEncodeSuspect>>): Promise<Array<IEncodeSuspect>> {
-    let suspects = new Array<Promise<IEncodeSuspect>>();
+  private _getSuspectsOfBeing(suspectDocuments: Array<DocumentReference<IEncodeSuspect>>): Promise<DocumentSnapshot<IEncodeSuspect>[]> {
+    let suspects = new Array<Promise<DocumentSnapshot<IEncodeSuspect>>>();
    
     suspectDocuments.forEach( async docRef => {
       const suspectId = docRef.id;
-      const suspect = this._dbService.getEncodeSuspect(suspectId);
+      const suspect = this._encodeFirestoreService.getEncodeSuspect(suspectId);
       suspects.push(suspect);
     });
 
@@ -145,8 +149,8 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     perpSuspectsDocs.forEach( async (suspectDocRef, index: number) => {
       const suspect = perpSuspects[index];
       suspect.id = suspectDocRef.id;
-      const url$ = this._dbService.getCloudStorageFileRef(suspect.photoStorageRef).getDownloadURL();
-      suspect.photoImageUrl = await lastValueFrom(url$);
+      const fileRef = this._encodeStorageService.getCloudStorageFileRef(suspect.photoStorageRef);
+      suspect.photoImageUrl = await this._encodeStorageService.getDownloadURL(fileRef);
     });
   }
 

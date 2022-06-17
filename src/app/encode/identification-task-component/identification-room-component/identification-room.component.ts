@@ -4,7 +4,7 @@ import { ABSENT_SUSPECT_ID, ROOM_1_TITLE, ROOM_2_TITLE } from '../../constants';
 import { IEncodeIdentificationResponse } from '../../models/IEncodeIdentificationResponse';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfidenceDialogComponent } from './confidence-component/confidence.component';
-import { Observable, Subject } from 'rxjs';
+import { lastValueFrom, Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-encode-identification-room',
@@ -59,7 +59,7 @@ export class EncodeIdentificationRoom implements OnInit {
     
     const dialogClose$ = confidenceDialogRef.afterClosed();
     dialogClose$.subscribe(this._confidenceDialogClose$);
-    await dialogClose$.toPromise();
+    await lastValueFrom(dialogClose$);
     
     confidenceDialogRef.close();
   }
