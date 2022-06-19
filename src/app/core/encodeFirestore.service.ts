@@ -109,5 +109,16 @@ export class EncodeFirestoreService {
     public getEncodeScreenshot(screenshotId: string): Promise<DocumentSnapshot<IEncodeScreenshot>> {
         const screenshotDocRef = doc(this._encodeScreenshotCollectionRef, screenshotId);
         return getDoc(screenshotDocRef);
-      }
+    }
+
+    public async getAllEncodeUsersData(): Promise<QuerySnapshot<IEncodeUser>> {
+        const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"));
+        return getDocs(q);
+        // const snapshot = await this.encodeUserCollectionRef_OLD.ref.get();
+        // let users = new Array<IEncodeUser>();
+        // snapshot.docs.forEach( (doc: DocumentData) => {
+        //     users.push(doc.data());
+        // });
+        // return users;
+    }
 }

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Parser, transforms } from 'json2csv';
 import { CSV_SEPARATOR, encodeCSVFields, PAGE_SIZE } from '../../constants';
 import { EncodeFirestoreService } from "src/app/core/encodeFirestore.service";
+import { PlatformLocation } from '@angular/common';
 
 
 @Component({
@@ -34,8 +35,10 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
     private _encodeUserService: EncodeUserService,
     private _encodeFirestoreService: EncodeFirestoreService,
     private _dialog: MatDialog,
-    private _router: Router
-    ) {}
+    private _router: Router,
+    private _platformLocation: PlatformLocation) 
+    {
+    }
   
   async ngOnInit(): Promise<void> 
   {
@@ -100,21 +103,18 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
   }
 
   public async downloadCSV() {
-    // let encodeUsers = await this._dbService.getAllEncodeUsersData();
-    // let temp = JSON.parse(JSON.stringify(encodeUsers));
-    // let downloadPrefix = (this._platformLocation as any).location.origin + "/admin/encode/";
-    // for (let i = 0; i < temp.length; i++) {
-    //   temp[i].link_audios = downloadPrefix + temp[i].uid + "/audios";
-    //   temp[i].creationDate = new Date(temp[i].creationDate.seconds*1000);
-    // }
+    const usersQuery = await this._encodeFirestoreService.getAllEncodeUsersData();
+    const encodeUsers = usersQuery.docs.map(doc => doc.data());
+    let temp = JSON.parse(JSON.stringify(encodeUsers));
+    let downloadPrefix = (this._platformLocation as any).location.origin + "/admin/encode/";
+    for (let i = 0; i < temp.length; i++) {
+      temp[i].link_audios = downloadPrefix + temp[i].uid + "/audios";
+      temp[i].creationDate = new Date(temp[i].creationDate.seconds*1000);
+    }
 
-    // let csvString = this.generateCSV(temp);
-    // this.openDownloadWindow(csvString);
+    let csvString = this.generateCSV(temp);
+    this.openDownloadWindow(csvString);
   }
-
-  // private _userCounterObserver = (counterData) => {
-  //   this.totalTestsCounter = counterData.payload.data();
-  // }
 
   private openDownloadWindow(csvString: string) {
     // Download
