@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import firebase from 'firebase/compat';
 import { Parser, transforms } from 'json2csv';
-import { DataDbService } from 'src/app/core/services/db/data-db.service';
+import { RulitFirestoreService } from 'src/app/core/rulitFirestore.service';
 import { IRulitSettings, IRulitSolutionSettings } from 'src/app/rulit/bits/IRulitSettings';
+import { CSV_SEPARATOR } from '../../constants';
 
-const SEPARATOR = "_";
+const SEPARATOR = CSV_SEPARATOR;
 
 @Component({
   selector: 'app-admin-rulit',
@@ -16,12 +17,14 @@ export class AdminRulitComponent implements OnInit{
   shortMemMaxExercises: number = 0;
   longMemMaxExercises: number = 0;
 
-  constructor( private _dbData: DataDbService ) {}
+  constructor( 
+    private _rulitFirestoreService: RulitFirestoreService 
+    ) {}
 
   async ngOnInit(): Promise<void> {
-    const asf: IRulitSettings = await this._dbData.getRulitSettings();
-    asf.solutions.forEach(async (solution) => {
-      const settings: IRulitSolutionSettings = await this._dbData.getRulitSolutionSettings(solution.id);
+    const rulitSettingsData: IRulitSettings = (await this._rulitFirestoreService.getRulitSettings()).data();
+    rulitSettingsData.solutions.forEach(async (solutionDocRef) => {
+      const settings: IRulitSolutionSettings = (await this._rulitFirestoreService.getRulitSolutionSettings(solutionDocRef.id)).data();
       if (this.shortMemMaxExercises < settings.shortMem_MaxExercises)
         this.shortMemMaxExercises = settings.shortMem_MaxExercises;
       if (this.longMemMaxExercises < settings.longMem_MaxExercises)
@@ -30,7 +33,8 @@ export class AdminRulitComponent implements OnInit{
   }
   
   async getData() {
-    let rulitUsers = await this._dbData.getAllRulitUsersData();
+    const usersQuery = await this._rulitFirestoreService.getAllRulitUsersData();
+    const rulitUsers = usersQuery.docs.map(doc => doc.data());
     rulitUsers.map( (user) => { 
       if ( user.trainingDate )
         user.trainingDate = (user.trainingDate as firebase.firestore.Timestamp).toDate().toLocaleString("es-AR")
@@ -102,7 +106,5 @@ export class AdminRulitComponent implements OnInit{
     }
 
     return fields;
-
   }
-  
 }
