@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { DocumentReference } from '@angular/fire/compat/firestore';
 import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
 import { OnExit } from '../exit.guard';
@@ -10,6 +9,9 @@ import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.com
 import { SCREENSHOTS_COUNT } from '../constants';
 import { lastValueFrom } from 'rxjs';
 import { Observable } from 'rxjs';
+import { EncodeFirestoreService } from 'src/app/core/encodeFirestore.service';
+import { EncodeStorageService } from 'src/app/core/encodeStorage.service';
+import { DocumentSnapshot } from '@angular/fire/firestore';
 
 
 @Component({
@@ -31,7 +33,8 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
 
   constructor(private _router: Router,
               private _route: ActivatedRoute,
-              private _dbService: DataDbService,
+              private _encodeFirestoreService: EncodeFirestoreService,
+              private _encodeStorageService: EncodeStorageService,
               private _userService: EncodeUserService,
               private _dialog: MatDialog) 
   {
@@ -55,13 +58,17 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
 
   async getScreenshotPairs() 
   {
-    const taskResources = await this._dbService.getEncodeTasksResources();
-    this.imagesPairs = await this._getScreenshot(taskResources.screenshotsPairs);
+    if (this._userService.encodeTasksResources == null) {
+      this._userService.encodeTasksResources = (await this._encodeFirestoreService.getEncodeTasksResources()).data();
+    }
+
+    const taskResources = this._userService.encodeTasksResources;
+    this.imagesPairs = (await this._getScreenshot(taskResources.screenshotsPairs)).map(snap => snap.data());
 
     this.imagesPairs.forEach( async (screenshot: IEncodeScreenshot, index) => {
       screenshot.id = taskResources.screenshotsPairs[index].id;
-      const url$ = this._dbService.getCloudStorageFileRef(screenshot.imageStorageRef).getDownloadURL();
-      screenshot.imageURL = await lastValueFrom(url$);
+      const fileRef = this._encodeStorageService.getCloudStorageFileRef(screenshot.imageStorageRef);
+      screenshot.imageURL = await this._encodeStorageService.getDownloadURL(fileRef);
     });
       
     let pairNumber = 1;
@@ -80,8 +87,6 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
     for (let i = 0; i < SCREENSHOTS_COUNT; i++) {
       this.random_pairs.push(Math.floor(Math.random() * (1 - 0 + 1) + 0));
     }
-
-    console.log(this.random_pairs);
   }
 
   onSelection(image): void
@@ -118,12 +123,12 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
     }
   }
 
-  private _getScreenshot(screenshotDocuments: Array<DocumentReference<IEncodeScreenshot>>): Promise<Array<IEncodeScreenshot>> {
-    let screenshots = new Array<Promise<IEncodeScreenshot>>();
+  private _getScreenshot(screenshotDocuments: Array<DocumentReference<IEncodeScreenshot>>): Promise<Array<DocumentSnapshot<IEncodeScreenshot>>> {
+    let screenshots = new Array<Promise<DocumentSnapshot<IEncodeScreenshot>>>();
 
     screenshotDocuments.forEach( async docRef => {
       const screenshotId = docRef.id;
-      const screenshot = this._dbService.getEncodeScreenshot(screenshotId);
+      const screenshot = this._encodeFirestoreService.getEncodeScreenshot(screenshotId);
       screenshots.push(screenshot);
     });
 

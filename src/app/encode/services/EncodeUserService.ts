@@ -9,7 +9,7 @@ import { IEncodeSessionTwo } from "../models/IEncodeSessionTwo";
 import { IEncodeUserConsent } from "../models/IEncodeUserConsent";
 import { SessionsEnum } from "../constants";
 import { EncodeFirestoreService } from "src/app/core/encodeFirestore.service";
-import { serverTimestamp, Unsubscribe } from "@angular/fire/firestore";
+import { DocumentData, serverTimestamp, Unsubscribe } from "@angular/fire/firestore";
 
 @Injectable({
     providedIn: 'root'
@@ -19,6 +19,7 @@ export class EncodeUserService {
     private _user: IEncodeUser = null;
     private _googleFormsResponses$: Observable<IEncodeGoogleFormResponse[]> = null;
     private _googleFormsSubscription$: Unsubscribe;
+    private _encodeTasksResources: DocumentData = null;
     
     constructor(private _encodeFirestoreService: EncodeFirestoreService, private _http: HttpClient)
     {
@@ -75,6 +76,15 @@ export class EncodeUserService {
 
     set user(user: IEncodeUser) {
         this._user = user;
+    }
+
+    get encodeTasksResources(): DocumentData
+    {
+        return this._encodeTasksResources;
+    }
+
+    set encodeTasksResources(taskResourcesData: DocumentData) {
+        this._encodeTasksResources = taskResourcesData;
     }
 
     // TODO

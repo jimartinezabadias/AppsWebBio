@@ -59,7 +59,12 @@ export class EncodeIdentificationTaskComponent implements OnExit {
   async openIdentificaton() {
     this.isLoadingLineups = true;
     const userPerpetratorCondition = this._userService.user.sessionTwo.perpetratorCondition;
-    const taskResources = (await this._encodeFirestoreService.getEncodeTasksResources()).data();
+
+    if (this._userService.encodeTasksResources == null) {
+      this._userService.encodeTasksResources = (await this._encodeFirestoreService.getEncodeTasksResources()).data();
+    }
+
+    const taskResources = this._userService.encodeTasksResources;
     const perp1suspects = (await this._getSuspectsOfBeing(taskResources.perpetrator1Suspects)).map(snap => snap.data()); 
     const perp2suspects = (await this._getSuspectsOfBeing(taskResources.perpetrator2Suspects)).map(snap => snap.data()); 
     
@@ -69,12 +74,12 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     let firstLineup: Array<IEncodeSuspect>;
     let secondLineup: Array<IEncodeSuspect>;
     
-    if(userPerpetratorCondition == PerpetratorCondition.A) {
+    if (userPerpetratorCondition == PerpetratorCondition.A) {
       firstLineup = perp1suspects;
       secondLineup = perp2suspects;
     }
     
-    if(userPerpetratorCondition == PerpetratorCondition.B) {
+    if (userPerpetratorCondition == PerpetratorCondition.B) {
       firstLineup = perp2suspects;
       secondLineup = perp1suspects;
     }

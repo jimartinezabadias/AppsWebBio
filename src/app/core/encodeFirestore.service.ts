@@ -4,6 +4,7 @@ import { DocumentData, DocumentSnapshot, startAfter } from 'firebase/firestore';
 import { map, Observable } from 'rxjs';
 import { IEncodeGoogleFormResponse } from '../encode/models/IEncodeGoogleFormResponse';
 import { IEncodeGoogleFormsSettings } from '../encode/models/IEncodeGoogleFormsSettings';
+import { IEncodeScreenshot } from '../encode/models/IEncodeScreenshot';
 import { IEncodeSuspect } from '../encode/models/IEncodeSuspect';
 import { IEncodeUser } from '../encode/models/IEncodeUser';
 
@@ -17,6 +18,8 @@ export class EncodeFirestoreService {
     private _encodeConfigCollectionRef: CollectionReference;
     private _encodeSuspectCollectionRef: CollectionReference<IEncodeSuspect>;
     private _metadataCollectionRef: CollectionReference;
+    private _encodeScreenshotCollectionRef: CollectionReference<IEncodeScreenshot>;
+    
 
     constructor(
         private _firestore: Firestore
@@ -25,6 +28,7 @@ export class EncodeFirestoreService {
         this._encodeConfigCollectionRef = collection(this._firestore, "encode-config");
         this._encodeSuspectCollectionRef = collection(this._firestore, "encode-config/tasksResources/suspects") as CollectionReference<IEncodeSuspect>;
         this._metadataCollectionRef = collection(this._firestore, "creatives-meta");
+        this._encodeScreenshotCollectionRef = collection(this._firestore, "encode-config/tasksResources/screenshots") as CollectionReference<IEncodeScreenshot>;
     }
 
     public getEncodeNewUserDocumentRef(): DocumentReference {
@@ -102,4 +106,8 @@ export class EncodeFirestoreService {
         return getDoc(suspectDocRef);
     }
 
+    public getEncodeScreenshot(screenshotId: string): Promise<DocumentSnapshot<IEncodeScreenshot>> {
+        const screenshotDocRef = doc(this._encodeScreenshotCollectionRef, screenshotId);
+        return getDoc(screenshotDocRef);
+      }
 }
