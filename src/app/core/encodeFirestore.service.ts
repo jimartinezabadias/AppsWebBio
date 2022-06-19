@@ -114,11 +114,5 @@ export class EncodeFirestoreService {
     public async getAllEncodeUsersData(): Promise<QuerySnapshot<IEncodeUser>> {
         const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"));
         return getDocs(q);
-        // const snapshot = await this.encodeUserCollectionRef_OLD.ref.get();
-        // let users = new Array<IEncodeUser>();
-        // snapshot.docs.forEach( (doc: DocumentData) => {
-        //     users.push(doc.data());
-        // });
-        // return users;
     }
 }
