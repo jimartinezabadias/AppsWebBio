@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { BreakpointObserver, Breakpoints, BreakpointState, MediaMatcher } from '@angular/cdk/layout';
 
-import { fromEvent, interval, Observable, Subscription } from 'rxjs';
+import { fromEvent, interval, lastValueFrom, Observable, Subscription } from 'rxjs';
 import { filter, map, take, tap } from "rxjs/operators";
 
 import { RulitUserService } from 'src/app/rulit/bits/RulitUserService';
@@ -37,7 +37,7 @@ export class RulitTestComponent implements OnInit, AfterViewChecked, OnDestroy {
         private ngZone: NgZone,
         private route: ActivatedRoute,
         private router: Router,
-        private userService: RulitUserService,
+        private _userService: RulitUserService,
         private _testService: RulitTestService,
         private _dialog: MatDialog,
         private _breakpointObserver: BreakpointObserver,
@@ -47,13 +47,13 @@ export class RulitTestComponent implements OnInit, AfterViewChecked, OnDestroy {
         
         // When user enters the URL for the long term memory test.
         //      - eg. /rulit/test/<<userId>>
-        if ( ! this.userService.user ) {
+        if ( ! this._userService.user ) {
             let userIdParam = this.route.snapshot.paramMap.get('userId');
-            await this.userService.loadUserFromDB(userIdParam);
+            await this._userService.loadUserFromDB(userIdParam);
         }
 
         // TODO: Cambiar la segunda condicion por: ! this._testService.isTesting
-        if ( this.userService.user.nextTest === "long_memory_test" && this.userService.user.longMemoryTest.length === 0 ) {
+        if ( this._userService.user.nextTest === "long_memory_test" && this._userService.user.longMemoryTest.length === 0 ) {
             await this.openLongMemoryWellcomeDialog().afterClosed().toPromise();
         }
         
@@ -94,7 +94,7 @@ export class RulitTestComponent implements OnInit, AfterViewChecked, OnDestroy {
 
         this.setCanvasSize();
         
-        await this._testService.initGraph(this.canvas, this.userService.user.graphAndSolutionCode);
+        await this._testService.initGraph(this.canvas, this._userService.user.graphAndSolutionCode);
         
         // Observers
         this.clickCanvas$ = fromEvent(this.canvas.nativeElement,"click");
@@ -116,7 +116,7 @@ export class RulitTestComponent implements OnInit, AfterViewChecked, OnDestroy {
                     }
                     else
                     {
-                        this._testService.registerError(this.userService.user);
+                        this._testService.registerError(this._userService.user);
                         if (this._testService.graph.isActiveNodeNextTo(node)) {
                             this._testService.graph.flickerNode(node);
                         }
@@ -163,7 +163,7 @@ export class RulitTestComponent implements OnInit, AfterViewChecked, OnDestroy {
                 filter( (isExerciseOver) => isExerciseOver === true ),
                 tap( () => {
                     if (this._testService.testName === "learning") 
-                        this.userService.user.nextTest = "short_memory_test";
+                        this._userService.user.nextTest = "short_memory_test";
                 })
             )
             .subscribe({
@@ -182,7 +182,7 @@ export class RulitTestComponent implements OnInit, AfterViewChecked, OnDestroy {
             .subscribe( { 
                 next: (testOver) => {
                     if ( this._testService.testName === "short_memory_test" ) {
-                        this.userService.user.nextTest = "long_memory_test";
+                        this._userService.user.nextTest = "long_memory_test";
                         if ( testOver === "MAX_CORRECT_EXERCISES" ) {
                             this.openFinishTestDialog("Completaste la prueba","Perfecto encontraste el final del camino oculto. En unos dias te enviaremos un e-mail para completar la prueba.");
                         }
@@ -192,17 +192,17 @@ export class RulitTestComponent implements OnInit, AfterViewChecked, OnDestroy {
                     }
                     else if ( this._testService.testName === "long_memory_test" )
                     {
-                        this.userService.user.nextTest = "no_next_test";
+                        this._userService.user.nextTest = "no_next_test";
                         this.openFinishTestDialog("¡Felicitaciones!","Completaste todas las pruebas. ¡Has hecho un gran aporte a la ciencia!");
                     }
                     this._testService.isTesting = false;
-                    this.userService.saveTestData();
+                    this._userService.saveTestData();
                 }
             }
         );
         
         // 
-        this._testService.startTest(this.userService);
+        this._testService.startTest(this._userService);
 
         // Test starts with first node selected
         this._testService.setActiveNode(this._testService.graph.firstNode);
@@ -234,18 +234,18 @@ export class RulitTestComponent implements OnInit, AfterViewChecked, OnDestroy {
     private goNextExercise(): void {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['rulit/test',this.userService.user.userId]);
+        this.router.navigate(['rulit/test',this._userService.user.userId]);
     }
 
     private countdown() {
 
         let countdownStart = 3;
         
-        return interval(1000).pipe(
+        return lastValueFrom(interval(1000).pipe(
             take(countdownStart + 1),
             map(i => countdownStart - i),
             tap( i => { this.countDown = i } )
-        ).toPromise();
+        ));
 
     }
 
@@ -281,7 +281,7 @@ export class RulitTestComponent implements OnInit, AfterViewChecked, OnDestroy {
         config.panelClass = ["custom-rulit-dialog"];
         config.maxWidth = "30rem";
         config.data = { 
-            userName: this.userService.user.name,
+            userName: this._userService.user.name,
             message: "Hace unos dias encontraste el final del camino oculto. Trata de recordarlo para hallarlo nuevamente, el camino oculto es el mismo. "
         }
         return this._dialog.open(LongMemoryWellcomeDialogComponent, config);

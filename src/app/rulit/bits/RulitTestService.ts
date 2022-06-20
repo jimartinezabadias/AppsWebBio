@@ -1,8 +1,7 @@
 import { ElementRef, Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { filter, map, tap } from "rxjs/operators";
-import { DataDbService } from "src/app/core/services/db/data-db.service";
-import { NavigationService } from "src/app/navigation-service/navigation.service"
+import { RulitFirestoreService } from "src/app/core/rulitFirestore.service";
 import { CanvasGraph } from "./CanvasGraph";
 import { ExerciseService } from "./ExerciseService";
 import { GraphNode } from "./GraphNode";
@@ -41,9 +40,8 @@ export class RulitTestService implements IRulitTestService {
     private _isTestOver$: Subject<string | null>;
     private _solutionSettings: IRulitSolutionSettings = null;
 
-    constructor(private _navigationService: NavigationService,
-                private _dbService: DataDbService,
-                private _userService: RulitUserService) 
+    constructor(private _rulitFirestoreService: RulitFirestoreService,
+        private _userService: RulitUserService) 
     {
         this.isTesting = false;
         this._isExerciseOver$ = new Subject<boolean>();
@@ -54,7 +52,8 @@ export class RulitTestService implements IRulitTestService {
     {
         if (this._userService.user)
         {
-            this._solutionSettings = await this._dbService.getRulitSolutionSettings(this._userService.user.graphAndSolutionCode);
+            const settingsDoc = await this._rulitFirestoreService.getRulitSolutionSettings(this._userService.user.graphAndSolutionCode)
+            this._solutionSettings = settingsDoc.data();
         }
     }
 

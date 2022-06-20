@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { DocumentReference } from "@angular/fire/compat/firestore";
-import { DataDbService } from "src/app/core/services/db/data-db.service";
+import { DocumentReference } from "@angular/fire/firestore";
+import { RulitFirestoreService } from "src/app/core/rulitFirestore.service";
 import { NavigationService } from "src/app/navigation-service/navigation.service";
 import { DEFAULT_GRAPH_SOLUTION } from "./GraphUtils";
 import { TestName } from "./RulitTestService";
@@ -41,8 +41,9 @@ export class RulitUserService {
     private _user: IRulitUser;
     private _userDbRef: DocumentReference;
 
-    constructor(private _dbService: DataDbService,
-                private _navigationService: NavigationService)
+    constructor( 
+        private _rulitFirestoreService: RulitFirestoreService,
+        private _navigationService: NavigationService)
     {
     }
 
@@ -67,7 +68,7 @@ export class RulitUserService {
         
         for (var i = 0; i < 15; i++) this._user.stepErrors.push(0);
 
-        this._userDbRef = this._dbService.getNewRulitDocumentRef();
+        this._userDbRef = this._rulitFirestoreService.getNewRulitDocumentRef();
         this._user.userId = this._userDbRef.id;
         
         if (this._navigationService.rulitSolutionCodeUrl !== null )
@@ -81,7 +82,7 @@ export class RulitUserService {
 
     // Load user from db
     async loadUserFromDB(userId: string): Promise<boolean> {
-        this._user = await this._dbService.getRulitUserData(userId);
+        this._user = (await this._rulitFirestoreService.getRulitUserData(userId)).data();
         return true;
     }
 
@@ -113,7 +114,6 @@ export class RulitUserService {
     }
 
     saveTestData() {
-        this._dbService.saveRulitUserData(this._user);
+        this._rulitFirestoreService.saveRulitUserData(this._user);
     }
-
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
-import { DataDbService } from "src/app/core/services/db/data-db.service";
+import { RulitFirestoreService } from "../core/rulitFirestore.service";
 import { IRulitSettings } from "../rulit/bits/IRulitSettings";
 
 @Injectable({
@@ -14,7 +14,7 @@ export class NavigationService {
 
     public isRulitOpen: boolean = false;
 
-    constructor(private _dbService: DataDbService)
+    constructor(private _rulitFirestoreServise: RulitFirestoreService)
     {
         this.rulitConfigChanged$.subscribe(
             {
@@ -47,8 +47,7 @@ export class NavigationService {
     // Load config from db
     async loadRulitConfig(): Promise<void> 
     {
-        this._rulitConfig = await this._dbService.getRulitSettings();
+        this._rulitConfig = (await this._rulitFirestoreServise.getRulitSettings()).data();
         this._rulitConfig$.next(this._rulitConfig);
     }
-
 }
