@@ -49,7 +49,7 @@ export class AdminEncodeUserComponent implements OnInit {
 
   public async applyPerpetratorCondition(): Promise<void> {
     this.user.sessionTwo.perpetratorCondition = this.selectedPerpetratorCondition;
-    await this._encodeFirestoreService.updateEncodeUser(this.user);
+    await this._encodeFirestoreService.updateUser(this.user);
   }
 
 }

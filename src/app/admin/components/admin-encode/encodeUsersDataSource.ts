@@ -33,7 +33,7 @@ export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
     {
         this._loadingSubject.next(true);
 
-        const usersSnapshot = await this._encodeFirestoreService.getEncodeFirstPage(pageSize);
+        const usersSnapshot = await this._encodeFirestoreService.getFirstPage(pageSize);
         this._loadNewResults(usersSnapshot);
         this._loadingSubject.next(false);
     }
@@ -43,7 +43,7 @@ export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
         this._loadingSubject.next(true);
 
         this._prevFirstQueue.push(this._actualPageFirstDoc);
-        const usersSnapshot = await this._encodeFirestoreService.getEncodesNextPage(this._actualPageLastDoc, pageSize);
+        const usersSnapshot = await this._encodeFirestoreService.getNextPage(this._actualPageLastDoc, pageSize);
         this._loadNewResults(usersSnapshot);
         this._loadingSubject.next(false);
     }
@@ -54,7 +54,7 @@ export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
 
         let prevFirst = this._prevFirstQueue.pop();
 
-        const usersSnapshot = await this._encodeFirestoreService.getEncodePrevPage(prevFirst, this._actualPageFirstDoc, pageSize);
+        const usersSnapshot = await this._encodeFirestoreService.getPrevPage(prevFirst, this._actualPageFirstDoc, pageSize);
         this._loadNewResults(usersSnapshot);
         this._loadingSubject.next(false);
     }
@@ -74,10 +74,6 @@ export class EncodeUsersDataSource implements DataSource<IEncodeUser> {
                 arrUsers.push(doc.data() as IEncodeUser);
             })
 
-            // arrUsers.forEach(user => {
-            //     console.log(user);
-            // })
-    
             this._actualPageFirstDoc = results.docs[0];
             this._actualPageLastDoc = results.docs[results.size - 1];
             

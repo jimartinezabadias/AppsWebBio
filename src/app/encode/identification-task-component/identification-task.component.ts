@@ -61,7 +61,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     const userPerpetratorCondition = this._userService.user.sessionTwo.perpetratorCondition;
 
     if (this._userService.encodeTasksResources == null) {
-      this._userService.encodeTasksResources = (await this._encodeFirestoreService.getEncodeTasksResources()).data();
+      this._userService.encodeTasksResources = (await this._encodeFirestoreService.getTasksResources()).data();
     }
 
     const taskResources = this._userService.encodeTasksResources;
@@ -143,7 +143,7 @@ export class EncodeIdentificationTaskComponent implements OnExit {
    
     suspectDocuments.forEach( async docRef => {
       const suspectId = docRef.id;
-      const suspect = this._encodeFirestoreService.getEncodeSuspect(suspectId);
+      const suspect = this._encodeFirestoreService.getSuspect(suspectId);
       suspects.push(suspect);
     });
 

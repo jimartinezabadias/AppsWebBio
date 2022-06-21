@@ -28,7 +28,7 @@ export class EncodeUserService {
     // creates and stores a new user
     // returns the created user
     public async createNewUser(userData: {name: string, email: string}): Promise<IEncodeUser> {
-        const newUserRef = this._encodeFirestoreService.getEncodeNewUserDocumentRef();
+        const newUserRef = this._encodeFirestoreService.getNewUserDocumentRef();
         const googleFormsResponses: IEncodeGoogleFormResponse[] = await this._getGoogleFormsPreFilledURLs(newUserRef.id);
 
         const newSessionOne: IEncodeSessionOne = { 
@@ -63,8 +63,8 @@ export class EncodeUserService {
             consent: userConsent
         };
         
-        await this._encodeFirestoreService.createNewEncodeUser(newUserData, newUserRef);
-        await this._encodeFirestoreService.incrementEncodeUserCounter();
+        await this._encodeFirestoreService.createNewUser(newUserData, newUserRef);
+        await this._encodeFirestoreService.incrementUserCounter();
 
         return newUserData;
     }
@@ -91,7 +91,7 @@ export class EncodeUserService {
     get googleFormsResponses$(): Observable<IEncodeGoogleFormResponse[]> {
         
         if (this._googleFormsResponses$ == null) {
-            this._googleFormsResponses$ = this._encodeFirestoreService.getEncodeGoogleFormsResponses$(this._user.uid);
+            this._googleFormsResponses$ = this._encodeFirestoreService.getGoogleFormsResponses$(this._user.uid);
         }
 
         return this._googleFormsResponses$;
@@ -110,7 +110,7 @@ export class EncodeUserService {
 
     public async updateUserInDB() {
         if (this._user == null) return ;
-        await this._encodeFirestoreService.updateEncodeUser(this._user);
+        await this._encodeFirestoreService.updateUser(this._user);
     }
 
     public abandonTest(): Promise<void> {
@@ -123,7 +123,7 @@ export class EncodeUserService {
     }
     
     private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
-        const googleFormsSettings: IEncodeGoogleFormsSettings = await this._encodeFirestoreService.getEncodeGoogleFormsSettings();
+        const googleFormsSettings: IEncodeGoogleFormsSettings = await this._encodeFirestoreService.getGoogleFormsSettings();
         const options = {
             params: {
                 userId: newUserId,

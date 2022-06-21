@@ -11,7 +11,6 @@ import { CSV_SEPARATOR, encodeCSVFields, PAGE_SIZE } from '../../constants';
 import { EncodeFirestoreService } from "src/app/core/encodeFirestore.service";
 import { PlatformLocation } from '@angular/common';
 
-
 @Component({
   selector: 'app-admin-encode',
   templateUrl: './admin-encode.component.html',
@@ -46,7 +45,7 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
     this.encodeUserDataSource.loadUsers(PAGE_SIZE);
 
     // Get total number of users
-    const counter = await this._encodeFirestoreService.getEncodeMetadataCounter();
+    const counter = await this._encodeFirestoreService.getUserCounter();
     this.totalTestsCounter.count = counter.data().count;
   }
 
@@ -103,7 +102,7 @@ export class AdminEncodeComponent implements OnInit, OnDestroy {
   }
 
   public async downloadCSV() {
-    const usersQuery = await this._encodeFirestoreService.getAllEncodeUsersData();
+    const usersQuery = await this._encodeFirestoreService.getAllUsersData();
     const encodeUsers = usersQuery.docs.map(doc => doc.data());
     let temp = JSON.parse(JSON.stringify(encodeUsers));
     let downloadPrefix = (this._platformLocation as any).location.origin + "/admin/encode/";

@@ -22,7 +22,7 @@ export class EncodeAbandonedGuard implements CanActivate {
     // check if user isnt loaded
     if (this._userService.user == null) {
       const userId: string = route.paramMap.get('userId');
-      const userData = await this._encodeFirestoreService.getEncodeUser(userId);
+      const userData = await this._encodeFirestoreService.getUser(userId);
       this._userService.user = userData.data();
     }
     

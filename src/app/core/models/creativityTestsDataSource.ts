@@ -1,78 +1,74 @@
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
-import { DocumentData, QuerySnapshot } from "@angular/fire/compat/firestore";
 import { BehaviorSubject, Observable } from "rxjs";
-import { finalize } from "rxjs/operators";
-import { DataDbService } from "../services/db/data-db.service";
 import { CreativeUser } from "./creative-user.interface";
-import firebase from "firebase/compat/app";
+import { CreativityFirestoreService } from "../creativityFirestore.service";
+import { DocumentData, DocumentSnapshot, QuerySnapshot } from "@angular/fire/firestore";
 
 export class CreativityTestsDataSource implements DataSource<CreativeUser> {
 
-    private testsSubject = new BehaviorSubject<CreativeUser[]>([]);
-    private loadingSubject = new BehaviorSubject<boolean>(false);
+    private _testsSubject = new BehaviorSubject<CreativeUser[]>([]);
+    private _loadingSubject = new BehaviorSubject<boolean>(false);
+    private _actualPageFirstDoc: DocumentSnapshot<DocumentData> = null;
+    private _actualPageLastDoc: DocumentSnapshot<DocumentData> = null;
+    private _prevFirstQueue: Array<DocumentSnapshot<DocumentData>> = [];
 
-    public loading$ = this.loadingSubject.asObservable();
-    private actualFirstInPage: firebase.firestore.DocumentSnapshot<DocumentData> = null;
-    private actualLastInPage: firebase.firestore.DocumentSnapshot<DocumentData> = null;
-    private prevFirstQueue: Array<firebase.firestore.DocumentSnapshot<DocumentData>> = [];
+    public loading$ = this._loadingSubject.asObservable();
 
-    constructor(private dbService: DataDbService) {}
+    constructor(private _creativityFirestoreService: CreativityFirestoreService) {}
 
-    connect(collectionViewer: CollectionViewer): Observable<CreativeUser[]> {
-        return this.testsSubject.asObservable();
+    connect(collectionViewer: CollectionViewer): Observable<CreativeUser[] | readonly CreativeUser[]> {
+        return this._testsSubject.asObservable();
     }
 
     disconnect(collectionViewer: CollectionViewer): void {
-        this.testsSubject.complete();
-        this.loadingSubject.complete();
+        this._testsSubject.complete();
+        this._loadingSubject.complete();
     }
   
-    loadTests(pageSize: number) {
+    async loadTests(pageSize: number) {
         
-        this.loadingSubject.next(true);
-
-        this.dbService.getTestsFirstPage(pageSize)
-            .pipe( finalize(() => this.loadingSubject.next(false)) )
-            .subscribe( tests => this.loadNewResults(tests));
-
+        this._loadingSubject.next(true);
+        
+        const usersSnapshot = await this._creativityFirestoreService.getFirstPage(pageSize);
+        this._loadNewResults(usersSnapshot);
+        this._loadingSubject.next(false);
     }
 
-    loadNextTestsPage(pageSize: number){
+    async loadNextTestsPage(pageSize: number) {
         
-        this.loadingSubject.next(true);
+        this._loadingSubject.next(true);
 
-        this.prevFirstQueue.push(this.actualFirstInPage);
-
-        this.dbService.getTestsNextPage(this.actualLastInPage, pageSize)
-            .pipe( finalize(() => this.loadingSubject.next(false)) )
-            .subscribe( tests => this.loadNewResults(tests));
+        this._prevFirstQueue.push(this._actualPageFirstDoc);
+        const usersSnapshot = await this._creativityFirestoreService.getNextPage(this._actualPageLastDoc, pageSize);
+        this._loadNewResults(usersSnapshot);
+        this._loadingSubject.next(false);
     }
     
-    loadPrevTestsPage(pageSize: number){
+    public async loadPrevTestsPage(pageSize: number){
         
-        this.loadingSubject.next(true);
+        this._loadingSubject.next(true);
 
-        let prevFirst = this.prevFirstQueue.pop();
+        let prevFirst = this._prevFirstQueue.pop();
 
-        this.dbService.getTestsPrevPage( prevFirst, this.actualFirstInPage, pageSize)
-            .pipe( finalize(() => this.loadingSubject.next(false)) )
-            .subscribe( tests => this.loadNewResults(tests));
+        const usersSnapshot = await this._creativityFirestoreService.getPrevPage(prevFirst, this._actualPageFirstDoc, pageSize);
+        this._loadNewResults(usersSnapshot);
+        this._loadingSubject.next(false);
     }
 
-    private async loadNewResults(results: QuerySnapshot<CreativeUser>): Promise<void>{
-        
-        let arrUsers: CreativeUser[] = [];
-        this.testsSubject.next(arrUsers);
+    private _loadNewResults(results: QuerySnapshot<CreativeUser>): void
+    {
+        if (results.size > 0) {
+            let arrUsers: CreativeUser[] = [];
+            this._testsSubject.next(arrUsers);
+                
+            results.docs.forEach( doc => {
+                arrUsers.push(doc.data() as CreativeUser);
+            });
+    
+            this._actualPageFirstDoc = results.docs[0];
+            this._actualPageLastDoc = results.docs[results.size - 1];
             
-        results.docs.forEach( test => {
-            arrUsers.push(test.data());
-        });
-
-        this.actualFirstInPage = await results.docs[0].ref.get();
-        this.actualLastInPage = await results.docs[results.size - 1].ref.get();
-        
-        this.testsSubject.next(arrUsers);
-        // this.loadingSubject.next(false);
+            this._testsSubject.next(arrUsers);
+        }
     }
-
 }

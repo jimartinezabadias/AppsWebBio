@@ -31,11 +31,11 @@ export class EncodeFirestoreService {
         this._encodeScreenshotCollectionRef = collection(this._firestore, "encode-config/tasksResources/screenshots") as CollectionReference<IEncodeScreenshot>;
     }
 
-    public getEncodeNewUserDocumentRef(): DocumentReference {
+    public getNewUserDocumentRef(): DocumentReference {
         return doc(this._encodeUserCollectionRef);
     }
 
-    async getEncodeGoogleFormsSettings(): Promise<IEncodeGoogleFormsSettings> {
+    async getGoogleFormsSettings(): Promise<IEncodeGoogleFormsSettings> {
         const docRef = doc(this._firestore, this._encodeConfigCollectionRef.path, "googleFormsSettings");
         const docSnap = await getDoc(docRef);
 
@@ -49,69 +49,69 @@ export class EncodeFirestoreService {
         return null;
     }
 
-    public createNewEncodeUser(user: IEncodeUser, userDocRef: DocumentReference): Promise<void> {
+    public createNewUser(user: IEncodeUser, userDocRef: DocumentReference): Promise<void> {
         return setDoc(userDocRef, user);
     }
 
-    public getEncodeFirstPage(pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
+    public getFirstPage(pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
         const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"), limit(pageSize));
         return getDocs(q);
     }
 
-    public getEncodeMetadataCounter() {
+    public getUserCounter() {
         const ref = doc(this._metadataCollectionRef, "encode-counter");
         return getDoc(ref);
     }
     
-    public incrementEncodeUserCounter() {
+    public incrementUserCounter() {
         const ref = doc(this._metadataCollectionRef, "encode-counter");
         return updateDoc(ref, {
             count: increment(1)
         });
     }
 
-    public getEncodesNextPage(actualLast, pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
+    public getNextPage(actualLast, pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
         const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"), limit(pageSize), startAfter(actualLast));
         return getDocs(q);
     }
 
-    public getEncodePrevPage(prevFirst, actualFirst, pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
+    public getPrevPage(prevFirst, actualFirst, pageSize: number = 3): Promise<QuerySnapshot<IEncodeUser>> {
         const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"), limit(pageSize), startAt(prevFirst), endBefore(actualFirst));
         return getDocs(q);
     }
 
-    public getEncodeUser(userId: string): Promise<DocumentSnapshot<IEncodeUser>>  {
+    public getUser(userId: string): Promise<DocumentSnapshot<IEncodeUser>>  {
         const userDocRef = doc(this._encodeUserCollectionRef,userId);
         return getDoc(userDocRef);
     }
 
-    public updateEncodeUser(user: IEncodeUser): Promise<void> {
+    public updateUser(user: IEncodeUser): Promise<void> {
         const userDocRef = doc(this._encodeUserCollectionRef, user.uid);
         return setDoc(userDocRef, user);
     }
 
-    public getEncodeGoogleFormsResponses$(userId: string): Observable<IEncodeGoogleFormResponse[]> {
+    public getGoogleFormsResponses$(userId: string): Observable<IEncodeGoogleFormResponse[]> {
         const userDocRef = doc(this._encodeUserCollectionRef,userId);
         // Devuelvo solo el arreglo de respuestas de GoogleForms
         return docData(userDocRef).pipe(map((user: IEncodeUser) => user.googleFormsResponses));
     }
 
-    public getEncodeTasksResources(): Promise<DocumentSnapshot<DocumentData>> {
+    public getTasksResources(): Promise<DocumentSnapshot<DocumentData>> {
         const taskResourcesDocRef = doc(this._encodeConfigCollectionRef,"tasksResources");
         return getDoc(taskResourcesDocRef);
     }
 
-    public getEncodeSuspect(suspectId: string): Promise<DocumentSnapshot<IEncodeSuspect>> {
+    public getSuspect(suspectId: string): Promise<DocumentSnapshot<IEncodeSuspect>> {
         const suspectDocRef = doc(this._encodeSuspectCollectionRef, suspectId);
         return getDoc(suspectDocRef);
     }
 
-    public getEncodeScreenshot(screenshotId: string): Promise<DocumentSnapshot<IEncodeScreenshot>> {
+    public getScreenshot(screenshotId: string): Promise<DocumentSnapshot<IEncodeScreenshot>> {
         const screenshotDocRef = doc(this._encodeScreenshotCollectionRef, screenshotId);
         return getDoc(screenshotDocRef);
     }
 
-    public async getAllEncodeUsersData(): Promise<QuerySnapshot<IEncodeUser>> {
+    public async getAllUsersData(): Promise<QuerySnapshot<IEncodeUser>> {
         const q = query(this._encodeUserCollectionRef, orderBy("creationDate", "desc"));
         return getDocs(q);
     }

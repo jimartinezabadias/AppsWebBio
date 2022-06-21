@@ -34,7 +34,7 @@ export class EncodeAuthGuard implements CanActivate {
     }
     else if (route.children.length == 0)
     {
-      const userData = await this._encodeFirestoreService.getEncodeUser(userId);
+      const userData = await this._encodeFirestoreService.getUser(userId);
       this._userService.user = userData.data();
       if (this._userService.user != null)
       {

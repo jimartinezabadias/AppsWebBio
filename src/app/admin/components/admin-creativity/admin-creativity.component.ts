@@ -1,11 +1,10 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
-
 import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { CreativityTestsDataSource } from 'src/app/core/models/creativityTestsDataSource';
 import { tap } from 'rxjs/operators';
 import { CreativeUser } from 'src/app/core/models/creative-user.interface';
-import { DataDbService } from 'src/app/core/services/db/data-db.service';
+import { CreativityFirestoreService } from 'src/app/core/creativityFirestore.service';
 
 @Component({
   selector: 'app-admin-creativity',
@@ -20,7 +19,6 @@ export class AdminCreativityComponent implements AfterViewInit, OnInit {
   public count = 1;
   public end = false;
   public totalTestsCounter: any = { count: -1 };
-  // public admin: AdminComponent
 
   // Columnas de la tabla que se van a mostrar
   displayedColumns: string[] = ["nameLastName", "age", "city", "educationLevel", "educationStatus", "school", "degree",
@@ -33,20 +31,19 @@ export class AdminCreativityComponent implements AfterViewInit, OnInit {
   @ViewChild(MatTable) table: MatTable<CreativeUser>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor( private dbData: DataDbService ) { }
-
+  constructor(private _creativityFirestoreService: CreativityFirestoreService) 
+  { 
+  }
 
   //al iniciar esta sección, se obtienen todos los datos de la colección 'creativesUsers'
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     
-    this.testsDataSource = new CreativityTestsDataSource(this.dbData);
+    this.testsDataSource = new CreativityTestsDataSource(this._creativityFirestoreService);
     this.testsDataSource.loadTests(this.pageSize);
 
-    // Get total number of creative tests users using creative-metadata collection
-    this.dbData.getCreativesMetadataCounter().snapshotChanges().subscribe( counterData => {
-      this.totalTestsCounter = counterData.payload.data();
-    });
-
+    // Get total number of users
+    const counter = await this._creativityFirestoreService.getCreativityMetadataCounter();
+    this.totalTestsCounter.count = counter.data().count;
   }
 
   ngAfterViewInit() {
@@ -55,25 +52,26 @@ export class AdminCreativityComponent implements AfterViewInit, OnInit {
             tap(() => {
               this.paginator._nextButtonsDisabled()
               this.paginator._previousButtonsDisabled()
-              this.loadTestsPage()
+              this._loadTestsPage()
             })
         )
         .subscribe();
   }
   
-  loadTestsPage() {
+  private _loadTestsPage() {
     if (this.pageIndex < this.paginator.pageIndex){
       this.testsDataSource.loadNextTestsPage(this.pageSize);
       this.pageIndex = this.paginator.pageIndex;
       return
     }
+
     this.testsDataSource.loadPrevTestsPage(this.pageSize);
     this.pageIndex = this.paginator.pageIndex;
   }
 
   public getData() {
-    let data = this.dbData.getCreativesUsersData(this);
-    return data;
+    // let data = this.dbData.getCreativesUsersData(this);
+    // return data;
   }
 
   downloadFile(data: any) {
