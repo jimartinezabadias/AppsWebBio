@@ -8,7 +8,6 @@ import { MaterialModule } from '../material/material.module';
 
 import { PersonalInfoComponent } from './components/personal-info.component';
 import { FormComponent } from './components/form/form.component';
-import { DataDbService } from '../core/services/db/data-db.service';
 
 @NgModule({
   declarations: [
@@ -23,10 +22,8 @@ import { DataDbService } from '../core/services/db/data-db.service';
     MaterialModule
   ],
   exports: [
-    PersonalInfoComponent,
-    // FormComponent
-  ],
-  providers: [DataDbService]
+    PersonalInfoComponent
+  ]
 })
 
 export class PersonalInfoModule { }

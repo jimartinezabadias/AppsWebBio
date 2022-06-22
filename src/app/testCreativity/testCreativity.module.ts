@@ -8,7 +8,6 @@ import { SharedModule } from './../shared/shared.module';
 import { PersonalInfoModule } from './../personal-info/personal-info.module';
 
 import { TestCreativityComponent } from './components/testCreativity.component';
-import { DataDbService } from '../core/services/db/data-db.service';
 
 @NgModule({
     declarations: [
@@ -24,8 +23,7 @@ import { DataDbService } from '../core/services/db/data-db.service';
     ],
     exports: [
         TestCreativityComponent
-    ],
-    providers: [DataDbService]
+    ]
 })
 
 export class TestCreativityModule {}

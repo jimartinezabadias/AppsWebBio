@@ -7,7 +7,6 @@ import { SelectTestComponent } from './components/select-test.component';
 import { SelectTestRoutingModule } from './select-test-routing';
 import { MaterialModule } from './../material/material.module';
 import { SharedModule } from './../shared/shared.module';
-import { DataDbService } from '../core/services/db/data-db.service';
 
 @NgModule({
     declarations: [
@@ -19,8 +18,7 @@ import { DataDbService } from '../core/services/db/data-db.service';
         FormsModule,
         MaterialModule,
         SharedModule
-    ],
-    providers: [ DataDbService ]
+    ]
 })
 
 export class SelectTestModule {}

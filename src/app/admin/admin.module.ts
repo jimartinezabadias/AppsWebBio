@@ -9,8 +9,6 @@ import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FileSaverModule } from 'ngx-filesaver';
 
-import { DataDbService } from '../core/services/db/data-db.service';
-
 import { MatTableModule } from "@angular/material/table";
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -29,9 +27,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { EncodeLinkPipe } from './components/admin-encode/encode-link.pipe';
 
 @NgModule({
-  providers: [
-    DataDbService
-  ],
   declarations: [
     AdminComponent,
     AdminCreativityComponent,

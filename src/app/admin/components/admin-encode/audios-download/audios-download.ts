@@ -1,10 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { IEncodeAudio } from 'src/app/encode/models/IEncodeAudio';
-import { DataDbService } from 'src/app/core/services/db/data-db.service';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver/dist/FileSaver';
 import * as JSZip from 'jszip';
+import { EncodeFirestoreService } from 'src/app/core/encodeFirestore.service';
 
 @Component({
     selector: 'app-admin-audios-download',
@@ -14,14 +14,14 @@ import * as JSZip from 'jszip';
 export class AudiosDownload implements OnInit{
 
     constructor(private _httpClient: HttpClient,
-                private _route: ActivatedRoute,
-                private _dbService: DataDbService) {
+        private _route: ActivatedRoute,
+        private _encodeFirestoreService: EncodeFirestoreService) {
     }
 
     async ngOnInit(): Promise<void> 
     {
         let userIdParam = this._route.snapshot.paramMap.get('userId');
-        const userData = await this._dbService.getEncodeUser(userIdParam);
+        const userData = (await this._encodeFirestoreService.getUser(userIdParam)).data();
         let userAudios = new Array<IEncodeAudio>();
 
         if (userData.sessionOne != null && userData.sessionOne.audios != null) {
