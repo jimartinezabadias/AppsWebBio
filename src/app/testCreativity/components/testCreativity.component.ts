@@ -4,11 +4,9 @@ import { TestCreativity } from '../../core/models/testCreativity.module';
 import { Clock } from '../../core/models/clock.module';
 import { CreativeUser } from './../../core/models/creative-user.interface';
 import { Element } from './../../core/models/element.module';
-import { DataDbService } from '../../core/services/db/data-db.service';
 
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { DocumentData, QuerySnapshot } from '@angular/fire/compat/firestore';
+import { CreativityFirestoreService } from 'src/app/core/creativityFirestore.service';
 
 @Component({
     selector: 'app-testcreativity',
@@ -18,7 +16,12 @@ import { DocumentData, QuerySnapshot } from '@angular/fire/compat/firestore';
 
 export class TestCreativityComponent implements OnInit {
 
-    constructor(private router: Router, private dbData: DataDbService) { }
+    constructor(
+        private _router: Router,
+        private _creativityFirestoreService: CreativityFirestoreService
+    ) 
+    {
+    }
 
     // INIT
     started = false;
@@ -63,7 +66,7 @@ export class TestCreativityComponent implements OnInit {
         const finalElement = this.getElement();
         this.element = finalElement;
         if (!creativeUser) {
-            this.router.navigate(['select-test']);
+            this._router.navigate(['select-test']);
         }
         this.countdown();
     }
@@ -161,7 +164,7 @@ export class TestCreativityComponent implements OnInit {
     }
 
     saveInBBDD() {
-        this.dbData.saveContact(this.user);
+        this._creativityFirestoreService.saveContact(this.user);
     }
 
 

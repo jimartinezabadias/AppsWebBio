@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataDbService } from '../../../core/services/db/data-db.service';
 import { FormControl, FormGroup, Validators, PatternValidator } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -14,8 +13,7 @@ export class FormComponent implements OnInit {
   users: any;
 
   constructor(
-    private router: Router,
-    private dbData: DataDbService,
+    private router: Router
     ) {
       this.dataUser = this.getDataUser();
   }
@@ -25,7 +23,6 @@ export class FormComponent implements OnInit {
   private stringPattern: any = /^[a-zA-ZñÑáéíóú ]*$/;
   private stringAndNumberPattern: any = /^[a-zA-ZñÑáéíóú 0-9 °]*$/;
   private characterPattern: any = /[A-Za-z]/;
-  // private characterPattern: any = /^[A-Z]+$/i;
   getDataUser() {
     const formData = new FormGroup({
       nameLastName: new FormControl('', [

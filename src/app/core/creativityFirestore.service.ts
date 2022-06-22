@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, CollectionReference, doc, endBefore, Firestore, getDoc, getDocs, limit, orderBy, query, QuerySnapshot, startAfter, startAt } from '@angular/fire/firestore';
+import { collection, CollectionReference, doc, endBefore, Firestore, getDoc, getDocs, increment, limit, orderBy, query, QuerySnapshot, setDoc, startAfter, startAt, updateDoc } from '@angular/fire/firestore';
 import { CreativeUser } from './models/creative-user.interface';
 
 
@@ -42,5 +42,18 @@ export class CreativityFirestoreService {
     public async getAllUsersData(): Promise<QuerySnapshot<CreativeUser>> {
         const q = query(this._creativityUsersCollectionRef, orderBy("dateStart", "desc"));
         return getDocs(q);
+    }
+
+    public saveContact(newUser: CreativeUser): Promise<void> {
+        const userDocRef = doc(this._creativityUsersCollectionRef);
+        this._incrementUserCounter();
+        return setDoc(userDocRef, newUser);
+    }
+
+    private _incrementUserCounter(): Promise<void> {
+        const ref = doc(this._metadataCollectionRef, "tests-counter");
+        return updateDoc(ref, {
+            count: increment(1)
+        });
     }
 }

@@ -22,6 +22,4 @@ export class MessageOkPrevTestComponent implements OnInit {
         }, 1000);
       }, 1000);
   }
-
-
 }
