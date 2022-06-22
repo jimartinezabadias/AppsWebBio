@@ -69,9 +69,10 @@ export class AdminCreativityComponent implements AfterViewInit, OnInit {
     this.pageIndex = this.paginator.pageIndex;
   }
 
-  public getData() {
-    // let data = this.dbData.getCreativesUsersData(this);
-    // return data;
+  public async getData() {
+    const usersQuery = await this._creativityFirestoreService.getAllUsersData();
+    const creativityUsers = usersQuery.docs.map(doc => doc.data());
+    this.downloadFile(creativityUsers);
   }
 
   downloadFile(data: any) {
@@ -124,8 +125,4 @@ export class AdminCreativityComponent implements AfterViewInit, OnInit {
        }
        return str;
     }
- 
-
-  
-
 }

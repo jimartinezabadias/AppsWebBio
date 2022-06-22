@@ -39,4 +39,8 @@ export class CreativityFirestoreService {
         return getDocs(q);
     }
 
+    public async getAllUsersData(): Promise<QuerySnapshot<CreativeUser>> {
+        const q = query(this._creativityUsersCollectionRef, orderBy("dateStart", "desc"));
+        return getDocs(q);
+    }
 }
