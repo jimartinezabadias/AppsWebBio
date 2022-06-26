@@ -3,7 +3,6 @@ import { collection, doc, Firestore, CollectionReference, DocumentReference, get
 import { DocumentData, DocumentSnapshot, startAfter } from 'firebase/firestore';
 import { map, Observable } from 'rxjs';
 import { IEncodeGoogleFormResponse } from '../encode/models/IEncodeGoogleFormResponse';
-import { IEncodeGoogleFormsSettings } from '../encode/models/IEncodeGoogleFormsSettings';
 import { IEncodeScreenshot } from '../encode/models/IEncodeScreenshot';
 import { IEncodeSuspect } from '../encode/models/IEncodeSuspect';
 import { IEncodeUser } from '../encode/models/IEncodeUser';
@@ -35,18 +34,9 @@ export class EncodeFirestoreService {
         return doc(this._encodeUserCollectionRef);
     }
 
-    async getGoogleFormsSettings(): Promise<IEncodeGoogleFormsSettings> {
-        const docRef = doc(this._firestore, this._encodeConfigCollectionRef.path, "googleFormsSettings");
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            return docSnap.data() as IEncodeGoogleFormsSettings;
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-
-        return null;
+    public getGoogleFormsSettings(): Promise<DocumentSnapshot<DocumentData>> {
+        const docRef = doc(this._encodeConfigCollectionRef, "googleFormsSettings");
+        return getDoc(docRef);
     }
 
     public createNewUser(user: IEncodeUser, userDocRef: DocumentReference): Promise<void> {

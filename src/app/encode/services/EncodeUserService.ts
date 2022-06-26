@@ -123,15 +123,22 @@ export class EncodeUserService {
     }
     
     private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
-        const googleFormsSettings: IEncodeGoogleFormsSettings = await this._encodeFirestoreService.getGoogleFormsSettings();
-        const options = {
-            params: {
-                userId: newUserId,
-                formsURLs: googleFormsSettings.googleFormsURLs
-            }
-        }
+        const formsSettingsDoc = await this._encodeFirestoreService.getGoogleFormsSettings();
 
-        const request$ = this._http.get<IEncodeGoogleFormResponse[]>(googleFormsSettings.generatePreFilledResponsesScriptURL, options);
-        return lastValueFrom(request$);
+        if (formsSettingsDoc.exists()) {
+            const googleFormsSettings: IEncodeGoogleFormsSettings = formsSettingsDoc.data() as IEncodeGoogleFormsSettings;
+            const options = {
+                params: {
+                    userId: newUserId,
+                    formsURLs: googleFormsSettings.googleFormsURLs
+                }
+            }
+    
+            const request$ = this._http.get<IEncodeGoogleFormResponse[]>(googleFormsSettings.generatePreFilledResponsesScriptURL, options);
+            return lastValueFrom(request$);
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
     }
 }
