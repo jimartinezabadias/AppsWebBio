@@ -61,7 +61,7 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
     if (this._userService.encodeTasksResources == null) {
       this._userService.encodeTasksResources = (await this._encodeFirestoreService.getTasksResources()).data();
     }
-
+    
     const taskResources = this._userService.encodeTasksResources;
     this.imagesPairs = (await this._getScreenshot(taskResources.screenshotsPairs)).map(snap => snap.data());
 
@@ -123,10 +123,10 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
     }
   }
 
-  private _getScreenshot(screenshotDocuments: Array<DocumentReference<IEncodeScreenshot>>): Promise<Array<DocumentSnapshot<IEncodeScreenshot>>> {
+  private _getScreenshot(screenshotDocuments: Array<DocumentReference<IEncodeScreenshot>>): Promise<DocumentSnapshot<IEncodeScreenshot>[]> {
     let screenshots = new Array<Promise<DocumentSnapshot<IEncodeScreenshot>>>();
 
-    screenshotDocuments.forEach( async docRef => {
+    screenshotDocuments.forEach( docRef => {
       const screenshotId = docRef.id;
       const screenshot = this._encodeFirestoreService.getScreenshot(screenshotId);
       screenshots.push(screenshot);
