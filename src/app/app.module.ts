@@ -3,9 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-// import { AngularFireModule } from '@angular/fire/compat';
-// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireStorageModule } from "@angular/fire/compat/storage";
 import { environment } from './../environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -35,13 +32,10 @@ import { DatePipe } from '@angular/common';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    // AngularFireModule.initializeApp(environment.firebaseConfig),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    // AngularFirestoreModule,
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),
-    AngularFireStorageModule
   ],
   providers: [ NavigationService, DatePipe ],
   bootstrap: [AppComponent]
