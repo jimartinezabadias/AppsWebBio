@@ -20,6 +20,7 @@ export class EncodeUserService {
     private _googleFormsResponses$: Observable<IEncodeGoogleFormResponse[]> = null;
     private _googleFormsSubscription$: Unsubscribe;
     private _encodeTasksResources: DocumentData = null;
+    private _googleFormsSettings: IEncodeGoogleFormsSettings = null;
     
     constructor(private _encodeFirestoreService: EncodeFirestoreService, private _http: HttpClient)
     {
@@ -123,22 +124,26 @@ export class EncodeUserService {
     }
     
     private async _getGoogleFormsPreFilledURLs(newUserId: string): Promise<IEncodeGoogleFormResponse[]> {
-        const formsSettingsDoc = await this._encodeFirestoreService.getGoogleFormsSettings();
-
-        if (formsSettingsDoc.exists()) {
-            const googleFormsSettings: IEncodeGoogleFormsSettings = formsSettingsDoc.data() as IEncodeGoogleFormsSettings;
+        if (this._googleFormsSettings == null) {
+            const formsSettingsDoc = await this._encodeFirestoreService.getGoogleFormsSettings();
+            if (formsSettingsDoc.exists()) {
+                this._googleFormsSettings = formsSettingsDoc.data() as IEncodeGoogleFormsSettings;
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }
+        
+        if (this._googleFormsSettings != null) {
             const options = {
                 params: {
                     userId: newUserId,
-                    formsURLs: googleFormsSettings.googleFormsURLs
+                    formsURLs: this._googleFormsSettings.googleFormsURLs
                 }
             }
-    
-            const request$ = this._http.get<IEncodeGoogleFormResponse[]>(googleFormsSettings.generatePreFilledResponsesScriptURL, options);
+
+            const request$ = this._http.get<IEncodeGoogleFormResponse[]>(this._googleFormsSettings.generatePreFilledResponsesScriptURL, options);
             return lastValueFrom(request$);
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
         }
     }
 }
