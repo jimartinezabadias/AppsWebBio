@@ -12,7 +12,7 @@ const SEPARATOR = CSV_SEPARATOR;
   templateUrl: './admin-rulit.component.html',
   styleUrls: ['../admin.component.scss'],
 })
-export class AdminRulitComponent implements OnInit{
+export class AdminRulitComponent {
 
   shortMemMaxExercises: number = 0;
   longMemMaxExercises: number = 0;
@@ -20,8 +20,8 @@ export class AdminRulitComponent implements OnInit{
   constructor( 
     private _rulitFirestoreService: RulitFirestoreService 
     ) {}
-
-  async ngOnInit(): Promise<void> {
+  
+  async getData() {
     const rulitSettingsData: IRulitSettings = (await this._rulitFirestoreService.getRulitSettings()).data();
     rulitSettingsData.solutions.forEach(async (solutionDocRef) => {
       const settings: IRulitSolutionSettings = (await this._rulitFirestoreService.getRulitSolutionSettings(solutionDocRef.id)).data();
@@ -30,9 +30,7 @@ export class AdminRulitComponent implements OnInit{
       if (this.longMemMaxExercises < settings.longMem_MaxExercises)
         this.longMemMaxExercises = settings.longMem_MaxExercises;
     });
-  }
-  
-  async getData() {
+
     const usersQuery = await this._rulitFirestoreService.getAllRulitUsersData();
     const rulitUsers = usersQuery.docs.map(doc => doc.data());
     rulitUsers.map( (user) => { 
