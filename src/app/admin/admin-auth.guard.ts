@@ -17,11 +17,12 @@ export class AdminAuthGuard implements CanActivate {
   }
   
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
-    const isUserLoggedIn = await lastValueFrom(this._authService.user$
-      .pipe(
-        take(1),
-        map(user => !!user)
-      )
+    const isUserLoggedIn = await lastValueFrom(
+      this._authService.user$
+        .pipe(
+          take(1),
+          map(user => !!user)
+        )
     );
     
     if (isUserLoggedIn){

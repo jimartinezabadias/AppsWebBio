@@ -35,13 +35,11 @@ const routes: Routes = [
     children: [
       {
         path: ':userId',
-        component: AdminEncodeUserComponent,
-        canActivate: [ AdminAuthGuard ]
+        component: AdminEncodeUserComponent
       },
       {
         path: ':userId/audios',
-        component: AudiosDownload,
-        canActivate: [ AdminAuthGuard ]
+        component: AudiosDownload
       }
     ]
   }
