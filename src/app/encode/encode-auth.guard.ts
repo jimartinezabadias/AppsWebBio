@@ -32,13 +32,11 @@ export class EncodeAuthGuard implements CanActivate {
         return true;
       } 
     }
-    else if (route.children.length == 0)
+    else
     {
       const userData = await this._encodeFirestoreService.getUser(userId);
-      this._userService.user = userData.data();
-      if (this._userService.user != null)
-      {
-        // Redirect to the home page
+      if (userData.exists()) {
+        this._userService.user = userData.data();
         return this._router.parseUrl(url + '/bienvenido');
       }
     }
@@ -46,5 +44,4 @@ export class EncodeAuthGuard implements CanActivate {
     // Redirect to the home page
     return this._router.parseUrl('/');
   }
-  
 }

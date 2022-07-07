@@ -1,31 +1,19 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';
-import { EncodeFirestoreService } from '../core/encodeFirestore.service';
+import { ActivatedRouteSnapshot, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
 import { EncodeUserService } from './services/EncodeUserService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EncodeAbandonedGuard implements CanActivate {
+export class EncodeAbandonedGuard implements CanActivateChild {
   
   constructor(
     private _userService: EncodeUserService, 
-    private _router: Router,
-    private _encodeFirestoreService: EncodeFirestoreService) {}
-
-  async canActivate(route: ActivatedRouteSnapshot): Promise<boolean | UrlTree> 
-  {
-    return this.checkAbandoned(route);
-  }
+    private _router: Router) {}
   
-  private async checkAbandoned(route: ActivatedRouteSnapshot): Promise<boolean | UrlTree> {
-    // check if user isnt loaded
-    if (this._userService.user == null) {
-      const userId: string = route.paramMap.get('userId');
-      const userData = await this._encodeFirestoreService.getUser(userId);
-      this._userService.user = userData.data();
-    }
-    
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+    console.log("EncodeAbandonedGuard");
     if (this._userService.user.abandonedByUser)
     {
       // Redirect to the abandoned component
@@ -34,5 +22,4 @@ export class EncodeAbandonedGuard implements CanActivate {
 
     return true;
   }
-  
 }
