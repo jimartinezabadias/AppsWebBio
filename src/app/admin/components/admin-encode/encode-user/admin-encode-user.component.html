@@ -19,20 +19,21 @@
                     <ng-template #abandoned>
                         <p>Estado: Abandono</p>
                     </ng-template>
+
                     <ng-template #progress>
+                        <div *ngIf="!user.sessionOne.completed">
+                            <p>Estado: esperando sesión 1</p>
+                        </div>
                         <div *ngIf="user.sessionOne.completed">
-                            <div *ngIf="user.sessionTwo.perpetratorCondition && user.sessionTwo.completed == true">
-                                <p>Estado: Dia 2 Completado</p> 
+                            <div *ngIf="!user.sessionTwo.perpetratorCondition">
+                                <p>Estado: sesión 1 completa</p> 
                             </div>
                             <div *ngIf="user.sessionTwo.perpetratorCondition && user.sessionTwo.completed == false">
-                                <p>Estado: Dia 2 En progreso</p> 
+                                <p>Estado: esperando sesión 2</p> 
                             </div>
-                            <div *ngIf="!user.sessionTwo.perpetratorCondition">
-                                <p>Estado: Dia 1 Completado</p> 
+                            <div *ngIf="user.sessionTwo.perpetratorCondition && user.sessionTwo.completed == true">
+                                <p>Estado: sesión 2 completa</p> 
                             </div>
-                        </div>
-                        <div *ngIf="!user.sessionOne.completed">
-                            <p>Estado: Dia 1 En progreso</p>
                         </div>
                     </ng-template>
                     
@@ -143,7 +144,7 @@
 
                         <!-- Sesión 1 Incompleta -->
                         <ng-template #noDataTemplate>
-                            <p>aun sin datos</p>
+                            <p>Sesión 1 incompleta</p>
                         </ng-template>
 
                     </mat-tab>
@@ -157,7 +158,7 @@
                         
                         <!-- Sesión 1 Incompleta -->
                         <ng-template #noDataTemplate>
-                            <p>aun sin datos</p>
+                            <p>Sesión 1 incompleta</p>
                         </ng-template>
                         
                         <!-- Datos Sesión 1 -->
@@ -194,7 +195,7 @@
                             <!-- Audios -->
                             <h3>Audios</h3>
                             <div class="audios-container" *ngIf="user.sessionOne.audios">
-                                <p>El sujeto grabó {{user.sessionOne.audios.length}} audio/s en esta sesión.</p>
+                                <p>Se grabaron {{user.sessionOne.audios.length}} audio/s en esta sesión.</p>
                             </div>
 
                         </ng-template>
@@ -208,9 +209,9 @@
                             <!-- template will replace this div -->
                         </div>
 
-                        <!-- Sesión 1 Incompleta -->
+                        <!-- Sesión 2 Incompleta -->
                         <ng-template #noDataTemplate>
-                            <p>aun sin datos</p>
+                            <p>Sesión 2 incompleta</p>
                         </ng-template>
 
                         <!-- Sesión 2 -->
@@ -243,7 +244,7 @@
 
                             <!-- Sesión 2 Incompleta -->
                             <ng-template #noDataTemplate>
-                                <p>aun sin datos</p>
+                                <p>Sesión 2 incompleta</p>
                             </ng-template>
 
                             <!-- Datos Sesión 2 -->
@@ -280,7 +281,7 @@
                                 <!-- Audios -->
                                 <h3>Audios</h3>
                                 <div class="audios-container" *ngIf="user.sessionTwo.audios">
-                                    <p>El sujeto grabó {{user.sessionTwo.audios.length}} audio/s en esta sesión.</p>
+                                    <p>Se grabaron {{user.sessionTwo.audios.length}} audio/s en esta sesión.</p>
                                 </div>
 
                             </ng-template>

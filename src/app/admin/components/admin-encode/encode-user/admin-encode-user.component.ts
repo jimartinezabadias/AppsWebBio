@@ -15,8 +15,6 @@ export class AdminEncodeUserComponent implements OnInit {
 
   public user : IEncodeUser;
   
-  // Columnas de la tabla que se van a mostrar
-  public displayedColumns: string[] = ["email", "link", "creationDate" ];
   public somnolenceDegrees = SomnolenceDegree;
   public selectedPerpetratorCondition: PerpetratorCondition | null = null;
 
@@ -51,5 +49,4 @@ export class AdminEncodeUserComponent implements OnInit {
     this.user.sessionTwo.perpetratorCondition = this.selectedPerpetratorCondition;
     await this._encodeFirestoreService.updateUser(this.user);
   }
-
 }
