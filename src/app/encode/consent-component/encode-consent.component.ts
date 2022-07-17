@@ -32,7 +32,7 @@ export class EncodeConsentComponent {
     {
       let date = new Date();
       this._userService.user.consent.hasAccepted = true; 
-      let currentDate = this.datepipe.transform(date, 'yyyy-MM-dd');
+      let currentDate = this.datepipe.transform(date, 'dd-MM-yyyy');
       this._userService.user.consent.date = currentDate; 
       this._router.navigate(["../personal-info"], { relativeTo: this._route });
     }

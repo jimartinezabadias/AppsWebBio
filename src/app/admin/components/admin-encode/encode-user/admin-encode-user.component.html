@@ -137,8 +137,15 @@
                             </div>
 
                             <h3>Consentimiento</h3>
-                            <!-- TODO: mostrar consentimiento posta -->
-                            <p>Consentimiento otorgado.</p>
+                            <div *ngIf="user.consent.date; then consent else noConsent">
+                                <!-- template will replace this div -->
+                            </div>
+                            <ng-template #consent>
+                                <p>Consentimiento otorgado el {{ user.consent.date }}.</p>
+                            </ng-template>
+                            <ng-template #noConsent>
+                                <p>Consentimiento <b>NO</b> otorgado.</p>
+                            </ng-template>
 
                         </ng-template>
 
