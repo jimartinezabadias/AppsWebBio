@@ -32,6 +32,15 @@ export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
   get googleForms(): FormArray {
     return this.userForms.get('googleForms') as FormArray; 
   }
+
+  navigateToVideo(): void {
+    this._router.navigate(['../consigna'], { 
+      relativeTo: this._route,
+      queryParams: { 
+        consigna: 'A continuación vas a visualizar un video corto  y te pedimos por favor que le prestes atención. Asegúrate de estar en un lugar tranquilo y sin interrupciones. Tené en cuenta que una vez que comience no podrás detenerlo.',
+        ruta: '../video'
+    } });
+  }
   
   ngOnInit(): void {
     this.userForms = this._formBuilder.group({
