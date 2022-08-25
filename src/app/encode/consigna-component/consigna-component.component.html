@@ -1,20 +1,35 @@
 <section class="container">
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
-        <div class="consigna">
+        <div id="task-breafing">
+    
+            <div *ngIf="puntos_consigna" id="task-breafing">
+            
+                <h1 *ngIf="titulo" class="title">{{ titulo }}</h1>
 
-            <mat-card>
-                    
-                <h1 class="title"> {{ consigna }} </h1>  
+                <p *ngIf="descripcion">{{ descripcion }}</p>
+
+                <mat-list>
+
+                    <mat-list-item *ngFor="let punto of puntos_consigna">
+                        <mat-icon mat-list-icon
+                            color="accent">lens</mat-icon>
+                        <p class="mat-list-text">
+                            {{ punto }}
+                        </p>
+                    </mat-list-item>
+
+                </mat-list>
                 
-                <a mat-raised-button 
+                <button mat-raised-button 
+                    id="continue-button" 
                     class="save-form-btn" 
                     routerLink="{{ ruta }}"
                     routerLinkActive="active">
                     Comenzar
-                </a>
-                
-            </mat-card>
-          
+                </button>
+
+            </div>
+            
         </div>
 </section>

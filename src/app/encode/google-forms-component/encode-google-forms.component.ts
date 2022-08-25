@@ -34,10 +34,18 @@ export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
   }
 
   navigateToVideo(): void {
+    let puntos_consigna:string[] = [
+      'A continuación vas a visualizar un video corto  y te pedimos por favor que le prestes atención.',
+      'Asegúrate de estar en un lugar tranquilo y sin interrupciones.',
+      'Tené en cuenta que una vez que comience no podrás detenerlo.'
+    ];
+
     this._router.navigate(['../consigna'], { 
       relativeTo: this._route,
       queryParams: { 
-        consigna: 'A continuación vas a visualizar un video corto  y te pedimos por favor que le prestes atención. Asegúrate de estar en un lugar tranquilo y sin interrupciones. Tené en cuenta que una vez que comience no podrás detenerlo.',
+        titulo: 'Video',
+        descripcion: null,
+        puntos_consigna: puntos_consigna,
         ruta: '../video'
     } });
   }

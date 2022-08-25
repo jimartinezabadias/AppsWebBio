@@ -9,7 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 export class EncodeConsignaComponent implements OnInit {
 
-  public consigna: string;
+  public puntos_consigna: [];
+  public titulo: string; 
+  public descripcion: string;
   public ruta: string;
 
   constructor(
@@ -21,10 +23,10 @@ export class EncodeConsignaComponent implements OnInit {
   
   ngOnInit(): void {
     this._route.queryParams.subscribe(params => {
-      this.consigna = params['consigna'];
+      this.titulo = params['titulo'];
+      this.descripcion = params['descripcion'];
+      this.puntos_consigna = params['puntos_consigna'];
       this.ruta = params['ruta'];
-      console.log(this.consigna);
-      console.log(this.ruta);
     });
   }
 
