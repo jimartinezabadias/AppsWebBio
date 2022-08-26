@@ -33,7 +33,7 @@ import { EncodeIdentificationRoom } from './identification-task-component/identi
 import { EncodeSuspect } from './identification-task-component/identification-room-component/suspect-component/suspect.component';
 import { ConfidenceDialogComponent } from './identification-task-component/identification-room-component/confidence-component/confidence.component';
 import { EncodeSortingTaskComponent } from './sorting-task-component/sorting-task.component';
-import { EncodeConsignaComponent } from './consigna-component/consigna-component.component';
+import { EncodeInstructionsComponent } from './instructions-component/instructions-component.component';
 import { EncodeGridImageComponent } from './sorting-task-component/grid-image-component/grid-image.component';
 import { EncodeFullImageComponent } from './sorting-task-component/grid-image-component/full-image-component/full-image.component';
 import { EncodeTimelineComponent } from './sorting-task-component/timeline-component/timeline.component';
@@ -68,7 +68,7 @@ import { EncodeTimelineComponent } from './sorting-task-component/timeline-compo
         EncodeSuspect,
         ConfidenceDialogComponent,
         EncodeSortingTaskComponent,
-        EncodeConsignaComponent,
+        EncodeInstructionsComponent,
         EncodeGridImageComponent,
         EncodeFullImageComponent,
         EncodeTimelineComponent

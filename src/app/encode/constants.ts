@@ -68,3 +68,10 @@ export const ROOM_2_TITLE = "Ronda 2 de 2";
 // export const MAX_TIMELINE_SCREENSHOTS = 8;
 export const SCREENSHOTS_COUNT = 8;
 export const HAS_CURSOR_CLASS = 'hasCursor';
+
+// Video Task
+export const VIDEO_INSTRUCTIONS:string[] = [
+    'A continuación vas a visualizar un video corto  y te pedimos por favor que le prestes atención.',
+    'Asegúrate de estar en un lugar tranquilo y sin interrupciones.',
+    'Tené en cuenta que una vez que comience no podrás detenerlo.'
+];

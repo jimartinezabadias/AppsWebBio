@@ -19,7 +19,7 @@ import { EncodeAbandonedGuard } from './encode-abandoned.guard';
 import { EncodeIdentificationTaskComponent } from './identification-task-component/identification-task.component';
 import { EncodeSelectionComponent } from './selection-component/selection.component';
 import { EncodeSortingTaskComponent } from './sorting-task-component/sorting-task.component';
-import { EncodeConsignaComponent } from './consigna-component/consigna-component.component';
+import { EncodeInstructionsComponent } from './instructions-component/instructions-component.component';
 import { CanActivateTest } from './can-activate-test.guard';
 
 
@@ -100,9 +100,9 @@ const routes: Routes = [
                 component: EncodeSortingTaskComponent
             },
             {
-                path: 'consigna',
+                path: 'instructions',
                 canDeactivate: [ExitGuard],
-                component: EncodeConsignaComponent
+                component: EncodeInstructionsComponent
             }
         ]
     }

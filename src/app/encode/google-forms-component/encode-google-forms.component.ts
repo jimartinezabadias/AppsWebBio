@@ -5,6 +5,8 @@ import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { MatStepper } from '@angular/material/stepper';
 import { googleForValidator } from './google-form-validator';
 import { ActivatedRoute, Router } from '@angular/router';
+import { VIDEO_INSTRUCTIONS } from '../constants';
+import { IEncodeInstructionsParams} from '../models/IEncodeInstructionsParams';
 
 @Component({
     selector: 'app-encode-google-forms',
@@ -34,20 +36,16 @@ export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
   }
 
   navigateToVideo(): void {
-    let puntos_consigna:string[] = [
-      'A continuación vas a visualizar un video corto  y te pedimos por favor que le prestes atención.',
-      'Asegúrate de estar en un lugar tranquilo y sin interrupciones.',
-      'Tené en cuenta que una vez que comience no podrás detenerlo.'
-    ];
+    let instructions_params: IEncodeInstructionsParams = {
+      title: 'Video',
+      description: null,
+      instructions: VIDEO_INSTRUCTIONS,
+      route: '../video'
+    };
 
-    this._router.navigate(['../consigna'], { 
+    this._router.navigate(['../instructions'], { 
       relativeTo: this._route,
-      queryParams: { 
-        titulo: 'Video',
-        descripcion: null,
-        puntos_consigna: puntos_consigna,
-        ruta: '../video'
-    } });
+      queryParams: instructions_params });
   }
   
   ngOnInit(): void {

@@ -3,19 +3,19 @@
     <section class="main-app-section">
         <div id="task-breafing">
     
-            <div *ngIf="puntos_consigna" id="task-breafing">
+            <div *ngIf="instructions" id="task-breafing">
             
-                <h1 *ngIf="titulo" class="title">{{ titulo }}</h1>
+                <h1 *ngIf="title" class="title">{{ title }}</h1>
 
-                <p *ngIf="descripcion">{{ descripcion }}</p>
+                <p *ngIf="description">{{ description }}</p>
 
                 <mat-list>
 
-                    <mat-list-item *ngFor="let punto of puntos_consigna">
+                    <mat-list-item *ngFor="let instruction of instructions">
                         <mat-icon mat-list-icon
                             color="accent">lens</mat-icon>
                         <p class="mat-list-text">
-                            {{ punto }}
+                            {{ instruction }}
                         </p>
                     </mat-list-item>
 
@@ -24,7 +24,7 @@
                 <button mat-raised-button 
                     id="continue-button" 
                     class="save-form-btn" 
-                    routerLink="{{ ruta }}"
+                    routerLink="{{ route }}"
                     routerLinkActive="active">
                     Comenzar
                 </button>
