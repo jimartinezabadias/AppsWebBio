@@ -3,11 +3,9 @@
     <section class="main-app-section">
         <div id="task-breafing">
     
-            <div *ngIf="instructions" id="task-breafing">
+            <div id="task-breafing">
             
-                <h1 *ngIf="title" class="title">{{ title }}</h1>
-
-                <p *ngIf="description">{{ description }}</p>
+                <h1 class="title">{{ title }}</h1>
 
                 <mat-list>
 
@@ -24,7 +22,7 @@
                 <button mat-raised-button 
                     id="continue-button" 
                     class="save-form-btn" 
-                    routerLink="{{ route }}"
+                    routerLink="{{ nextRoute }}"
                     routerLinkActive="active">
                     Comenzar
                 </button>

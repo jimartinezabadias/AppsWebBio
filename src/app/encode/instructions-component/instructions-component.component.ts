@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IEncodeInstructionsParams } from '../models/IEncodeInstructionsParams';
 
 @Component({
     selector: 'app-encode-instructions',
@@ -9,10 +10,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 export class EncodeInstructionsComponent implements OnInit {
 
-  public instructions: [];
   public title: string; 
-  public description: string;
-  public route: string;
+  public instructions: string[];
+  public nextRoute: string;
 
   constructor(
     private _router: Router, 
@@ -22,11 +22,10 @@ export class EncodeInstructionsComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this._route.queryParams.subscribe(params => {
-      this.title = params['title'];
-      this.description = params['description'];
-      this.instructions = params['instructions'];
-      this.route = params['route'];
+    this._route.queryParams.subscribe((params: IEncodeInstructionsParams) => {
+      this.title = params.title;
+      this.instructions = params.instructions;
+      this.nextRoute = params.nextRouteToNavigate;
     });
   }
 

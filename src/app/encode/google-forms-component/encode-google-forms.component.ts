@@ -35,12 +35,11 @@ export class EncodeGoogleFormsComponent implements OnInit, AfterViewInit {
     return this.userForms.get('googleForms') as FormArray; 
   }
 
-  navigateToVideo(): void {
+  navigateToVideoInstructions(): void {
     let instructions_params: IEncodeInstructionsParams = {
       title: 'Video',
-      description: null,
       instructions: VIDEO_INSTRUCTIONS,
-      route: '../video'
+      nextRouteToNavigate: '../video'
     };
 
     this._router.navigate(['../instructions'], { 
