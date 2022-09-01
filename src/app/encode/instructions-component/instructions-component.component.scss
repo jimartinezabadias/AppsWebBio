@@ -1,21 +1,20 @@
 #task-breafing {
     display: flex;
     flex-flow: column;
-    grid-row-gap: 32px;
-    row-gap: 32px;
+    row-gap: 8px;
     max-width: 32rem;
     line-height: 1.32rem;
     align-items: center;
 }
 
 #continue-button {
+    margin-top: 1.2rem;
     align-self: center;
 }
 
 .mat-list {
     display: flex;
     flex-flow: column;
-    row-gap: 0.5rem;
 }
 
 .mat-list .mat-list-icon {
