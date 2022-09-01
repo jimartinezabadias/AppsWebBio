@@ -1,4 +1,4 @@
-import { Component, ComponentRef, ViewChild } from '@angular/core';
+import { Component, ComponentRef, OnInit, ViewChild } from '@angular/core';
 import { EncodeUserService } from '../services/EncodeUserService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnExit } from '../exit.guard';
@@ -21,16 +21,14 @@ import { EncodeStorageService } from 'src/app/core/encodeStorage.service';
     templateUrl: './identification-task.component.html',
     styleUrls: ['identification-task.component.scss','../encode.component.scss']
 })
-export class EncodeIdentificationTaskComponent implements OnExit {
+export class EncodeIdentificationTaskComponent implements OnInit,OnExit {
   
-  public isIdentifing: boolean = false;
   public isLoadingLineups: boolean = false;
   public currentRoom: number = 1;
 
   @ViewChild(EncodeIdentificationRoomDirective, {static: true}) identificationRoomHost!: EncodeIdentificationRoomDirective;
   
   constructor(
-    // private _dbService: DataDbService,
     private _encodeFirestoreService: EncodeFirestoreService,
     private _encodeStorageService: EncodeStorageService,
     private _userService: EncodeUserService,
@@ -39,24 +37,8 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     private _dialog: MatDialog)
   {
   }
-
-  async onExit(): Promise<any> {
-    const exitDialogRef = this._dialog.open(ExitConfirmComponent);
-    exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
-    const exit$ = exitDialogRef.afterClosed();
-    return await lastValueFrom(exit$);
-  }
-
-  private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
-    if (response == true){ 
-      await this._userService.abandonTest();
-      this._router.navigate(["/"]);
-    } 
-
-    return false;
-  }
-
-  async openIdentificaton() {
+  
+  async ngOnInit(): Promise<void> {
     this.isLoadingLineups = true;
     const userPerpetratorCondition = this._userService.user.sessionTwo.perpetratorCondition;
 
@@ -103,10 +85,8 @@ export class EncodeIdentificationTaskComponent implements OnExit {
     firstRoomResult.subscribe(this.saveIdentificationResponse);
     
     this.isLoadingLineups = false;
-    this.isIdentifing = true; 
     await lastValueFrom(firstRoomResult);
     
-    this.isIdentifing = false;
     actualRoomRef.destroy();
 
     // cargo el segundo room
@@ -118,15 +98,30 @@ export class EncodeIdentificationTaskComponent implements OnExit {
       const secondRoomResult = actualRoomRef.instance.suspectIdentifiedEvent;
       secondRoomResult.subscribe(this.saveIdentificationResponse);
       
-      this.isIdentifing = true;
+      this.isLoadingLineups = false;
       await lastValueFrom(secondRoomResult);
 
-      this.isIdentifing = false;
       actualRoomRef.destroy();
   
       this.onExit = async () => true;
       this._router.navigate(["../audios"], { relativeTo: this._route });
     }, 2000)
+  }
+
+  async onExit(): Promise<any> {
+    const exitDialogRef = this._dialog.open(ExitConfirmComponent);
+    exitDialogRef.afterClosed().subscribe(this._exitDialogClosed$);
+    const exit$ = exitDialogRef.afterClosed();
+    return await lastValueFrom(exit$);
+  }
+
+  private _exitDialogClosed$ = async (response: boolean): Promise<boolean> => {
+    if (response == true){ 
+      await this._userService.abandonTest();
+      this._router.navigate(["/"]);
+    } 
+
+    return false;
   }
 
   private saveIdentificationResponse = (response: IEncodeIdentificationResponse): void => {

@@ -2,64 +2,14 @@
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
         
-        <div *ngIf="isIdentifing == false; then taskBreafing else identificationRoomComponent">
-            <!-- template will replace this div -->
-        </div>
-
-        <ng-template #taskBreafing>
-            
+        <div identificationRoomHost>
             <div *ngIf="isLoadingLineups"
                 id="loading-spinner">
                 <mat-spinner [diameter]="64"></mat-spinner>
                 <p *ngIf="this.currentRoom == 1">Cargando Ronda 1...</p>
                 <p *ngIf="this.currentRoom == 2">Cargando Ronda 2...</p>
             </div>
-
-            <div *ngIf="!isLoadingLineups"
-                id="task-breafing">
-                
-                <h1 class="title">Rondas de reconocimiento</h1>
-
-                <mat-list>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon
-                            color="accent">lens</mat-icon>
-                        <p class="mat-list-text">
-                            A continuación vas a realizar dos rondas de reconocimiento correspondientes cada una a uno de los asaltantes del video de la sesión anterior.
-                        </p>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon
-                            color="accent">lens</mat-icon>
-                        <p class="mat-list-text">
-                            Cada ronda está compuesta por fotos de 6 sospechosos en donde puede estar presente o no el asaltante.
-                        </p>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon
-                            color="accent">lens</mat-icon>
-                        <p class="mat-list-text">
-                            Te vamos a pedir que las mires con atención y selecciones la opción que creas correcta.
-                        </p>
-                    </mat-list-item>
-                    
-                </mat-list>
-                
-                <button mat-raised-button 
-                    id="continue-button" 
-                    class="save-form-btn" 
-                    aria-label="comenzar"
-                    (click)="openIdentificaton()">
-                    Comenzar
-                </button>
-
-            </div>
-            
-        </ng-template>
-
-        <ng-template #identificationRoomComponent
-            identificationRoomHost>
-        </ng-template>
+        </div>
         
     </section>
 

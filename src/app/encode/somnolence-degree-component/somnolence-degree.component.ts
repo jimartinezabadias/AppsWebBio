@@ -3,7 +3,8 @@ import { Location } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EncodeUserService } from '../services/EncodeUserService';
-import { SessionsEnum, SomnolenceDegree } from "../constants";
+import { IDENTIFICATION_INSTRUCTIONS, SessionsEnum, SomnolenceDegree } from "../constants";
+import { IEncodeInstructionsParams } from '../models/IEncodeInstructionsParams';
 
 @Component({
     selector: 'app-encode-somnolence-degree',
@@ -42,7 +43,8 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
 
     if (this._userService.session == SessionsEnum.SessionTwo) 
     {
-      this._router.navigate(["../suspect-identification"], { relativeTo: this._route });
+      this.navigateToVideoSuspectIdentificationInstructions();
+      // this._router.navigate(["../suspect-identification"], { relativeTo: this._route });
     } else if (this._userService.session == SessionsEnum.SessionOne) 
     {
       this._router.navigate(["../google-forms"], { relativeTo: this._route });
@@ -59,6 +61,18 @@ export class EncodeSomnolenceDegreeComponent implements OnInit {
     });
    
     return somnolenceFormFields;
+  }
+
+  private navigateToVideoSuspectIdentificationInstructions(): void {
+    let instructions_params: IEncodeInstructionsParams = {
+      title: 'Rondas de reconocimiento',
+      instructions: IDENTIFICATION_INSTRUCTIONS,
+      nextRouteToNavigate: '../suspect-identification'
+    };
+
+    this._router.navigate(['../instructions'], { 
+      relativeTo: this._route,
+      queryParams: instructions_params });
   }
   
 }
