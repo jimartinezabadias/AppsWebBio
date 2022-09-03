@@ -6,12 +6,13 @@ import { IEncodeScreenshot } from '../models/IEncodeScreenshot';
 import { OnExit } from '../exit.guard';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
-import { SCREENSHOTS_COUNT } from '../constants';
+import { SCREENSHOTS_COUNT, SORTING_INSTRUCTIONS } from '../constants';
 import { lastValueFrom } from 'rxjs';
 import { Observable } from 'rxjs';
 import { EncodeFirestoreService } from 'src/app/core/encodeFirestore.service';
 import { EncodeStorageService } from 'src/app/core/encodeStorage.service';
 import { DocumentSnapshot } from '@angular/fire/firestore';
+import { IEncodeInstructionsParams } from '../models/IEncodeInstructionsParams';
 
 
 @Component({
@@ -99,7 +100,17 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
     if (this.completed) {
       //routear a ordenamiento
       this.onExit = async () => true;
-      this._router.navigate(["../sorting"], { relativeTo: this._route });
+
+      let instructions_params: IEncodeInstructionsParams = {
+        title: 'Tarea de Ordenamiento',
+        instructions: SORTING_INSTRUCTIONS,
+        nextRouteToNavigate: '../sorting'
+      };
+  
+      this._router.navigate(['../instructions'], { 
+        relativeTo: this._route,
+        queryParams: instructions_params });
+      return;
     }
   }
 

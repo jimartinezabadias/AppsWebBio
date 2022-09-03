@@ -2,65 +2,28 @@
     <app-header-encode></app-header-encode>
     <section class="main-app-section">
         
-        <div *ngIf="isTaskRunning == true; then sortingTaskTemplate else taskBreafingTemplate">
-            <!-- template will replace this div -->
+        <h1 class="title">Ordená temporalmente las imágenes</h1>
+        
+        <!-- Screenshots Grid -->
+        <div id="screenshots-grid">
+            <app-grid-image *ngFor="let screenshot of lineup" 
+                [screenshot]="screenshot"
+                [timeline$]="timeline$"
+                (addScreenshotToTimelineEvent)="onAddScreenshotToTimelineEvent($event)">
+            </app-grid-image>
         </div>
+        <!-- Timeline -->
+        <app-timeline [timeline$]="timeline$"
+            (removeScreenshotFromTimelineEvent)="onRemoveScreenshotFromTimelineEvent($event)">
+        </app-timeline>
 
-        <ng-template #taskBreafingTemplate>
-            <div id="task-breafing">
-
-                <h1 class="title">Tarea de Ordenamiento</h1>
-                
-                <mat-list>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon
-                            color="accent">lens</mat-icon>
-                        <p class="mat-list-text">Ahora te vamos a pedir que ordenes las imágenes que seleccionaste.</p>
-                    </mat-list-item>
-                    
-                    <mat-list-item>
-                        <mat-icon mat-list-icon
-                            color="accent">lens</mat-icon>
-                        <p class="mat-list-text">Ordenalas de forma temporal, según como aparecieron en el video.</p>
-                    </mat-list-item>
-                </mat-list>
-                
-                <button mat-raised-button
-                    color="primary"
-                    class="save-form-btn"
-                    aria-label="continuar"
-                    (click)="startTask()">
-                    Continuar
-                </button>
-
-            </div>
-        </ng-template>
-
-        <ng-template #sortingTaskTemplate>
-            <h1 class="title">Ordená temporalmente las imágenes</h1>
-            
-            <!-- Screenshots Grid -->
-            <div id="screenshots-grid">
-                <app-grid-image *ngFor="let screenshot of lineup" 
-                    [screenshot]="screenshot"
-                    [timeline$]="timeline$"
-                    (addScreenshotToTimelineEvent)="onAddScreenshotToTimelineEvent($event)">
-                </app-grid-image>
-            </div>
-            <!-- Timeline -->
-            <app-timeline [timeline$]="timeline$"
-                (removeScreenshotFromTimelineEvent)="onRemoveScreenshotFromTimelineEvent($event)">
-            </app-timeline>
-
-            <button mat-raised-button 
-                class="save-form-btn finish-task-button"
-                aria-label="finalizar"
-                (click)="finishTask()"
-                [disabled]="!isTimelineCompleted">
-                Finalizar
-            </button>
-
-        </ng-template>
+        <button mat-raised-button 
+            class="save-form-btn finish-task-button"
+            aria-label="finalizar"
+            (click)="finishTask()"
+            [disabled]="!isTimelineCompleted">
+            Finalizar
+        </button>
         
     </section>
 </section>

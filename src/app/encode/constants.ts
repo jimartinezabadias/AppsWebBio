@@ -88,3 +88,9 @@ export const SELECTION_INSTRUCTIONS: string[] = [
     'Ahora te vamos a pedir que selecciones de entre 12 pares de fotos.',
     'Tenés que seleccionar la que corresponde con lo que viste en el video.'
 ];
+
+// Sorting Task Instructions
+export const SORTING_INSTRUCTIONS: string[] = [
+    'Ahora te vamos a pedir que ordenes las imágenes que seleccionaste.',
+    'Ordenalas de forma temporal, según como aparecieron en el video.'
+];

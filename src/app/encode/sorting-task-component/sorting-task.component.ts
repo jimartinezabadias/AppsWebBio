@@ -18,7 +18,6 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
   private _timeline = new Array<IEncodeScreenshot | null>(SCREENSHOTS_COUNT).fill(null);
   private _timelineSubject = new Subject<Array<IEncodeScreenshot | null>>();
 
-  public isTaskRunning: boolean = false;
   public lineup: Array<IEncodeScreenshot>;
   public timeline$: Observable<Array<IEncodeScreenshot | null>>;
 
@@ -53,10 +52,6 @@ export class EncodeSortingTaskComponent implements OnInit, OnExit {
   ngOnInit(): void {
     this.lineup = this._userService.user.sessionTwo.imageSelectionResponse;
     this.timeline$ = this._timelineSubject.asObservable();
-  }
-
-  public startTask(): void {
-    this.isTaskRunning = true;
   }
 
   public finishTask(): void {
