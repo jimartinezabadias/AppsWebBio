@@ -70,15 +70,21 @@ export const SCREENSHOTS_COUNT = 8;
 export const HAS_CURSOR_CLASS = 'hasCursor';
 
 // Video Task Instructions
-export const VIDEO_INSTRUCTIONS:string[] = [
+export const VIDEO_INSTRUCTIONS: string[] = [
     'A continuación vas a visualizar un video corto  y te pedimos por favor que le prestes atención.',
     'Asegúrate de estar en un lugar tranquilo y sin interrupciones.',
     'Tené en cuenta que una vez que comience no podrás detenerlo.'
 ];
 
-// Suspect Identificatin Task Instructions
-export const IDENTIFICATION_INSTRUCTIONS:string[] = [
+// Suspect Identification Task Instructions
+export const IDENTIFICATION_INSTRUCTIONS: string[] = [
     'A continuación vas a realizar dos rondas de reconocimiento correspondientes cada una a uno de los asaltantes del video de la sesión anterior.',
     'Cada ronda está compuesta por fotos de 6 sospechosos en donde puede estar presente o no el asaltante.',
     'Te vamos a pedir que las mires con atención y selecciones la opción que creas correcta.'
+];
+
+// Selection Task Instructions
+export const SELECTION_INSTRUCTIONS: string[] = [
+    'Ahora te vamos a pedir que selecciones de entre 12 pares de fotos.',
+    'Tenés que seleccionar la que corresponde con lo que viste en el video.'
 ];

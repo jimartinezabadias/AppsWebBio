@@ -5,10 +5,11 @@ import { OnExit } from '../exit.guard';
 import { ExitConfirmComponent } from '../exit-confirm-component/exit-confirm.component';
 import { EncodeAudioListComponent } from './audios-list-component/audio-list.component';
 import { ExtendedRecallComponent } from './extended-recall-component/extended-recall.component';
-import { SessionsEnum } from '../constants';
+import { SELECTION_INSTRUCTIONS, SessionsEnum } from '../constants';
 import { IEncodeUser } from '../models/IEncodeUser';
 import { lastValueFrom, map, Observable, of } from "rxjs";
 import { MatDialog } from '@angular/material/dialog';
+import { IEncodeInstructionsParams } from '../models/IEncodeInstructionsParams';
 
 @Component({
     selector: 'app-encode-audios',
@@ -70,7 +71,7 @@ export class EncodeAudiosComponent implements OnExit {
           if(response == true) {
             this._wantsToExtend = false;
           } else if (response == false) {
-            this._navigateToEndComponent();
+            this._navigateToNextComponent();
           }
           
           extendDialogRef.close();
@@ -79,22 +80,29 @@ export class EncodeAudiosComponent implements OnExit {
       }
   
       if (!this._wantsToExtend) {
-        this._navigateToEndComponent();
+        this._navigateToNextComponent();
       } 
     }
   }
 
-  private _navigateToEndComponent(): void {
+  private _navigateToNextComponent(): void {
     this.onExit = async () => true;
     
     if (this._userService.session == SessionsEnum.SessionOne) {
-      //si estamos en sesion 1
       this._router.navigate(["../end"], { relativeTo: this._route });
       return;
     }
     
     if (this._userService.session == SessionsEnum.SessionTwo) {
-      this._router.navigate(["../selection"], { relativeTo: this._route });
+      let instructions_params: IEncodeInstructionsParams = {
+        title: 'Tarea de Selección',
+        instructions: SELECTION_INSTRUCTIONS,
+        nextRouteToNavigate: '../selection'
+      };
+  
+      this._router.navigate(['../instructions'], { 
+        relativeTo: this._route,
+        queryParams: instructions_params });
       return;
     }  
   }

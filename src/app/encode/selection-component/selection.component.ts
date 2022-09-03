@@ -25,7 +25,6 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
   public random_pairs = [];
   public currentStep = 0;
   public selectionMade = false;
-  public started = false;
   public completed = false;
   public userChoices: Array<IEncodeScreenshot> = [];
   public userChoice: IEncodeScreenshot;
@@ -97,11 +96,7 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
   }
 
   continue() {
-    if (this.completed == false) {
-      if (this.started == false) {
-        this.started = true;
-      }
-    } else {
+    if (this.completed) {
       //routear a ordenamiento
       this.onExit = async () => true;
       this._router.navigate(["../sorting"], { relativeTo: this._route });
@@ -117,7 +112,6 @@ export class EncodeSelectionComponent implements OnInit, OnExit {
     }
 
     if (this.userChoices.length == SCREENSHOTS_COUNT) {
-      this.started = false;
       this.completed = true;
       this._userService.user.sessionTwo.imageSelectionResponse = this.userChoices;
     }

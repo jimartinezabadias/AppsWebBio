@@ -4,76 +4,27 @@
 
         <div class="selectionComponent">
 
-            <div *ngIf="started == true; then selectionStarted else selectionStopped">
+            <div *ngIf="completed == true; then goToNextTask else selectionTemplate">
                 <!-- template will replace this div -->
             </div>
 
-            <!-- selectionStopped -->
-            <ng-template #selectionStopped>
+            <ng-template #selectionTemplate>
                 
-                <div *ngIf="!completed"
-                    class="task-breafing">
-                
-                    <h1 class="title">Tarea de Selección</h1>
-
-                    <mat-list>
-                        <mat-list-item>
-                            <mat-icon mat-list-icon
-                                color="accent">lens</mat-icon>
-                            <p class="mat-list-text">Ahora te vamos a pedir que selecciones de entre 12 pares de fotos.</p>
-                        </mat-list-item>
-
-                        <mat-list-item>
-                            <mat-icon mat-list-icon
-                                color="accent">lens</mat-icon>
-                            <p class="mat-list-text">Tenés que seleccionar la que corresponde con lo que viste en el video.</p>
-                        </mat-list-item>
-                    </mat-list>
-
-                    <button mat-raised-button 
-                        class="save-form-btn"
-                        color="primary" 
-                        aria-label="comenzar"
-                        (click)="continue()">
-                        Comenzar
-                    </button>
-
-                </div>
-
-                <div *ngIf="completed"
-                    class="task-breafing">
-                
-                    <h1 class="title">¡Ya seleccionaste las imagenes!</h1>
-
-                    <button mat-raised-button 
-                        class="save-form-btn"
-                        color="primary" 
-                        aria-label="continuar"
-                        (click)="continue()">
-                        Continuar
-                    </button>
-                    <p>Seleccionadas <b>{{currentStep}}/{{steps}}</b></p>
-
-                </div>
-                
-            </ng-template>
-
-            <!-- selectionStarted -->
-            <ng-template #selectionStarted>
                 <h1 class="title">Seleccioná la que corresponde con lo que viste en el video.</h1>
-
-                <div *ngIf="imagesPairsLoaded == true; then selectionTemplate else loading">
+    
+                <div *ngIf="imagesPairsLoaded == true; then selection else loading">
                     <!-- template will replace this div -->
                 </div>
         
                 <!-- loading -->
                 <ng-template #loading>
+                    <mat-spinner [diameter]="64"></mat-spinner>
                     <p>Cargando...</p>
                 </ng-template>
 
-                <ng-template #selectionTemplate>
+                <!-- selection task -->
+                <ng-template #selection>
                     <mat-card>
-                    
                         <mat-card-content class="card-content">
                             
                             <mat-stepper linear #stepper>
@@ -122,14 +73,25 @@
                                     
                                 </mat-step>
                             </mat-stepper>
-        
                         </mat-card-content>
-        
                     </mat-card>
                 </ng-template>
 
             </ng-template>
-            
+
+            <ng-template #goToNextTask class="task-breafing">
+                <h1 class="title">¡Ya seleccionaste las imagenes!</h1>
+
+                <button mat-raised-button 
+                    class="save-form-btn"
+                    color="primary" 
+                    aria-label="continuar"
+                    (click)="continue()">
+                    Continuar
+                </button>
+                <p>Seleccionadas <b>{{currentStep}}/{{steps}}</b></p>
+            </ng-template>
+
         </div>
                 
     </section>
