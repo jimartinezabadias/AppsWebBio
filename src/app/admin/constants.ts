@@ -1,4 +1,4 @@
-export const VERSION_NUMBER: string = "01-072022";
+export const VERSION_NUMBER: string = "01-092022";
 
 // ENCODE ADMIN CONSTANTS
 
