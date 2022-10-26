@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from 'src/app/navigation-service/navigation.service';
 
-import Swiper, { Navigation } from 'swiper';
+import Swiper from 'swiper';
 
 @Component({
     selector: 'app-rulit-instructions',
@@ -23,7 +23,6 @@ export class RulitInstructionsComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-      Swiper.use([Navigation]);
       
       this.mySwiper = new Swiper('.swiper-container', {
         // If we need pagination
@@ -38,7 +37,7 @@ export class RulitInstructionsComponent implements OnInit {
         // And if we need scrollbar
         scrollbar: {
           el: '.swiper-scrollbar',
-        }
+        },
       });
     }
 

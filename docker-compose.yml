@@ -10,7 +10,7 @@ services:
       - "4200:4200"
     volumes:
       - .:/home/node/app
-    command: ng serve --host 0.0.0.0 --disable-host-check --ssl --ssl-cert "ssl/dev.investigar.crt" --ssl-key "ssl/dev-investigar.key"
+    command: ng serve --host 0.0.0.0 --disable-host-check --ssl
   web:
     build: .docker/nginx
     image: nginx-investigar
@@ -19,6 +19,3 @@ services:
       - "4280:80"
     volumes:
       - ./dist/appweb:/usr/share/nginx/html
-
-
-
