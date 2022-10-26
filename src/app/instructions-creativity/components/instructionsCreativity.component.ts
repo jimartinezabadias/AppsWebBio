@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Element } from './../../core/models/element.module';
 import { ActivatedRoute, Params  } from '@angular/router';
 
-import Swiper, { Navigation } from 'swiper';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-instructions-creativity',
@@ -17,7 +17,6 @@ export class InstructionsCreativityComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute) {  }
 
   elementFinal: Element;
-
 
   elementClip: Element = {
     id: 1,
@@ -67,22 +66,14 @@ export class InstructionsCreativityComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    Swiper.use([Navigation]);
+    Swiper.use([{ }]);
 
     this.mySwiper = new Swiper('.swiper-container', {
-      // If we need pagination
-      pagination: {
-        el: '.swiper-pagination',
-      },
       // Navigation arrows
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
-      },
-      // And if we need scrollbar
-      scrollbar: {
-        el: '.swiper-scrollbar',
-      },
+      }
     });
   }
 }
