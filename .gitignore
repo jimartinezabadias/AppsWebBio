@@ -4,7 +4,7 @@
 .angular/cache
 
 # priv key file
-ssl/dev-investigar.key
+ssl/
 
 # env files
 src/environments
