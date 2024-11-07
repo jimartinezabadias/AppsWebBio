@@ -6,6 +6,9 @@
 # priv key file
 ssl/dev-investigar.key
 
+# env files
+src/environments
+
 # large files
 src/assets/videos/videoEncode.mp4
 
