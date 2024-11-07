@@ -76,8 +76,8 @@
           "options": {
             "browserTarget": "appweb:build",
             "ssl": true,
-            "sslKey": "ssl/dev-investigar.key",
-            "sslCert": "ssl/dev.investigar.crt" 
+            "sslKey": "ssl/investigar-localhost.key",
+            "sslCert": "ssl/investigar-localhost.crt" 
           },
           "configurations": {
             "production": {

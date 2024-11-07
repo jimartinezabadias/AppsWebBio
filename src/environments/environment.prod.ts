@@ -3,7 +3,7 @@
 export const environment = {
   production: true,
    firebaseConfig : {
-     apiKey: 'AIzaSyAzvJ5tF7OHEBGcTv9oB0B3Q2hlG8o2cVQ',
+     apiKey: 'AIzaSyCi-pFzq1NYZW_kkpcyruJ2hT2GeM8eVFw',
      authDomain: 'investigapp-ec690.firebaseapp.com',
      databaseURL: 'https://investigapp-ec690.firebaseio.com',
      projectId: 'investigapp-ec690',
