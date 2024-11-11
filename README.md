@@ -1,10 +1,11 @@
 
-<a href="https://investigar.jima.com.ar" target="_blank">
+<a href="https://investigar.com.ar" target="_blank">
   <img src="src/assets/images/logo_navbar.svg" width="200" height="100" alt="Investig.ar logo">
 </a>
 
-***
+- (ES) [Investigar](investigar.com.ar) es una plataforma web que permiten a los científicos realizar pruebas con voluntarios en el ámbito de las neurociencias.
+El objetivo principal del proyecto es generar estrategias para mejorar la calidad de vida de las personas basadas en evidencias científicas. Las pruebas comenzaron a realizarse en el año 2020, bajo el contexto de la pandemia por COVID-19, y desde entonces se han llevado a cabo con éxito 3 investigaciones con mas de 1000 usuarios.
 
-Live demo: (https://investigar.jima.com.ar)
+- (EN) [Investigar](investigar.com.ar) is a web platform that allows scientists to conduct tests with volunteers in the field of neuroscience.
+The main objective of the project is to generate strategies to improve people's quality of life based on scientific evidence. The tests began in 2020, in the context of the COVID-19 pandemic, and since then 3 successful investigations have been carried out with more than 1,000 users.
 
-> Document under construction
