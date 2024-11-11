@@ -1,7 +1,8 @@
-
-<a href="https://investigar.com.ar" target="_blank">
-  <img src="src/assets/images/logo_navbar.svg" width="200" height="100" alt="Investig.ar logo">
-</a>
+<div align="center" width="100%">
+  <a href="https://investigar.com.ar" target="_blank">
+    <img src="src/assets/images/logo_navbar.svg" width="200" height="100" alt="Investig.ar logo">
+  </a>
+</div>
 
 <sup>ES</sup> [Investigar](investigar.com.ar) es una plataforma web que permite realizar pruebas con voluntarios en el ámbito de la investigación científica de las neurociencias.
 El objetivo principal del proyecto es generar estrategias para mejorar la calidad de vida de las personas basadas en evidencias científicas. Las pruebas comenzaron a realizarse en el año 2020, bajo el contexto de la pandemia por COVID-19, y desde entonces se han llevado a cabo con éxito 3 investigaciones con mas de 1000 usuarios.
